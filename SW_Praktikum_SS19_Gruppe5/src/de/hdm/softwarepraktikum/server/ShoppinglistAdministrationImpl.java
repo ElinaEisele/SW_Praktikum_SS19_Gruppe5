@@ -1,14 +1,15 @@
 package de.hdm.softwarepraktikum.server;
 
-import de.hdm.softwarepraktikum.client.GreetingService;
 import de.hdm.softwarepraktikum.shared.FieldVerifier;
+import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
+public class ShoppinglistAdministrationImpl extends RemoteServiceServlet implements ShoppinglistAdministration {
 
 	public String greetServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
