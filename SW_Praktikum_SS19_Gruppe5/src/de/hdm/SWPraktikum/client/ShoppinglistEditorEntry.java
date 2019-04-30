@@ -42,7 +42,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	public void onModuleLoad() {
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
-		nameField.setText("Uffffffffffffffffff");
+		nameField.setText("Ufffffffffff");
 		final Label errorLabel = new Label();
 
 		// We can add style names to widgets
