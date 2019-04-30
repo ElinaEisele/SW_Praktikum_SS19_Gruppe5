@@ -1,9 +1,5 @@
 package de.hdm.softwarepraktikum.client;
 
-import de.hdm.softwarepraktikum.shared.FieldVerifier;
-import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
-import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -19,6 +15,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.hdm.softwarepraktikum.shared.FieldVerifier;
+import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
+import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -44,6 +44,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
 		final Label errorLabel = new Label();
+		Button b1 = new Button("Uff");
 
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
