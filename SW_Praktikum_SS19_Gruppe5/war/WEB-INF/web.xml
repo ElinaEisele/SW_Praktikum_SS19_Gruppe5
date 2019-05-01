@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>de.hdm.SWPraktikum.server.ShoppinglistAdministrationImpl</servlet-class>
+    <servlet-class>de.hdm.softwarepraktikum.server.ShoppinglistAdministrationImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
