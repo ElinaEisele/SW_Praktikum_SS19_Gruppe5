@@ -1,12 +1,14 @@
-package de.hdm.softwarepraktikum.dummydata;
+package de.hdm.softwarepraktikum.shared.dummydata;
+
+import java.util.Date;
 
 public class User {
 	private String userName;
 	private int id;
-	private int creationDate;
+	private Date creationDate;
 	private String gMail;
 
-	public User(String userName, int id, int creationDate, String gMail) {
+	public User(String userName, int id, Date creationDate, String gMail) {
 		this.userName = userName;
 		this.id = id;
 		this.creationDate = creationDate;
@@ -29,11 +31,11 @@ public class User {
 		this.userName = userName;
 	}
 
-	public int getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(int creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 

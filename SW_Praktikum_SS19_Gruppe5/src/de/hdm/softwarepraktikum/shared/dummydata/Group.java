@@ -1,11 +1,13 @@
-package de.hdm.softwarepraktikum.dummydata;
+package de.hdm.softwarepraktikum.shared.dummydata;
+
+import java.util.Date;
 
 public class Group {
 	private String groupName;
 	private int id;
-	private int creationDate;
+	private Date creationDate;
 
-	public Group(String groupName, int id, int creationDate) {
+	public Group(String groupName, int id, Date creationDate) {
 		this.groupName = groupName;
 		this.id = id;
 		this.creationDate = creationDate;
@@ -27,11 +29,11 @@ public class Group {
 		this.id = id;
 	}
 
-	public int getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(int creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 

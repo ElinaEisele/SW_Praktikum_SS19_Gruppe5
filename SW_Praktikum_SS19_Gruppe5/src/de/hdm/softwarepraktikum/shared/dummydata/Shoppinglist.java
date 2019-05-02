@@ -1,11 +1,13 @@
-package de.hdm.softwarepraktikum.dummydata;
+package de.hdm.softwarepraktikum.shared.dummydata;
+
+import java.util.Date;
 
 public class Shoppinglist {
 	private String shoppinglistName;
 	private int id;
-	private int creationDate;
+	private Date creationDate;
 
-	public Shoppinglist(String shoppinglistName, int id, int creationDate) {
+	public Shoppinglist(String shoppinglistName, int id, Date creationDate) {
 		this.shoppinglistName = shoppinglistName;
 		this.id = id;
 		this.creationDate = creationDate;
@@ -27,11 +29,11 @@ public class Shoppinglist {
 		this.id = id;
 	}
 
-	public int getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(int creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 

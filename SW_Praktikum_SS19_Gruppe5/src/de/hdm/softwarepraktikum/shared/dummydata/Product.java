@@ -1,12 +1,14 @@
-package de.hdm.softwarepraktikum.dummydata;
+package de.hdm.softwarepraktikum.shared.dummydata;
+
+import java.util.Date;
 
 public class Product {
 
 	private String productName;
 	private int id;
-	private int creationDate;
+	private Date creationDate;
 
-	public Product(String productName, int id, int creationDate) {
+	public Product(String productName, int id, Date creationDate) {
 		this.productName = productName;
 		this.id = id;
 		this.creationDate = creationDate;
@@ -28,11 +30,11 @@ public class Product {
 		this.id = id;
 	}
 
-	public int getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(int creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 

@@ -1,11 +1,13 @@
-package de.hdm.softwarepraktikum.dummydata;
+package de.hdm.softwarepraktikum.shared.dummydata;
+
+import java.util.Date;
 
 public class Retailer {
 	private String retailerName;
 	private int id;
-	private int creationDate;
+	private Date creationDate;
 
-	public Retailer(String retailerName, int id, int creationDate) {
+	public Retailer(String retailerName, int id, Date creationDate) {
 		this.retailerName = retailerName;
 		this.id = id;
 		this.creationDate = creationDate;
@@ -27,11 +29,11 @@ public class Retailer {
 		this.id = id;
 	}
 
-	public int getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(int creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 }
