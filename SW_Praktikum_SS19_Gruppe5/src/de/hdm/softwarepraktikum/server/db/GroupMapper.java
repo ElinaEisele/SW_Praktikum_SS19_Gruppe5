@@ -11,7 +11,7 @@ import javafx.scene.Group;
 /**
  * Mapper Klasse für </code>Group</code> Objekte. Diese umfasst Methoden
  * um Group Objekte zu erstellen, zu suchen, zu modifizieren und zu
- * löschen. Das Mapping funktioniert dabei bidirektional. Es können Objekte in
+ * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
  * 
  * @author CarlaHofmann
@@ -25,7 +25,7 @@ public class GroupMapper {
 	private static GroupMapper groupMapper = null;
 
 	/**
-	 * Geschützter Konstruktor verhindert weitere Instanzierungen von UserMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UserMapper.
 	 */
 	protected GroupMapper() {
 	}
@@ -33,7 +33,7 @@ public class GroupMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Gibt den Groupmapper zurück.
+	 * @return Gibt den Groupmapper zurueck.
 	 */
 	public static GroupMapper groupMapper() {
 		if (groupMapper == null) {
@@ -46,7 +46,7 @@ public class GroupMapper {
 	/**
 	 * Ausgabe einer Liste aller Gruppen.
 	 *
-	 * @return Gibt eine Liste aller Gruppen zurück.
+	 * @return Gibt eine Liste aller Gruppen zurueck.
 	 */
 	public ArrayList<Group> findAll() {
 
@@ -76,7 +76,7 @@ public class GroupMapper {
 	/**
 	 * Gruppe mithilfe des Gruppennamen finden.
 	 * 
-	 * @param name: Übergabe des Namens einer Gruppe in Form eines Strings
+	 * @param name Übergabe des Namens einer Gruppe in Form eines Strings
 	 * @return Gruppe(n) mit dem entsprechenden Namen
 	 */
 	public ArrayList<Group> findByName (String name){
@@ -105,10 +105,10 @@ public class GroupMapper {
 	}
 	
 	/**
-	 * Insert Methode, um eine neue Entität der Datenbank hinzuzufügen.
+	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
-	 * @param  group: Die gewählte Gruppe wird übergeben
-	 * @return Die group wird zurückgegeben.
+	 * @param  group: Die gewaehlte Gruppe wird uebergeben
+	 * @return Die group wird zurueckgegeben.
 	 */
 	public Group insert(Group group) {
 		
@@ -126,8 +126,8 @@ public class GroupMapper {
 			PreparedStatement stmt2 = con.prepareStatement("INSERT INTO Groups (id, creationDate,name) VALUES (?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			stmt2.setInt(1, group.getId());
-			stmt2.setString(2, group.getCreationDate());
+			stmt2.setInt(1, group.getBOid());
+			stmt2.setDate(2, group.getCreationDate());
 			stmt2.setString(3, group.getName());
 			stmt2.executeUpdate();
 
@@ -140,10 +140,10 @@ public class GroupMapper {
 	}
 	
 	/**
-	 * Wiederholtes Schreiben / Ändern eines Objekts in die Datenbank.
+	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
 	 *
-	 * @param group: Die Gruppe wird übergeben.
-	 * @return Gibt die akutalisierte Gruppe zurück.
+	 * @param group: Die Gruppe wird uebergeben.
+	 * @return Gibt die akutalisierte Gruppe zurueck.
 	 */
 	public Group update(Group group) {
 		
@@ -168,9 +168,9 @@ public class GroupMapper {
 	}
 	
 	/**
-	 * Delete Methode, um einen Gruppen-Datensatz aus der Datenbank zu entfernen.
+	 * Delete Methode, um einen Gruppen-Objekt aus der Datenbank zu entfernen.
 	 *
-	 * @param group: Die Gruppe wird übergeben.
+	 * @param group: Die Gruppe wird uebergeben.
 	 */
 	public void delete(Group group) {
 
@@ -190,8 +190,8 @@ public class GroupMapper {
 	/**
 	 * Gruppe mittels id finden.
 	 *
-	 * @param id: Die id wird übergeben,um daran die Gruppe zu finden.
-	 * @return Die Gruppe, die anhand der id gefunden wurde, wird zurückgegeben.
+	 * @param id: Die id wird uebergeben,um daran die Gruppe zu finden.
+	 * @return Die Gruppe, die anhand der id gefunden wurde, wird zurueckgegeben.
 	 */
 	public Group findById(int id) {
 
@@ -219,5 +219,7 @@ public class GroupMapper {
 		
 		return null;
 	}
+	
+	
 	
 }
