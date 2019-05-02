@@ -15,11 +15,14 @@ public class ShoppinglistAdministrationForm extends VerticalPanel {
 	GroupHeader groupHeader = new GroupHeader();
 	ListHeader listHeader = new ListHeader();
 	EditorHeader editorHeader = new EditorHeader();
+	
+	Content content = new Content();
 
 	public void onLoad() {
 		super.onLoad();
 
 		this.add(listHeader);
+		this.add(content);
 
 	}
 
