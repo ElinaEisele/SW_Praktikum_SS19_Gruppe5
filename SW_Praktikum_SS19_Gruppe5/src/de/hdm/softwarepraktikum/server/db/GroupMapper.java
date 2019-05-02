@@ -6,6 +6,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Mapper Klasse für </code>Group</code> Objekte. Diese umfasst Methoden
+ * um Group Objekte zu erstellen, zu suchen, zu modifizieren und zu
+ * löschen. Das Mapping funktioniert dabei bidirektional. Es können Objekte in
+ * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
+ * 
+ * @autor CarlaHofmann
+ */
+
 public class GroupMapper {
 
 	/**
