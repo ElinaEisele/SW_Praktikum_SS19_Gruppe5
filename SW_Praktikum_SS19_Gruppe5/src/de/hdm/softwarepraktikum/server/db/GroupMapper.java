@@ -22,7 +22,7 @@ public class GroupMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Gibt den Group Mapper zurück.
+	 * @return Gibt den Groupmapper zurück.
 	 */
 	public static GroupMapper groupMapper() {
 		if (groupMapper == null) {
