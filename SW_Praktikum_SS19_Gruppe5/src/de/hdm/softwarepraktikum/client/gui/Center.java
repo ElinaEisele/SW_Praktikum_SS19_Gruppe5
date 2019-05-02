@@ -3,6 +3,7 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
+
 public class Center extends HorizontalPanel{
 	
 	Button b1 = new Button("Center");

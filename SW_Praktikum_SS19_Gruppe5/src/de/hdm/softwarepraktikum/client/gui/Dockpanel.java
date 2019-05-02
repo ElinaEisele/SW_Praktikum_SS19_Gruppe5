@@ -21,8 +21,8 @@ public class Dockpanel extends HorizontalPanel{
 
 		dockPanel.add(north, DockPanel.NORTH);
 		dockPanel.add(west, DockPanel.WEST);
-//		dockPanel.add(new HTML("EAST"), DockPanel.EAST);
-//		dockPanel.add(new HTML("SOUTH"), DockPanel.SOUTH);
+		dockPanel.add(new HTML("EAST"), DockPanel.EAST);
+		dockPanel.add(new HTML("SOUTH"), DockPanel.SOUTH);
 		dockPanel.add(center, DockPanel.CENTER);
 		
 	}

@@ -1,6 +1,10 @@
 package de.hdm.softwarepraktikum.client;
 
 
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+
+
 import de.hdm.softwarepraktikum.client.gui.Dockpanel;
 import de.hdm.softwarepraktikum.shared.FieldVerifier;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
@@ -19,17 +23,18 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
+
+
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class ShoppinglistEditorEntry implements EntryPoint {
-	
-public void onModuleLoad() {
-		
+
+	public void onModuleLoad() {
+
 		Dockpanel d1 = new Dockpanel();
 		HorizontalPanel h1 = new HorizontalPanel();		
 		
@@ -39,4 +44,5 @@ public void onModuleLoad() {
 		
 	}
 	
+
 }
