@@ -97,8 +97,24 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public void save(Retailer retailer) throws IllegalArgumentException;
 	
+	/*
+	 * Löschen des übergebenen User-Objekts
+	 */
+	public void delete(User user) throws IllegalArgumentException;
 	
+	/*
+	 * Löschen des übergebenen Group-Objekts
+	 */
+	public void delete(Group group) throws IllegalArgumentException;
 	
+	/*
+	 * Löschen des übergebenen Shoppinglist-Objekts
+	 */
+	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
+	/*
+	 * Löschen des übergebenen Listitem-Objekts
+	 */
+	public void delete(Listitem listitem) throws IllegalArgumentException;
 }
 
