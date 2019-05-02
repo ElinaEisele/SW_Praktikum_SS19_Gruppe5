@@ -1,9 +1,9 @@
 package de.hdm.softwarepraktikum.server;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import de.hdm.softwarepraktikum.shared.FieldVerifier;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server-side implementation of the RPC service.
