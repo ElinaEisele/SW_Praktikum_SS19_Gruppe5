@@ -206,7 +206,7 @@ public class GroupMapper {
 			if (rs.next()) {
 
 				Group group = new Group();
-				group.setId(rs.getInt("id"));
+				group.setBOid(rs.getInt("id"));
 				group.setCreationDate(rs.getString("CreationDate"));
 				group.setName(rs.getString("Name"));
 				return group;
