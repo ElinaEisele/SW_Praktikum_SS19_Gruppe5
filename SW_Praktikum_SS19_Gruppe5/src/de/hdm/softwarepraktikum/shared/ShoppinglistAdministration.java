@@ -1,6 +1,8 @@
 package de.hdm.softwarepraktikum.shared;
 
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -14,7 +16,7 @@ import de.hdm.softwarepraktikum.server.bo.User;
 
 
 
-/*
+/**
  * <p>
  * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Verwaltung von Shoppinglists.
  * </p>
@@ -32,7 +34,7 @@ import de.hdm.softwarepraktikum.server.bo.User;
 public interface ShoppinglistAdministration extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
 	
-	  /*
+	  /**
 	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
 	   * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
 	   * {@link ShoppinglistAdministrationImpl} notwendig. Bitte diese Methode direkt nach der
@@ -42,22 +44,24 @@ public interface ShoppinglistAdministration extends RemoteService {
 	   */
 	public void init() throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Einen User anlegen
+	 * @return User-Objekt
 	 */
 	public User createUser(String mail) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Eine Gruppe anlegen
+	 * 
 	 */
 	public Group createGroup(String name) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Eine Shoppinglist anlegen
 	 */
 	public Shoppinglist createShoppinglist(Group group, String name) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Ein Listitem anlegen
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
@@ -116,5 +120,24 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * Löschen des übergebenen Listitem-Objekts
 	 */
 	public void delete(Listitem listitem) throws IllegalArgumentException;
+	
+	/*
+	 * Sämtliche Gruppen eines Users-Objekts ausgeben
+	 */
+	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException;
+	
+	/*
+	 * Sämtliche Gruppen eines Users mit Hilfe der UserID ausgeben
+	 */
+	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException;
+	
+	/*
+	 * Sämtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
+	 */
+	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
+	
+	
+	
+	
 }
 
