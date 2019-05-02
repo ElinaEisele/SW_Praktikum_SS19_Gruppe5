@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * löschen. Das Mapping funktioniert dabei bidirektional. Es können Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
  * 
- * @autor CarlaHofmann
+ * @author CarlaHofmann
  */
 
 public class GroupMapper {
