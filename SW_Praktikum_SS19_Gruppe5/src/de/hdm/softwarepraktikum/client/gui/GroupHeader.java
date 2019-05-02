@@ -4,6 +4,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+/*
+ * Klasse für die Ueberschrift und Buttons in der Gruppenansicht
+ * 
+ * @author: ElinaEisele
+ */
+
 public class GroupHeader extends HorizontalPanel {
 
 	Label groupHeaderLabel = new Label("Hier steht der Name der ausgewählten Gruppe");

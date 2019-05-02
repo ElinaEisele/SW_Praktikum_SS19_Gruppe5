@@ -4,6 +4,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+/*
+ * Klasse für die Überschrift und Buttons in der Listenansicht
+ * 
+ * @author: ElinaEisele
+ */
+
 public class ListHeader extends HorizontalPanel {
 
 	Label listHeaderLabel = new Label("Hier steht der Name der ausgewählten Liste");
