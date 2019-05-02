@@ -137,6 +137,34 @@ public class GroupMapper {
 		}
 		return group;
 
+	}
+	
+	/**
+	 * Wiederholtes Schreiben / Ändern eines Objekts in die Datenbank.
+	 *
+	 * @param group: Die Gruppe wird übergeben.
+	 * @return Gibt die akutalisierte Gruppe zurück.
+	 */
+	public Group update(Group group) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			
+		/**
+			PreparedStatement stmt = con.prepareStatement("UPDATE Groups SET CreationDate= ?, Name= ? WHERE ID = ?");
+
+			stmt.setString(1, group.get());
+			stmt.setString(2, group.getName());
+			stmt.setInt(3, group.getBO_ID());
+			stmt.executeUpdate();
+		*/
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			}
+		
+		return group;
 }
 
 }
