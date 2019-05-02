@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Klasse, die den Inhalt der Gruppen bzw. der Listen darstellt
  * 
- * @author: ElinaEisele
+ * @author ElinaEisele
  */
 
 public class Content extends VerticalPanel{

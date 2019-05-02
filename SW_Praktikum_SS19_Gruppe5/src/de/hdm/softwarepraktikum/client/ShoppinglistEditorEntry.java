@@ -12,6 +12,7 @@ import de.hdm.softwarepraktikum.client.gui.ShoppinglistAdministrationForm;
  * Entry-Point Klasse des Projekts <b>MaulTasche</b> für den Editor.
  * 
  * @author ElinaEisele
+ * 
  */
 public class ShoppinglistEditorEntry implements EntryPoint {
 
