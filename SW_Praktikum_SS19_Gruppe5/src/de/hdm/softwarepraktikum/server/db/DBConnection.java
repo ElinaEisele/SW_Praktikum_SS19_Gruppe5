@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 
 import com.google.appengine.api.utils.SystemProperty;
 
-/**
- * Verwalten einer Verbindung zur Datenbank.
- */
+	/**
+	 * Verwalten einer Verbindung zur Datenbank.
+	 * 
+	 * @author CarlaHofmann
+	 */
 
 public class DBConnection {
 	
