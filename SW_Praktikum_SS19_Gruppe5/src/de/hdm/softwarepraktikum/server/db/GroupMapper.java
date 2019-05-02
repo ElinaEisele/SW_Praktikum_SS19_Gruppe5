@@ -165,6 +165,25 @@ public class GroupMapper {
 			}
 		
 		return group;
-}
+	}
+	
+	/**
+	 * Delete Methode, um einen Gruppen-Datensatz aus der Datenbank zu entfernen.
+	 *
+	 * @param group: Die Gruppe wird übergeben.
+	 */
+	public void delete(Group group) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM Groups WHERE Groups.id =" + group.getId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
