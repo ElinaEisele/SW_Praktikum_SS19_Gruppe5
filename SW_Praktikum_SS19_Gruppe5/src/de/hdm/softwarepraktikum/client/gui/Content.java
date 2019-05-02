@@ -11,11 +11,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class Content extends VerticalPanel{
 	
 	SearchBar searchBar = new SearchBar();
+	GroupView groupView = new GroupView();
 		
 	public void onLoad() {
 		super.onLoad();
 		
 		this.add(searchBar);
+		this.add(groupView);
 		
 	}
 
