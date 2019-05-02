@@ -14,6 +14,8 @@ public class ShoppinglistReportEntry implements EntryPoint{
 	
 	Label reportLabel = new Label("Report Generator");
 
+
+
 	@Override
 	public void onModuleLoad() {
 		
