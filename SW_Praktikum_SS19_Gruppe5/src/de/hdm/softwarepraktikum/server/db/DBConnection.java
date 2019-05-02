@@ -3,6 +3,8 @@ package de.hdm.softwarepraktikum.server.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import com.google.appengine.api.utils.SystemProperty;
+
 /**
  * Verwalten einer Verbindung zur Datenbank.
  */
