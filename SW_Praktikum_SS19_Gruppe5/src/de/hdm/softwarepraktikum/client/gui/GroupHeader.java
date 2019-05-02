@@ -4,10 +4,10 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
-/*
+/**
  * Klasse für die Ueberschrift und Buttons in der Gruppenansicht
  * 
- * @author: ElinaEisele
+ * @author ElinaEisele
  */
 
 public class GroupHeader extends HorizontalPanel {

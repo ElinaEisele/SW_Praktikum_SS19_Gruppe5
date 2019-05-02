@@ -3,10 +3,10 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
-/*
+/**
  * Klasse für die Ueberschrift zur bearbeitenden Liste
  * 
- * @author: ElinaEisele
+ * @author ElinaEisele
  * 
  */
 

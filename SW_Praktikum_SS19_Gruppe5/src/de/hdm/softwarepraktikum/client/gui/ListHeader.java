@@ -4,10 +4,10 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
-/*
+/**
  * Klasse für die Überschrift und Buttons in der Listenansicht
  * 
- * @author: ElinaEisele
+ * @author ElinaEisele
  */
 
 public class ListHeader extends HorizontalPanel {
