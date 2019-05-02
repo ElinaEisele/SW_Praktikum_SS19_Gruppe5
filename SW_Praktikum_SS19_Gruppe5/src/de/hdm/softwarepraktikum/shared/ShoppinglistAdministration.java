@@ -72,6 +72,32 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public Retailer createRetailer(String name) throws IllegalArgumentException;
 	
+	/*
+	 * Speichern eines User-Objekts in der Datenbank
+	 */
+	public void save(User user) throws IllegalArgumentException;
+	
+	/*
+	 * Speichern eines Group-Objekts in der Datenbank
+	 */
+	public void save(Group group) throws IllegalArgumentException;
+	
+	/*
+	 * Speichern eines Shoppinglist-Objekts in der Datenbank
+	 */
+	public void save(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/*
+	 * Speichern eines Listitem-Objekt in der Datenbank
+	 */
+	public void save(Listitem listitem) throws IllegalArgumentException;
+	
+	/*
+	 * Speichern eines Retailer-Objekts in der Datenbank
+	 */
+	public void save(Retailer retailer) throws IllegalArgumentException;
+	
+	
 	
 	
 }
