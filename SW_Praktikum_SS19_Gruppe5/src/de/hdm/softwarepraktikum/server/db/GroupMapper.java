@@ -186,4 +186,38 @@ public class GroupMapper {
 		}
 	}
 
+	
+	/**
+	 * Gruppe mittels id finden.
+	 *
+	 * @param id: Die id wird übergeben,um daran die Gruppe zu finden.
+	 * @return Die Gruppe, die anhand der id gefunden wurde, wird zurückgegeben.
+	 */
+	public Group findById(int id) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT id, CreationDate, Name FROM Groups WHERE Group.id = " + id);
+
+			if (rs.next()) {
+
+				Group group = new Group();
+				group.setId(rs.getInt("id"));
+				group.setCreationDate(rs.getString("CreationDate"));
+				group.setName(rs.getString("Name"));
+				return group;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return null;
+	}
+	
 }
