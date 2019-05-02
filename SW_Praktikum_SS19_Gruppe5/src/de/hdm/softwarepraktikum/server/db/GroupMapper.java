@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javafx.scene.Group;
+
 /**
  * Mapper Klasse für </code>Group</code> Objekte. Diese umfasst Methoden
  * um Group Objekte zu erstellen, zu suchen, zu modifizieren und zu
@@ -74,7 +76,7 @@ public class GroupMapper {
 	/**
 	 * Gruppe mithilfe des Gruppennamen finden.
 	 * 
-	 * @param Übergabe des Namens einer Gruppe in Form eines Strings
+	 * @param name: Übergabe des Namens einer Gruppe in Form eines Strings
 	 * @return Gruppe(n) mit dem entsprechenden Namen
 	 */
 	public ArrayList<Group> findByName (String name){
@@ -101,5 +103,40 @@ public class GroupMapper {
 		return groups;
 		
 	}
+	
+	/**
+	 * Insert Methode, um eine neue Entität der Datenbank hinzuzufügen.
+	 *
+	 * @param  group: Die gewählte Gruppe wird übergeben
+	 * @return Die group wird zurückgegeben.
+	 */
+	public Group insert(Group group) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("");
+
+			if (rs.next()) {
+
+			}
+
+			PreparedStatement stmt2 = con.prepareStatement("INSERT INTO Groups (id, creationDate,name) VALUES (?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
+			stmt2.setInt(1, group.getId());
+			stmt2.setString(2, group.getCreationDate());
+			stmt2.setString(3, group.getName());
+			stmt2.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return group;
+
+}
 
 }
