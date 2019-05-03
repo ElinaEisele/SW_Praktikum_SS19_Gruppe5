@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author ElinaEisele
  */
 
-public class ShoppinglistAdministrationForm extends VerticalPanel {
+public class ShoppinglistForm extends VerticalPanel {
 	
 	StartHeader startHeader = new StartHeader();
 	GroupHeader groupHeader = new GroupHeader();
