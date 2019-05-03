@@ -274,6 +274,46 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
+	/**
+	 * Sämtliche Retailer-Objetke werden ausgegeben
+	 * @return ArrayList mit allen Retailer-Objekten
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException;
+	
+	/**
+	 * Sämtliche Retailer-Objekte mit einem bestimmten Namen werden ausgegeben
+	 * @param name ist die Bezeichnung der gesuchten Retailer-Objekte
+	 * @return ArrayList mit allen Ratailer-Objekten, welche einen bestimmten Namen besitzen
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Retailer> getRetailersByName(String name) throws IllegalArgumentException;
+	
+	/**
+	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
+	 * @param retailerId ist die ID des gesuchten Einzelhändlers
+	 * @return Das erste Retailer-Objekt, welches den Suchkriterien entspricht wird ausgegeben
+	 * @throws IllegalArgumentException
+	 */
+	public Retailer getRetailerById(int retailerId) throws IllegalArgumentException; 
+	
+	/**
+	 * Sämtliche Retailer-Objekte in einer Shoppinglist werden ausgegeben
+	 * @param shoppinglist ist die Einkaufsliste, in welcher nach allen Retailer-Objekten gesucht wird
+	 * @return ArrayList mit allen Retailer-Objekten innerhalb einer bestimmten Shoppinglist
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Retailer> getRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Sämtliche Retailer-Objekte einer Shoppinglist, welche einem bestimmten User zugeordnet sind werden ausgegeben
+	 * @param shoppinglist shoppinglist ist die Einkaufsliste, in welcher nach allen Retailer-Objekten gesucht wird
+	 * @param user ist der Nutzer, nach wessen zugewiesenen Einzelhändlern gesucht wird
+	 * @return ArrayList mit allen Retailer-Objekten innerhalb einer bestimmten Shoppinglist, welche einem besimmten Nutzer zugeordnet sind
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Retailer> getRetailersOf(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
+	
 	
 	
 	
