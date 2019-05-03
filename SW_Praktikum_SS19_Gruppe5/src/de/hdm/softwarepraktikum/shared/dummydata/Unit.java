@@ -2,6 +2,13 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author JonasWagenknecht
+ * Unit object for testing purposes
+ * 
+ */
+
 public class Unit {
 	private String unitName;
 	private int id;

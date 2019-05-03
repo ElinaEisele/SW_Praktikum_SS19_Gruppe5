@@ -20,6 +20,13 @@ import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.dummydata.Unit;
 import de.hdm.softwarepraktikum.shared.dummydata.User;
 
+/**
+ * 
+ * @author JonasWagenknecht
+ * Celltable that contains the dummy data
+ *  
+ */
+
 public class Celltable extends VerticalPanel {
 
 	ArrayList<Group> group;

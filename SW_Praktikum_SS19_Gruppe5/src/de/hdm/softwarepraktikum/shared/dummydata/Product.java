@@ -2,6 +2,13 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author JonasWagenknecht
+ * Product object for testing purposes
+ * 
+ */
+
 public class Product {
 
 	private String productName;

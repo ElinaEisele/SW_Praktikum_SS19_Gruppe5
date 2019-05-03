@@ -2,6 +2,13 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author JonasWagenknecht
+ * Shoppinglist object for testing purposes
+ * 
+ */
+
 public class Shoppinglist {
 	private String shoppinglistName;
 	private int id;

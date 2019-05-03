@@ -2,6 +2,13 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author JonasWagenknecht
+ * User object for testing purposes
+ * 
+ */
+
 public class User {
 	private String userName;
 	private int id;
