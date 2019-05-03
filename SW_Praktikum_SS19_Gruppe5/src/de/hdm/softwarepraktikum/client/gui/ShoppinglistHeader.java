@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Label;
  * @author ElinaEisele
  */
 
-public class ListHeader extends HorizontalPanel {
+public class ShoppinglistHeader extends HorizontalPanel {
 
 	Label listHeaderLabel = new Label("Hier steht der Name der ausgewählten Liste");
 	Button addListItem = new Button("Eitrag hinzufügen Bild");
