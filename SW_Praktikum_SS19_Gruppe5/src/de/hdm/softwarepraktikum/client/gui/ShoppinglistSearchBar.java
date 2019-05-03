@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
  * @author ElinaEisele
  */
 
-public class SearchBar extends HorizontalPanel{
+public class ShoppinglistSearchBar extends HorizontalPanel{
 	
 	SuggestBox search = new SuggestBox();
 	
