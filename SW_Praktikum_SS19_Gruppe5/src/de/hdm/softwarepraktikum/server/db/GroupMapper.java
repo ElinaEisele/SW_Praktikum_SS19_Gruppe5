@@ -78,7 +78,7 @@ public class GroupMapper {
 	/**
 	 * Gruppe mithilfe des Gruppennamen finden.
 	 * 
-	 * @param name Übergabe des Namens einer Gruppe in Form eines Strings
+	 * @param name Uebergabe des Namens einer Gruppe in Form eines Strings
 	 * @return Gruppe(n) mit dem entsprechenden Namen
 	 */
 	public ArrayList<Group> findByName(String name) {
