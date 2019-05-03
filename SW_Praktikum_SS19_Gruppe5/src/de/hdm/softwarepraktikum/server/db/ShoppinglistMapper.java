@@ -26,31 +26,31 @@ public class ShoppinglistMapper {
 	private static ShoppinglistMapper shoppinglistMapper = null;
 
 	/**
-	 * Geschützter Konstruktor verhindert die Moeglichkeit, mit <code>new</code> neue
-	 * Instanzen dieser Klasse zu erzeugen.
+	 * Geschützter Konstruktor verhindert die Moeglichkeit, mit <code>new</code>
+	 * neue Instanzen dieser Klasse zu erzeugen.
 	 */
 
-	protected ShoppinglistMapper () {
-		
+	protected ShoppinglistMapper() {
+
 	}
-	
+
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 * 
-	 * @return Gibt den Shoppinglist Mapper zurück. 
+	 * @return Gibt den Shoppinglist Mapper zurück.
 	 */
-	
+
 	public static ShoppinglistMapper shoppinglistMapper() {
 		if (shoppinglistMapper == null) {
 			shoppinglistMapper = new ShoppinglistMapper();
 		}
 		return shoppinglistMapper;
 	}
-	
+
 	/**
-	 * Ausgabe einer Liste aller Shoppinglist Objekte 
+	 * Ausgabe einer Liste aller Shoppinglist Objekte
 	 * 
-	 * @return gibt eine Liste aller Shoppinglist Objekte zurück. 
+	 * @return gibt eine Liste aller Shoppinglist Objekte zurück.
 	 */
 	public ArrayList<Shoppinglist> findAll() {
 
@@ -75,5 +75,33 @@ public class ShoppinglistMapper {
 
 		return shoppinglists;
 
+	}
+
+	/**
+	 * Methode um Shoppinglist mittels Id zu finden.
+	 * 
+	 * @param id: die Id wird übergeben.
+	 * @return Die Shoppinglist mit der jeweiligen id wird zurückgegeben.
+	 */
+	public Shoppinglist findById(int id) {
+		Connection con = DBConnection.connection();
+
+		Shoppinglist shoppinglist = new Shoppinglist();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT ... ");
+			if (rs.next()) {
+
+			}
+		} catch (
+
+		SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return shoppinglist;
 	}
 }
