@@ -16,6 +16,8 @@ import de.hdm.softwarepraktikum.shared.CommonSettings;
  * <code>ServerSideSettings.getLogger()</code> genutzt werden kann.
  * </p>
  * 
+ * @author CarlaHofmann
+ * 
  */
 
 public class ServersideSettings extends CommonSettings {
