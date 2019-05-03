@@ -1,24 +1,23 @@
 package de.hdm.softwarepraktikum.client.gui;
 
-import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
- * Klasse, um die Navigation in Gruppen und Einkaufslisten darzustellen.
+ * Klasse, um die Navigation darzustellen.
  * 
  * @author ElinaEisele
  *
  */
 
-public class ShoppinglistNavigator extends VerticalPanel {
-	
-//	CellTree navigator = new CellTree();
+public class GroupNavigator extends VerticalPanel {
 
 	public void onLoad() {
 		super.onLoad();
 
+		Button b1 = new Button("Click me 1");
 
+		this.add(b1);
 	}
 
 }

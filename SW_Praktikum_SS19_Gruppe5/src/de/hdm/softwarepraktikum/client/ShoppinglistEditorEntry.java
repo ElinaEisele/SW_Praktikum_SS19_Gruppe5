@@ -7,8 +7,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistNavigator;
 import de.hdm.softwarepraktikum.client.gui.Content;
-
-
+import de.hdm.softwarepraktikum.client.gui.Celltable;
+import de.hdm.softwarepraktikum.client.gui.GroupNavigator;
+import de.hdm.softwarepraktikum.client.gui.ShoppinglistForm;
 
 /**
  * Entry-Point Klasse des Projekts <b>MaulTasche</b> für den Editor.
@@ -39,8 +40,12 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		ShoppinglistNavigator navigator = new ShoppinglistNavigator();
 		Content slaForm = new Content();
 		
-		RootPanel.get().add(navigator);
+		GroupNavigator groupNavigator = new GroupNavigator();
+		ShoppinglistForm shoppinglistForm = new ShoppinglistForm();
+				
+		RootPanel.get().add(groupNavigator);
 		RootPanel.get().add(slaForm);
+	
 		
 		
 	}
