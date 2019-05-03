@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Klasse, die die Header Klasse und Content Klasse zusammenfasst.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, JonasWagenkencht
  */
 
 public class Content extends VerticalPanel {
@@ -23,6 +23,7 @@ public class Content extends VerticalPanel {
 
 		this.add(listHeader);
 		this.add(content);
+
 
 	}
 

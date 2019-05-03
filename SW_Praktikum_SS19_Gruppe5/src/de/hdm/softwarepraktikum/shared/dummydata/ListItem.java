@@ -2,6 +2,13 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author JonasWagenknecht
+ * ListItem object for testing purposes 
+ * 
+ */
+
 public class ListItem {
 	private int amount;
 	private int id;

@@ -2,6 +2,13 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author JonasWagenknecht
+ * Retailer object for testing purposes
+ * 
+ */
+
 public class Retailer {
 	private String retailerName;
 	private int id;

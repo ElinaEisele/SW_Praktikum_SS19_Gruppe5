@@ -2,6 +2,13 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author JonasWagenknecht
+ * Group object for testing purposes
+ * 
+ */
+
 public class Group {
 	private String groupName;
 	private int id;
