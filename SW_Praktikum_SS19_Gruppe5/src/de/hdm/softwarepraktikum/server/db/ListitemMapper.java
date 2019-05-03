@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.server.bo.Listitem;
+import javafx.scene.Group;
 
 
 /**
@@ -104,6 +105,81 @@ public class ListitemMapper {
 			return null;
 		}
 
+	}
+	
+	/**
+	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
+	 *
+	 * @param listitem: Das gewaehlte Listitem wird uebergeben
+	 * @return Das Listitem wird zurueckgegeben.
+	 */
+	public Listitem insert(Listitem listitem) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("");
+
+			if (rs.next()) {
+
+			}
+
+			PreparedStatement stmt2 = con.prepareStatement(
+					"INSERT INTO Listitem (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+			stmt2.setInt(1, listitem.getBOid());
+			stmt2.setDate(2, listitem.getCreationDate());
+			stmt2.setString(3, listitem.getName());
+			stmt2.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return listitem;
+
+	}
+
+	/**
+	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
+	 *
+	 * @param listitem: Das Listitem wird uebergeben.
+	 * @return Gibt das akutalisierte Listitem zurueck.
+	 */
+	public Listitem update(Listitem listitem) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listitem;
+	}
+
+	/**
+	 * Delete Methode, um ein Listitem-Objekt aus der Datenbank zu entfernen.
+	 *
+	 * @param listitem: Das Listitem wird uebergeben.
+	 */
+	public void delete(Listitem listitem) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM Listitem WHERE Listitem.id =" + listitem.getBOId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	
