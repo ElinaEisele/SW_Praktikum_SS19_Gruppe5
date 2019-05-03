@@ -6,7 +6,7 @@ import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistNavigator;
-import de.hdm.softwarepraktikum.client.gui.ShoppinglistForm;
+import de.hdm.softwarepraktikum.client.gui.Content;
 
 
 
@@ -37,7 +37,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	public void onModuleLoad() {
 		
 		ShoppinglistNavigator navigator = new ShoppinglistNavigator();
-		ShoppinglistForm slaForm = new ShoppinglistForm();
+		Content slaForm = new Content();
 		
 		RootPanel.get().add(navigator);
 		RootPanel.get().add(slaForm);
