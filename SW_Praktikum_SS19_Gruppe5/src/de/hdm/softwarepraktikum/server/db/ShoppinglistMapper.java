@@ -113,7 +113,7 @@ public class ShoppinglistMapper {
 	 * 
 	 * @param name: Uebergabe des Namens einer Shoppinglist in Form eines Strings
 	 * 
-	 * @return Gruppe(n) mit dem entsprechenden Namen
+	 * @return Shoppinglist(n) mit dem entsprechenden Namen
 	 */
 	public ArrayList<Shoppinglist> findByName(String name) {
 
