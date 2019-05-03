@@ -169,7 +169,7 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Delete Methode, um einen Gruppen-Objekt aus der Datenbank zu entfernen.
+	 * Delete Methode, um ein Gruppen-Objekt aus der Datenbank zu entfernen.
 	 *
 	 * @param group: Die Gruppe wird uebergeben.
 	 */
