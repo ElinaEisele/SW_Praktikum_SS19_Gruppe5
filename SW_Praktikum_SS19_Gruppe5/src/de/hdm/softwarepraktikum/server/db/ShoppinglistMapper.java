@@ -267,4 +267,17 @@ public class ShoppinglistMapper {
 		}
 		return shoppinglists;
 	}
+	
+	public ArrayList<Shoppinglist> getShoppinglistsOf(User user){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
+		
+		try {
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return shoppinglists;
+	}
 }
