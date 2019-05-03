@@ -1,10 +1,12 @@
 package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.TreeViewModel;
 import com.sun.javafx.collections.MappingChange.Map;
 
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.dummydata.BusinessObject;
 import de.hdm.softwarepraktikum.shared.dummydata.Group;
 import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
 
@@ -32,6 +34,27 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	 * der im Gruppen- und Shoppinglistbaum expandierten Gruppenknoten gemerkt.
 	 */
 	private Map<Group, ListDataProvider<Shoppinglist>> shoppinglistDataProviders = null;
+	
+	
+	/**
+	 * Diese Klasse bildet BusinessObjects auf eindeutige Zahlenobjekte ab, die als 
+	 * Schlüssel für Baumknoten dienen.
+	 * 
+	 * @author ElinaEisele
+	 *
+	 */
+	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject>{
+
+		@Override
+		public Integer getKey(BusinessObject bo) {
+			if (bo == null) {
+				return null;
+			} else {
+				return bo.getId();
+			}
+		}
+		
+	};
 	
 	@Override
 	public <T> NodeInfo<?> getNodeInfo(T value) {

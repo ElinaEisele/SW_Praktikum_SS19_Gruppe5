@@ -9,7 +9,7 @@ import java.util.Date;
  * 
  */
 
-public class Unit {
+public class Unit extends BusinessObject{
 	private String unitName;
 	private int id;
 	private Date creationDate;

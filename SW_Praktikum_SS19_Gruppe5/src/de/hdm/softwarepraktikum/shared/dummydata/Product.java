@@ -9,7 +9,7 @@ import java.util.Date;
  * 
  */
 
-public class Product {
+public class Product extends BusinessObject{
 
 	private String productName;
 	private int id;

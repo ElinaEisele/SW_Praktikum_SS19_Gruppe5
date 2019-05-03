@@ -9,7 +9,7 @@ import java.util.Date;
  * 
  */
 
-public class ListItem {
+public class ListItem extends BusinessObject{
 	private int amount;
 	private int id;
 	private Date creationDate;
