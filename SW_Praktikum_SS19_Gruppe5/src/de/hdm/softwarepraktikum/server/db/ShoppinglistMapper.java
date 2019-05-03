@@ -209,5 +209,33 @@ public class ShoppinglistMapper {
 
 		return shoppinglist;
 	}
+	
+	/**
+	 * Loeschen einer Shoppinglist aus der Datenbank.
+	 * 
+	 * @param shoppinglist: Die Shoppinglist wird uebergeben 
+	 */
+	public void delete(Shoppinglist shoppinglist) {
+
+		Connection con = DBConnection.connection();
+	
+
+		try {
+			//Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu gewährleisten.
+			con.setAutoCommit(false);
+			
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM Shoppinglist ... ";
+
+			//vervollständigen
+			
+			//Wenn alle Statements fehlerfrei ausgeführt wurden, wird commited.
+			con.commit();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 }
