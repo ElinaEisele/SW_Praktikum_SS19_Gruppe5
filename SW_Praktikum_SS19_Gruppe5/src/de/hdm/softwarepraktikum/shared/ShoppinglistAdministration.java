@@ -188,7 +188,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Rückgabe eines bestimmten Group-Objekts
 	 * @param id ID der gesuchten Gruppe
-	 * @return Group-Objekt mit der übergeben ID
+	 * @return Das erste Group-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
 	 */
 	public Group getGroupById(int id) throws IllegalArgumentException;
@@ -212,7 +212,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Rückgabe eines User-Objekts mit einer bestimmten ID
 	 * @param userId ID des gesuchten User-Objekts
-	 * @return User-Objekt, welches die übergebene ID besitzt
+	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
 	 */
 	public User getUserById(int userId) throws IllegalArgumentException;
@@ -231,10 +231,31 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return User, welcher übergebene EMail-Adresse besitzt
 	 * @throws IllegalArgumentException
 	 */
-	public User getUserByName(String mail) throws IllegalArgumentException;
+	public User getUserByMail(String mail) throws IllegalArgumentException;
 	
+	/**
+	 * Sämtliche Shoppinglist-Objekte aus einer Gruppe werden ausgegeben
+	 * @param group Gruppe, deren Shoppinglist-Objekte ausgegeben werden sollen
+	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException;
 	
+	/**
+	 * Sämtliche Shoppinglist-Objekt mit einem bestimmten Namen werden ausgegeben
+	 * @param name ist die Bezeichnung der gesuchten Shoppinglists
+	 * @return ArrayList mit Shoppinglist-Objekten, welche einen bestimmten Namen besitzen
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException;
 	
+	/**
+	 * Das Shoppinglist-Objekt mit der übergebenen ID wird ausgegeben
+	 * @param shoppinglistId ist die ID der gesuchten Shoppinglist
+	 * @return Das erste Shoppinglist-Objekt, welches den Suchkriterien entspricht
+	 * @throws IllegalArgumentException
+	 */
+	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException;
 	
 }
 
