@@ -182,4 +182,32 @@ public class ShoppinglistMapper {
 		return shoppinglist;
 
 	}
+	/**
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank. 
+	 * 
+	 * @param shoppinglist: die Shoppinglist wird uebergeben. 
+	 * @return Die aktualisierte Shoppinglist wird zurueckgegeben. 
+	 */
+	public Shoppinglist update(Shoppinglist shoppinglist) {
+		Connection con = DBConnection.connection();
+
+		try {
+
+			//Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu gewährleisten.
+			con.setAutoCommit(false);
+			
+			PreparedStatement stmt = con.prepareStatement("UPDATE ...");
+
+			//vervollständigen
+			
+			//Wenn alle Statements fehlerfrei ausgeführt wurden, wird commited.
+			con.commit();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return shoppinglist;
+	}
+
 }
