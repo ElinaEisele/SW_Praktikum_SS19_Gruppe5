@@ -185,6 +185,54 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
 	
+	/**
+	 * Rückgabe eines bestimmten Group-Objekts
+	 * @param id ID der gesuchten Gruppe
+	 * @return Group-Objekt mit der übergeben ID
+	 * @throws IllegalArgumentException
+	 */
+	public Group getGroupById(int id) throws IllegalArgumentException;
+	
+	/**
+	 * Sämliche Mitglieder einer Gruppe ausgeben mit Hilfe der Übergabe eines Gruppen-Objekts
+	 * @param group Gruppe, deren Mitglieder ausgegeben werden sollen
+	 * @return ArrayList sämtlicher Mitglieder einer Gruppe
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<User> getUsersOf(Group group) throws IllegalArgumentException;
+	
+	/**
+	 * Sämliche Mitglieder einer Gruppe ausgeben mit Hilfe der Übergabe der ID eines Gruppen-Obejekts
+	 * @param groupId GruppenID von einer Gruppe, deren Mitglieder ausgegeben werden sollen
+	 * @return ArrayList sämtlicher Mitglieder einer Gruppe
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException;
+	
+	/**
+	 * Rückgabe eines User-Objekts mit einer bestimmten ID
+	 * @param userId ID des gesuchten User-Objekts
+	 * @return User-Objekt, welches die übergebene ID besitzt
+	 * @throws IllegalArgumentException
+	 */
+	public User getUserById(int userId) throws IllegalArgumentException;
+	
+	/**
+	 * Sämtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
+	 * @param name Username
+	 * @return ArrayList sämtlicher User-Objekte, welche einen bestimmten Namen besitzen
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<User> getUsersByName(String name) throws IllegalArgumentException;
+	
+	/**
+	 * User-Objekt mit einer bestimmten E-Mail-Adresse wird ausgegeben
+	 * @param mail ist die EMail des gesuchten Users
+	 * @return User, welcher übergebene EMail-Adresse besitzt
+	 * @throws IllegalArgumentException
+	 */
+	public User getUserByName(String mail) throws IllegalArgumentException;
+	
 	
 	
 	
