@@ -1,24 +1,29 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
- * Klasse, die den Inhalt der Gruppen bzw. der Listen darstellt
+ * Klasse, die die Header Klasse und Content Klasse zusammenfasst.
  * 
  * @author ElinaEisele
  */
 
-public class Content extends VerticalPanel{
+public class Content extends VerticalPanel {
 	
-	SearchBar searchBar = new SearchBar();
-	GroupView groupView = new GroupView();
-		
+	StartHeader startHeader = new StartHeader();
+	GroupHeader groupHeader = new GroupHeader();
+	ListHeader listHeader = new ListHeader();
+	EditorHeader editorHeader = new EditorHeader();
+	
+	GroupForm content = new GroupForm();
+
 	public void onLoad() {
 		super.onLoad();
-		
-		this.add(searchBar);
-		this.add(groupView);
-		
+
+		this.add(listHeader);
+		this.add(content);
+
 	}
 
 }
