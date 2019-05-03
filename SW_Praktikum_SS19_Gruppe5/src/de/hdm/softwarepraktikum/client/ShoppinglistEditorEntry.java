@@ -6,8 +6,8 @@ import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistNavigator;
-import de.hdm.softwarepraktikum.client.gui.Content;
-import de.hdm.softwarepraktikum.client.gui.Celltable;
+import de.hdm.softwarepraktikum.client.gui.ShoppinglistForm;
+import de.hdm.softwarepraktikum.client.gui.ShoppinglistCelltable;
 import de.hdm.softwarepraktikum.client.gui.GroupNavigator;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistForm;
 
@@ -38,7 +38,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	public void onModuleLoad() {
 		
 		ShoppinglistNavigator navigator = new ShoppinglistNavigator();
-		Content slaForm = new Content();
+		ShoppinglistForm slaForm = new ShoppinglistForm();
 		
 		GroupNavigator groupNavigator = new GroupNavigator();
 		ShoppinglistForm shoppinglistForm = new ShoppinglistForm();
