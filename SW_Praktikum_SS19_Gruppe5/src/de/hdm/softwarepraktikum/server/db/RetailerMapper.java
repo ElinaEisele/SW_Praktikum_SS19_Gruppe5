@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -130,7 +131,108 @@ public class RetailerMapper {
 		}
 
 		return retailers;
+	}
+	/**
+	 * Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen.
+	 * 
+	 * @param retailer: Der Retailer wird uebergeben.
+	 * @return Der aktualisierte Retailer wird zurueckgegeben.
+	 */
+
+	public Retailer insert(Retailer retailer) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT ... ");
+
+			if (rs.next()) {
+
+			}
+			// Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu
+			// gewährleisten.
+			con.setAutoCommit(false);
+
+			PreparedStatement stmt2 = con.prepareStatement("INSERT INTO ...", Statement.RETURN_GENERATED_KEYS);
+
+			// vervollstaendigen
+
+			stmt2.executeUpdate();
+
+			PreparedStatement stmt3 = con.prepareStatement("INSERT INTO ... ", Statement.RETURN_GENERATED_KEYS);
+
+			stmt3.executeUpdate();
+
+			// Wenn alle Statements fehlerfrei ausgefuehrt wurden, wird commited.
+			con.commit();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return retailer;
 
 	}
+
+	/**
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+	 * 
+	 * @param retailer: der Retailer wird uebergeben.
+	 * @return Der aktualisierte Retailer wird zurueckgegeben.
+	 */
+	public Retailer update(Retailer retailer) {
+		Connection con = DBConnection.connection();
+
+		try {
+
+			// Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu
+			// gewaehrleisten.
+			con.setAutoCommit(false);
+
+			PreparedStatement stmt = con.prepareStatement("UPDATE ...");
+
+			// vervollständigen
+
+			// Wenn alle Statements fehlerfrei ausgefuehrt wurden, wird commited.
+			con.commit();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return retailer;
+	}
+
+	/**
+	 * Loeschen eines Retailers aus der Datenbank.
+	 * 
+	 * @param retailer: Der Retailer wird uebergeben.  
+	 */
+	public void delete(Retailer retailer) {
+
+		Connection con = DBConnection.connection();
+	
+
+		try {
+			//Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu gewaehrleisten.
+			con.setAutoCommit(false);
+			
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("");
+
+			//vervollstaendigen
+			
+			//Wenn alle Statements fehlerfrei ausgefuehrt wurden, wird commited.
+			con.commit();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 }
