@@ -7,20 +7,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.server.bo.Listitem;
+import de.hdm.softwarepraktikum.server.bo.Retailer;
+import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.server.bo.User;
 import javafx.scene.Group;
-
 
 /**
  * Mapper Klasse für </code>Listitem</code> Objekte. Diese umfasst Methoden um
- * Listitem Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das
- * Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen
- * und DB-Stukturen in Objekte umgewandelt werden.
+ * Listitem Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen.
+ * Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
+ * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
  * 
  * @author CarlaHofmann
  */
 
 public class ListitemMapper {
-	
+
 	/**
 	 * Speicherung der Instanz dieser Mapperklasse.
 	 */
@@ -44,7 +46,7 @@ public class ListitemMapper {
 
 		return listitemMapper;
 	}
-	
+
 	/**
 	 * Ausgabe einer Liste aller Listitems.
 	 *
@@ -78,8 +80,10 @@ public class ListitemMapper {
 	/**
 	 * Listitem mittels id finden.
 	 *
-	 * @param id: Die id wird uebergeben,um daran das entsprechende Listitem zu finden.
-	 * @return Das Listitem, welches anhand der id gefunden wurde, wird zurueckgegeben.
+	 * @param id: Die id wird uebergeben,um daran das entsprechende Listitem zu
+	 *        finden.
+	 * @return Das Listitem, welches anhand der id gefunden wurde, wird
+	 *         zurueckgegeben.
 	 */
 	public Listitem findById(int id) {
 
@@ -106,7 +110,7 @@ public class ListitemMapper {
 		}
 
 	}
-	
+
 	/**
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
@@ -154,8 +158,6 @@ public class ListitemMapper {
 
 		try {
 
-			
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -182,8 +184,65 @@ public class ListitemMapper {
 		}
 	}
 
-	
-	
-	
+	/**
+	 * Methode, um alle Listitems einer Shoppingliste auszugeben.
+	 * 
+	 * @param shoppinglist: Shoppingliste, von welcher die Listitems gesucht werden.
+	 * @return Listitems der Shoppinglist
+	 */
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+
+				Listitem listitem = new Listitem();
+				listitem.setBOid(rs.getInt("id"));
+				listitem.setCreationDate(rs.getString("CreationDate"));
+				listitem.setName(rs.getString("Name"));
+				return listitem;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Methode, um alle Listitems eines Retailers zu finden.
+	 * 
+	 * @param retailer: Retailer, von welchem alle Listitems gefunden werden sollen.
+	 * @return Listitems eines Händlers.
+	 */
+	public ArrayList<Listitem> getListitemsOf(Retailer retailer) {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT ...");
+
+			while (rs.next()) {
+
+				Listitem listitem = new Listitem();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listitems;
+
+	}
 
 }
