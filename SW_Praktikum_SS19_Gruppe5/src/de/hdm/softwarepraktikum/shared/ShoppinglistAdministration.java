@@ -330,6 +330,128 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public void assignUser (User user, Listitem listitem) throws IllegalArgumentException;
 	
+	/**
+	 * Einem Eintrag wird Produkt zugeordnet
+	 * @param product ist das Produkt, welches einem Eintrag zugeordnet wird
+	 * @param listitem ist der Eintrag, welchem ein Produkt zugeordnet wird
+	 * @throws IllegalArgumentException
+	 */
+	public void setProduct (Product product, Listitem listitem) throws IllegalArgumentException;
 	
+	/**
+	 * Setzen eines Listitem-Objekts inkl. User-Objekt
+	 * @param product ist das Produkt, welches sich in dem Listitem-Objekt befindet
+	 * @param amount ist die Menge des zu besorgenden Produkts bezogen auf die angegebene Mengenienheit
+	 * @param unit ist die Mengeneinheit, in welcher die Menge angegeben wird
+	 * @param retailer ist der Einzelhändler, bei welchem das Produkt zu besorgen ist
+	 * @param user ist der Nutzer, welcher für das Besorgen des Produkts verantwortlich ist
+	 */
+	public void setListitem(Product product, float amount, Unit unit, Retailer retailer, User user) throws IllegalArgumentException;
+	
+	/**
+	 * Setzen eines Listitem-Objekts ohne User-Objekt
+	 * @param product ist das Produkt, welches sich in dem Listitem-Objekt befindet
+	 * @param amount ist die Menge des zu besorgenden Produkts bezogen auf die angegebene Mengenienheit
+	 * @param unit ist die Mengeneinheit, in welcher die Menge angegeben wird
+	 * @param retailer ist der Einzelhändler, bei welchem das Produkt zu besorgen ist
+	 */
+	public void setListitem(Product product, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
+	
+	/**
+	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
+	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
+	 * @throws IllegalArgumentException
+	 */
+	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException; 
+	
+	/**
+	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
+	 * @param listitem ist der Eintrag, aus welchem das Produkt ausgegeben werden soll
+	 * @throws IllegalArgumentException
+	 */
+	public void getProductOf(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgeben von allen Listitems aus einer Gruppe
+	 * @param group ist die Gruppe, aus welcher die StandardListitems ausgegeben werden sollen
+	 * @return ArrayList mit Listitem-Objekte, welche innerhalb einer Gruppe als StandardListitems markiert wurden
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Listitem> getStandardListitemsOf(Group group) throws IllegalArgumentException;
+	
+	/**
+	 * Filtern einer Einkaufsliste nach Verantwortungsbereich eines Nutzers
+	 * @param shoppinglist ist die Einkaufsliste, in welcher nach Verantwortungsbereich eines bestimmten Nutzers gefiltert werden soll
+	 * @param user ist der Nutzer, nach wessen Verantwortungsbereich gefiltert werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungberiehc eines Nutzers liegen
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Listitem> filterShoppinglistsByUsername(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
+	
+	/**
+	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelhändler zugeordnet sind
+	 * @param shoppinglist ist die Einkaufslsite, in welcher nach Einzelhändler gefiltert werden soll
+	 * @param retailer ist der Einzelhändler, nach welchem die Einkaufsliste gefiltert werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche einem bestimmten Einzelhändler zugeordnet sind
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Listitem> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
+	
+	/**
+	 * Ein User-Objekt einer Gruppe hinzufuegen
+	 * @param user ist ein Nutzer, welcher einer Gruppe hinzugefuegt wird
+	 * @param group ist eine Gruppe, welcher ein User-Objekt hinzugfügt wird
+	 * @throws IllegalArgumentException
+	 */
+	public void addUserToGroup(User user, Group group) throws IllegalArgumentException;
+	
+	/**
+	 * Ein User-Objekt soll von einer Gruppe entfernt werden
+	 * @param user ist ein Nutzer, welcher von einer Gruppe entfernt wird
+	 * @param group ist eine Gruppe, von welcher ein User-Objekt entfernt werden soll
+	 * @throws IllegalArgumentException
+	 */
+	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException;
+	
+	/**
+	 * Setzen einer Bezeichnung für ein Produkt
+	 * @param name ist die Bezeichnung des Produkts
+	 * @param product ist das Produkt, welches die Bezcihung erhält
+	 * @throws IllegalArgumentException
+	 */
+	public void setProductName(String name, Product product) throws IllegalArgumentException;
+	
+	/**
+	 * Setzen einer Menge für einen Eintrag
+	 * @param amount ist die Menge
+	 * @param listitem ist der Eintrag, für welchen die Menge gesetzt wird
+	 * @throws IllegalArgumentException
+	 */
+	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Setzen einer Mengeneinheit für ein Listitem-Objekt
+	 * @param unit ist die Mengeneinheit, welche einem Listitem-Objekt hinzugefügt wird
+	 * @param listitem ist der Eintrag, welchem eine Menge hinzugefügt wird
+	 * @throws IllegalArgumentException
+	 */
+	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgeben der Mengeneinheit eines Eintrags
+	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurückgegeben wird
+	 * @return Unit 
+	 * @throws IllegalArgumentException
+	 */
+	public Unit getUnit(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgeben der Menge eines Eintrags
+	 * @param listitem ist der Eintrag, dessen Menge ausgegeben wird
+	 * @return float
+	 * @throws IllegalArgumentException
+	 */
+	public float getAmount(Listitem listitem) throws IllegalArgumentException;
 }
 
