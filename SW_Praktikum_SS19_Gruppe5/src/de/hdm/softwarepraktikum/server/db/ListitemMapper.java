@@ -28,7 +28,7 @@ public class ListitemMapper {
 	private static ListitemMapper listitemMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UserMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von ListitemMapper.
 	 */
 	protected ListitemMapper() {
 	}
