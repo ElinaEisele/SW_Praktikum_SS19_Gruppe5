@@ -27,7 +27,7 @@ public class GroupMapper {
 	private static GroupMapper groupMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UserMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von GroupMapper.
 	 */
 	protected GroupMapper() {
 	}
