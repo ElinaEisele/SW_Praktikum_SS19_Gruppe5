@@ -80,8 +80,8 @@ public class ShoppinglistMapper {
 	/**
 	 * Methode um Shoppinglist mittels Id zu finden.
 	 * 
-	 * @param id: die Id wird übergeben.
-	 * @return Die Shoppinglist mit der jeweiligen id wird zurückgegeben.
+	 * @param id: die Id wird uebergeben.
+	 * @return Die Shoppinglist mit der jeweiligen id wird zurueckgegeben.
 	 */
 	public Shoppinglist findById(int id) {
 		Connection con = DBConnection.connection();
@@ -103,5 +103,36 @@ public class ShoppinglistMapper {
 		}
 
 		return shoppinglist;
+	}
+	/**
+	 * Shoppinglist mittels Shoppinglist Namen finden 
+	 * 
+	 * @param name: Uebergabe des Namens einer Gruppe in Form eines Strings
+	 * 
+	 * @return Gruppe(n) mit dem entsprechenden Namen 
+	 */
+	public ArrayList<Shoppinglist> findByName (String name){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT ...");
+
+			while (rs.next()) {
+
+				Shoppinglist shoppinglist = new Shoppinglist();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return shoppinglists;
+		
 	}
 }
