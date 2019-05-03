@@ -46,93 +46,142 @@ public interface ShoppinglistAdministration extends RemoteService {
 	
 	/**
 	 * Einen User anlegen
-	 * @return User-Objekt
+	 * @param mail GoogleMail des Users
+	 * @return fertiges User-Objekt
+	 * @throws IllegalArgumentException
 	 */
 	public User createUser(String mail) throws IllegalArgumentException;
 	
 	/**
 	 * Eine Gruppe anlegen
-	 * 
+	 * @param name Gruppenname
+	 * @return fertiges Group-Objekt
+	 * @throws IllegalArgumentException
 	 */
 	public Group createGroup(String name) throws IllegalArgumentException;
 	
 	/**
 	 * Eine Shoppinglist anlegen
+	 * @param group Gruppe, welcher eine Shoppinglist hinzugefügt werden soll
+	 * @param name Name der Shoppinglist
+	 * @return fertiges Shoppinglist-Objekt
+	 * @throws IllegalArgumentException
 	 */
 	public Shoppinglist createShoppinglist(Group group, String name) throws IllegalArgumentException;
 	
 	/**
 	 * Ein Listitem anlegen
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param unit Mengeneinheit 
+	 * @param retailer Einzelhändler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Möglichkeit "Noch nicht bekannt" ausgewählt werden.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
 	
-	/*
-	 * Ein Standardeintrag anlegen
+	/**
+	 * Ein Standardeintrag anlegen ohne Unit, Retailer und Menge
+	 * @param product zu beschaffender Artikel
+	 * @param group Gruppe, in welcher der Standardartikel hinzugefueft werden soll
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
 	 */
 	public Listitem standardListitem(Product product, Group group) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Einen Retailer anlegen
+	 * @param name Name des Einzelhändlers
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
 	 */
 	public Retailer createRetailer(String name) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Speichern eines User-Objekts in der Datenbank
+	 * @param user User-Objekt, welches in der Datenbank gespeichert werden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void save(User user) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Speichern eines Group-Objekts in der Datenbank
+	 * @param group Group-Objekt, welches in der Datenbank gespeichert werden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void save(Group group) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Speichern eines Shoppinglist-Objekts in der Datenbank
+	 * @param shoppinglist, Shoppinglist-Objekt, welches in der Datenbank gespeichert weden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void save(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Speichern eines Listitem-Objekt in der Datenbank
+	 * @param listitem, Listitem-Objekt, welches in der Datenbank gepseichert werden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void save(Listitem listitem) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Speichern eines Retailer-Objekts in der Datenbank
+	 * @param retailer Retailer-Objekt, welches in der Datenbank gepseichert werden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void save(Retailer retailer) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Löschen des übergebenen User-Objekts
+	 * @param user User-Objekt, welches in der Datenbank gelöscht werden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void delete(User user) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Löschen des übergebenen Group-Objekts
+	 * @param group Group-Objekt, welches in der Datenbank gelöscht werden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void delete(Group group) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Löschen des übergebenen Shoppinglist-Objekts
+	 * @param shoppinglist Shoppinglist-Objekt, welches in der Datenbank gelöscht werden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Löschen des übergebenen Listitem-Objekts
+	 * @param listitem Listitem-Objekt, welches in der Datenbank gelöscht werden soll
+	 * @throws IllegalArgumentException
 	 */
 	public void delete(Listitem listitem) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Sämtliche Gruppen eines Users-Objekts ausgeben
+	 * @param user Nutzer, dessen Gruppen angezeigt werden sollen
+	 * @return ArrayList sämtlicher Gruppen eines Users
+	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Sämtliche Gruppen eines Users mit Hilfe der UserID ausgeben
+	 * @param userId ID eines Nutzers, dessen Gruppen angezeigt werden sollen
+	 * @return ArrayList sämtlicher Gruppen eines Users
+	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException;
 	
-	/*
+	/**
 	 * Sämtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
+	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
+	 * @return ArrayList sämtlicher Gruppen eines Users
+	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
 	
