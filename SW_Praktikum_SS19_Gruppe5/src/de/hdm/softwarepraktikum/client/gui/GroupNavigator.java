@@ -3,6 +3,13 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+/**
+ * Klasse, um die Navigation darzustellen.
+ * 
+ * @author ElinaEisele
+ *
+ */
+
 public class GroupNavigator extends VerticalPanel {
 
 	public void onLoad() {

@@ -3,10 +3,10 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 
-/*
+/**
  * Klasse, die Such- und Filterfunktionen zusammenfasst.
  * 
- * @author: ElinaEisele
+ * @author ElinaEisele
  */
 
 public class SearchBar extends HorizontalPanel{
