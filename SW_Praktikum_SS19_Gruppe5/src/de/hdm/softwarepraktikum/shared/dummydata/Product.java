@@ -3,46 +3,14 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 import java.util.Date;
 
 /**
- * 
- * @author JonasWagenknecht
  * Product object for testing purposes
  * 
+ * @author JonasWagenknecht, ElinaEisele
  */
 
-public class Product {
+public class Product extends NamedBusinessObject {
 
-	private String productName;
-	private int id;
-	private Date creationDate;
-
-	public Product(String productName, int id, Date creationDate) {
-		this.productName = productName;
-		this.id = id;
-		this.creationDate = creationDate;
+	public Product(String name, int id, Date creationDate) {
+		super(name, id, creationDate);
 	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
 }
