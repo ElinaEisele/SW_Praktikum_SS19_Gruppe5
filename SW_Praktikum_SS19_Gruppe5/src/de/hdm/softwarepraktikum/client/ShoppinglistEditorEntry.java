@@ -19,11 +19,10 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		
 		GroupNavigator navigator = new GroupNavigator();
 		ShoppinglistAdministrationForm slaForm = new ShoppinglistAdministrationForm();
-		Celltable celltable = new Celltable();
-		
+				
 		RootPanel.get().add(navigator);
 		RootPanel.get().add(slaForm);
-		RootPanel.get().add(celltable);
+	
 		
 		
 	}

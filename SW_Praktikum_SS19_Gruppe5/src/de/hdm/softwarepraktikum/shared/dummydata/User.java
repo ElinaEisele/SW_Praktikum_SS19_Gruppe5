@@ -12,7 +12,7 @@ public class User {
 		this.userName = userName;
 		this.id = id;
 		this.creationDate = creationDate;
-		this.gMail=gMail;
+		this.gMail = gMail;
 	}
 
 	public String getgMail() {

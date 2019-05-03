@@ -23,12 +23,12 @@ import de.hdm.softwarepraktikum.shared.dummydata.User;
 public class Celltable extends VerticalPanel {
 
 	ArrayList<Group> group;
-	ArrayList<ListItem> listitem;
 	ArrayList<Product> product;
 	ArrayList<Retailer> retailer;
 	ArrayList<Shoppinglist> shoppinglist;
 	ArrayList<Unit> unit;
 	ArrayList<User> user;
+	ArrayList<ListItem> listitem;
 
 	public void onLoad() {
 		super.onLoad();
@@ -105,7 +105,7 @@ public class Celltable extends VerticalPanel {
 		TextColumn<ListItem> productNameColumn = new TextColumn<ListItem>() {
 			@Override
 			public String getValue(ListItem object) {
-				return object.getProduct();
+				return object.getProductName();
 			}
 		};
 		table.addColumn(productNameColumn, "Produkt");
@@ -122,7 +122,7 @@ public class Celltable extends VerticalPanel {
 		TextColumn<ListItem> unitNameColumn = new TextColumn<ListItem>() {
 			@Override
 			public String getValue(ListItem object) {
-				return object.getUnit();
+				return object.getUnitName();
 			}
 		};
 		table.addColumn(unitNameColumn, "Einheit");
@@ -130,7 +130,7 @@ public class Celltable extends VerticalPanel {
 		TextColumn<ListItem> retailerNameColumn = new TextColumn<ListItem>() {
 			@Override
 			public String getValue(ListItem object) {
-				return object.getRetailer();
+				return object.getRetailerName();
 			}
 		};
 		table.addColumn(retailerNameColumn, "Haendler");
@@ -138,7 +138,7 @@ public class Celltable extends VerticalPanel {
 		TextColumn<ListItem> userNameColumn = new TextColumn<ListItem>() {
 			@Override
 			public String getValue(ListItem object) {
-				return object.getUser();
+				return object.getUserName();
 			}
 		};
 		table.addColumn(userNameColumn, "Verantwortlicher");

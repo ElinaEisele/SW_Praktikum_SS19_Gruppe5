@@ -6,12 +6,12 @@ public class ListItem {
 	private int amount;
 	private int id;
 	private Date creationDate;
-	private Group group;
-	private Product product;
-	private Retailer retailer;
-	private Shoppinglist shoppinglist;
-	private Unit unit;
-	private User user;
+	Group group;
+	Product product;
+	Retailer retailer;
+	Shoppinglist shoppinglist;
+	Unit unit;
+	User user;
 
 	public ListItem(int amount, int id, Date creationDate, Group group, Product product, Retailer retailer,
 			Shoppinglist shoppinglist, Unit unit, User user) {
@@ -51,7 +51,7 @@ public class ListItem {
 		this.creationDate = creationDate;
 	}
 
-	public String getGroup() {
+	public String getGroupName() {
 		return group.getGroupName();
 	}
 
@@ -59,7 +59,7 @@ public class ListItem {
 		this.group = group;
 	}
 
-	public String getProduct() {
+	public String getProductName() {
 		return product.getProductName();
 	}
 
@@ -67,7 +67,7 @@ public class ListItem {
 		this.product = product;
 	}
 
-	public String getRetailer() {
+	public String getRetailerName() {
 		return retailer.getRetailerName();
 	}
 
@@ -75,7 +75,7 @@ public class ListItem {
 		this.retailer = retailer;
 	}
 
-	public String getShoppinglist() {
+	public String getShoppinglistName() {
 		return shoppinglist.getShoppinglistName();
 	}
 
@@ -83,7 +83,7 @@ public class ListItem {
 		this.shoppinglist = shoppinglist;
 	}
 
-	public String getUnit() {
+	public String getUnitName() {
 		return unit.getUnitName();
 	}
 
@@ -91,7 +91,7 @@ public class ListItem {
 		this.unit = unit;
 	}
 
-	public String getUser() {
+	public String getUserName() {
 		return user.getUserName();
 	}
 
