@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.server.bo.Listitem;
 import de.hdm.softwarepraktikum.server.bo.Retailer;
 import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.server.bo.User;
-import javafx.scene.Group;
+
 
 /**
  * Mapper Klasse für </code>Listitem</code> Objekte. Diese umfasst Methoden um
