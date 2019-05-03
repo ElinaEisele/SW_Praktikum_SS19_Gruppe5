@@ -74,6 +74,39 @@ public class GroupMapper {
 		return groups;
 
 	}
+	
+	/**
+	 * Gruppe mittels id finden.
+	 *
+	 * @param id: Die id wird uebergeben,um daran die Gruppe zu finden.
+	 * @return Die Gruppe, die anhand der id gefunden wurde, wird zurueckgegeben.
+	 */
+	public Group findById(int id) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT id, CreationDate, Name FROM Groups WHERE Group.id = " + id);
+
+			if (rs.next()) {
+
+				Group group = new Group();
+				group.setBOid(rs.getInt("id"));
+				group.setCreationDate(rs.getString("CreationDate"));
+				group.setName(rs.getString("Name"));
+				return group;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return null;
+	}
 
 	/**
 	 * Gruppe mithilfe des Gruppennamen finden.
@@ -187,38 +220,7 @@ public class GroupMapper {
 		}
 	}
 
-	/**
-	 * Gruppe mittels id finden.
-	 *
-	 * @param id: Die id wird uebergeben,um daran die Gruppe zu finden.
-	 * @return Die Gruppe, die anhand der id gefunden wurde, wird zurueckgegeben.
-	 */
-	public Group findById(int id) {
-
-		Connection con = DBConnection.connection();
-
-		try {
-
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, CreationDate, Name FROM Groups WHERE Group.id = " + id);
-
-			if (rs.next()) {
-
-				Group group = new Group();
-				group.setBOid(rs.getInt("id"));
-				group.setCreationDate(rs.getString("CreationDate"));
-				group.setName(rs.getString("Name"));
-				return group;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		return null;
-	}
+	
 
 	/**
 	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen.
