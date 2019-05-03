@@ -100,5 +100,37 @@ public class RetailerMapper {
 
 		return retailer;
 	}
+	
+	/**
+	 * Retailer mittels Namen finden
+	 * 
+	 * @param name: Uebergabe des Namens eines Retailers in Form eines Strings
+	 * 
+	 * @return Retailer(n) mit dem entsprechenden Namen
+	 */
+	public ArrayList<Retailer> findByName(String name) {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT ...");
+
+			while (rs.next()) {
+
+				Retailer retailer = new Retailer();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return retailers;
+
+	}
 
 }
