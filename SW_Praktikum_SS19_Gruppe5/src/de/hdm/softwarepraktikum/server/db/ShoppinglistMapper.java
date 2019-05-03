@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.hdm.softwarepraktikum.server.bo.Listitem;
 import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.server.bo.User;
 import javafx.scene.Group;
 
 /**
@@ -182,34 +184,36 @@ public class ShoppinglistMapper {
 		return shoppinglist;
 
 	}
+
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank. 
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 * 
-	 * @param shoppinglist: die Shoppinglist wird uebergeben. 
-	 * @return Die aktualisierte Shoppinglist wird zurueckgegeben. 
+	 * @param shoppinglist: die Shoppinglist wird uebergeben.
+	 * @return Die aktualisierte Shoppinglist wird zurueckgegeben.
 	 */
 	public Shoppinglist update(Shoppinglist shoppinglist) {
 		Connection con = DBConnection.connection();
 
 		try {
 
-			//Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu gewährleisten.
+			// Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu
+			// gewährleisten.
 			con.setAutoCommit(false);
-			
+
 			PreparedStatement stmt = con.prepareStatement("UPDATE ...");
 
-			//vervollständigen
-			
-			//Wenn alle Statements fehlerfrei ausgeführt wurden, wird commited.
+			// vervollständigen
+
+			// Wenn alle Statements fehlerfrei ausgeführt wurden, wird commited.
 			con.commit();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return shoppinglist;
 	}
-	
+
 	/**
 	 * Loeschen einer Shoppinglist aus der Datenbank.
 	 * 
@@ -225,7 +229,7 @@ public class ShoppinglistMapper {
 			con.setAutoCommit(false);
 			
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Shoppinglist ... ";
+			stmt.executeUpdate("");
 
 			//vervollständigen
 			
@@ -238,4 +242,29 @@ public class ShoppinglistMapper {
 
 	}
 
+	public Shoppinglist getShoppinglistOf(Listitem listitem) {
+
+		Connection con = DBConnection.connection();
+		Shoppinglist shoppinglist = new Shoppinglist();
+
+		try {
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return shoppinglist;
+	}
+	
+	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) {
+		
+		Connection con = DBConnection.connection();
+		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
+		
+		try {
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return shoppinglists;
+	}
 }
