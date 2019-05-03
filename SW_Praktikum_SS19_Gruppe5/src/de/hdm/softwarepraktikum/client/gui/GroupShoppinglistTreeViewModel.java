@@ -10,7 +10,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 public class GroupShoppinglistTreeViewModel {
 	
-	private GroupForm groupForm;
+	private ShoppinglistContent groupForm;
 	private ShoppinglistForm shoppinglistForm;
 	
 

@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Grid;
  *
  */
 
-public class GroupView extends Grid{
+public class GroupGrid extends Grid{
 	
 	public void onLoad() {
 		super.onLoad();

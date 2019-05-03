@@ -20,7 +20,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.dummydata.Unit;
 import de.hdm.softwarepraktikum.shared.dummydata.User;
 
-public class Celltable extends VerticalPanel {
+public class ShoppinglistCelltable extends VerticalPanel {
 
 	ArrayList<Group> group;
 	ArrayList<Product> product;

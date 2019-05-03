@@ -8,16 +8,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @author ElinaEisele
  */
 
-public class GroupForm extends VerticalPanel{
+public class ShoppinglistContent extends VerticalPanel{
 	
 	SearchBar searchBar = new SearchBar();
-	GroupView groupView = new GroupView();
 		
 	public void onLoad() {
 		super.onLoad();
 		
 		this.add(searchBar);
-		this.add(groupView);
 		
 	}
 
