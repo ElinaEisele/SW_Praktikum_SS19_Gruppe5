@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -104,15 +105,16 @@ public class ShoppinglistMapper {
 
 		return shoppinglist;
 	}
+
 	/**
-	 * Shoppinglist mittels Shoppinglist Namen finden 
+	 * Shoppinglist mittels Shoppinglist Namen finden
 	 * 
 	 * @param name: Uebergabe des Namens einer Gruppe in Form eines Strings
 	 * 
-	 * @return Gruppe(n) mit dem entsprechenden Namen 
+	 * @return Gruppe(n) mit dem entsprechenden Namen
 	 */
-	public ArrayList<Shoppinglist> findByName (String name){
-		
+	public ArrayList<Shoppinglist> findByName(String name) {
+
 		Connection con = DBConnection.connection();
 		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
 
@@ -133,6 +135,51 @@ public class ShoppinglistMapper {
 		}
 
 		return shoppinglists;
-		
+
+	}
+
+	/**
+	 * Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen.
+	 * 
+	 * @param shoppinglist: Die Shoppinglist wird uebergeben.
+	 * @return Die aktualisierte Shoppinglist wird zurueckgegeben.
+	 */
+
+	public Shoppinglist insert(Shoppinglist shoppinglist) {
+
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT ... ");
+
+			if (rs.next()) {
+
+			}
+			// Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu
+			// gewährleisten.
+			con.setAutoCommit(false);
+
+			PreparedStatement stmt2 = con.prepareStatement("INSERT INTO ...", Statement.RETURN_GENERATED_KEYS);
+
+			// vervollstaendigen
+
+			stmt2.executeUpdate();
+
+			PreparedStatement stmt3 = con.prepareStatement("INSERT INTO ... ", Statement.RETURN_GENERATED_KEYS);
+
+			stmt3.executeUpdate();
+
+			// Wenn alle Statements fehlerfrei ausgefuehrt wurden, wird commited.
+			con.commit();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		return shoppinglist;
+
 	}
 }
