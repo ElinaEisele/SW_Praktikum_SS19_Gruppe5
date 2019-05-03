@@ -233,13 +233,20 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+
+				Group group = new Group();
+				group.setBOid(rs.getInt("id"));
+				group.setCreationDate(rs.getString("CreationDate"));
+				group.setName(rs.getString("Name"));
+				return group;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return group;
 
 	}
 
