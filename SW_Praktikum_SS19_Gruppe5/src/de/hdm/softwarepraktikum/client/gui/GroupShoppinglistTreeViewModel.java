@@ -29,7 +29,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	private ShoppinglistForm shoppinglistForm;
 	
 	private Group selectedGroup = null;
-	private Shoppinglist selectedShoppinglst = null;
+	private Shoppinglist selectedShoppinglist = null;
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 	private ListDataProvider<Group> groupDataProvider = null;
@@ -90,17 +90,39 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		shoppinglistDataProviders = new HashMap<Group, ListDataProvider<Shoppinglist>>();		
 	}
 	
+	void setGroupForm(GroupForm gf) {
+		groupForm = gf;
+	}
 	
+	void setShoppinglistForm(ShoppinglistForm sf) {
+		shoppinglistForm = sf;
+	}
+	
+	Group getSelectedGroup() {
+		return selectedGroup;
+	}
+	
+	void setSelectedGroup(Group g) {
+		selectedGroup = g;
+		groupForm.setSelected(g);
+		selectedShoppinglist = null;
+		shoppinglistForm.setSelected(null);
+	}
+	
+	Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
+	}
+	
+	/**
+	 * Wenn eine Shoppinglist ausgewählt wird, wird auch die 
+	 * ausgewaehlte Gruppe angepasst.
+	 */
+	void setSelectedShoppinglsit(Shoppinglist s) {
+		selectedShoppinglist = s;
+		shoppinglistForm.setSelected(s);
+	}
 
-		private void setSelectedShoppinglsit(Shoppinglist selection) {
-			// TODO Auto-generated method stub
-			
-		}
 
-		private void setSelectedGroup(Group selection) {
-			// TODO Auto-generated method stub
-			
-		}
 	
 	@Override
 	public <T> NodeInfo<?> getNodeInfo(T value) {
