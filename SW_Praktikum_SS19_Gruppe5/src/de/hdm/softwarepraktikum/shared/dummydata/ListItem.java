@@ -3,16 +3,14 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 import java.util.Date;
 
 /**
+ * ListItem object for testing purposes
  * 
- * @author JonasWagenknecht
- * ListItem object for testing purposes 
- * 
+ * @author JonasWagenknecht, ElinaEisele
  */
 
-public class ListItem {
+public class ListItem extends BusinessObject {
+
 	private int amount;
-	private int id;
-	private Date creationDate;
 	Group group;
 	Product product;
 	Retailer retailer;
@@ -20,18 +18,17 @@ public class ListItem {
 	Unit unit;
 	User user;
 
-	public ListItem(int amount, int id, Date creationDate, Group group, Product product, Retailer retailer,
+	public ListItem(int id, Date creationDate, int amount, Group group, Product product, Retailer retailer,
 			Shoppinglist shoppinglist, Unit unit, User user) {
+
+		super(id, creationDate);
 		this.amount = amount;
-		this.id = id;
-		this.creationDate = creationDate;
 		this.group = group;
 		this.product = product;
 		this.retailer = retailer;
 		this.shoppinglist = shoppinglist;
 		this.unit = unit;
 		this.user = user;
-
 	}
 
 	public int getAmount() {
@@ -42,64 +39,48 @@ public class ListItem {
 		this.amount = amount;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public String getGroupName() {
-		return group.getGroupName();
+	public Group getGroup() {
+		return group;
 	}
 
 	public void setGroup(Group group) {
 		this.group = group;
 	}
 
-	public String getProductName() {
-		return product.getProductName();
+	public Product getProduct() {
+		return product;
 	}
 
 	public void setProduct(Product product) {
 		this.product = product;
 	}
 
-	public String getRetailerName() {
-		return retailer.getRetailerName();
+	public Retailer getRetailer() {
+		return retailer;
 	}
 
 	public void setRetailer(Retailer retailer) {
 		this.retailer = retailer;
 	}
 
-	public String getShoppinglistName() {
-		return shoppinglist.getShoppinglistName();
+	public Shoppinglist getShoppinglist() {
+		return shoppinglist;
 	}
 
 	public void setShoppinglist(Shoppinglist shoppinglist) {
 		this.shoppinglist = shoppinglist;
 	}
 
-	public String getUnitName() {
-		return unit.getUnitName();
+	public Unit getUnit() {
+		return unit;
 	}
 
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
 
-	public String getUserName() {
-		return user.getUserName();
+	public User getUser() {
+		return user;
 	}
 
 	public void setUser(User user) {
