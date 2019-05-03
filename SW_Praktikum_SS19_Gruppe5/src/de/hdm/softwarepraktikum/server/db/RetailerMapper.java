@@ -7,14 +7,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.hdm.softwarepraktikum.server.bo.Listitem;
 import de.hdm.softwarepraktikum.server.bo.Retailer;
 import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
-
+import de.hdm.softwarepraktikum.server.bo.User;
 
 /**
- * Mapper Klasse für </code>Retailer</code> Objekte.
- * Diese umfasst  Methoden um RetailerMapper Objekte zu erstellen, zu suchen, zu  modifizieren und zu loeschen.
- * Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
+ * Mapper Klasse für </code>Retailer</code> Objekte. Diese umfasst Methoden um
+ * RetailerMapper Objekte zu erstellen, zu suchen, zu modifizieren und zu
+ * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
+ * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
+ * 
  * @author Leoni Friedrich
  *
  */
@@ -27,28 +30,29 @@ public class RetailerMapper {
 	private static RetailerMapper retailerMapper = null;
 
 	/**
-	 * Geschuetzter Konstrukter verhindert weitere Instanzierungen von RetailerMapper Objekten.
+	 * Geschuetzter Konstrukter verhindert weitere Instanzierungen von
+	 * RetailerMapper Objekten.
 	 */
 	protected RetailerMapper() {
 	}
-	
+
 	/**
-	 * Sicherstellung der Singleton Eigenschaft der Mapperklasse 
+	 * Sicherstellung der Singleton Eigenschaft der Mapperklasse
 	 * 
-	 * @return Gibt den RetailerMapper zurueck. 
+	 * @return Gibt den RetailerMapper zurueck.
 	 */
-	
+
 	public static RetailerMapper retailerMapper() {
 		if (retailerMapper == null) {
-			retailerMapper = new RetailerMapper ();
+			retailerMapper = new RetailerMapper();
 		}
 		return retailerMapper;
 	}
-	
+
 	/**
-	 * Ausgabe einer Liste aller Retailer Objekte 
+	 * Ausgabe einer Liste aller Retailer Objekte
 	 * 
-	 * @return gibt Liste aller Retailer Objekte zurück. 
+	 * @return gibt Liste aller Retailer Objekte zurück.
 	 */
 	public ArrayList<Retailer> findAll() {
 
@@ -73,12 +77,12 @@ public class RetailerMapper {
 
 		return retailers;
 	}
-	
+
 	/**
-	 * Methode um Retailer mittels Id zu finden 
+	 * Methode um Retailer mittels Id zu finden
 	 * 
-	 * @param id: Die Id wird uebergeben. 
-	 * @return Der Retailer wird mit der jeweiligen id wird zurueckgegeben. 
+	 * @param id: Die Id wird uebergeben.
+	 * @return Der Retailer wird mit der jeweiligen id wird zurueckgegeben.
 	 */
 	public Retailer findById(int id) {
 		Connection con = DBConnection.connection();
@@ -101,7 +105,7 @@ public class RetailerMapper {
 
 		return retailer;
 	}
-	
+
 	/**
 	 * Retailer mittels Namen finden
 	 * 
@@ -132,6 +136,7 @@ public class RetailerMapper {
 
 		return retailers;
 	}
+
 	/**
 	 * Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen.
 	 * 
@@ -209,23 +214,23 @@ public class RetailerMapper {
 	/**
 	 * Loeschen eines Retailers aus der Datenbank.
 	 * 
-	 * @param retailer: Der Retailer wird uebergeben.  
+	 * @param retailer: Der Retailer wird uebergeben.
 	 */
 	public void delete(Retailer retailer) {
 
 		Connection con = DBConnection.connection();
-	
 
 		try {
-			//Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu gewaehrleisten.
+			// Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu
+			// gewaehrleisten.
 			con.setAutoCommit(false);
-			
+
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("");
 
-			//vervollstaendigen
-			
-			//Wenn alle Statements fehlerfrei ausgefuehrt wurden, wird commited.
+			// vervollstaendigen
+
+			// Wenn alle Statements fehlerfrei ausgefuehrt wurden, wird commited.
 			con.commit();
 
 		} catch (SQLException e) {
@@ -234,5 +239,28 @@ public class RetailerMapper {
 
 	}
 
+	public Retailer getRetailerOf(Listitem listitem) {
 
+		Connection con = DBConnection.connection();
+		Retailer retailer = new Retailer();
+
+		try {
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retailer;
+	}
+
+	public ArrayList<Retailer> getRetailersOf(User user) {
+		Connection con = DBConnection.connection();
+		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
+
+		try {
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retailers;
+	}
 }
