@@ -1,4 +1,79 @@
-/** Add css rules here for your application. */
+div#TopLevelFrame {
+	max-width: 900px;
+	min-width: 400px;
+	border: 2px solid gray;	
+	
+	text-align: center;
+	background: #A9D0F5;
+}
+
+div#Header {
+	margin: 10px;
+	border: 2px solid gray;
+	
+}
+
+div#Navigator {
+	max-height: 300px;
+	overflow:scroll;
+	padding: 10em 2em;
+	float: left;
+	width: 20%;
+	border: 2px solid gray;
+	margin: 10px;
+	
+	background: #FFFFFF;
+}
+
+div#Details {
+	height: 330px;
+	padding: 14m 1em;
+	float: right;
+	width: 68%;
+	border: 2px solid gray;
+	margin: 10px;
+	
+	background: #FFFFFF;
+}
+
+
+div#Trailer {
+	padding: 10px 5px;
+	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	border-top: 1px dashed silver;
+	font-size: 80%;
+	text-align: center;
+	clear: both;
+	
+	
+	background: #E6E6E6;
+	
+}
+
+.shoppinglistHeader {
+	border: 2px solid gray;
+	margin: 10px 10px;
+}
+
+.shoppinglistContent {
+	width: 90%;
+	border: 2px solid gray;
+	margin: 10px 10px;
+}
+
+.shoppinglistSearchBar {
+	border: 2px solid gray;
+	margin: 10px 10px;
+}
+
+.shoppinglistCellTable {
+	border: 2px solid gray;
+	margin: 10px 10px;
+}
+
+.logout-Button {
+	float: center;
+}
 
 
 

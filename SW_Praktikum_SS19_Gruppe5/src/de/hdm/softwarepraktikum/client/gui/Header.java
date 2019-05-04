@@ -34,6 +34,7 @@ public class Header extends HorizontalPanel{
 		
 		applicationLabel = new Label("Maul Tasche");
 		logout = new Button("Logout");
+		logout.setStylePrimaryName("logout-Button");
 		
 		this.add(editor);
 		this.add(reportGenerator);
