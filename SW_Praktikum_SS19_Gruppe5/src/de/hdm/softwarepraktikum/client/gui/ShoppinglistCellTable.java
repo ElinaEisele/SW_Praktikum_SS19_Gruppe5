@@ -26,7 +26,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.User;
  * @author JonasWagenknecht, ElinaEisele 
  */
 
-public class ShoppinglistCelltable extends VerticalPanel {
+public class ShoppinglistCellTable extends VerticalPanel {
 
 	ArrayList<Group> group;
 	ArrayList<Product> product;

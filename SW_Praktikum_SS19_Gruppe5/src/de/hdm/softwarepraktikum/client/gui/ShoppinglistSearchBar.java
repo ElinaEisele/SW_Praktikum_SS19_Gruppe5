@@ -4,9 +4,9 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 
 /**
- * Klasse, die Such- und Filterfunktionen zusammenfasst.
+ * Klasse, die Such- und Filterfunktionen einer Shoppingliste zusammenfasst.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, JonasWagenknecht
  */
 
 public class ShoppinglistSearchBar extends HorizontalPanel{

@@ -3,13 +3,17 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
+
 /**
- * Klasse, die die Header Klasse und Content Klasse zusammenfasst.
+ * Klasse zur Uebersicht einer Shoppingliste mit einem Header inklusiv
+ * Buttons zum bearbeiten der Shoppingliste und mit der Anzeige des Inhalt der
+ * Shoppingliste.
  * 
  * @author ElinaEisele, JonasWagenkencht
  */
 
-public class ShoppinglistForm extends VerticalPanel {
+public class ShoppinglistShowForm extends VerticalPanel {
 	
 	ShoppinglistHeader shoppinglistHeader = new ShoppinglistHeader();
 	ShoppinglistContent shoppinglistContent = new ShoppinglistContent();
@@ -25,7 +29,7 @@ public class ShoppinglistForm extends VerticalPanel {
 	}
 
 
-	public void setSelected(Object object) {
+	public void setSelected(Shoppinglist s) {
 		// TODO Auto-generated method stub
 		
 	}
