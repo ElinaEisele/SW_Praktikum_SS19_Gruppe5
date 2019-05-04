@@ -12,14 +12,20 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ShoppinglistContent extends VerticalPanel{
 	
-	ShoppinglistSearchBar shoppinglistSearchBar = new ShoppinglistSearchBar();
-	ShoppinglistCellTable schoppinglistCelltable = new ShoppinglistCellTable();
+	ShoppinglistSearchBar shoppinglistSearchBar = null;
+	ShoppinglistCellTable shoppinglistCellTable = null;
 	
 	public void onLoad() {
 		super.onLoad();
 		
+		shoppinglistSearchBar = new ShoppinglistSearchBar();
+		shoppinglistCellTable = new ShoppinglistCellTable();
+		
+		shoppinglistSearchBar.setStylePrimaryName("shoppinglistSearchBar");
+		shoppinglistCellTable.setStylePrimaryName("shoppinglistCellTable");
+		
 		this.add(shoppinglistSearchBar);
-		this.add(schoppinglistCelltable);
+		this.add(shoppinglistCellTable);
 	}
 
 }

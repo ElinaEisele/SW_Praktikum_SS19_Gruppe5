@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestBox;
 
 /**
@@ -11,11 +12,16 @@ import com.google.gwt.user.client.ui.SuggestBox;
 
 public class ShoppinglistSearchBar extends HorizontalPanel{
 	
-	SuggestBox search = new SuggestBox();
+	Label searchLabel = null;
+	SuggestBox search = null;
 	
 	public void onLoad() {
 		super.onLoad();
 		
+		searchLabel = new Label("Suche: ");
+		search = new SuggestBox();
+		
+		this.add(searchLabel);
 		this.add(search);
 		
 	}

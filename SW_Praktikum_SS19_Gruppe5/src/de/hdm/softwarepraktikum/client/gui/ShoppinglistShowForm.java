@@ -15,13 +15,19 @@ import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
 
 public class ShoppinglistShowForm extends VerticalPanel {
 	
-	ShoppinglistHeader shoppinglistHeader = new ShoppinglistHeader();
-	ShoppinglistContent shoppinglistContent = new ShoppinglistContent();
+	ShoppinglistHeader shoppinglistHeader = null;
+	ShoppinglistContent shoppinglistContent = null;
 	
 	
 	public void onLoad() {
 		super.onLoad();
-
+		
+		shoppinglistHeader = new ShoppinglistHeader();
+		shoppinglistContent = new ShoppinglistContent();
+		
+		shoppinglistHeader.setStylePrimaryName("shoppinglistHeader");
+		shoppinglistContent.setStylePrimaryName("shoppinglistContent");
+		
 		this.add(shoppinglistHeader);
 		this.add(shoppinglistContent);
 

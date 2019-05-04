@@ -25,9 +25,8 @@ public class NavigatorPanel extends VerticalPanel {
 		super.onLoad();
 		
 		navigatorPlatzhalter = new VerticalPanel();
-		navigatorPlatzhalter.setStyleName("swp-navigatorPlatzhalter");
 		
-		navigatorLabel = new Label("Gruppen/Shoppinglisten Navigator");
+		navigatorLabel = new Label("Hier befindet sich der Gruppen/Shoppinglisten Navigator");
 		navigatorPlatzhalter.add(navigatorLabel);
 		
 		this.add(navigatorPlatzhalter);

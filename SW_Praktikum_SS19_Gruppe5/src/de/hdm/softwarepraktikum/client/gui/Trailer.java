@@ -18,6 +18,7 @@ public class Trailer extends VerticalPanel{
 		super.onLoad();
 		
 		impressum = new Label("Hier steht das Impressum.");
+		impressum.setStyleName("impressum");
 		
 		this.add(impressum);
 	}
