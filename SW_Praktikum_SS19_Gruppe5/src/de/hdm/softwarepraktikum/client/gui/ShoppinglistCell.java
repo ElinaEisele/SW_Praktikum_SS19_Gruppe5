@@ -5,12 +5,25 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
 
+/**
+ * Klasse zur Darstellung von Shoppinglist-Objekte. 
+ * Erweiterungen von <code>AbstractCell<T></code> dienen zur Erzeugung
+ * von HTML-Code fuer benutzerdefinierte Objejte.
+ * 
+ * @author ElinaEisele
+ *
+ */
 public class ShoppinglistCell extends AbstractCell<Shoppinglist> {
 
 	@Override
 	public void render(Context context, Shoppinglist value, SafeHtmlBuilder sb) {
-		// TODO Auto-generated method stub
+		if (value == null) {
+			return;
+		}
 		
+		sb.appendHtmlConstant("<div>");
+		sb.appendEscaped(value.getName());
+		sb.appendHtmlConstant("</div>");
 	}
 
 }
