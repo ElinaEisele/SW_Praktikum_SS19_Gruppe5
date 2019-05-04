@@ -10,7 +10,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
  * Erweiterungen von <code>AbstractCell<T></code> dienen zur Erzeugung
  * von HTML-Code fuer benutzerdefinierte Objejte.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, JonasWagenknecht
  *
  */
 public class ShoppinglistCell extends AbstractCell<Shoppinglist> {

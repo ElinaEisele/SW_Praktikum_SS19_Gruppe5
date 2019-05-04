@@ -11,7 +11,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.Group;
  * Erweiterungen von <code>AbstractCell<T></code> dienen zur
  * Erzeugung von HTML-Code fuer benutzerdefinierte Objekte.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, JonasWagenknecht
  *
  */
 public class GroupCell extends AbstractCell<Group> {

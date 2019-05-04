@@ -19,17 +19,17 @@ import de.hdm.softwarepraktikum.shared.dummydata.Group;
 import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
 
 /**
- * Diese Implementierung des TreeViewModels sorgt für die Verwaltung des Gruppen- 
+ * Diese Implementierung des TreeViewModels sorgt fï¿½r die Verwaltung des Gruppen- 
  * und Shoppinglistenbaums.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, JonasWagenknecht
  * 
  */
 
 public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	
-	private GroupForm groupForm;
-	private ShoppinglistForm shoppinglistForm;
+	private GroupShowForm groupForm;
+	private ShoppinglistShowForm shoppinglistForm;
 	
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
@@ -47,7 +47,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	
 	/**
 	 * Nested Class, welche  BusinessObjects auf eindeutige Zahlenobjekte abbildet, 
-	 * die als Schlüssel für Baumknoten dienen.
+	 * die als Schlï¿½ssel fï¿½r Baumknoten dienen.
 	 *
 	 */
 	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject>{
@@ -67,7 +67,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	private SingleSelectionModel<BusinessObject> selectionModel = null;
 	
 	/**
-	 * Nested Class für die Reaktion auf Selektionsereignisse. Als Folge
+	 * Nested Class fï¿½r die Reaktion auf Selektionsereignisse. Als Folge
 	 * einer Baumknotenauswahl wird je nach Typ des Business-Objects
 	 * die "selectedGroup" bzw. die "selectedShoppinglist" gesetzt.
 	 *
@@ -94,11 +94,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		shoppinglistDataProviders = new HashMap<Group, ListDataProvider<Shoppinglist>>();		
 	}
 	
-	void setGroupForm(GroupForm gf) {
+	void setGroupForm(GroupShowForm gf) {
 		groupForm = gf;
 	}
 	
-	void setShoppinglistForm(ShoppinglistForm sf) {
+	void setShoppinglistForm(ShoppinglistShowForm sf) {
 		shoppinglistForm = sf;
 	}
 	
@@ -175,7 +175,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	/**
 	 * Eine Shoppinglist in der Baumstruktur soll ersetzt werden durch eine
 	 * Shoppinglist mit der selben Id, wenn sich die Eigenschaften einer 
-	 * Shoppinglist geändert haben und in der Baumstruktur noch ein veraltetes
+	 * Shoppinglist geï¿½ndert haben und in der Baumstruktur noch ein veraltetes
 	 * Shoppinglistobjekt vorhanden ist.
 	 */
 	void updateShoppinglist(Shoppinglist s) {
@@ -236,7 +236,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		}
 		
 		if (value instanceof Group) {
-			// Erzeugen eines ListDataProviders für Shoppinglist-Daten
+			// Erzeugen eines ListDataProviders fï¿½r Shoppinglist-Daten
 			final ListDataProvider<Shoppinglist> shoppinglistsProvider = new ListDataProvider<Shoppinglist>();
 			shoppinglistDataProviders.put((Group) value, shoppinglistsProvider);
 			

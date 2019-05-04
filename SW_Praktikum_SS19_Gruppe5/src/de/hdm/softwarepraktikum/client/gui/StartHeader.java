@@ -7,12 +7,12 @@ import com.google.gwt.user.client.ui.Label;
 /**
  * Klasse, die den Header der Startseite darstellt.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, JonasWagenknecht
  */
 
 public class StartHeader extends HorizontalPanel {
 
-	Button addNewGroup = new Button("Neue Gruppe hinzufügen");
+	Button addNewGroup = new Button("Neue Gruppe hinzufï¿½gen");
 
 	public void onLoad() {
 		super.onLoad();
