@@ -3,17 +3,17 @@ package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.softwarepraktikum.server.bo.Group;
+import de.hdm.softwarepraktikum.shared.dummydata.Group;
+import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
 import de.hdm.softwarepraktikum.server.bo.Listitem;
 import de.hdm.softwarepraktikum.server.bo.Product;
 import de.hdm.softwarepraktikum.server.bo.Retailer;
-import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.server.bo.Unit;
 import de.hdm.softwarepraktikum.server.bo.User;
-
 
 
 /**
@@ -21,7 +21,7 @@ import de.hdm.softwarepraktikum.server.bo.User;
  * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Verwaltung von Shoppinglists.
  * </p>
  * <p>
- * <code>@RemoteServiceRelativePath("bankadministration")</code> ist bei der
+ * <code>@RemoteServiceRelativePath("shoppinglistadministration")</code> ist bei der
  * Adressierung des aus der zugehörigen Impl-Klasse entstehenden
  * Servlet-Kompilats behilflich. Es gibt im Wesentlichen einen Teil der URL des
  * Servlets an.
@@ -34,6 +34,8 @@ import de.hdm.softwarepraktikum.server.bo.User;
 public interface ShoppinglistAdministration extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
 	
+	ArrayList<Group> getAllGroups();
+
 	  /**
 	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
 	   * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse

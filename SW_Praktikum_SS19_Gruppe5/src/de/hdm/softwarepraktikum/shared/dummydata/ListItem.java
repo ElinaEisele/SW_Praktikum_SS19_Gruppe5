@@ -8,6 +8,7 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 
+
 public class ListItem extends BusinessObject {
 
 	private int amount;

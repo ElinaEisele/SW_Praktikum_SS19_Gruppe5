@@ -8,6 +8,7 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 
+
 public class Retailer extends NamedBusinessObject {
 
 	public Retailer(String name, int id, Date creationDate) {

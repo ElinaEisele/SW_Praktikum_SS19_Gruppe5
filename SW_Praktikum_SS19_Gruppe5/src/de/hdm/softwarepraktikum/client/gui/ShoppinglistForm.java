@@ -24,4 +24,10 @@ public class ShoppinglistForm extends VerticalPanel {
 
 	}
 
+
+	public void setSelected(Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

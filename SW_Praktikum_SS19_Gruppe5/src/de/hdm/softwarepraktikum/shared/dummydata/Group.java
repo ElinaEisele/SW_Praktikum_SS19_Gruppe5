@@ -5,9 +5,9 @@ import java.util.Date;
 /**
  * Group object for testing purposes
  * 
- * @author JonasWagenknecht, ElinaEisele
+ * @author JonasWagenknecht
  */
-
+	
 public class Group extends NamedBusinessObject {
 
 	public Group(String name, int id, Date creationDate) {

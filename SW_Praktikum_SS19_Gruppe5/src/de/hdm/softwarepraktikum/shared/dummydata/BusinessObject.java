@@ -1,7 +1,6 @@
 package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
-
 /**
  * Named Business object class for testing purposes
  * 
