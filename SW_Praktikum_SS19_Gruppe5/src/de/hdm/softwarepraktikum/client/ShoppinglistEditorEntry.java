@@ -10,6 +10,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;
+import de.hdm.softwarepraktikum.client.gui.Trailer;
+import de.hdm.softwarepraktikum.client.gui.Editor;
 import de.hdm.softwarepraktikum.client.gui.Header;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable;
 
@@ -23,9 +25,10 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	
 	ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 	
-	Header header = null;
-	NavigatorPanel shoppinglistNavigator = null;
-	ShoppinglistShowForm shoppinglistShowForm = null;
+	private Header header = null;
+	private NavigatorPanel shoppinglistNavigator = null;
+	private ShoppinglistShowForm shoppinglistShowForm = null;
+	private Trailer trailer = null;
 	
 	
 	/**
@@ -40,12 +43,15 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		header = new Header();
 		shoppinglistNavigator = new NavigatorPanel();
 		shoppinglistShowForm = new ShoppinglistShowForm();
+		trailer = new Trailer();
 		
 						
 		RootPanel.get("Header").add(header);
 		RootPanel.get("Navigator").add(shoppinglistNavigator);
 		RootPanel.get("Details").add(shoppinglistShowForm);
-		
+		RootPanel.get("Trailer").add(trailer);
+	
+	
 		
 	}
 	

@@ -1,5 +1,6 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -10,5 +11,15 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class Trailer extends VerticalPanel{
+	
+	Label impressum = null;
+	
+	public void onLoad() {
+		super.onLoad();
+		
+		impressum = new Label("Hier steht das Impressum.");
+		
+		this.add(impressum);
+	}
 
 }
