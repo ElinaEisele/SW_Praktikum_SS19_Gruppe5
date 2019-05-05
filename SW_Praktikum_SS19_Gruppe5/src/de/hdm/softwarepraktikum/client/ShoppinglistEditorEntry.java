@@ -44,24 +44,74 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	private GroupShowForm groupShowForm = null;
 	private Trailer trailer = null;
 	
+	private static class UserNavigator{
+		private final List<Group> groups = new ArrayList<Group>();
+		
+		public void addGroup(Group g) {
+			groups.add(g);
+		}
+		
+		public List<Group> getGroups(){
+			return groups;
+		}
+		
+	}
+	
+	private static class GroupNavigator{
+		private final List<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
+		
+		public Shoppinglist addShoppinglist(Shoppinglist s){
+			shoppinglists.add(s);
+			return s;
+		}
+		
+		public List<Shoppinglist> getShoppinglists(){
+			return shoppinglists;
+		}
+		
+	}
+	
 	/**
 	   * The model that defines the nodes in the tree.
 	   */
 	  private static class CustomTreeModel implements TreeViewModel {
+		  
+		  private List<Group> groups1 = null;
+		  
+		  private final SingleSelectionModel<String> selectionModel = new SingleSelectionModel<String>();		  
+		  
+		  public CustomTreeModel() {
+			  groups1 = new ArrayList<Group>();
+			  
+			  Group g1 = new Group("Gruppe 1", 0, new Date());
+			  Group g2 = new Group("Gruppe 2", 3, new Date());
+			  groups1.add(g1);
+			  groups1.add(g2);
+			  
+			  Shoppinglist s1 = new Shoppinglist("Einkaufsliste 1", 1, new Date());
+			  Shoppinglist s2 = new Shoppinglist("Einkaufsliste 2", 2, new Date());
+			  Shoppinglist s3 = new Shoppinglist("Einkaufsliste 1", 4, new Date());
+			  
+			  g1.addShoppinglist(s1);
+			  g1.addShoppinglist(s2);
+			  g2.addShoppinglist(s3);
+			  
+		  }
 
 	    /**
 	     * Get the {@link NodeInfo} that provides the children of the specified
 	     * value.
 	     */
 	    public <T> NodeInfo<?> getNodeInfo(T value) {
-	      /*
-	       * Create some data in a data provider. Use the parent value as a prefix
-	       * for the next level.
-	       */
-	      ListDataProvider<String> dataProvider = new ListDataProvider<String>();
-	      for (int i = 0; i < 2; i++) {
-	        dataProvider.getList().add(value+"." + String.valueOf(i));
-	      }
+	    	if (value == null) {
+	    		/*
+	  	       * Create some data in a data provider. Use the parent value as a prefix
+	  	       * for the next level.
+	  	       */
+	  	      ListDataProvider<UserNavigator> dataProvider = new ListDataProvider<ShoppinglistEditorEntry.UserNavigator>(groups1);
+
+	    		}
+	      
 
 	      // Return a node info that pairs the data with a cell.
 	      return new DefaultNodeInfo<String>(dataProvider, new TextCell());
@@ -87,9 +137,11 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 		
+		
+		
 	    TreeViewModel model = new CustomTreeModel();
 	    
-	    CellTree cellTree = new CellTree(model, "Gruppe 1");
+	    CellTree cellTree = new CellTree(model, "Gruppe ");
 				
 		header = new Header();
 		shoppinglistShowForm = new ShoppinglistShowForm();
