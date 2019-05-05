@@ -72,7 +72,17 @@ div#Trailer {
 }
 
 .logout-Button {
-	float: center;
+	margin: 5px 248px;
+	
+}
+
+.application-Label {
+	margin: 5px 50px;
+	width: 60%;
+}
+
+.logo {
+	margin: 5px 100px;
 }
 
 

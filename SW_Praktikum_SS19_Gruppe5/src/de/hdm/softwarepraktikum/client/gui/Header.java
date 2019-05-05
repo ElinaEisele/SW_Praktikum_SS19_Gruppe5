@@ -26,15 +26,20 @@ public class Header extends HorizontalPanel{
 		super.onLoad();
 		
 		editor = new Button("Editor");
+		editor.setStyleName("editor-Button");
+		
 		reportGenerator = new Button("Report");
+		reportGenerator.setStyleName("report-Button");
 		
 		logo = new Image();
 		logo.setUrl("images/Maultasche.png");
 		logo.setPixelSize(100, 70);
+		logo.setStyleName("logo");
 		
 		applicationLabel = new Label("Maul Tasche");
+		applicationLabel.setStyleName("application-Label");
 		logout = new Button("Logout");
-		logout.setStylePrimaryName("logout-Button");
+		logout.setStyleName("logout-Button");
 		
 		this.add(editor);
 		this.add(reportGenerator);

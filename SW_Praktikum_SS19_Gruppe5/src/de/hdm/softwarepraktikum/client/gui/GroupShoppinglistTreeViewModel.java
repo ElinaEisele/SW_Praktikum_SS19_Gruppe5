@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -209,6 +210,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		
 		
 	}
+	
 	
 	/**
 	 * Zurueckgeben der NodeInfo, die die Kinder des jeweiligen Werts enthaelt.
