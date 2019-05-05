@@ -1,5 +1,9 @@
 package de.hdm.softwarepraktikum.client;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.resources.client.ImageResource;
@@ -8,10 +12,14 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.dummydata.Group;
+import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.dummydata.User;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;
 import de.hdm.softwarepraktikum.client.gui.Trailer;
 import de.hdm.softwarepraktikum.client.gui.Editor;
@@ -27,15 +35,16 @@ import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable;
  * 
  */
 public class ShoppinglistEditorEntry implements EntryPoint {
-	
+
 	ShoppinglistAdministrationAsync shoppinglistAdministration = null;
+
 		
 	private Header header = null;
 	private NavigatorPanel shoppinglistNavigator = null;
 	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private GroupShowForm groupShowForm = null;
 	private Trailer trailer = null;
-	
+
 	/**
 	   * The model that defines the nodes in the tree.
 	   */
@@ -68,35 +77,26 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	      return value.toString().length() > 10;
 	    }
 	  }
-	
-	
-	/**
-	 * Da diese Klasse die Implementierung des Interrface <code>EntryPoint</code>
-	 * sicherstellt, wird die Methode <code>public void onModuleLoad()</code> benoetigt.
-	 * Diese ist wie die <code>main()</code>-Methode in Java-Applikationen
-	 * fuer GWT zu verstehen.
-	 */
-	@Override
-	public void onModuleLoad() {
-		
-	    TreeViewModel model = new CustomTreeModel();
-	    
-	    CellTree cellTree = new CellTree(model, "Gruppe 1");
-				
-		header = new Header();
-		shoppinglistShowForm = new ShoppinglistShowForm();
-		groupShowForm = new GroupShowForm();
-		trailer = new Trailer();
-		
-						
-		RootPanel.get("Header").add(header);
-		RootPanel.get("Navigator").add(cellTree);
-		RootPanel.get("Details").add(shoppinglistShowForm);
-		RootPanel.get("Trailer").add(trailer);
-	
-	
-		
-	}
-	
+	  
+	  @Override
+		public void onModuleLoad() {
 
+		    TreeViewModel model = new CustomTreeModel();
+
+		    CellTree cellTree = new CellTree(model, "Gruppe 1");
+
+			header = new Header();
+			
+			shoppinglistShowForm = new ShoppinglistShowForm();
+			groupShowForm = new GroupShowForm();
+			trailer = new Trailer();
+
+
+			RootPanel.get("Header").add(header);
+			RootPanel.get("Navigator").add(cellTree);
+			RootPanel.get("Details").add(shoppinglistShowForm);
+			RootPanel.get("Trailer").add(trailer);
+			
+	  }
+	 
 }

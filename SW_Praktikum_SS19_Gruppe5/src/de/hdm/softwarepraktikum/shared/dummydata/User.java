@@ -1,5 +1,6 @@
 package de.hdm.softwarepraktikum.shared.dummydata;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Date;
 public class User extends NamedBusinessObject {
 
 	private String gMail;
+	private ArrayList<Group> groups = new ArrayList<Group>();
 
 	public User(String name, int id, Date creationDate, String gMail) {
 		super(name, id, creationDate);
@@ -23,5 +25,13 @@ public class User extends NamedBusinessObject {
 
 	public void setgMail(String gMail) {
 		this.gMail = gMail;
+	}
+	
+	public void addGroup(Group g) {
+		this.groups.add(g);
+	}
+	
+	public ArrayList<Group> getGroups(){
+		return groups;
 	}
 }
