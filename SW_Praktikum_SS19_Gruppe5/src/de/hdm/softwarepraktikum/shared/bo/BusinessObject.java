@@ -1,5 +1,96 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
-public class BusinessObject {
+import java.io.Serializable;
 
+/**
+ * <p>
+ * Die Klasse <code>BusinessObject</code> stellt die Basisklasse aller in diesem
+ * Projekt für die Umsetzung des Fachkonzepts relevanten Klassen dar. Hierbei hat 
+ * jede Sub-Klasse eine ID.
+ * </p>
+ * <p>
+ * Zentrales Merkmal ist, dass jedes <code>BusinessObject</code> eine Nummer
+ * besitzt, die man in einer relationalen Datenbank auch als Primärschlüssel
+ * bezeichnen würde. Fernen ist jedes <code>BusinessObject</code> als
+ * gekennzeichnet. Durch diese Eigenschaft kann jedes <code>BusinessObject</code> 
+ * automatisch in eine textuelle Form überführt und z.B. zwischen Client und Server
+ * transportiert werden.
+ * </p>
+ * 
+ * @author TimBeutelspacher
+ */
+
+public abstract class BusinessObject implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Die eindeutige Identifikationsnummer einer Instanz dieser Klasse.
+	 */
+	private int id = 0;
+	
+	/**
+	 * Auslesen der ID.
+	 */
+	public int getId() {
+		return this.id;
+	}
+	
+	/**
+	 * Setzen der ID
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	/**
+	 * Erzeugen einer einfachen textuellen Darstellung der jeweiligen
+	 * Instanz. Kann in Sub-Klassen überschrieben werden
+	 */ 
+	public String toString() {
+		/*
+		 * Ausgabe des Klassennamens und der ID
+		 */
+		return this.getClass().getName() +" #" +this.getId();
+	}
+	
+	/**
+	 * Gleichheit zweier BusinessObjects überprüfen. Hierbei wird sich auf
+	 * die ID's bezogen.
+	 */
+	public boolean equals(Object o) {
+	    /*
+	     * Abfragen, ob ein Objekt ungleich NULL ist und ob ein Objekt gecastet
+	     * werden kann.
+	     */
+	    if (o != null && o instanceof BusinessObject) {
+	      BusinessObject bo = (BusinessObject) o;
+	      try {
+	        if (bo.getId() == this.id)
+	          return true;
+	      }
+	      catch (IllegalArgumentException e) {
+	        /*
+	         * Falls etwas schief geht, wird false zurückgegeben.
+	         */
+	        return false;
+	      }
+	    }
+	    /*
+	     * Wenn bislang keine Gleichheit bestimmt werden konnte, dann wird
+	     * false zurückgeben.
+	     */
+	    return false;
+	  }
+	
+	/**
+	   * <p>
+	   * Erzeugen einer ganzen Zahl, die für das <code>BusinessObject</code> charakteristisch ist.
+	   * </p>
+	   * <p>
+	   * Zusammen mit <code>equals</code> sollte diese Methode immer definiert werden.
+	   */
+	public int hashCode() {
+		return this.id;
+	}
 }
