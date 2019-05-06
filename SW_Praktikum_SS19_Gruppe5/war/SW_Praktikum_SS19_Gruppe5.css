@@ -1,34 +1,89 @@
-/** Add css rules here for your application. */
-
-
-/** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+div#TopLevelFrame {
+	max-width: 900px;
+	min-width: 400px;
+	border: 2px solid gray;	
+	
+	text-align: center;
+	background: #A9D0F5;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
+div#Header {
+	margin: 10px;
+	border: 2px solid gray;
+	
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+div#Navigator {
+	max-height: 300px;
+	overflow:scroll;
+	padding: 10em 2em;
+	float: left;
+	width: 20%;
+	border: 2px solid gray;
+	margin: 10px;
+	
+	background: #FFFFFF;
 }
 
-.dialogVPanel {
-  margin: 5px;
+div#Details {
+	height: 330px;
+	padding: 14m 1em;
+	float: right;
+	width: 68%;
+	border: 2px solid gray;
+	margin: 10px;
+	
+	background: #FFFFFF;
 }
 
-.serverResponseLabelError {
-  color: red;
+
+div#Trailer {
+	padding: 10px 5px;
+	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	border-top: 1px dashed silver;
+	font-size: 80%;
+	text-align: center;
+	clear: both;
+	
+	
+	background: #E6E6E6;
+	
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+.shoppinglistHeader {
+	border: 2px solid gray;
+	margin: 10px 10px;
 }
+
+.shoppinglistContent {
+	width: 90%;
+	border: 2px solid gray;
+	margin: 10px 10px;
+}
+
+.shoppinglistSearchBar {
+	border: 2px solid gray;
+	margin: 10px 10px;
+}
+
+.shoppinglistCellTable {
+	border: 2px solid gray;
+	margin: 10px 10px;
+}
+
+.logout-Button {
+	margin: 5px 248px;
+	
+}
+
+.application-Label {
+	margin: 5px 50px;
+	width: 60%;
+}
+
+.logo {
+	margin: 5px 100px;
+}
+
+
+
