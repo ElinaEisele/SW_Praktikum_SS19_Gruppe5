@@ -5,17 +5,17 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
 /**
- * Klasse für die Überschrift und Buttons in der Listenansicht
+ * Klasse fuer die Ueberschrift und Buttons in der Listenansicht
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, JonasWagenknecht
  */
 
 public class ShoppinglistHeader extends HorizontalPanel {
 
-	Label listHeaderLabel = new Label("Hier steht der Name der ausgewählten Liste");
-	Button addListItem = new Button("Eitrag hinzufügen Bild");
-	Button setUserRetailerAssignment = new Button("Nutzer Händler Zuweisung Bild");
-	Button deleteShoppinglist = new Button("Einkaufsliste löschen Bild");
+	Label listHeaderLabel = new Label("Hier steht der Name der ausgewÃ¤hlten Liste");
+	Button addListItem = new Button("Eitrag hinzufÃ¼gen Bild");
+	Button setUserRetailerAssignment = new Button("Nutzer HÃ¤ndler Zuweisung Bild");
+	Button deleteShoppinglist = new Button("Einkaufsliste lÃ¶schen Bild");
 
 	public void onLoad() {
 		super.onLoad();

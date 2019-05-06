@@ -1,24 +1,21 @@
 package de.hdm.softwarepraktikum.shared.dummydata;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ * User object class for testing purposes
  * 
- * @author JonasWagenknecht
- * User object for testing purposes
- * 
+ * @author JonasWagenknecht, ElinaEisele
  */
 
-public class User {
-	private String userName;
-	private int id;
-	private Date creationDate;
-	private String gMail;
+public class User extends NamedBusinessObject {
 
-	public User(String userName, int id, Date creationDate, String gMail) {
-		this.userName = userName;
-		this.id = id;
-		this.creationDate = creationDate;
+	private String gMail;
+	private ArrayList<Group> groups = new ArrayList<Group>();
+
+	public User(String name, int id, Date creationDate, String gMail) {
+		super(name, id, creationDate);
 		this.gMail = gMail;
 	}
 
@@ -29,28 +26,12 @@ public class User {
 	public void setgMail(String gMail) {
 		this.gMail = gMail;
 	}
-
-	public String getUserName() {
-		return userName;
+	
+	public void addGroup(Group g) {
+		this.groups.add(g);
 	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	
+	public ArrayList<Group> getGroups(){
+		return groups;
 	}
 }

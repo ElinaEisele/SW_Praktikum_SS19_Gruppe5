@@ -21,13 +21,12 @@ import de.hdm.softwarepraktikum.shared.dummydata.Unit;
 import de.hdm.softwarepraktikum.shared.dummydata.User;
 
 /**
- * 
- * @author JonasWagenknecht
  * Celltable that contains the dummy data
- *  
+ * 
+ * @author JonasWagenknecht, ElinaEisele 
  */
 
-public class ShoppinglistCelltable extends VerticalPanel {
+public class ShoppinglistCellTable extends VerticalPanel {
 
 	ArrayList<Group> group;
 	ArrayList<Product> product;
@@ -82,10 +81,10 @@ public class ShoppinglistCelltable extends VerticalPanel {
 		user.add(user3);
 		user.add(user4);
 
-		ListItem listitem1 = new ListItem(2, 204, new Date(), group1, product2, retailer2, shoppinglist2, unit2, user2);
-		ListItem listitem2 = new ListItem(1, 204, new Date(), group1, product2, retailer2, shoppinglist2, unit2, user2);
-		ListItem listitem3 = new ListItem(1, 205, new Date(), group1, product1, retailer1, shoppinglist1, unit1, user3);
-		ListItem listitem4 = new ListItem(2, 206, new Date(), group1, product2, retailer2, shoppinglist2, unit2, user4);
+		ListItem listitem1 = new ListItem(204, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2, user2);
+		ListItem listitem2 = new ListItem(204, new Date(), 1, group1, product2, retailer2, shoppinglist2, unit2, user2);
+		ListItem listitem3 = new ListItem(205, new Date(), 1, group1, product1, retailer1, shoppinglist1, unit1, user3);
+		ListItem listitem4 = new ListItem(206, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2, user4);
 		listitem.add(listitem1);
 		listitem.add(listitem2);
 		listitem.add(listitem3);
@@ -112,7 +111,7 @@ public class ShoppinglistCelltable extends VerticalPanel {
 		TextColumn<ListItem> productNameColumn = new TextColumn<ListItem>() {
 			@Override
 			public String getValue(ListItem object) {
-				return object.getProductName();
+				return object.getProduct().getName();
 			}
 		};
 		table.addColumn(productNameColumn, "Produkt");
@@ -129,7 +128,7 @@ public class ShoppinglistCelltable extends VerticalPanel {
 		TextColumn<ListItem> unitNameColumn = new TextColumn<ListItem>() {
 			@Override
 			public String getValue(ListItem object) {
-				return object.getUnitName();
+				return object.getUnit().getName();
 			}
 		};
 		table.addColumn(unitNameColumn, "Einheit");
@@ -137,7 +136,7 @@ public class ShoppinglistCelltable extends VerticalPanel {
 		TextColumn<ListItem> retailerNameColumn = new TextColumn<ListItem>() {
 			@Override
 			public String getValue(ListItem object) {
-				return object.getRetailerName();
+				return object.getRetailer().getName();
 			}
 		};
 		table.addColumn(retailerNameColumn, "Haendler");
@@ -145,7 +144,7 @@ public class ShoppinglistCelltable extends VerticalPanel {
 		TextColumn<ListItem> userNameColumn = new TextColumn<ListItem>() {
 			@Override
 			public String getValue(ListItem object) {
-				return object.getUserName();
+				return object.getUser().getName();
 			}
 		};
 		table.addColumn(userNameColumn, "Verantwortlicher");
