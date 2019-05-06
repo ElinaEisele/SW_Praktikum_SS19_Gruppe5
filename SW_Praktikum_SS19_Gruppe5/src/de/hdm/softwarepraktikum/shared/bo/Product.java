@@ -5,7 +5,7 @@ public class Product extends NamedBusinessObject{
 	private static final long serialVersionUID = 1L;
 	
 	public Product(String productname) {
-		super(productname);
+		this.setName(productname);
 	}
 
 }
