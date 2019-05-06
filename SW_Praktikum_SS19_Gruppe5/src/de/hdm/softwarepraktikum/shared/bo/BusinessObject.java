@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -23,6 +24,8 @@ import java.io.Serializable;
 public abstract class BusinessObject implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
+	private Date creationDate = new Date();
 	
 	/**
 	 * Die eindeutige Identifikationsnummer einer Instanz dieser Klasse.
@@ -93,4 +96,33 @@ public abstract class BusinessObject implements Serializable{
 	public int hashCode() {
 		return this.id;
 	}
+
+	/**
+	 * Ausgeben des Erstellungsdatum.
+	 */
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	/**
+	 * Setzen des Erstellungsdatums.
+	 */
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	
+	/**
+	 * Ausgeben des Erstellungsdatums als String.
+	 */
+	public String getCreationDateConvertToString() {
+		return this.getCreationDate().toString();
+	}
+	
+	/*
+	 * Ausgeben der SerialVersionUID
+	 */
+	public long getSerialVersionUID() {
+		return this.serialVersionUID;
+	}
+	
 }
