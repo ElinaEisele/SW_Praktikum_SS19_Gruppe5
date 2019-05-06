@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.server.bo.User;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 import javafx.scene.Group;
 
 /**

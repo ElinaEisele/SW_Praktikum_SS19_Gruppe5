@@ -5,11 +5,6 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.softwarepraktikum.server.bo.Group;
-import de.hdm.softwarepraktikum.server.bo.Listitem;
-import de.hdm.softwarepraktikum.server.bo.Retailer;
-import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.server.bo.User;
 import de.hdm.softwarepraktikum.server.db.GroupMapper;
 import de.hdm.softwarepraktikum.server.db.ListitemMapper;
 import de.hdm.softwarepraktikum.server.db.ProductMapper;
@@ -18,6 +13,15 @@ import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
 import de.hdm.softwarepraktikum.server.db.UserMapper;
 import de.hdm.softwarepraktikum.shared.FieldVerifier;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
+import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Product;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.Unit;
+import de.hdm.softwarepraktikum.shared.bo.User;
+import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
+import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 
 /**
  * Die Klasse <code>ShoppinglistAdministrationImpl</code> implementiert das Interface
@@ -165,9 +169,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return groups;
 	}
 	
-	public void createGroup(String name) throws IllegalArgumentException {
-		
-	}
 	
 	public void leaveGroup(Group group) throws IllegalArgumentException {
 		
@@ -307,5 +308,375 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 			return null;
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
+
+
+	@Override
+	public ArrayList<GroupDD> getAllGroups() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User createUser(String mail) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public GroupDD createGroup(String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ShoppinglistDD createShoppinglist(GroupDD group, String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Listitem createListitem(ShoppinglistDD shoppinglist, String productname, float amount, Unit unit,
+			Retailer retailer) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Listitem standardListitem(Product product, GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Retailer createRetailer(String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void save(User user) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void save(GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void save(ShoppinglistDD shoppinglist) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void save(Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void save(Retailer retailer) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void delete(User user) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void delete(GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void delete(ShoppinglistDD shoppinglist) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void delete(Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public ArrayList<GroupDD> getGroupsOf(User user) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<GroupDD> getGroupsOf(int userId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<GroupDD> getGroupsOf(String username) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public GroupDD getGroupById(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<User> getUsersOf(GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User getUserById(int userId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<User> getUsersByName(String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public User getUserByMail(String mail) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<ShoppinglistDD> getShoppinglistsOf(GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<ShoppinglistDD> getShoppinglistsByName(String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ShoppinglistDD getShoppinglistById(int shoppinglistId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Listitem> getListitemsOf(ShoppinglistDD shoppinglist, String productname)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Listitem> getAllListitemsOf(ShoppinglistDD shoppinglist) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Retailer> getRetailersByName(String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Retailer getRetailerById(int retailerId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Retailer> getRetailersOf(ShoppinglistDD shoppinglist) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Retailer> getRetailersOf(ShoppinglistDD shoppinglist, User user) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void assignRetailer(Retailer retailer, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void assignUser(User user, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setProduct(Product product, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setListitem(Product product, float amount, Unit unit, Retailer retailer, User user)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setListitem(Product product, float amount, Unit unit, Retailer retailer)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setStandardListitem(Listitem listitem, GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getProductOf(Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public ArrayList<Listitem> getStandardListitemsOf(GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Listitem> filterShoppinglistsByUsername(ShoppinglistDD shoppinglist, User user)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Listitem> filterShoppinglistsByRetailer(ShoppinglistDD shoppinglist, Retailer retailer)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void addUserToGroup(User user, GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void removeUserFromGroup(User user, GroupDD group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setProductName(String name, Product product) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Unit getUnit(Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public float getAmount(Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

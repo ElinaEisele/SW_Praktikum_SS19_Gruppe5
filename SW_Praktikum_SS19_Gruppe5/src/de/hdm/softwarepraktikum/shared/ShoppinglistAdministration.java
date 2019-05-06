@@ -7,13 +7,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Product;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
+import de.hdm.softwarepraktikum.shared.bo.Unit;
+import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
-import de.hdm.softwarepraktikum.server.bo.Listitem;
-import de.hdm.softwarepraktikum.server.bo.Product;
-import de.hdm.softwarepraktikum.server.bo.Retailer;
-import de.hdm.softwarepraktikum.server.bo.Unit;
-import de.hdm.softwarepraktikum.server.bo.User;
 
 
 /**
