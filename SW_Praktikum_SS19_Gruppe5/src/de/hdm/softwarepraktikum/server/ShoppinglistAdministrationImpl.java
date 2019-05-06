@@ -5,13 +5,6 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.softwarepraktikum.server.bo.Group;
-import de.hdm.softwarepraktikum.server.bo.Listitem;
-import de.hdm.softwarepraktikum.server.bo.Product;
-import de.hdm.softwarepraktikum.server.bo.Retailer;
-import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.server.bo.Unit;
-import de.hdm.softwarepraktikum.server.bo.User;
 import de.hdm.softwarepraktikum.server.db.GroupMapper;
 import de.hdm.softwarepraktikum.server.db.ListitemMapper;
 import de.hdm.softwarepraktikum.server.db.ProductMapper;
@@ -20,6 +13,13 @@ import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
 import de.hdm.softwarepraktikum.server.db.UserMapper;
 import de.hdm.softwarepraktikum.shared.FieldVerifier;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
+import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Product;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.Unit;
+import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 
