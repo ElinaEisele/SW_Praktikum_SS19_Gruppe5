@@ -9,12 +9,12 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 
-public class User extends NamedBusinessObject {
+public class UserDD extends NamedBusinessObject {
 
 	private String gMail;
-	private ArrayList<Group> groups = new ArrayList<Group>();
+	private ArrayList<GroupDD> groups = new ArrayList<GroupDD>();
 
-	public User(String name, int id, Date creationDate, String gMail) {
+	public UserDD(String name, int id, Date creationDate, String gMail) {
 		super(name, id, creationDate);
 		this.gMail = gMail;
 	}
@@ -27,11 +27,11 @@ public class User extends NamedBusinessObject {
 		this.gMail = gMail;
 	}
 	
-	public void addGroup(Group g) {
+	public void addGroup(GroupDD g) {
 		this.groups.add(g);
 	}
 	
-	public ArrayList<Group> getGroups(){
+	public ArrayList<GroupDD> getGroups(){
 		return groups;
 	}
 }
