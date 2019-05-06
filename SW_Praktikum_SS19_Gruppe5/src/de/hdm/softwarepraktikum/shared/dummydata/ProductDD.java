@@ -3,14 +3,14 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 import java.util.Date;
 
 /**
- * Shoppinglist object for testing purposes
+ * Product object for testing purposes
  * 
  * @author JonasWagenknecht, ElinaEisele
  */
 
-public class Shoppinglist extends NamedBusinessObject {
+public class ProductDD extends NamedBusinessObject {
 
-	public Shoppinglist(String name, int id, Date creationDate) {
+	public ProductDD(String name, int id, Date creationDate) {
 		super(name, id, creationDate);
 	}
 }

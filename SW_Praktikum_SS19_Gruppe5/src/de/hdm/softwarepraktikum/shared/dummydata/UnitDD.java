@@ -8,9 +8,9 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 
-public class Unit extends NamedBusinessObject {
+public class UnitDD extends NamedBusinessObject {
 
-	public Unit(String name, int id, Date creationDate) {
+	public UnitDD(String name, int id, Date creationDate) {
 		super(name, id, creationDate);
 	}
 
