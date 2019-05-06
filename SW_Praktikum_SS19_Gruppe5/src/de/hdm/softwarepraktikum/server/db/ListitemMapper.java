@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.server.bo.Listitem;
-import de.hdm.softwarepraktikum.server.bo.Retailer;
-import de.hdm.softwarepraktikum.server.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 
 /**
