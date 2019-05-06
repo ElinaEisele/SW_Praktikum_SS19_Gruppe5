@@ -9,15 +9,15 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 	
-public class Group extends NamedBusinessObject {
+public class GroupDD extends NamedBusinessObject {
 	
-	private ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
+	private ArrayList<ShoppinglistDD> shoppinglists = new ArrayList<ShoppinglistDD>();
 
-	public Group(String name, int id, Date creationDate) {
+	public GroupDD(String name, int id, Date creationDate) {
 		super(name, id, creationDate);
 	}
 	
-	public void addShoppinglist(Shoppinglist s) {
+	public void addShoppinglist(ShoppinglistDD s) {
 		this.shoppinglists.add(s);
 	}
 

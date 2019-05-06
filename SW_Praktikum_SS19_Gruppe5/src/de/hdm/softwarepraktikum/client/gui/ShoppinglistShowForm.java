@@ -3,7 +3,7 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 
 /**
  * Klasse zur Uebersicht einer Shoppingliste mit einem Header inklusiv
@@ -35,7 +35,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	}
 
 
-	public void setSelected(Shoppinglist s) {
+	public void setSelected(ShoppinglistDD s) {
 		// TODO Auto-generated method stub
 		
 	}
