@@ -17,7 +17,7 @@ import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
-import de.hdm.softwarepraktikum.shared.dummydata.Group;
+import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;

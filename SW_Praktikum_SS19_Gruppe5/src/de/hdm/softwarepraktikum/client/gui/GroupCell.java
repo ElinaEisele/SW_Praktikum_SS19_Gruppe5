@@ -4,7 +4,7 @@ import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-import de.hdm.softwarepraktikum.shared.dummydata.Group;
+import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 
 /**
  * Klasse zur Darstellung von Group-Objekten im Navigator.
@@ -14,10 +14,10 @@ import de.hdm.softwarepraktikum.shared.dummydata.Group;
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class GroupCell extends AbstractCell<Group> {
+public class GroupCell extends AbstractCell<GroupDD> {
 
 	@Override
-	public void render(Context context, Group value, SafeHtmlBuilder sb) {
+	public void render(Context context, GroupDD value, SafeHtmlBuilder sb) {
 		if (value == null) {
 			return;		
 		}

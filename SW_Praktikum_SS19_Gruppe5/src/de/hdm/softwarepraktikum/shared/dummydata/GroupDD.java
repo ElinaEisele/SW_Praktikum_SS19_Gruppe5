@@ -9,11 +9,11 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 	
-public class Group extends NamedBusinessObject {
+public class GroupDD extends NamedBusinessObject {
 	
 	private ArrayList<ShoppinglistDD> shoppinglists = new ArrayList<ShoppinglistDD>();
 
-	public Group(String name, int id, Date creationDate) {
+	public GroupDD(String name, int id, Date creationDate) {
 		super(name, id, creationDate);
 	}
 	

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import de.hdm.softwarepraktikum.shared.dummydata.Group;
+import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 
 /**
@@ -13,9 +13,9 @@ import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 public interface ShoppinglistAdministrationAsync {
 	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
 
-	void getGroupById(int id, AsyncCallback<Group> callback);
+	void getGroupById(int id, AsyncCallback<GroupDD> callback);
 
-	void getShoppinglistsOf(Group value, AsyncCallback<ArrayList<ShoppinglistDD>> asyncCallback);
+	void getShoppinglistsOf(GroupDD value, AsyncCallback<ArrayList<ShoppinglistDD>> asyncCallback);
 
-	void getAllGroups(AsyncCallback<ArrayList<Group>> asyncCallback);
+	void getAllGroups(AsyncCallback<ArrayList<GroupDD>> asyncCallback);
 }
