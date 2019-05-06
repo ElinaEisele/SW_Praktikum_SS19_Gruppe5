@@ -7,12 +7,12 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 
-public class BusinessObject {
+public class BusinessObjectDD {
 
 	private int id;
 	private Date creationDate;
 
-	public BusinessObject(int id, Date creationDate) {
+	public BusinessObjectDD(int id, Date creationDate) {
 		this.id = id;
 		this.creationDate = creationDate;
 	}
