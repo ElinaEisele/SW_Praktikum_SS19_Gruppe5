@@ -55,6 +55,34 @@ public class Trailer extends VerticalPanel{
 		});
 		
 	}
+	/**
+	 * Innere Klasse zur Darstellung des Impressums des
+	 * Shared Shoppinglisten Systems mittels HTML-Format.
+	 */
+	public class Impressum extends HTML{
+		
+		public Impressum() {
+			this.setHTML(("<div class = 'Impressum'>" + "</br>" + "<b>Hochschule der Medien</b>" + "</br>"
+							+ "<b>Wirtschaftsinformatik und digitale Medien</b></br>"
+							+ "Nobelstraße&#223e 10</br>" + "70563 Stuttgart</br></br>"
+							+ "Kontakt</br>Telefon: 0711 8923-3242</br> E-Mail: <a href=\"mailto:info-wi7@hdm-stuttgart.de\" target=\"_top\">info-wi7@hdm-stuttgart.de "
+							+ "<br><a href=\"https:\\www.hdm-stuttgart.de\""
+							+ "impressum\"TARGET=\"_blank\">Impressum der Hochschule</a></br></br>" + "</div>"));
+					
+		}
+		
+	}
+	
+	/**
+	 * Innere Klasse zur Darstellung des Impressums des
+	 * Shared Shoppinglisten Systems mittels HTML-Format.
+	 */
+	private class Credits extends HTML{
+		
+		public Credits() {
+			this.setHTML(("<div class = 'Credits'>" + "</br>" + "<b>Special Thanks goes to: </b></br>KoeriWerks vegane Curryurst</br></br>"));
+		}
+	}
 	
 	/**
 	 * Innere Klasse zur Darstellung einer DialogBox mit dem Impressum als Inhalt, 
@@ -63,29 +91,48 @@ public class Trailer extends VerticalPanel{
 	 */
 	public class ImpressumDialogBox extends DialogBox{
 		
+		private Button closeButton = new Button("Schließen");
 		private VerticalPanel vp = new VerticalPanel();
-		private HTML impressum = new HTML("Hier steht das Impressum.");
+		private Impressum impressum = new Impressum();
 		
 		public ImpressumDialogBox() {
 			
 			this.setGlassEnabled(true);
 			vp.add(impressum);
+			vp.add(closeButton);
 			this.add(vp);
 			this.center();
+			
+			closeButton.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					ImpressumDialogBox.this.hide();
+				}
+			});
 		}
 	}
 	
 	public class CreditsDialogBox extends DialogBox{
 		
+		private Button closeButton = new Button("Schließen");
 		private VerticalPanel vp = new VerticalPanel();
-		private HTML credits = new HTML("Hier stehen die Credits.");
-		
+		private Credits credits = new Credits();
 		public CreditsDialogBox() {
 			
 			this.setGlassEnabled(true);
 			vp.add(credits);
+			vp.add(closeButton);
 			this.add(vp);
 			this.center();
+			
+			closeButton.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					CreditsDialogBox.this.hide();
+				}
+				
+			});
+			
 		}
 		
 	}

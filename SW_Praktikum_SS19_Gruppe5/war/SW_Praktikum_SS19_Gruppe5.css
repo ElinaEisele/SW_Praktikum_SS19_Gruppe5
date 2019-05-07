@@ -53,6 +53,7 @@ div#Trailer {
 .shoppinglistHeader {
 	border: 2px solid gray;
 	margin: 10px 10px;
+	padding: 5px;
 }
 
 .shoppinglistContent {
@@ -64,6 +65,7 @@ div#Trailer {
 .shoppinglistSearchBar {
 	border: 2px solid gray;
 	margin: 10px 10px;
+	padding: 5px;
 }
 
 .shoppinglistCellTable {
