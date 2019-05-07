@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Product;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.Unit;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Das asnchrone Gegenstück zu <code>GreetingService</code>.Es wird
+ * Das asnchrone GegenstÃ¼ck zu <code>GreetingService</code>.Es wird
  * semiautomatisch durch das Google Plugin erstellt und gepflegt. Daher erfolgt
  * hier keine weitere Dokumentation.
  */
@@ -26,7 +30,6 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createShoppinglist(Group group, String name, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
 	
-	
 	void getGroupById(int id, AsyncCallback<Group> callback);
 
 	void getShoppinglistsOf(Group value, AsyncCallback<ArrayList<Shoppinglist>> asyncCallback);
@@ -38,6 +41,38 @@ public interface ShoppinglistAdministrationAsync {
 	void getUserById(int userId, AsyncCallback<User> callback) throws IllegalArgumentException;
 	
 	void getUsersByName(String name, AsyncCallback<ArrayList<User>>callback) throws IllegalArgumentException;
+  
+	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
+	
+	void standardListitem(Product product, Group group, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
+	
+	void createRetailer(String name, AsyncCallback<Retailer> callback) throws IllegalArgumentException; 
+	
+	void save(User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void save(Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void save(Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void save(Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void save(Retailer retailer, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void delete(User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void delete(Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void delete(Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void delete(Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void getGroupsOf(User user, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
+	
+	void getGroupsOf(int userId, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
+	
+	void getGroupsOf(String username, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
+	
+	void getGroupById(int id, AsyncCallback<Group> callback);
 	
 	void getUserByMail(String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
 	
