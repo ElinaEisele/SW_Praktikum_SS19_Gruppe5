@@ -15,9 +15,11 @@ import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
-import de.hdm.softwarepraktikum.shared.dummydata.BusinessObjectDD;
-import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
-import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
+import de.hdm.softwarepraktikum.shared.bo.BusinessObject;
+import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+
+import de.hdm.softwarepraktikum.*;
 
 /**
  * Diese Implementierung des TreeViewModels sorgt f�r die Verwaltung des Gruppen- 
@@ -32,18 +34,18 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	private GroupShowForm groupForm;
 	private ShoppinglistShowForm shoppinglistForm;
 	
-	private GroupDD selectedGroup = null;
-	private ShoppinglistDD selectedShoppinglist = null;
+	private Group selectedGroup = null;
+	private Shoppinglist selectedShoppinglist = null;
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = null;
-	private ListDataProvider<GroupDD> groupDataProvider = null;
+	private ListDataProvider<Group> groupDataProvider = null;
 	
 	/*
 	 * In dieser Map werden die ListDataProviders fuer die Shoppinglisten
 	 * der im Gruppen- und Shoppinglistbaum expandierten Gruppenknoten gemerkt.
 	 * In einer Gruppe kann es mehrere Shoppinglisten geben.
 	 */
-	private Map<GroupDD, ListDataProvider<ShoppinglistDD>> shoppinglistDataProviders = null;
+	private Map<Group, ListDataProvider<Shoppinglist>> shoppinglistDataProviders = null;
 	
 	
 	/**
@@ -51,10 +53,10 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	 * die als Schl�ssel f�r Baumknoten dienen.
 	 *
 	 */
-	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObjectDD>{
+	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject>{
 
 		@Override
-		public Integer getKey(BusinessObjectDD bo) {
+		public Integer getKey(BusinessObject bo) {
 			if (bo == null) {
 				return null;
 			} else {
@@ -65,7 +67,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	};
 	
 	private BusinessObjectKeyProvider boKeyProvider = null;
-	private SingleSelectionModel<BusinessObjectDD> selectionModel = null;
+	private SingleSelectionModel<BusinessObject> selectionModel = null;
 	
 	/**
 	 * Nested Class f�r die Reaktion auf Selektionsereignisse. Als Folge
@@ -77,11 +79,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 
 		@Override
 		public void onSelectionChange(SelectionChangeEvent event) {
-			BusinessObjectDD selection = selectionModel.getSelectedObject();
-			if (selection instanceof GroupDD) {
-				setSelectedGroup((GroupDD) selection);
-			} else if (selection instanceof ShoppinglistDD){
-				setSelectedShoppinglsit((ShoppinglistDD) selection);
+			BusinessObject selection = selectionModel.getSelectedObject();
+			if (selection instanceof Group) {
+				setSelectedGroup((Group) selection);
+			} else if (selection instanceof Shoppinglist){
+				setSelectedShoppinglsit((Shoppinglist) selection);
 			}
 		}
 		
@@ -90,9 +92,9 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	public GroupShoppinglistTreeViewModel() {
 		shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 		boKeyProvider = new BusinessObjectKeyProvider();
-		selectionModel = new SingleSelectionModel<BusinessObjectDD>(boKeyProvider);
+		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEventHandler());
-		shoppinglistDataProviders = new HashMap<GroupDD, ListDataProvider<ShoppinglistDD>>();		
+		shoppinglistDataProviders = new HashMap<Group, ListDataProvider<Shoppinglist>>();		
 	}
 	
 	void setGroupForm(GroupShowForm gf) {
@@ -103,28 +105,28 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		shoppinglistForm = sf;
 	}
 	
-	GroupDD getSelectedGroup() {
+	Group getSelectedGroup() {
 		return selectedGroup;
 	}
 	
-	void setSelectedGroup(GroupDD g) {
-		selectedGroup = g;
-		groupForm.setSelected(g);
+	void setSelectedGroup(Group selection) {
+		selectedGroup = selection;
+		groupForm.setSelected(selection);
 //		selectedShoppinglist = null;
 //		shoppinglistForm.setSelected(null);
 	}
 	
-	ShoppinglistDD getSelectedShoppinglist() {
+	Shoppinglist getSelectedShoppinglist() {
 		return selectedShoppinglist;
 	}
 	
 
-	void setSelectedShoppinglsit(ShoppinglistDD s) {
+	void setSelectedShoppinglsit(Shoppinglist s) {
 		selectedShoppinglist = s;
 		shoppinglistForm.setSelected(s);
 	}
 	
-	void addGroup(GroupDD group) {
+	void addGroup(Group group) {
 		groupDataProvider.getList().add(group);
 		selectionModel.setSelected(group,  true);
 	}
@@ -134,10 +136,10 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	 * in der Liste die gleiche Id wie die upzudatende Gruppe, wird die Gruppe
 	 * an dieser Stelle neu gesetzt.
 	 */
-	void updateGroup(GroupDD group) {
-		List<GroupDD> groupList = groupDataProvider.getList(); // oder ArrayList?
+	void updateGroup(Group group) {
+		List<Group> groupList = groupDataProvider.getList(); // oder ArrayList?
 		int i = 0;
-		for (GroupDD g : groupList) {
+		for (Group g : groupList) {
 			if (g.getId() == group.getId()) {
 				groupList.set(i, group);
 				break;
@@ -148,16 +150,16 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		groupDataProvider.refresh();
 	}
 	
-	void removeGroup(GroupDD group) {
+	void removeGroup(Group group) {
 		groupDataProvider.getList().remove(group);
 		shoppinglistDataProviders.remove(group);
 	}
 	
-	void addShoppinglistOfGroup(ShoppinglistDD shoppinglist, GroupDD group) {
+	void addShoppinglistOfGroup(Shoppinglist shoppinglist, Group group) {
 		if (!shoppinglistDataProviders.containsKey(group)) {
 			return;
 		}
-		ListDataProvider<ShoppinglistDD> shoppinglistsProvider = shoppinglistDataProviders.get(group);
+		ListDataProvider<Shoppinglist> shoppinglistsProvider = shoppinglistDataProviders.get(group);
 		
 		if (!shoppinglistsProvider.getList().contains(shoppinglist)) {
 			shoppinglistsProvider.getList().add(shoppinglist);
@@ -165,7 +167,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		selectionModel.setSelected(shoppinglist, true);
 	}
 	
-	void removeShoppinglistOfGroup(ShoppinglistDD shoppinglist, GroupDD group) {
+	void removeShoppinglistOfGroup(Shoppinglist shoppinglist, Group group) {
 		if (!shoppinglistDataProviders.containsKey(group)) {
 			return;
 		}
@@ -179,16 +181,16 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	 * Shoppinglist ge�ndert haben und in der Baumstruktur noch ein veraltetes
 	 * Shoppinglistobjekt vorhanden ist.
 	 */
-	void updateShoppinglist(ShoppinglistDD s) {
+	void updateShoppinglist(Shoppinglist s) {
 		shoppinglistAdministration.getGroupById(s.getId(),
 				new UpdateShoppinglistCallback(s));
 	}
 	
-	private class UpdateShoppinglistCallback implements AsyncCallback<GroupDD>{
+	private class UpdateShoppinglistCallback implements AsyncCallback<Group>{
 		
-		ShoppinglistDD shoppinglist = null;
+		Shoppinglist shoppinglist = null;
 		
-		UpdateShoppinglistCallback(ShoppinglistDD s){
+		UpdateShoppinglistCallback(Shoppinglist s){
 			shoppinglist = s;
 		}
 
@@ -197,8 +199,8 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		}
 
 		@Override
-		public void onSuccess(GroupDD group) {	
-			List<ShoppinglistDD> shoppinglistList = shoppinglistDataProviders.get(group)
+		public void onSuccess(Group group) {	
+			List<Shoppinglist> shoppinglistList = shoppinglistDataProviders.get(group)
 					.getList();
 			for (int i=0; i<shoppinglistList.size(); i++) {
 				if (shoppinglist.getId() == shoppinglistList.get(i).getId()) {
@@ -218,45 +220,45 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	@Override
 	public <T> NodeInfo<?> getNodeInfo(T value) {
 		if (value.equals("Root")) {
-			groupDataProvider = new ListDataProvider<GroupDD>();
-			shoppinglistAdministration.getAllGroups(new AsyncCallback<ArrayList<GroupDD>>() {
+			groupDataProvider = new ListDataProvider<Group>();
+			shoppinglistAdministration.getAllGroups(new AsyncCallback<ArrayList<Group>>() {
 
 				@Override
 				public void onFailure(Throwable t) {					
 				}
 
 				@Override
-				public void onSuccess(ArrayList<GroupDD> groups) {
-					for (GroupDD g : groups) {
+				public void onSuccess(ArrayList<Group> groups) {
+					for (Group g : groups) {
 						groupDataProvider.getList().add(g);
 					}
 				}
 				
 			});
 			
-			return new DefaultNodeInfo<GroupDD>(groupDataProvider, new GroupCell(), selectionModel, null);	
+			return new DefaultNodeInfo<Group>(groupDataProvider, new GroupCell(), selectionModel, null);	
 		}
 		
-		if (value instanceof GroupDD) {
+		if (value instanceof Group) {
 			// Erzeugen eines ListDataProviders f�r Shoppinglist-Daten
-			final ListDataProvider<ShoppinglistDD> shoppinglistsProvider = new ListDataProvider<ShoppinglistDD>();
-			shoppinglistDataProviders.put((GroupDD) value, shoppinglistsProvider);
+			final ListDataProvider<Shoppinglist> shoppinglistsProvider = new ListDataProvider<Shoppinglist>();
+			shoppinglistDataProviders.put((Group) value, shoppinglistsProvider);
 			
-			shoppinglistAdministration.getShoppinglistsOf((GroupDD) value, new AsyncCallback<ArrayList<ShoppinglistDD>>(){
+			shoppinglistAdministration.getShoppinglistsOf((Group) value, new AsyncCallback<ArrayList<Shoppinglist>>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
 				}
 
 				@Override
-				public void onSuccess(ArrayList<ShoppinglistDD> shoppinglists) {
-					for (ShoppinglistDD s : shoppinglists) {
+				public void onSuccess(ArrayList<Shoppinglist> shoppinglists) {
+					for (Shoppinglist s : shoppinglists) {
 						shoppinglistsProvider.getList().add(s);
 					}
 				}
 			});
 			// Zurueckgeben der Node Info, die die Daten in einer Zelle gruppiert.
-			return new DefaultNodeInfo<ShoppinglistDD>(shoppinglistsProvider, new ShoppinglistCell(), selectionModel, null);
+			return new DefaultNodeInfo<Shoppinglist>(shoppinglistsProvider, new ShoppinglistCell(), selectionModel, null);
 			}
 		return null;
 		}
@@ -267,7 +269,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	 */
 	@Override
 	public boolean isLeaf(Object value) {
-		return (value instanceof ShoppinglistDD);
+		return (value instanceof Shoppinglist);
 	}
 	
 
