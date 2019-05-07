@@ -13,7 +13,7 @@ import de.hdm.softwarepraktikum.shared.bo.Unit;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Das asnchrone Gegenstück zu <code>GreetingService</code>.Es wird
+ * Das asnchrone GegenstÃ¼ck zu <code>GreetingService</code>.Es wird
  * semiautomatisch durch das Google Plugin erstellt und gepflegt. Daher erfolgt
  * hier keine weitere Dokumentation.
  */
@@ -30,6 +30,18 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createShoppinglist(Group group, String name, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
 	
+	void getGroupById(int id, AsyncCallback<Group> callback);
+
+	void getShoppinglistsOf(Group value, AsyncCallback<ArrayList<Shoppinglist>> asyncCallback);
+
+	void getUsersOf(Group group, AsyncCallback<ArrayList<User>> callback) throws IllegalArgumentException;
+	
+	void getUsersOf(int groupId, AsyncCallback<ArrayList<User>> callback ) throws IllegalArgumentException;
+	
+	void getUserById(int userId, AsyncCallback<User> callback) throws IllegalArgumentException;
+	
+	void getUsersByName(String name, AsyncCallback<ArrayList<User>>callback) throws IllegalArgumentException;
+  
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 	
 	void standardListitem(Product product, Group group, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
@@ -61,6 +73,13 @@ public interface ShoppinglistAdministrationAsync {
 	void getGroupsOf(String username, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
 	
 	void getGroupById(int id, AsyncCallback<Group> callback);
-
 	
+	void getUserByMail(String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
+	
+	void getShoppinglistsByName(String name, AsyncCallback<ArrayList<Shoppinglist>> callback) throws IllegalArgumentException;
+	
+	void getShoppinglistById(int shoppinglistId, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
+	
+	void getListitemsOf(Shoppinglist shoppinglist, String productname, AsyncCallback<ArrayList<Listitem>>callback) throws IllegalArgumentException;
+
 }
