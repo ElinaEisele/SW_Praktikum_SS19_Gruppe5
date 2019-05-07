@@ -140,35 +140,35 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Retailer retailer) throws IllegalArgumentException;
 	
 	/**
-	 * L�schen des �bergebenen User-Objekts
+	 * Loeschen des uebergebenen User-Objekts
 	 * @param user User-Objekt, welches in der Datenbank gel�scht werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void delete(User user) throws IllegalArgumentException;
 	
 	/**
-	 * L�schen des �bergebenen Group-Objekts
+	 * Loeschen des uebergebenen Group-Objekts
 	 * @param group Group-Objekt, welches in der Datenbank gel�scht werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void delete(Group group) throws IllegalArgumentException;
 	
 	/**
-	 * L�schen des �bergebenen Shoppinglist-Objekts
+	 * Loeschen des uebergebenen Shoppinglist-Objekts
 	 * @param shoppinglist Shoppinglist-Objekt, welches in der Datenbank gel�scht werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * L�schen des �bergebenen Listitem-Objekts
+	 * Loeschen des uebergebenen Listitem-Objekts
 	 * @param listitem Listitem-Objekt, welches in der Datenbank gel�scht werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void delete(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Gruppen eines Users-Objekts ausgeben
+	 * Saemtliche Gruppen eines Users-Objekts ausgeben
 	 * @param user Nutzer, dessen Gruppen angezeigt werden sollen
 	 * @return ArrayList s�mtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
@@ -176,15 +176,15 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Gruppen eines Users mit Hilfe der UserID ausgeben
+	 * Saemtliche Gruppen eines Users mit Hilfe der UserID ausgeben
 	 * @param userId ID eines Nutzers, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList s�mtlicher Gruppen eines Users
+	 * @return ArrayList saemtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
+	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
 	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
 	 * @return ArrayList s�mtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
@@ -192,7 +192,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
 	
 	/**
-	 * R�ckgabe eines bestimmten Group-Objekts
+	 * Rueckgabe eines bestimmten Group-Objekts
 	 * @param id ID der gesuchten Gruppe
 	 * @return Das erste Group-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
@@ -200,7 +200,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Group getGroupById(int id) throws IllegalArgumentException;
 	
 	/**
-	 * S�mliche Mitglieder einer Gruppe ausgeben mit Hilfe der �bergabe eines Gruppen-Objekts
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der �bergabe eines Gruppen-Objekts
 	 * @param group Gruppe, deren Mitglieder ausgegeben werden sollen
 	 * @return ArrayList s�mtlicher Mitglieder einer Gruppe
 	 * @throws IllegalArgumentException
@@ -208,7 +208,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<User> getUsersOf(Group group) throws IllegalArgumentException;
 	
 	/**
-	 * S�mliche Mitglieder einer Gruppe ausgeben mit Hilfe der �bergabe der ID eines Gruppen-Obejekts
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der �bergabe der ID eines Gruppen-Obejekts
 	 * @param groupId GruppenID von einer Gruppe, deren Mitglieder ausgegeben werden sollen
 	 * @return ArrayList s�mtlicher Mitglieder einer Gruppe
 	 * @throws IllegalArgumentException
@@ -216,7 +216,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException;
 	
 	/**
-	 * R�ckgabe eines User-Objekts mit einer bestimmten ID
+	 * Rueckgabe eines User-Objekts mit einer bestimmten ID
 	 * @param userId ID des gesuchten User-Objekts
 	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
@@ -224,7 +224,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public User getUserById(int userId) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
+	 * Saemtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
 	 * @param name Username
 	 * @return ArrayList s�mtlicher User-Objekte, welche einen bestimmten Namen besitzen
 	 * @throws IllegalArgumentException
@@ -240,7 +240,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public User getUserByMail(String mail) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Shoppinglist-Objekte aus einer Gruppe werden ausgegeben
+	 * Saemtliche Shoppinglist-Objekte aus einer Gruppe werden ausgegeben
 	 * @param group Gruppe, deren Shoppinglist-Objekte ausgegeben werden sollen
 	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
@@ -248,7 +248,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Shoppinglist-Objekt mit einem bestimmten Namen werden ausgegeben
+	 * Saemtliche Shoppinglist-Objekt mit einem bestimmten Namen werden ausgegeben
 	 * @param name ist die Bezeichnung der gesuchten Shoppinglists
 	 * @return ArrayList mit Shoppinglist-Objekten, welche einen bestimmten Namen besitzen
 	 * @throws IllegalArgumentException
