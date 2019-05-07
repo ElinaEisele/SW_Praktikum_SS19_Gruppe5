@@ -9,18 +9,18 @@ import java.util.Date;
  */
 
 
-public class ListItem extends BusinessObject {
+public class ListItemDD extends BusinessObjectDD {
 
 	private int amount;
-	Group group;
-	Product product;
-	Retailer retailer;
-	Shoppinglist shoppinglist;
-	Unit unit;
-	User user;
+	GroupDD group;
+	ProductDD product;
+	RetailerDD retailer;
+	ShoppinglistDD shoppinglist;
+	UnitDD unit;
+	UserDD user;
 
-	public ListItem(int id, Date creationDate, int amount, Group group, Product product, Retailer retailer,
-			Shoppinglist shoppinglist, Unit unit, User user) {
+	public ListItemDD(int id, Date creationDate, int amount, GroupDD group, ProductDD product, RetailerDD retailer,
+			ShoppinglistDD shoppinglist, UnitDD unit, UserDD user) {
 
 		super(id, creationDate);
 		this.amount = amount;
@@ -40,51 +40,51 @@ public class ListItem extends BusinessObject {
 		this.amount = amount;
 	}
 
-	public Group getGroup() {
+	public GroupDD getGroup() {
 		return group;
 	}
 
-	public void setGroup(Group group) {
+	public void setGroup(GroupDD group) {
 		this.group = group;
 	}
 
-	public Product getProduct() {
+	public ProductDD getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductDD product) {
 		this.product = product;
 	}
 
-	public Retailer getRetailer() {
+	public RetailerDD getRetailer() {
 		return retailer;
 	}
 
-	public void setRetailer(Retailer retailer) {
+	public void setRetailer(RetailerDD retailer) {
 		this.retailer = retailer;
 	}
 
-	public Shoppinglist getShoppinglist() {
+	public ShoppinglistDD getShoppinglist() {
 		return shoppinglist;
 	}
 
-	public void setShoppinglist(Shoppinglist shoppinglist) {
+	public void setShoppinglist(ShoppinglistDD shoppinglist) {
 		this.shoppinglist = shoppinglist;
 	}
 
-	public Unit getUnit() {
+	public UnitDD getUnit() {
 		return unit;
 	}
 
-	public void setUnit(Unit unit) {
+	public void setUnit(UnitDD unit) {
 		this.unit = unit;
 	}
 
-	public User getUser() {
+	public UserDD getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserDD user) {
 		this.user = user;
 	}
 

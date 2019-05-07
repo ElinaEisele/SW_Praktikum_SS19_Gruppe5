@@ -3,15 +3,14 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 import java.util.Date;
 
 /**
- * Unit object for testing purposes
+ * Product object for testing purposes
  * 
  * @author JonasWagenknecht, ElinaEisele
  */
 
-public class Unit extends NamedBusinessObject {
+public class ProductDD extends NamedBusinessObjectDD {
 
-	public Unit(String name, int id, Date creationDate) {
+	public ProductDD(String name, int id, Date creationDate) {
 		super(name, id, creationDate);
 	}
-
 }

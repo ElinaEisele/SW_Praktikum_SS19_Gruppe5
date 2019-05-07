@@ -12,13 +12,13 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.softwarepraktikum.shared.dummydata.Group;
-import de.hdm.softwarepraktikum.shared.dummydata.ListItem;
-import de.hdm.softwarepraktikum.shared.dummydata.Product;
-import de.hdm.softwarepraktikum.shared.dummydata.Retailer;
-import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.dummydata.Unit;
-import de.hdm.softwarepraktikum.shared.dummydata.User;
+import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
+import de.hdm.softwarepraktikum.shared.dummydata.ListItemDD;
+import de.hdm.softwarepraktikum.shared.dummydata.ProductDD;
+import de.hdm.softwarepraktikum.shared.dummydata.RetailerDD;
+import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
+import de.hdm.softwarepraktikum.shared.dummydata.UnitDD;
+import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 
 /**
  * Celltable that contains the dummy data
@@ -28,13 +28,13 @@ import de.hdm.softwarepraktikum.shared.dummydata.User;
 
 public class ShoppinglistCellTable extends VerticalPanel {
 
-	ArrayList<Group> group;
-	ArrayList<Product> product;
-	ArrayList<Retailer> retailer;
-	ArrayList<Shoppinglist> shoppinglist;
-	ArrayList<Unit> unit;
-	ArrayList<User> user;
-	ArrayList<ListItem> listitem;
+	ArrayList<GroupDD> group;
+	ArrayList<ProductDD> product;
+	ArrayList<RetailerDD> retailer;
+	ArrayList<ShoppinglistDD> shoppinglist;
+	ArrayList<UnitDD> unit;
+	ArrayList<UserDD> user;
+	ArrayList<ListItemDD> listitem;
 
 	public void onLoad() {
 		super.onLoad();
@@ -47,58 +47,58 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		unit = new ArrayList<>();
 		user = new ArrayList<>();
 
-		Group group1 = new Group("Tims Geburtstag", 187, new Date());
-		Group group2 = new Group("Tims Familie", 188, new Date());
+		GroupDD group1 = new GroupDD("Tims Geburtstag", 187, new Date());
+		GroupDD group2 = new GroupDD("Tims Familie", 188, new Date());
 		group.add(group1);
 		group.add(group2);
 
-		Product product1 = new Product("Tomate", 191, new Date());
-		Product product2 = new Product("Apfel", 192, new Date());
+		ProductDD product1 = new ProductDD("Tomate", 191, new Date());
+		ProductDD product2 = new ProductDD("Apfel", 192, new Date());
 		product.add(product1);
 		product.add(product2);
 
-		Retailer retailer1 = new Retailer("Aldi", 193, new Date());
-		Retailer retailer2 = new Retailer("Kaufland", 194, new Date());
+		RetailerDD retailer1 = new RetailerDD("Aldi", 193, new Date());
+		RetailerDD retailer2 = new RetailerDD("Kaufland", 194, new Date());
 		retailer.add(retailer1);
 		retailer.add(retailer2);
 
-		Shoppinglist shoppinglist1 = new Shoppinglist("Party", 195, new Date());
-		Shoppinglist shoppinglist2 = new Shoppinglist("Familieneinkauf", 196, new Date());
+		ShoppinglistDD shoppinglist1 = new ShoppinglistDD("Party", 195, new Date());
+		ShoppinglistDD shoppinglist2 = new ShoppinglistDD("Familieneinkauf", 196, new Date());
 		shoppinglist.add(shoppinglist1);
 		shoppinglist.add(shoppinglist2);
 
-		Unit unit1 = new Unit("Kg", 197, new Date());
-		Unit unit2 = new Unit("Stk", 198, new Date());
+		UnitDD unit1 = new UnitDD("Kg", 197, new Date());
+		UnitDD unit2 = new UnitDD("Stk", 198, new Date());
 		unit.add(unit1);
 		unit.add(unit2);
 
-		User user1 = new User("Tim", 199, new Date(), "tim@gmail.com");
-		User user2 = new User("Tims Papa", 200, new Date(), "timspapa@gmail.com");
-		User user3 = new User("Felix", 201, new Date(), "felix@gmail.com");
-		User user4 = new User("Jonas", 202, new Date(), "jonas@gmail.com");
+		UserDD user1 = new UserDD("Tim", 199, new Date(), "tim@gmail.com");
+		UserDD user2 = new UserDD("Tims Papa", 200, new Date(), "timspapa@gmail.com");
+		UserDD user3 = new UserDD("Felix", 201, new Date(), "felix@gmail.com");
+		UserDD user4 = new UserDD("Jonas", 202, new Date(), "jonas@gmail.com");
 		user.add(user1);
 		user.add(user2);
 		user.add(user3);
 		user.add(user4);
 
-		ListItem listitem1 = new ListItem(204, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2, user2);
-		ListItem listitem2 = new ListItem(204, new Date(), 1, group1, product2, retailer2, shoppinglist2, unit2, user2);
-		ListItem listitem3 = new ListItem(205, new Date(), 1, group1, product1, retailer1, shoppinglist1, unit1, user3);
-		ListItem listitem4 = new ListItem(206, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2, user4);
+		ListItemDD listitem1 = new ListItemDD(204, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2, user2);
+		ListItemDD listitem2 = new ListItemDD(204, new Date(), 1, group1, product2, retailer2, shoppinglist2, unit2, user2);
+		ListItemDD listitem3 = new ListItemDD(205, new Date(), 1, group1, product1, retailer1, shoppinglist1, unit1, user3);
+		ListItemDD listitem4 = new ListItemDD(206, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2, user4);
 		listitem.add(listitem1);
 		listitem.add(listitem2);
 		listitem.add(listitem3);
 		listitem.add(listitem4);
 
-		CellTable<ListItem> table = new CellTable<>();
+		CellTable<ListItemDD> table = new CellTable<>();
 
-		table.setStyleName("table");
+		table.setStyleName("shoppinglist-CellTable");
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-		Column<ListItem, Boolean> checkColumn = new Column<ListItem, Boolean>(new CheckboxCell(true, false)) {
+		Column<ListItemDD, Boolean> checkColumn = new Column<ListItemDD, Boolean>(new CheckboxCell(true, false)) {
 
 			@Override
-			public Boolean getValue(ListItem arg0) {
+			public Boolean getValue(ListItemDD arg0) {
 				// TODO Auto-generated method stub
 				return null;
 			}
@@ -108,42 +108,42 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(checkColumn, "Check");
 		// table.setColumnWidth(checkColumn, 40, Unit.PX);
 
-		TextColumn<ListItem> productNameColumn = new TextColumn<ListItem>() {
+		TextColumn<ListItemDD> productNameColumn = new TextColumn<ListItemDD>() {
 			@Override
-			public String getValue(ListItem object) {
+			public String getValue(ListItemDD object) {
 				return object.getProduct().getName();
 			}
 		};
 		table.addColumn(productNameColumn, "Produkt");
 
 		NumberCell amountCell = new NumberCell();
-		Column<ListItem, Number> listItemAmountColumn = new Column<ListItem, Number>(amountCell) {
+		Column<ListItemDD, Number> listItemAmountColumn = new Column<ListItemDD, Number>(amountCell) {
 			@Override
-			public Number getValue(ListItem object) {
+			public Number getValue(ListItemDD object) {
 				return object.getAmount();
 			}
 		};
 		table.addColumn(listItemAmountColumn, "Menge");
 
-		TextColumn<ListItem> unitNameColumn = new TextColumn<ListItem>() {
+		TextColumn<ListItemDD> unitNameColumn = new TextColumn<ListItemDD>() {
 			@Override
-			public String getValue(ListItem object) {
+			public String getValue(ListItemDD object) {
 				return object.getUnit().getName();
 			}
 		};
 		table.addColumn(unitNameColumn, "Einheit");
 
-		TextColumn<ListItem> retailerNameColumn = new TextColumn<ListItem>() {
+		TextColumn<ListItemDD> retailerNameColumn = new TextColumn<ListItemDD>() {
 			@Override
-			public String getValue(ListItem object) {
+			public String getValue(ListItemDD object) {
 				return object.getRetailer().getName();
 			}
 		};
 		table.addColumn(retailerNameColumn, "Haendler");
 
-		TextColumn<ListItem> userNameColumn = new TextColumn<ListItem>() {
+		TextColumn<ListItemDD> userNameColumn = new TextColumn<ListItemDD>() {
 			@Override
-			public String getValue(ListItem object) {
+			public String getValue(ListItemDD object) {
 				return object.getUser().getName();
 			}
 		};

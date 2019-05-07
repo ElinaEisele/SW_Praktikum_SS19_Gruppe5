@@ -3,7 +3,7 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 
 /**
  * Klasse zur Darstellung von Shoppinglist-Objekte. 
@@ -13,10 +13,10 @@ import de.hdm.softwarepraktikum.shared.dummydata.Shoppinglist;
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class ShoppinglistCell extends AbstractCell<Shoppinglist> {
+public class ShoppinglistCell extends AbstractCell<ShoppinglistDD> {
 
 	@Override
-	public void render(Context context, Shoppinglist value, SafeHtmlBuilder sb) {
+	public void render(Context context, ShoppinglistDD value, SafeHtmlBuilder sb) {
 		if (value == null) {
 			return;
 		}
