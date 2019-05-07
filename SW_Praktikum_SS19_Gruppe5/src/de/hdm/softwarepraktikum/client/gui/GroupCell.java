@@ -4,6 +4,7 @@ import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 
 /**
@@ -14,10 +15,10 @@ import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class GroupCell extends AbstractCell<GroupDD> {
+public class GroupCell extends AbstractCell<Group> {
 
 	@Override
-	public void render(Context context, GroupDD value, SafeHtmlBuilder sb) {
+	public void render(Context context, Group value, SafeHtmlBuilder sb) {
 		if (value == null) {
 			return;		
 		}
