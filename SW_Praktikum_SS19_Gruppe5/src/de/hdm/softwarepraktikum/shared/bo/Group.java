@@ -19,26 +19,38 @@ public class Group extends NamedBusinessObject implements IsSerializable{
 	private ArrayList<Listitem> standardListitem;
 	
 	public Group(String groupname) {
-		this.setName(groupname);
-		users.add(this);
+		super(1, groupname);
 	}
 	
 	public ArrayList<User> getUsers() {
 		return users;
 	}
+	
 	public void setUser(ArrayList<User> users) {
 		this.users = users;
 	}
+	
 	public ArrayList<Shoppinglist> getShoppinglists() {
 		return shoppinglists;
 	}
+	
 	public void setShoppinglists(ArrayList<Shoppinglist> shoppinglists) {
 		this.shoppinglists = shoppinglists;
 	}
+	
 	public ArrayList<Listitem> getStandardListitem() {
 		return standardListitem;
 	}
+	
 	public void setStandardListitem(ArrayList<Listitem> standardListitem) {
 		this.standardListitem = standardListitem;
+	}
+
+	public int getGroupID() {
+		return groupID;
+	}
+
+	public void setGroupID(int groupID) {
+		this.groupID = groupID;
 	}
 }
