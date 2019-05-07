@@ -110,10 +110,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 	
 	/**
-	 * *************************
+	 * **********************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für BO-Objekte
 	 * 
-	 * *************************
+	 * **********************************************************************************
 	 **/
 	
 	public void setBOid(int boId) throws IllegalArgumentException {
@@ -135,10 +135,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * *************************
+	 * **********************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Named BO-Objekte
 	 * 
-	 * *************************
+	 * **********************************************************************************
 	 **/
 	
 	public void setName(String name) throws IllegalArgumentException{
@@ -152,10 +152,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * *************************
+	 * **********************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Group-Objekte
 	 * 
-	 * *************************
+	 * **********************************************************************************
 	 **/
 	
 	public Group getGroup() throws IllegalArgumentException {
@@ -191,10 +191,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 	
 	/**
-	 * *************************
+	 * **********************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Listitem-Objekte
 	 * 
-	 * *************************
+	 * **********************************************************************************
 	 **/
 	
 	
@@ -215,25 +215,25 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 	
 	/**
-	 * *************************
+	 * **********************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Produkt-Objekte
 	 * 
-	 * *************************
+	 * **********************************************************************************
 	 **/
 	
 	
 	/**
-	 * *************************
+	 * **********************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Retailer-Objekte
 	 * 
-	 * *************************
+	 * **********************************************************************************
 	 **/
 	
 	/**
-	 * *************************
+	 * **********************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für Shoppinglist-Objekte
 	 * 
-	 * *************************
+	 * **********************************************************************************
 	 **/
 	
 	public void createShoppinglist(String name) throws IllegalArgumentException {
@@ -245,10 +245,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * *************************
+	 * **********************************************************************************
 	 * ABSCHNITT, Beginn: Methoden für User-Objekte
 	 * 
-	 * *************************
+	 * **********************************************************************************
 	 **/
 	
 	
@@ -312,7 +312,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 
 	@Override
-	public ArrayList<GroupDD> getAllGroups() {
+	public ArrayList<Group> getAllGroups() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -425,21 +425,21 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 
 	@Override
-	public ArrayList<GroupDD> getGroupsOf(User user) throws IllegalArgumentException {
+	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public ArrayList<GroupDD> getGroupsOf(int userId) throws IllegalArgumentException {
+	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public ArrayList<GroupDD> getGroupsOf(String username) throws IllegalArgumentException {
+	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
