@@ -4,7 +4,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PushButton;
 
 /**
  * Klasse fuer die Ueberschrift und Buttons in der Gruppenansicht
@@ -15,18 +14,38 @@ import com.google.gwt.user.client.ui.PushButton;
 public class GroupHeader extends HorizontalPanel {
 
 	Label groupHeaderLabel = new Label("Hier steht der Name der ausgewählten Gruppe");
-	
-	PushButton leaveGroup = new PushButton(new Image("images/logout.png"));
-	PushButton deleteGroup = new PushButton(new Image("images/delete.png"));
-	PushButton addUser = new PushButton(new Image("war/images/add-user.png"));
+
+	Button leaveGroup;
+	Button deleteGroup;
+	Button addUser;
 
 	public void onLoad() {
 		super.onLoad();
 
+		addUser = new Button();
+		deleteGroup = new Button();
+		leaveGroup = new Button();
+
+		Image addUserImg = new Image();
+		addUserImg.setUrl("images/add-user.png");
+		addUserImg.setSize("32px", "32px");
+		addUser.getElement().appendChild(addUserImg.getElement());
+
+		Image leaveGroupImg = new Image();
+		leaveGroupImg.setUrl("images/logout.png");
+		leaveGroupImg.setSize("32px", "32px");
+		leaveGroup.getElement().appendChild(leaveGroupImg.getElement());
+		//leaveGroup.setStyleName("leaveGroupButton");
+
+		Image deleteImg = new Image();
+		deleteImg.setUrl("images/delete.png");
+		deleteImg.setSize("32px", "32px");
+		deleteGroup.getElement().appendChild(deleteImg.getElement());
+
 		this.add(groupHeaderLabel);
 		this.add(addUser);
-		this.add(leaveGroup);
 		this.add(deleteGroup);
+		this.add(leaveGroup);
 
 	}
 
