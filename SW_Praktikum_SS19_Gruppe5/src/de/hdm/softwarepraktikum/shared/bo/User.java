@@ -1,5 +1,7 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
-public class User extends NamedBusinessObject{
+public class User extends NamedBusinessObject implements isSerializable{
+	
+	
 
 }

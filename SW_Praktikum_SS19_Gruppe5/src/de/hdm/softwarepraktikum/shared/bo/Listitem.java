@@ -1,40 +1,63 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
-public class Listitem extends BusinessObject{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+/**
+ * Realisierung der Klasse Listitem, welche einen Eintrag in einer Shoppingliste darstellt.
+ * 
+ * @author Felix Rapp
+ */
+
+public class Listitem extends BusinessObject implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	private float amount;
-	private String unit;
-	private Product product;
+	private Unit unit;
+	private int productID;
+	private int shoppinglistID;
 	
 	public Listitem (String productname, float amount, Unit unit) {
 		Product p = new Product(productname);
-		this.setProduct(p);
+		this.setProductID(p.getId());
 		this.setAmount(amount);
-		this.setUnit(unit.toString());
+		this.setUnit(unit);
 	}
 	
 	
 	public long getSerialVersionUID() {
 		return serialVersionUID;
 	}
+	
 	public float getAmount() {
 		return amount;
 	}
+	
 	public void setAmount(float amount) {
 		this.amount = amount;
 	}
-	public String getUnit() {
+	
+	public Unit getUnit() {
 		return unit;
 	}
-	public void setUnit(String unit) {
+	
+	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
-	public Product getProduct() {
-		return product;
+	
+	public int getProductID() {
+		return productID;
 	}
-	public void setProduct(Product product) {
-		this.product = product;
+	
+	public void setProductID(int productID) {
+		this.productID = productID;
+	}
+	
+	public int getShoppinglistID() {
+		return shoppinglistID;
+	}
+	
+	public void setShoppinglistID(int shoppinglistID) {
+		this.shoppinglistID = shoppinglistID;
 	}
 	
 }

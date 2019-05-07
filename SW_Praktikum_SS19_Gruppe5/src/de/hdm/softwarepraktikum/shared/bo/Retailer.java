@@ -1,6 +1,8 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
-public class Retailer extends NamedBusinessObject{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class Retailer extends NamedBusinessObject implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	
