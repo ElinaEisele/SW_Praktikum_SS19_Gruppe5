@@ -1,7 +1,7 @@
 div#TopLevelFrame {
-	max-width: 900px;
-	min-width: 400px;
-	border: 2px solid gray;	
+	max-width: 100%;
+	
+	border: 0px solid gray;	
 	
 	text-align: center;
 	background: #A9D0F5;
@@ -14,26 +14,26 @@ div#Header {
 }
 
 div#Navigator {
-	max-height: 300px;
-	overflow:scroll;
-	padding: 10em 2em;
+	height: 500px;	
+	overflow: auto;
 	float: left;
-	width: 20%;
-	border: 2px solid gray;
+	width: 26%;
+	
+	border: 0px solid gray;
 	margin: 10px;
 	
-	background: #FFFFFF;
+	background: white;
 }
 
 div#Details {
-	height: 330px;
-	padding: 14m 1em;
-	float: right;
-	width: 68%;
-	border: 2px solid gray;
-	margin: 10px;
 	
-	background: #FFFFFF;
+	height: 500px;	
+	float: left;
+	width: 68%;
+	border: 0px solid gray;
+	margin: 10px;
+	overflow: auto;
+	background: white;
 }
 
 
@@ -87,5 +87,7 @@ div#Trailer {
 	margin: 5px 100px;
 }
 
-
+.flex-container {
+  display:flex;
+}
 
