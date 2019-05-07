@@ -27,6 +27,15 @@ public abstract class BusinessObject implements Serializable{
 	
 	private Date creationDate = new Date();
 	
+	public BusinessObject() {
+		/*
+		 * Setzen einer vorläufigen ID. Im Insert-Aufruf wird die Id gesetzt, welche mit der Datenbank
+		 * konsisent ist.
+		 */
+		this.setId(1);
+		this.setCreationDate(new Date());
+	}
+	
 	/**
 	 * Die eindeutige Identifikationsnummer einer Instanz dieser Klasse.
 	 */
