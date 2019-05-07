@@ -9,7 +9,7 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 	
-public class GroupDD extends NamedBusinessObject {
+public class GroupDD extends NamedBusinessObjectDD {
 	
 	private ArrayList<ShoppinglistDD> shoppinglists = new ArrayList<ShoppinglistDD>();
 

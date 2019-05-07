@@ -2,10 +2,10 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
-public class NamedBusinessObject extends BusinessObjectDD {
+public class NamedBusinessObjectDD extends BusinessObjectDD {
 	private String name;
 
-	public NamedBusinessObject(String name, int id, Date creationDate) {
+	public NamedBusinessObjectDD(String name, int id, Date creationDate) {
 		super(id, creationDate);
 		this.name = name;
 
