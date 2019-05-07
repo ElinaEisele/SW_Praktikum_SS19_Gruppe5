@@ -92,7 +92,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		CellTable<ListItemDD> table = new CellTable<>();
 
-		table.setStyleName("table");
+		table.setStyleName("shoppinglist-CellTable");
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 		Column<ListItemDD, Boolean> checkColumn = new Column<ListItemDD, Boolean>(new CheckboxCell(true, false)) {
