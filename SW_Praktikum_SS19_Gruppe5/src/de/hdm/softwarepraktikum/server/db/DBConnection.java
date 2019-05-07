@@ -3,7 +3,7 @@ package de.hdm.softwarepraktikum.server.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import com.google.appengine.api.utils.SystemProperty;
+//import com.google.appengine.api.utils.SystemProperty;
 
 	/**
 	 * Verwalten einer Verbindung zur Datenbank.
@@ -31,7 +31,7 @@ public class DBConnection {
     /**
      * Diese statische Methode kann aufgrufen werden durch
      * <code>DBConnection.connection()</code>. Sie stellt die
-     * Singleton-Eigenschaft sicher, indem Sie dafï¿½r sorgt, dass nur eine
+     * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine
      * einzige Instanz von <code>DBConnection</code> existiert.
      * <p>
      * 
@@ -42,21 +42,18 @@ public class DBConnection {
     public static Connection connection() {
         // Wenn es bisher keine Conncetion zur DB gab, ...
         if (con == null) {
-        	
-        	
-            String url = null;
+                String url = null;
             try {
                 if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                 	
-                    // Load the class that provides the new
-                    // "jdbc:google:mysql://" prefix.
+                    //Klasse laden, welche das neue Präfix "jdbc: google: mysql: //" bereitstellt.
                 	
                     Class.forName("com.mysql.jdbc.GoogleDriver");
                     url = googleUrl;
                
                 } else {
                    
-                	// Local MySQL instance to use during development.
+                    // Lokale MySQL Instanz zur Nutzung während der Entwicklung.
                 	
                 	Class.forName("com.mysql.jdbc.Driver");
                     url = localUrl;
