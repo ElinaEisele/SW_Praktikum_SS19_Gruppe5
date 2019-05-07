@@ -72,8 +72,6 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getGroupsOf(String username, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
 	
-	void getGroupById(int id, AsyncCallback<Group> callback);
-	
 	void getUserByMail(String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
 	
 	void getShoppinglistsByName(String name, AsyncCallback<ArrayList<Shoppinglist>> callback) throws IllegalArgumentException;

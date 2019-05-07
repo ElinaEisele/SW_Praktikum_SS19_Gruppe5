@@ -261,7 +261,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return Das erste Shoppinglist-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
 	 */
-	public ShoppinglistDD getShoppinglistById(int shoppinglistId) throws IllegalArgumentException;
+	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException;
 	
 	/**
 	 * S�mtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zur�ckgegeben
