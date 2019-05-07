@@ -13,7 +13,7 @@ import de.hdm.softwarepraktikum.shared.bo.Unit;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Das asnchrone Gegenstück zu <code>GreetingService</code>.Es wird
+ * Das asnchrone Gegenstueck zu <code>GreetingService</code>.Es wird
  * semiautomatisch durch das Google Plugin erstellt und gepflegt. Daher erfolgt
  * hier keine weitere Dokumentation.
  */
@@ -30,9 +30,9 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createShoppinglist(Group group, String name, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
 	
-	void getGroupById(int id, AsyncCallback<Group> callback);
+	void getGroupById(int id, AsyncCallback<Group> callback) throws IllegalArgumentException;
 
-	void getShoppinglistsOf(Group value, AsyncCallback<ArrayList<Shoppinglist>> asyncCallback);
+	void getShoppinglistsOf(Group value, AsyncCallback<ArrayList<Shoppinglist>> asyncCallback) throws IllegalArgumentException;
 
 	void getUsersOf(Group group, AsyncCallback<ArrayList<User>> callback) throws IllegalArgumentException;
 	
