@@ -60,7 +60,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	       * for the next level.
 	       */
 	      ListDataProvider<String> dataProvider = new ListDataProvider<String>();
-	      for (int i = 0; i < 2; i++) {
+	      for (int i = 0; i < 10; i++) {
 	        dataProvider.getList().add(value+"." + String.valueOf(i));
 	      }
 
