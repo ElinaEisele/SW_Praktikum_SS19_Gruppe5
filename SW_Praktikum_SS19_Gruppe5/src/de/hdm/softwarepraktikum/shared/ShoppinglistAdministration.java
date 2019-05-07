@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Product;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
@@ -34,7 +35,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 public interface ShoppinglistAdministration extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
 	
-	ArrayList<GroupDD> getAllGroups();
+	ArrayList<Group> getAllGroups();
 
 	  /**
 	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
@@ -177,7 +178,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList s�mtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<GroupDD> getGroupsOf(int userId) throws IllegalArgumentException;
+	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException;
 	
 	/**
 	 * S�mtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
@@ -185,7 +186,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList s�mtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<GroupDD> getGroupsOf(String username) throws IllegalArgumentException;
+	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
 	
 	/**
 	 * R�ckgabe eines bestimmten Group-Objekts
@@ -241,7 +242,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<ShoppinglistDD> getShoppinglistsOf(GroupDD group) throws IllegalArgumentException;
+	public ArrayList<Shoppinglist> getShoppinglistsOf(GroupDD group) throws IllegalArgumentException;
 	
 	/**
 	 * S�mtliche Shoppinglist-Objekt mit einem bestimmten Namen werden ausgegeben
@@ -249,7 +250,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Shoppinglist-Objekten, welche einen bestimmten Namen besitzen
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<ShoppinglistDD> getShoppinglistsByName(String name) throws IllegalArgumentException;
+	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException;
 	
 	/**
 	 * Das Shoppinglist-Objekt mit der �bergebenen ID wird ausgegeben
