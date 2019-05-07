@@ -74,7 +74,7 @@ public class GroupMapper {
 		return groups;
 
 	}
-	
+
 	/**
 	 * Gruppe mittels id finden.
 	 *
@@ -220,8 +220,6 @@ public class GroupMapper {
 		}
 	}
 
-	
-
 	/**
 	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen.
 	 * 
@@ -236,7 +234,7 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery();
-			
+
 			if (rs.next()) {
 
 				Group group = new Group();
