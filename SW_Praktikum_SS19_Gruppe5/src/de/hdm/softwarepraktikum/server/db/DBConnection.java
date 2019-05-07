@@ -18,15 +18,15 @@ public class DBConnection {
      * von einem sogenannten <b>Singleton</b>.
      * <p>
      * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
-     * für sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
+     * für saemtliche eventuellen Instanzen dieser Klasse vorhanden. Sie
      * speichert die einzige Instanz dieser Klasse.
      * 
      */
 	
     private static Connection con = null;
     
-    private static String googleUrl = "";
-    private static String localUrl = "";
+    private static String googleUrl = "jdbc:google:mysql://swpraktikumss19g5:europe-west3:sw-praktikum-ss19-g5?user=CarlaHofmann&password=CarlaHofmann";
+    private static String localUrl = "jdbc:mysql://127.0.0.1:3306/sw_praktikum_ss19_gruppe5?user=root&password=CarlaHofmann123&serverTimezone=UTC";
     
     /**
      * Diese statische Methode kann aufgrufen werden durch
@@ -83,7 +83,7 @@ public class DBConnection {
             }
         }
 
-        // Zurückgeben der Verbindung
+        // Zurueckgeben der Verbindung
         return con;
     }
 
