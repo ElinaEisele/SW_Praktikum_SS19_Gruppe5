@@ -12,14 +12,14 @@ import java.util.Date;
 public class ListItemDD extends BusinessObjectDD {
 
 	private int amount;
-	Group group;
+	GroupDD group;
 	ProductDD product;
 	RetailerDD retailer;
 	ShoppinglistDD shoppinglist;
 	UnitDD unit;
 	UserDD user;
 
-	public ListItemDD(int id, Date creationDate, int amount, Group group, ProductDD product, RetailerDD retailer,
+	public ListItemDD(int id, Date creationDate, int amount, GroupDD group, ProductDD product, RetailerDD retailer,
 			ShoppinglistDD shoppinglist, UnitDD unit, UserDD user) {
 
 		super(id, creationDate);
@@ -40,11 +40,11 @@ public class ListItemDD extends BusinessObjectDD {
 		this.amount = amount;
 	}
 
-	public Group getGroup() {
+	public GroupDD getGroup() {
 		return group;
 	}
 
-	public void setGroup(Group group) {
+	public void setGroup(GroupDD group) {
 		this.group = group;
 	}
 

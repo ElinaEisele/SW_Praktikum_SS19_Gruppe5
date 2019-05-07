@@ -2,7 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.softwarepraktikum.shared.dummydata.Group;
+import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 
 
 /**
@@ -26,7 +26,7 @@ public class GroupShowForm extends VerticalPanel{
 		this.add(groupContent);
 	}
 
-	public void setSelected(Group g) {
+	public void setSelected(GroupDD g) {
 		// TODO Auto-generated method stub
 		
 	}

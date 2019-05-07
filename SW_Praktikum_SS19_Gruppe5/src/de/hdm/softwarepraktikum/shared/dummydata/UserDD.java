@@ -12,7 +12,7 @@ import java.util.Date;
 public class UserDD extends NamedBusinessObject {
 
 	private String gMail;
-	private ArrayList<Group> groups = new ArrayList<Group>();
+	private ArrayList<GroupDD> groups = new ArrayList<GroupDD>();
 
 	public UserDD(String name, int id, Date creationDate, String gMail) {
 		super(name, id, creationDate);
@@ -27,11 +27,11 @@ public class UserDD extends NamedBusinessObject {
 		this.gMail = gMail;
 	}
 	
-	public void addGroup(Group g) {
+	public void addGroup(GroupDD g) {
 		this.groups.add(g);
 	}
 	
-	public ArrayList<Group> getGroups(){
+	public ArrayList<GroupDD> getGroups(){
 		return groups;
 	}
 }

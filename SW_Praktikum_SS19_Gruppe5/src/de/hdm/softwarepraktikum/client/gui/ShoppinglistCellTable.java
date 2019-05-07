@@ -12,7 +12,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.softwarepraktikum.shared.dummydata.Group;
+import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ListItemDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ProductDD;
 import de.hdm.softwarepraktikum.shared.dummydata.RetailerDD;
@@ -28,7 +28,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 
 public class ShoppinglistCellTable extends VerticalPanel {
 
-	ArrayList<Group> group;
+	ArrayList<GroupDD> group;
 	ArrayList<ProductDD> product;
 	ArrayList<RetailerDD> retailer;
 	ArrayList<ShoppinglistDD> shoppinglist;
@@ -47,8 +47,8 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		unit = new ArrayList<>();
 		user = new ArrayList<>();
 
-		Group group1 = new Group("Tims Geburtstag", 187, new Date());
-		Group group2 = new Group("Tims Familie", 188, new Date());
+		GroupDD group1 = new GroupDD("Tims Geburtstag", 187, new Date());
+		GroupDD group2 = new GroupDD("Tims Familie", 188, new Date());
 		group.add(group1);
 		group.add(group2);
 
@@ -92,7 +92,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		CellTable<ListItemDD> table = new CellTable<>();
 
-		table.setStyleName("table");
+		table.setStyleName("shoppinglist-CellTable");
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 		Column<ListItemDD, Boolean> checkColumn = new Column<ListItemDD, Boolean>(new CheckboxCell(true, false)) {
