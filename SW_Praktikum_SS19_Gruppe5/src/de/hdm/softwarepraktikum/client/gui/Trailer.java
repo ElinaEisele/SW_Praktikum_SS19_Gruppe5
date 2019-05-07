@@ -1,5 +1,11 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -12,15 +18,123 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class Trailer extends VerticalPanel{
 	
-	Label impressum = null;
-	
+	private ImpressumDialogBox impressumDialogBox;
+	private CreditsDialogBox creditsDialogBox;
+	private Label applicationName = new Label("Maul Tasche");
+	private HorizontalPanel buttonsPanel = new HorizontalPanel();
+	private Button impressumButton = new Button("Impressum");
+	private Button creditsButton = new Button("Credits");
+		
 	public void onLoad() {
 		super.onLoad();
 		
-		impressum = new Label("Hier steht das Impressum.");
-		impressum.setStyleName("impressum");
+		this.add(applicationName);
+		buttonsPanel.add(impressumButton);
+		buttonsPanel.add(creditsButton);
+		this.add(buttonsPanel);
+		this.setWidth("100%");
+		this.setCellHorizontalAlignment(applicationName, ALIGN_CENTER);
+		this.setCellHorizontalAlignment(buttonsPanel, ALIGN_CENTER);
 		
-		this.add(impressum);
+		/**
+		 * Anonyme innere Klasse zur Verarbeitung eines Klicks auf den <code>impressumButton</code>.
+		 */
+		impressumButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				impressumDialogBox = new ImpressumDialogBox();
+			}
+		});
+		
+		/**
+		 * Anonyme innere Klasse zur Verarbeitung eines Klicks auf den <code>creditsButton</code>.
+		 */
+		creditsButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				creditsDialogBox = new CreditsDialogBox();
+			}
+		});
+		
+	}
+	/**
+	 * Innere Klasse zur Darstellung des Impressums des
+	 * Shared Shoppinglisten Systems mittels HTML-Format.
+	 */
+	public class Impressum extends HTML{
+		
+		public Impressum() {
+			this.setHTML(("<div class = 'Impressum'>" + "</br>" + "<b>Hochschule der Medien</b>" + "</br>"
+							+ "<b>Wirtschaftsinformatik und digitale Medien</b></br>"
+							+ "Nobelstraße&#223e 10</br>" + "70563 Stuttgart</br></br>"
+							+ "Kontakt</br>Telefon: 0711 8923-3242</br> E-Mail: <a href=\"mailto:info-wi7@hdm-stuttgart.de\" target=\"_top\">info-wi7@hdm-stuttgart.de "
+							+ "<br><a href=\"https:\\www.hdm-stuttgart.de\""
+							+ "impressum\"TARGET=\"_blank\">Impressum der Hochschule</a></br></br>" + "</div>"));
+					
+		}
+		
+	}
+	
+	/**
+	 * Innere Klasse zur Darstellung des Impressums des
+	 * Shared Shoppinglisten Systems mittels HTML-Format.
+	 */
+	private class Credits extends HTML{
+		
+		public Credits() {
+			this.setHTML(("<div class = 'Credits'>" + "</br>" + "<b>Special Thanks goes to: </b></br>KoeriWerks vegane Curryurst</br></br>"));
+		}
+	}
+	
+	/**
+	 * Innere Klasse zur Darstellung einer DialogBox mit dem Impressum als Inhalt, 
+	 * wenn der Button <code>impressumButton</code> aktiviert wird.
+	 *
+	 */
+	public class ImpressumDialogBox extends DialogBox{
+		
+		private Button closeButton = new Button("Schließen");
+		private VerticalPanel vp = new VerticalPanel();
+		private Impressum impressum = new Impressum();
+		
+		public ImpressumDialogBox() {
+			
+			this.setGlassEnabled(true);
+			vp.add(impressum);
+			vp.add(closeButton);
+			this.add(vp);
+			this.center();
+			
+			closeButton.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					ImpressumDialogBox.this.hide();
+				}
+			});
+		}
+	}
+	
+	public class CreditsDialogBox extends DialogBox{
+		
+		private Button closeButton = new Button("Schließen");
+		private VerticalPanel vp = new VerticalPanel();
+		private Credits credits = new Credits();
+		public CreditsDialogBox() {
+			
+			this.setGlassEnabled(true);
+			vp.add(credits);
+			vp.add(closeButton);
+			this.add(vp);
+			this.center();
+			
+			closeButton.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					CreditsDialogBox.this.hide();
+				}
+				
+			});
+			
+		}
+		
 	}
 
 }
