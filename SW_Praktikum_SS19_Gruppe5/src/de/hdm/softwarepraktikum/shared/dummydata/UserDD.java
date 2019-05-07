@@ -9,7 +9,7 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 
-public class UserDD extends NamedBusinessObject {
+public class UserDD extends NamedBusinessObjectDD {
 
 	private String gMail;
 	private ArrayList<GroupDD> groups = new ArrayList<GroupDD>();

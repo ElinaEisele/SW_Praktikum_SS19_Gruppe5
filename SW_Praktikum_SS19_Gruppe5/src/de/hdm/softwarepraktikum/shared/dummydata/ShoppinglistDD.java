@@ -8,7 +8,7 @@ import java.util.Date;
  * @author JonasWagenknecht, ElinaEisele
  */
 
-public class ShoppinglistDD extends NamedBusinessObject {
+public class ShoppinglistDD extends NamedBusinessObjectDD {
 
 	public ShoppinglistDD(String name, int id, Date creationDate) {
 		super(name, id, creationDate);

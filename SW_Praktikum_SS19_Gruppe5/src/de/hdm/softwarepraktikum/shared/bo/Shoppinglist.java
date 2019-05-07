@@ -24,21 +24,13 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	/*
 	 * Fremdschlüsselbeziehung zur Gruppe, in welcher sich die Einkaufsliste befindet
 	 */
-	private int groupId;
+	private int groupId = 1;
 	
 	/**
-	 * Konstruktor, in welchem der Name gesetzt wird. Außerdem werden
-	 * der Shoppinglist alle Standardeinträfe der Gruppe hinzugefügt.
+	 * Konstruktor, in welchem der Name gesetzt wird.
 	 */
 	public Shoppinglist(String name) {
-		this.setName(name);
-		this.setCreationDate(new Date());
-		
-		/*
-		 * Die hier gesetzte ID fungiert als Platzhalter. In der später aufgerufenen 
-		 * insert-Methode wird ein Wert geliefert, welcher mit der Datenbank konsisten ist.
-		 */
-		this.setId(1);
+		super(name);
 		this.setGroupId(1);
 	}
 	
