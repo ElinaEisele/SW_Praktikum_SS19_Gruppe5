@@ -94,7 +94,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 
 			RootPanel.get("Header").add(header);
 			RootPanel.get("Navigator").add(cellTree);
-			RootPanel.get("Details").add(shoppinglistShowForm);
+			RootPanel.get("Details").add(groupShowForm);
 			RootPanel.get("Trailer").add(trailer);
 			
 	  }

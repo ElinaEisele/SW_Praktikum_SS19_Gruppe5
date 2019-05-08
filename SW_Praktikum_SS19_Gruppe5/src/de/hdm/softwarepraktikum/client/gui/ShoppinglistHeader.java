@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
 /**
@@ -12,18 +13,48 @@ import com.google.gwt.user.client.ui.Label;
 
 public class ShoppinglistHeader extends HorizontalPanel {
 
-	Label listHeaderLabel = new Label("Hier steht der Name der ausgewählten Liste");
-	Button addListItem = new Button("Eitrag hinzufügen Bild");
-	Button setUserRetailerAssignment = new Button("Nutzer Händler Zuweisung Bild");
-	Button deleteShoppinglist = new Button("Einkaufsliste löschen Bild");
+	Label shoppinlistHeaderLabel = new Label("Hier steht der Name der ausgewählten Liste");
+	
+	Button addListitem;
+	Button deleteShoppinglist;
+	Button assignUserToRetailer;
+	Button editShoppinglist;
 
 	public void onLoad() {
 		super.onLoad();
-
-		this.add(listHeaderLabel);
-		this.add(addListItem);
-		this.add(setUserRetailerAssignment);
+		
+		addListitem = new Button();
+		deleteShoppinglist = new Button();
+		assignUserToRetailer = new Button();
+		editShoppinglist = new Button();
+	
+		Image addListitemImg = new Image();
+		addListitemImg.setUrl("images/shopping-cart.png");
+		addListitemImg.setSize("32px", "32px");
+		addListitem.getElement().appendChild(addListitemImg.getElement());
+		
+		Image deleteShoppinglistImg = new Image();
+		deleteShoppinglistImg.setUrl("images/delete.png");
+		deleteShoppinglistImg.setSize("32px", "32px");
+		deleteShoppinglist.getElement().appendChild(deleteShoppinglistImg.getElement());
+		
+		Image assignUserToRetailerImg = new Image();
+		assignUserToRetailerImg.setUrl("images/man-pushing-a-shopping-cart.png");
+		assignUserToRetailerImg.setSize("32px", "32px");
+		assignUserToRetailer.getElement().appendChild(assignUserToRetailerImg.getElement());
+		
+		Image editShoppinglistImg = new Image();
+		editShoppinglistImg.setUrl("images/edit.png");
+		editShoppinglistImg.setSize("32px", "32px");
+		editShoppinglist.getElement().appendChild(editShoppinglistImg.getElement());
+		
+		this.add(shoppinlistHeaderLabel);
+		this.add(addListitem);
+		this.add(assignUserToRetailer);
+		this.add(editShoppinglist);
 		this.add(deleteShoppinglist);
+
+		
 
 	}
 
