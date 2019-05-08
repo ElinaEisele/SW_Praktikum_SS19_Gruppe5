@@ -21,6 +21,7 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
 	
+	void init(AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void getAllGroups(AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
 	
