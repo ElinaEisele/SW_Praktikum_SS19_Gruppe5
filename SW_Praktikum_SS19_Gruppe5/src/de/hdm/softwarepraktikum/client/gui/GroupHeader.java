@@ -15,9 +15,10 @@ public class GroupHeader extends HorizontalPanel {
 
 	Label groupHeaderLabel = new Label("Hier steht der Name der ausgewählten Gruppe");
 
+	Button addUser;
 	Button leaveGroup;
 	Button deleteGroup;
-	Button addUser;
+	Button editGroup;
 
 	public void onLoad() {
 		super.onLoad();
@@ -25,6 +26,7 @@ public class GroupHeader extends HorizontalPanel {
 		addUser = new Button();
 		deleteGroup = new Button();
 		leaveGroup = new Button();
+		editGroup = new Button();
 
 		Image addUserImg = new Image();
 		addUserImg.setUrl("images/add-user.png");
@@ -42,10 +44,17 @@ public class GroupHeader extends HorizontalPanel {
 		deleteImg.setSize("32px", "32px");
 		deleteGroup.getElement().appendChild(deleteImg.getElement());
 
+		Image editGroupImg = new Image();
+		editGroupImg.setUrl("images/edit.png");
+		editGroupImg.setSize("32px", "32px");
+		editGroup.getElement().appendChild(editGroupImg.getElement());
+		
 		this.add(groupHeaderLabel);
 		this.add(addUser);
-		this.add(deleteGroup);
 		this.add(leaveGroup);
+		this.add(editGroup);
+		this.add(deleteGroup);
+
 
 	}
 

@@ -20,7 +20,6 @@ public class Trailer extends VerticalPanel{
 	
 	private ImpressumDialogBox impressumDialogBox;
 	private CreditsDialogBox creditsDialogBox;
-	private Label applicationName = new Label("Maul Tasche");
 	private HorizontalPanel buttonsPanel = new HorizontalPanel();
 	private Button impressumButton = new Button("Impressum");
 	private Button creditsButton = new Button("Credits");
@@ -28,13 +27,13 @@ public class Trailer extends VerticalPanel{
 	public void onLoad() {
 		super.onLoad();
 		
-		this.add(applicationName);
 		buttonsPanel.add(impressumButton);
 		buttonsPanel.add(creditsButton);
 		this.add(buttonsPanel);
 		this.setWidth("100%");
-		this.setCellHorizontalAlignment(applicationName, ALIGN_CENTER);
 		this.setCellHorizontalAlignment(buttonsPanel, ALIGN_CENTER);
+		impressumButton.setStyleName("TrailerButton");
+		creditsButton.setStyleName("TrailerButton");
 		
 		/**
 		 * Anonyme innere Klasse zur Verarbeitung eines Klicks auf den <code>impressumButton</code>.
@@ -80,7 +79,7 @@ public class Trailer extends VerticalPanel{
 	private class Credits extends HTML{
 		
 		public Credits() {
-			this.setHTML(("<div class = 'Credits'>" + "</br>" + "<b>Special Thanks goes to: </b></br>KoeriWerks vegane Curryurst</br></br>"));
+			this.setHTML(("<div class = 'Credits'>" + "</br>" + "<b>Special Thanks goes to: </b></br></br> <br> <div>Icons made by <a href=\"https://www.flaticon.com/authors/kiranshastry\" title=\"Kiranshastry\">Kiranshastry</a> from <a href=\"https://www.flaticon.com/\" 			    title=\"Flaticon\">www.flaticon.com</a> is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" 			    title=\"Creative Commons BY 3.0\" target=\"_blank\">CC 3.0 BY</a></div></br>"));
 		}
 	}
 	
