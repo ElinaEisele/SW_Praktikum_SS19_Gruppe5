@@ -116,23 +116,23 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
-	public void setBOid(int boId) throws IllegalArgumentException {
-		
-	}
-	
-	public int getBOid() throws IllegalArgumentException{
-		int id = this.getBOid();
-		return id;
-	}
-	
-	public void setCreationDate(Date date) throws IllegalArgumentException{
-		
-	}
-	
-	public Date getCreationDate() throws IllegalArgumentException{
-		Date creationDate = this.getCreationDate();
-		return creationDate;
-	}
+//	public void setBOid(int boId) throws IllegalArgumentException {
+//		
+//	}
+//	
+//	public int getBOid() throws IllegalArgumentException{
+//		int id = this.getBOid();
+//		return id;
+//	}
+//	
+//	public void setCreationDate(Date date) throws IllegalArgumentException{
+//		
+//	}
+//	
+//	public Date getCreationDate() throws IllegalArgumentException{
+//		Date creationDate = this.getCreationDate();
+//		return creationDate;
+//	}
 	
 /**
  * **********************************************************************************
@@ -141,15 +141,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
-	public void setName(String name) throws IllegalArgumentException{
-		
-	}
-	
-	public String getName() throws IllegalArgumentException {
-		String name = this.getName();
-		
-		return name;
-	}
+//	public void setName(String name) throws IllegalArgumentException{
+//		
+//	}
+//	
+//	public String getName() throws IllegalArgumentException {
+//		String name = this.getName();
+//		
+//		return name;
+//	}
 	
 /**
  * **********************************************************************************
@@ -158,82 +158,121 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
-	public Group getGroup() throws IllegalArgumentException {
-		Group group = this.getGroup();
+//	public Group getGroup() throws IllegalArgumentException {
+//		Group group = this.getGroup();
+//		return group;
+//	}
+	
+//	public ArrayList<Group> getGroups() throws IllegalArgumentException {
+//		ArrayList<Group> groups = new ArrayList<Group>();
+//		
+//		return groups;
+//	}
+//	
+//	
+//	public void leaveGroup(Group group) throws IllegalArgumentException {
+//		
+//	}
+//	
+//	public void addMember(User user) throws IllegalArgumentException {
+//		
+//	}
+//	
+//	public ArrayList<User> getMembers() throws IllegalArgumentException {
+//		ArrayList<User> members = new ArrayList<User>();
+//		return members;
+//	}
+//	
+//	public ArrayList<Shoppinglist> getShoppinglists() throws IllegalArgumentException {
+//		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
+//		return shoppinglists;
+//	}
+	
+	/**
+	 * Alle Gruppen werden ausgegeben.
+	 * @return ArrayList mit Group-Objekten
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public ArrayList<Group> getAllGroups() throws IllegalArgumentException {
+		return this.groupMapper.findAll();
+	}
+	
+	/**
+	 * Eine Gruppe anlegen
+	 * @param name Gruppenname
+	 * @return fertiges Group-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Group createGroup(String name) throws IllegalArgumentException {
+		Group group = new Group(name);
+		this.groupMapper.insert(group);
+		//User hinzufügen Methode fehlt
 		return group;
 	}
 	
-	public ArrayList<Group> getGroups() throws IllegalArgumentException {
-		ArrayList<Group> groups = new ArrayList<Group>();
-		
-		return groups;
-	}
-	
-	
-	public void leaveGroup(Group group) throws IllegalArgumentException {
-		
-	}
-	
-	public void addMember(User user) throws IllegalArgumentException {
-		
-	}
-	
-	public ArrayList<User> getMembers() throws IllegalArgumentException {
-		ArrayList<User> members = new ArrayList<User>();
-		return members;
-	}
-	
-	public ArrayList<Shoppinglist> getShoppinglists() throws IllegalArgumentException {
-		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
-		return shoppinglists;
-	}
-	
-	@Override
-	public ArrayList<Group> getAllGroups() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public Group createGroup(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+	/**
+	 * Speichern eines Group-Objekts in der Datenbank
+	 * @param group Group-Objekt, welches in der Datenbank gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.groupMapper.update(group);
 	}
 	
+	
+	/**
+	 * Loeschen des uebergebenen Group-Objekts
+	 * @param group Group-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void delete(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.groupMapper.delete(group);
 	}
 	
-	@Override
+	/**
+	 * Saemtliche Gruppen eines Users-Objekts ausgeben
+	 * @param user Nutzer, dessen Gruppen angezeigt werden sollen
+	 * @return ArrayList saemtlicher Gruppen eines Users
+	 * @throws IllegalArgumentException
+	 */
 	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.groupMapper.getGroupsOf(user);;
 	}
 	
-	@Override
+	/**
+	 * Saemtliche Gruppen eines Users mit Hilfe der UserID ausgeben
+	 * @param userId ID eines Nutzers, dessen Gruppen angezeigt werden sollen
+	 * @return ArrayList saemtlicher Gruppen eines Users
+	 * @throws IllegalArgumentException
+	 */
 	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.groupMapper.getGroupsOf(userId);
 	}
 	
+	/**
+	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
+	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
+	 * @return ArrayList sï¿½mtlicher Gruppen eines Users
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.groupMapper.getGroupsOf(username);
 	}
-
+	
+	/**
+	 * Rueckgabe eines bestimmten Group-Objekts
+	 * @param id ID der gesuchten Gruppe
+	 * @return Das erste Group-Objekt, welches den Suchkriterien entspricht
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public Group getGroupById(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.groupMapper.getGroupsOf(id);
 	}
 	
 	

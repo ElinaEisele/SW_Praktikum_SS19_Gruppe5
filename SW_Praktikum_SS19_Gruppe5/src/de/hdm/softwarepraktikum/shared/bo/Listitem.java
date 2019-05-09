@@ -41,6 +41,7 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 * Konstruktor zum Setzen des Namen, der Menge und der Einheit.
 	 */
 	public Listitem (String productname, float amount, Unit unit) {
+		super();
 		Product p = new Product(productname);
 		this.setProductID(p.getId());
 		this.setAmount(amount);
