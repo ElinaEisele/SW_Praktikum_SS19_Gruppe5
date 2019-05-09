@@ -336,6 +336,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  **/
 	
 	@Override
+	public Product createProductFor(Listitem listitem, String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public void setProduct(Product product, Listitem listitem) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
@@ -598,5 +604,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 	}
+
+
+	
 
 }
