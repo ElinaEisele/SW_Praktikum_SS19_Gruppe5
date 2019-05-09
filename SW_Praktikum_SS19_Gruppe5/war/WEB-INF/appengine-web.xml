@@ -4,7 +4,7 @@
   <threadsafe>true</threadsafe>
   <sessions-enabled>false</sessions-enabled>
   <runtime>java8</runtime>
-  
+
     <!-- Configure serving/caching of GWT files -->
   <static-files>
     <include path="**" />
