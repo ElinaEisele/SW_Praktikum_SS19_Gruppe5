@@ -109,48 +109,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	
-/**
- * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für BO-Objekte
- * 
- * **********************************************************************************
- **/
-	
-//	public void setBOid(int boId) throws IllegalArgumentException {
-//		
-//	}
-//	
-//	public int getBOid() throws IllegalArgumentException{
-//		int id = this.getBOid();
-//		return id;
-//	}
-//	
-//	public void setCreationDate(Date date) throws IllegalArgumentException{
-//		
-//	}
-//	
-//	public Date getCreationDate() throws IllegalArgumentException{
-//		Date creationDate = this.getCreationDate();
-//		return creationDate;
-//	}
-	
-/**
- * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Named BO-Objekte
- * 
- * **********************************************************************************
- **/
-	
-//	public void setName(String name) throws IllegalArgumentException{
-//		
-//	}
-//	
-//	public String getName() throws IllegalArgumentException {
-//		String name = this.getName();
-//		
-//		return name;
-//	}
-	
+
+
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden für Group-Objekte
@@ -240,7 +200,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException {
-		return this.groupMapper.getGroupsOf(user);;
+		return this.groupMapper.getGroupsOf(user);
 	}
 	
 	/**
@@ -290,10 +250,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return item;
 	}
 	
-	public ArrayList<Listitem> getListitems() throws IllegalArgumentException {
-		ArrayList<Listitem> items = this.getListitems();
-		return items;
-	}
+//	public ArrayList<Listitem> getListitems() throws IllegalArgumentException {
+//		ArrayList<Listitem> items = this.getListitems();
+//		return items;
+//	}
 	
 	public void deleteListitem() throws IllegalArgumentException {
 		
@@ -508,15 +468,34 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.shoppinglistMapper.insert(sl);
 	}
 	
+	/**
+	 * Speichern eines Shoppinglist-Objekts in der Datenbank
+	 * @param shoppinglist, Shoppinglist-Objekt, welches in der Datenbank gespeichert weden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(Shoppinglist shoppinglist) throws IllegalArgumentException {
 		shoppinglistMapper.update(shoppinglist);
 		
 	}
 	
+	/**
+	 * Loeschen des uebergebenen Shoppinglist-Objekts
+	 * @param shoppinglist Shoppinglist-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		shoppinglistMapper.delete(shoppinglist);
+		ArrayList<Listitem> listitems = this.getAllListitemsOf(shoppinglist);
+		
+		// Beim Löschen einer Shoppinglist, müssen auch alle enthaltenen Listitems geloescht werden
+		if(listitems != null) {
+			for(Listitem l : listitems) {
+				this.delete(l);
+			}
+		}
+		// Sobald alle enthaltenen Listitems gelöscht wurden, kann die Shoppinglist gelöscht werden
+		this.shoppinglistMapper.delete(shoppinglist);
 		
 	}
 	
