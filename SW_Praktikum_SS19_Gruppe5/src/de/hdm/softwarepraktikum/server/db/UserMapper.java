@@ -104,17 +104,18 @@ public class UserMapper {
 		return null;
 	}
 
+	
 	/**
-	 * Member mittels der Gmail Adresse finden.
+	 * User mittels des User-Namens finden.
 	 * 
-	 * @param gmail: Die gmail des Users wird uebergeben.
-	 * @return Der User der ueber dessen GMail gefunden wurde, wird zurueckgegeben
+	 * @param name: Der Name des Users wird uebergeben.
+	 * @return Der User der ueber dessen Namen gefunden wurde, wird zurueckgegeben
 	 * 
 	 */
 	public ArrayList<User> findByName(String name) {
-
+		
 		Connection con = DBConnection.connection();
-
+		
 		try {
 
 			Statement stmt = con.createStatement();
@@ -133,8 +134,26 @@ public class UserMapper {
 			return null;
 		}
 		return null;
+		
+	}
+	
+	/**
+	 * Member mittels der Gmail Adresse finden.
+	 * 
+	 * @param gmail: Die gmail des Users wird uebergeben.
+	 * @return Der User der ueber dessen GMail gefunden wurde, wird zurueckgegeben
+	 * 
+	 */
+	public ArrayList<User> findByGMail(String gmail) {
+
+		Connection con = DBConnection.connection();
+		
+		//Inhalt
+
+		return null;
 	}
 
+	
 	/**
 	 * Delete Methode: um User-Datensatz aus der DB entfernen
 	 * 
