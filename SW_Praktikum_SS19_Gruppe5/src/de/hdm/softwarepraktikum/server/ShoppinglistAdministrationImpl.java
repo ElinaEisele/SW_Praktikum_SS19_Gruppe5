@@ -199,16 +199,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Eine Gruppe anlegen
+	 * Eine Gruppe anlegen.
 	 * @param name Gruppenname
 	 * @return fertiges Group-Objekt
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Group createGroup(String name) throws IllegalArgumentException {
+	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
 		this.groupMapper.insert(group);
-		//User hinzufügen Methode fehlt
+		group.getUsers().add(this);
 		return group;
 	}
 	
@@ -230,6 +230,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Group group) throws IllegalArgumentException {
+		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistsOf(group);
+		
+		//Bevor eine Gruppe geloescht wird, werden alle Einkauslisten der Gruppe
+		//geloescht.
+		if (shoppinglists != null) {
+			for (Shoppinglist s : shoppinglists) {
+				this.delete(s);
+			}
+		}
+		
 		this.groupMapper.delete(group);
 	}
 	
@@ -273,31 +283,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public Group getGroupById(int id) throws IllegalArgumentException {
 		return this.groupMapper.getGroupsOf(id);
-	}
-	
-	
-	
-/**
- * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Listitem-Objekte
- * 
- * **********************************************************************************
- **/
-	
-	
-	//????
-	public Listitem getListitem() throws IllegalArgumentException {
-		Listitem item = this.getListitem();
-		return item;
-	}
-	
-	public ArrayList<Listitem> getListitems() throws IllegalArgumentException {
-		ArrayList<Listitem> items = this.getListitems();
-		return items;
-	}
-	
-	public void deleteListitem() throws IllegalArgumentException {
-		
 	}
 	
 	@Override
@@ -514,7 +499,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	@Override
-	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {
+	public ArrayList<Shoppinglist>  getShoppinglistsOf(Group group) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
