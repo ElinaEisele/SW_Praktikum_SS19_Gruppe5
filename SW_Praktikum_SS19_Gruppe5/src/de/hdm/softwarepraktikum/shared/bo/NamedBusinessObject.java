@@ -35,7 +35,9 @@ public class NamedBusinessObject extends BusinessObject{
 	 * @param name
 	 */
 	public NamedBusinessObject(String name) {
+		super();
 		this.setName(name);
+		
 	}
 	
 	/*
