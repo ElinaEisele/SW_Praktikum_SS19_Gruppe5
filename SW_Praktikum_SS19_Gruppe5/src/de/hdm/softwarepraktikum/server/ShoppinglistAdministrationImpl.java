@@ -224,20 +224,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  **/
 	
 	
-	public Listitem getListitem() throws IllegalArgumentException {
-		Listitem item = this.getListitem();
-		return item;
-	}
-	
-//	public ArrayList<Listitem> getListitems() throws IllegalArgumentException {
-//		ArrayList<Listitem> items = this.getListitems();
-//		return items;
-//	}
-	
-	public void deleteListitem() throws IllegalArgumentException {
-		
-	}
-	
 	@Override
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit,
 			Retailer retailer) throws IllegalArgumentException {
