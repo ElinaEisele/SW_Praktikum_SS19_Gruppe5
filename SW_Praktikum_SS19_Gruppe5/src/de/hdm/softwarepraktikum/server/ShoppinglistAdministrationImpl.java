@@ -457,7 +457,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Shoppinglist createShoppinglist(Group group, String name) throws IllegalArgumentException {
+	public Shoppinglist createShoppinglistFor(Group group, String name) throws IllegalArgumentException {
 		Shoppinglist sl = new Shoppinglist(name);
 		sl.setGroupId(group.getId());
 		
