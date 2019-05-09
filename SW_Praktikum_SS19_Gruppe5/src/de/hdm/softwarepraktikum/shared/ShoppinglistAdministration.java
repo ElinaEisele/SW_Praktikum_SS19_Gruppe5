@@ -87,15 +87,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
-	 * Ein Standardeintrag anlegen ohne Unit, Retailer und Menge
-	 * @param product zu beschaffender Artikel
-	 * @param group Gruppe, in welcher der Standardartikel hinzugefueft werden soll
-	 * @return fertiges Listitem-Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Listitem standardListitem(Product product, Group group) throws IllegalArgumentException;
-	
-	/**
 	 * Einen Retailer anlegen
 	 * @param name Name des Einzelhaendlers
 	 * @return fertiges Listitem-Objekt
@@ -378,7 +369,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void getProductOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
-	 * Ausgeben von allen Listitems aus einer Gruppe
+	 * Ausgeben von allen Standard-Listitems aus einer Gruppe
 	 * @param group ist die Gruppe, aus welcher die StandardListitems ausgegeben werden sollen
 	 * @return ArrayList mit Listitem-Objekte, welche innerhalb einer Gruppe als StandardListitems markiert wurden
 	 * @throws IllegalArgumentException
