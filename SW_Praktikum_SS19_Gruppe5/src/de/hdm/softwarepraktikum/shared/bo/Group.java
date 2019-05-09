@@ -31,6 +31,13 @@ public class Group extends NamedBusinessObject implements IsSerializable{
 	 */
 	private ArrayList<Listitem> standardListitem;
 	
+	/*
+	 * Default-Konstruktor
+	 */
+	public Group() {
+		super();
+	}
+	
 	/**
 	 * Konstruktor zum Setzen des Namens.
 	 */
