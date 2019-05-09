@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.shared.bo.User;
+import de.hdm.softwarepraktikum.shared.*;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Mapper Klasse für </code>User</code> Objekte. Diese umfasst Methoden um User
