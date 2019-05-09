@@ -1,3 +1,4 @@
+
 package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
