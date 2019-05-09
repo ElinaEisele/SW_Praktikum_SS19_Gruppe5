@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.*;
 import de.hdm.softwarepraktikum.shared.bo.*;
-import javafx.scene.Group;
 
 /**
  * Mapper Klasse für </code>Group</code> Objekte. Diese umfasst Methoden um
@@ -20,6 +19,7 @@ import javafx.scene.Group;
  */
 
 public class GroupMapper {
+	
 
 	/**
 	 * Speicherung der Instanz dieser Mapperklasse.
@@ -98,7 +98,7 @@ public class GroupMapper {
 			if (rs.next()) {
 
 				Group group = new Group();
-				group.setBOid(rs.getInt("group_id"));
+				group.setId(rs.getInt("group_id"));
 				group.setName(rs.getString("name"));
 				group.setCreationDate(rs.getString("creationDate"));
 				return group;
