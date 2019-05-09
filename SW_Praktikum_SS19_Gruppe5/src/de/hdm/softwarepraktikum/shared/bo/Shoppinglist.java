@@ -1,8 +1,6 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
 import java.util.ArrayList;
-import java.util.Date;
-
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
@@ -25,6 +23,13 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	 * Fremdschlüsselbeziehung zur Gruppe, in welcher sich die Einkaufsliste befindet
 	 */
 	private int groupId = 1;
+	
+	/*
+	 * Default-Konstruktor
+	 */
+	public Shoppinglist() {
+		super();
+	}
 	
 	/**
 	 * Konstruktor, in welchem der Name gesetzt wird.

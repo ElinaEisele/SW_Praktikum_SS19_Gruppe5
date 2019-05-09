@@ -13,6 +13,13 @@ public class Retailer extends NamedBusinessObject implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	/*
+	 * Default-Konstruktor
+	 */
+	public Retailer() {
+		super();
+	}
+	
 	/**
 	 * Konstruktor zum Setzen des Namens des Händlers.
 	 */

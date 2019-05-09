@@ -37,6 +37,13 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 */
 	private int retailerID;
 	
+	/*
+	 * Default-Konstruktor
+	 */
+	public Listitem() {
+		super();
+	}
+	
 	/**
 	 * Konstruktor zum Setzen des Namen, der Menge und der Einheit.
 	 */
