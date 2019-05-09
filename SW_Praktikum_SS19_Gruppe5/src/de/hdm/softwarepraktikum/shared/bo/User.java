@@ -6,7 +6,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Realisierung der Klasse User, welche einen Nutzer des Programms darestellt. Dieser kann Mitglied von
  * verschiedenen Gruppen sein.
  * 
- * @author Felix Rapp
+ * @author FelixRapp, TimBeutelspacher
  */
 
 public class User extends NamedBusinessObject implements IsSerializable{
@@ -32,6 +32,13 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	 * Logout URL
 	 */
 	private String logoutUrl;
+	
+	/*
+	 * Default-Konstruktor, welcher den Konstruktor in NamedBusinessObject aufruft
+	 */
+	public User() {
+		super();
+	}
 	
 	/**
 	 * Konstruktor zum Setzen des Namens.
