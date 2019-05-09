@@ -25,7 +25,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 
 /**
  * Die Klasse <code>ShoppinglistAdministrationImpl</code> implementiert das Interface
- * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl sämtliche
+ * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl sÃ¤mtliche
  * Applikationslogik vorhanden.
  * 
  * @author CarlaHofmann & TimBeutelspacher
@@ -96,8 +96,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void init() throws IllegalArgumentException {
 
 		/**
-		 * Um mit der Datenbank kommunizieren zu können benäftigt die Klasse
-		 * ContactadministrationImpl einen vollständigen Satz von Mappern.
+		 * Um mit der Datenbank kommunizieren zu kÃ¶nnen benÃ¤ftigt die Klasse
+		 * ContactadministrationImpl einen vollstÃ¤ndigen Satz von Mappern.
 		 */
 
 		this.groupMapper = GroupMapper.groupMapper();
@@ -111,7 +111,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für BO-Objekte
+ * ABSCHNITT, Beginn: Methoden fÃ¼r BO-Objekte
  * 
  * **********************************************************************************
  **/
@@ -136,7 +136,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Named BO-Objekte
+ * ABSCHNITT, Beginn: Methoden fÃ¼r Named BO-Objekte
  * 
  * **********************************************************************************
  **/
@@ -153,7 +153,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Group-Objekte
+ * ABSCHNITT, Beginn: Methoden fÃ¼r Group-Objekte
  * 
  * **********************************************************************************
  **/
@@ -199,16 +199,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Eine Gruppe anlegen
+	 * Eine Gruppe anlegen.
 	 * @param name Gruppenname
 	 * @return fertiges Group-Objekt
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Group createGroup(String name) throws IllegalArgumentException {
+	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
 		this.groupMapper.insert(group);
-		//User hinzufügen Methode fehlt
+		group.getUsers().add(this);
 		return group;
 	}
 	
@@ -230,6 +230,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Group group) throws IllegalArgumentException {
+		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistsOf(group);
+		
+		//Bevor eine Gruppe geloescht wird, werden alle Einkauslisten der Gruppe
+		//geloescht.
+		if (shoppinglists != null) {
+			for (Shoppinglist s : shoppinglists) {
+				this.delete(s);
+			}
+		}
+		
 		this.groupMapper.delete(group);
 	}
 	
@@ -256,7 +266,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	/**
 	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
 	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList sï¿½mtlicher Gruppen eines Users
+	 * @return ArrayList sÃ¯Â¿Â½mtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
 	@Override
@@ -275,29 +285,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.groupMapper.getGroupsOf(id);
 	}
 	
-	
-	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Listitem-Objekte
+ * ABSCHNITT, Beginn: Methoden fÃ¼r Listitem-Objekte
  * 
  * **********************************************************************************
  **/
-	
-	
-	public Listitem getListitem() throws IllegalArgumentException {
-		Listitem item = this.getListitem();
-		return item;
-	}
-	
-	public ArrayList<Listitem> getListitems() throws IllegalArgumentException {
-		ArrayList<Listitem> items = this.getListitems();
-		return items;
-	}
-	
-	public void deleteListitem() throws IllegalArgumentException {
-		
-	}
 	
 	@Override
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit,
@@ -405,7 +398,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Product-Objekte
+ * ABSCHNITT, Beginn: Methoden fÃ¼r Product-Objekte
  * 
  * **********************************************************************************
  **/
@@ -430,7 +423,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Retailer-Objekte
+ * ABSCHNITT, Beginn: Methoden fÃ¼r Retailer-Objekte
  * 
  * **********************************************************************************
  **/
@@ -484,7 +477,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Shoppinglist-Objekte
+ * ABSCHNITT, Beginn: Methoden fÃ¼r Shoppinglist-Objekte
  * 
  * **********************************************************************************
  **/
@@ -501,7 +494,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		Shoppinglist sl = new Shoppinglist(name);
 		sl.setGroupId(group.getId());
 		
-		//Standardeinträge hinzufuegen
+		//StandardeintrÃ¤ge hinzufuegen
 		sl.getListitems().addAll(getStandardListitemsOf(group));
 		
 		// Objekt in der Datenbank speichern.
@@ -521,7 +514,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	@Override
-	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {
+	public ArrayList<Shoppinglist>  getShoppinglistsOf(Group group) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -542,7 +535,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für User-Objekte
+ * ABSCHNITT, Beginn: Methoden fÃ¼r User-Objekte
  * 
  * **********************************************************************************
  **/
