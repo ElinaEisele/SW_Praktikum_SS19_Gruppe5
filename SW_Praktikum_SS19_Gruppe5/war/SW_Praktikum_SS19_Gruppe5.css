@@ -144,30 +144,7 @@ body {
 }
 
 /* ShoppinglistEditorEntry.java: */
-.HeaderButton1 {
-	color: white;
-	font-weight: bold;
-	font-size: 150%;
-	background: transparent;
-	border: 0px solid white;
-	border-radius: 5px;
-	padding: 5px 10px;
-}
-
-.HeaderButton1:active {
-	border: 0px inset #ccc;
-	background: transparent;
-	border: 0px solid white;
-	border-radius: 5px;
-}
-
-.HeaderButton1:hover {
-	background: skyblue;
-	border-color: transparent;
-	border: 0px solid white;
-	border-radius: 5px;
-}
-.HeaderButton2 {
+.HeaderButton {
 	color: white;
 	font-weight: bold;
 	font-size: 150%;
@@ -177,20 +154,20 @@ body {
 	padding: 5px 10px;
 }
 
-.HeaderButton2:active {
+.HeaderButton:active {
 	border: 0px inset #ccc;
 	background: transparent;
 	border: 1px solid white;
 	border-radius: 5px;
 }
 
-.HeaderButton2:hover {
+.HeaderButton:hover {
 	background: skyblue;
 	border-color: transparent;
 	border: 1px solid white;
 	border-radius: 5px;
 }
-.HeaderButton3 {
+/* .HeaderButton3 {
 	color: white;
 	font-weight: bold;
 	font-size: 150%;
@@ -216,53 +193,31 @@ body {
 	border-color: transparent;
 	border: 0px solid white;
 	border-radius: 5px;
-}
+} */
 /* Trailer.java: */
 .TrailerButton {
 	color: white;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	border-radius: 5px;
-	padding: 5px 10px;
-	margin-left: 5px;
-	
-	border-top: 2px solid rgba(255, 255, 255, 0.3);
-	border-bottom: 2px solid rgba(0, 0, 0, 0.1); 
-	
-/* 	color: white;
-	font-weight: bold;
-	font-size: 150%;
-	background: transparent;
-	border: 0px solid white;
+	border: 1px solid white;
 	border-radius: 5px;
 	margin-right: 5px;
 	margin-left: 5px;
-	padding: 5px 10px; */
+	padding: 5px 10px;
 }
 
 .TrailerButton:active {
-	border: 0px inset #ccc;
 	background: transparent;
-	border: 0px solid white;
+	border: 1px solid white;
 	border-radius: 5px;
-	
-	/* background: transparent;
-	border: 0px solid white;
-	border-radius: 5px; */
 }
 
 .TrailerButton:hover {
 	background: skyblue;
 	border-color: transparent;
-	border: 0px solid white;
+	border: 1px solid white;
 	border-radius: 5px;
-	
-	/* background: skyblue;
-	border-color: transparent;
-	border: 0px solid white;
-	border-radius: 5px; */
 }
 
 /* ShoppinglistHeader.java: */
@@ -271,26 +226,23 @@ body {
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
-	border: 1px solid rgba(0, 0, 0, 0.1);
+	border: 1px solid white;
 	border-radius: 5px;
-	padding: 5px 10px;
+	margin-right: 5px;
 	margin-left: 5px;
-	
-	border-top: 2px solid rgba(255, 255, 255, 0.3);
-	border-bottom: 2px solid rgba(0, 0, 0, 0.1); 
+	padding: 5px 10px;
 }
 
 .ShoppinglistHeaderButton:active {
-	border: 0px inset #ccc;
 	background: transparent;
-	border: 0px solid white;
+	border: 1px solid white;
 	border-radius: 5px;
 }
 
 .ShoppinglistHeaderButton:hover {
 	background: skyblue;
 	border-color: transparent;
-	border: 0px solid white;
+	border: 1px solid white;
 	border-radius: 5px;
 }
 
