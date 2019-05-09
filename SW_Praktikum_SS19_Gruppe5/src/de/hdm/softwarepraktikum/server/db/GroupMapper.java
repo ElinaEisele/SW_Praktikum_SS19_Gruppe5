@@ -59,12 +59,12 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT group_id, name, creationDate FROM Groups");
+			ResultSet rs = stmt.executeQuery("SELECT usergroup_id, name, creationDate FROM usergroups");
 
 			while (rs.next()) {
 
 				Group group = new Group();
-				group.setId(rs.getInt("group_id"));
+				group.setId(rs.getInt("usergroup_id"));
 				group.setName(rs.getString("name"));
 				group.setCreationDate(rs.getDate("creationDate"));
 				groups.add(group);
