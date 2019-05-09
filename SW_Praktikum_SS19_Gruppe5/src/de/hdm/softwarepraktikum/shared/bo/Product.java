@@ -19,6 +19,12 @@ public class Product extends NamedBusinessObject implements IsSerializable{
 	private int listitemID;
 	
 	/*
+	 * Default-Konstruktor
+	 */
+	public Product() {
+		super();
+	}
+	/*
 	 * Konstruktor, in welchem der Name gesetzt wird.
 	 */
 	public Product(String productname) {

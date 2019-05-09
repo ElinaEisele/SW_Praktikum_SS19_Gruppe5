@@ -18,7 +18,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * <p>
- * Synchrone Schnittstelle f�r eine RPC-f�hige Klasse zur Verwaltung von Shoppinglists.
+ * Synchrone Schnittstelle fuer eine RPC-faehige Klasse zur Verwaltung von Shoppinglists.
  * </p>
  * <p>
  * <code>@RemoteServiceRelativePath("shoppinglistadministration")</code> ist bei der
