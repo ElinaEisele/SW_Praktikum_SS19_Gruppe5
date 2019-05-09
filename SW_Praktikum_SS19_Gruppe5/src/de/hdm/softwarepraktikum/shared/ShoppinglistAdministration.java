@@ -11,11 +11,9 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Product;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.Unit;
 import de.hdm.softwarepraktikum.shared.bo.User;
-import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
-import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
-import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 
 
 /**
@@ -36,16 +34,18 @@ import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 public interface ShoppinglistAdministration extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
 	
-	//Methode zum Testen der Dummydata fuer die Registrierung
-	public void saveUser(User u) throws IllegalArgumentException;; 
-	
-	ArrayList<Group> getAllGroups();
+		
+	/**
+	 * Alle Gruppen werden ausgegeben.
+	 * @return ArrayList mit Group-Objekten
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Group> getAllGroups() throws IllegalArgumentException;
 
 	  /**
 	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
-	   * RPC zus�tzlich zum No Argument Constructor der implementierenden Klasse
-	   * {@link ShoppinglistAdministrationImpl} notwendig. Bitte diese Methode direkt nach der
-	   * Instantiierung aufrufen.
+	   * RPC zusaetzlich zum No Argument Constructor der implementierenden Klasse
+	   * notwendig. Bitte diese Methode direkt nach der Instantiierung aufrufen.
 	   * 
 	   * @throws IllegalArgumentException
 	   */
@@ -65,16 +65,16 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Group-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public GroupDD createGroup(String name) throws IllegalArgumentException;
+	public Group createGroup(String name) throws IllegalArgumentException;
 	
 	/**
 	 * Eine Shoppinglist anlegen
-	 * @param group Gruppe, welcher eine Shoppinglist hinzugef�gt werden soll
+	 * @param group Gruppe, welcher eine Shoppinglist hinzugefuegt werden soll
 	 * @param name Name der Shoppinglist
 	 * @return fertiges Shoppinglist-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public ShoppinglistDD createShoppinglist(GroupDD group, String name) throws IllegalArgumentException;
+	public Shoppinglist createShoppinglist(Group group, String name) throws IllegalArgumentException;
 	
 	/**
 	 * Ein Listitem anlegen
@@ -82,11 +82,11 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
 	 * @param unit Mengeneinheit 
-	 * @param retailer Einzelh�ndler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die M�glichkeit "Noch nicht bekannt" ausgew�hlt werden.
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(ShoppinglistDD shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Ein Standardeintrag anlegen ohne Unit, Retailer und Menge
@@ -95,11 +95,11 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem standardListitem(Product product, GroupDD group) throws IllegalArgumentException;
+	public Listitem standardListitem(Product product, Group group) throws IllegalArgumentException;
 	
 	/**
 	 * Einen Retailer anlegen
-	 * @param name Name des Einzelh�ndlers
+	 * @param name Name des Einzelhaendlers
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
@@ -124,7 +124,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param shoppinglist, Shoppinglist-Objekt, welches in der Datenbank gespeichert weden soll
 	 * @throws IllegalArgumentException
 	 */
-	public void save(ShoppinglistDD shoppinglist) throws IllegalArgumentException;
+	public void save(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Speichern eines Listitem-Objekt in der Datenbank
@@ -141,51 +141,51 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Retailer retailer) throws IllegalArgumentException;
 	
 	/**
-	 * L�schen des �bergebenen User-Objekts
-	 * @param user User-Objekt, welches in der Datenbank gel�scht werden soll
+	 * Loeschen des uebergebenen User-Objekts
+	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void delete(User user) throws IllegalArgumentException;
 	
 	/**
-	 * L�schen des �bergebenen Group-Objekts
-	 * @param group Group-Objekt, welches in der Datenbank gel�scht werden soll
+	 * Loeschen des uebergebenen Group-Objekts
+	 * @param group Group-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
 	 */
-	public void delete(GroupDD group) throws IllegalArgumentException;
+	public void delete(Group group) throws IllegalArgumentException;
 	
 	/**
-	 * L�schen des �bergebenen Shoppinglist-Objekts
-	 * @param shoppinglist Shoppinglist-Objekt, welches in der Datenbank gel�scht werden soll
+	 * Loeschen des uebergebenen Shoppinglist-Objekts
+	 * @param shoppinglist Shoppinglist-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
 	 */
-	public void delete(ShoppinglistDD shoppinglist) throws IllegalArgumentException;
+	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * L�schen des �bergebenen Listitem-Objekts
+	 * Loeschen des uebergebenen Listitem-Objekts
 	 * @param listitem Listitem-Objekt, welches in der Datenbank gel�scht werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void delete(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Gruppen eines Users-Objekts ausgeben
+	 * Saemtliche Gruppen eines Users-Objekts ausgeben
 	 * @param user Nutzer, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList s�mtlicher Gruppen eines Users
+	 * @return ArrayList saemtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<GroupDD> getGroupsOf(User user) throws IllegalArgumentException;
+	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Gruppen eines Users mit Hilfe der UserID ausgeben
+	 * Saemtliche Gruppen eines Users mit Hilfe der UserID ausgeben
 	 * @param userId ID eines Nutzers, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList s�mtlicher Gruppen eines Users
+	 * @return ArrayList saemtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
+	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
 	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
 	 * @return ArrayList s�mtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
@@ -193,31 +193,31 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
 	
 	/**
-	 * R�ckgabe eines bestimmten Group-Objekts
+	 * Rueckgabe eines bestimmten Group-Objekts
 	 * @param id ID der gesuchten Gruppe
 	 * @return Das erste Group-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
 	 */
-	public GroupDD getGroupById(int id) throws IllegalArgumentException;
+	public Group getGroupById(int id) throws IllegalArgumentException;
 	
 	/**
-	 * S�mliche Mitglieder einer Gruppe ausgeben mit Hilfe der �bergabe eines Gruppen-Objekts
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der �bergabe eines Gruppen-Objekts
 	 * @param group Gruppe, deren Mitglieder ausgegeben werden sollen
 	 * @return ArrayList s�mtlicher Mitglieder einer Gruppe
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<User> getUsersOf(GroupDD group) throws IllegalArgumentException;
+	public ArrayList<User> getUsersOf(Group group) throws IllegalArgumentException;
 	
 	/**
-	 * S�mliche Mitglieder einer Gruppe ausgeben mit Hilfe der �bergabe der ID eines Gruppen-Obejekts
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der uebergabe der ID eines Gruppen-Obejekts
 	 * @param groupId GruppenID von einer Gruppe, deren Mitglieder ausgegeben werden sollen
-	 * @return ArrayList s�mtlicher Mitglieder einer Gruppe
+	 * @return ArrayList saemtlicher Mitglieder einer Gruppe
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException;
 	
 	/**
-	 * R�ckgabe eines User-Objekts mit einer bestimmten ID
+	 * Rueckgabe eines User-Objekts mit einer bestimmten ID
 	 * @param userId ID des gesuchten User-Objekts
 	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
@@ -225,9 +225,9 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public User getUserById(int userId) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
+	 * Saemtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
 	 * @param name Username
-	 * @return ArrayList s�mtlicher User-Objekte, welche einen bestimmten Namen besitzen
+	 * @return ArrayList saemtlicher User-Objekte, welche einen bestimmten Namen besitzen
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<User> getUsersByName(String name) throws IllegalArgumentException;
@@ -235,21 +235,21 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * User-Objekt mit einer bestimmten E-Mail-Adresse wird ausgegeben
 	 * @param mail ist die EMail des gesuchten Users
-	 * @return User, welcher �bergebene EMail-Adresse besitzt
+	 * @return User, welcher uebergebene EMail-Adresse besitzt
 	 * @throws IllegalArgumentException
 	 */
 	public User getUserByMail(String mail) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Shoppinglist-Objekte aus einer Gruppe werden ausgegeben
+	 * Saemtliche Shoppinglist-Objekte aus einer Gruppe werden ausgegeben
 	 * @param group Gruppe, deren Shoppinglist-Objekte ausgegeben werden sollen
 	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Shoppinglist> getShoppinglistsOf(GroupDD group) throws IllegalArgumentException;
+	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Shoppinglist-Objekt mit einem bestimmten Namen werden ausgegeben
+	 * Saemtliche Shoppinglist-Objekt mit einem bestimmten Namen werden ausgegeben
 	 * @param name ist die Bezeichnung der gesuchten Shoppinglists
 	 * @return ArrayList mit Shoppinglist-Objekten, welche einen bestimmten Namen besitzen
 	 * @throws IllegalArgumentException
@@ -257,7 +257,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException;
 	
 	/**
-	 * Das Shoppinglist-Objekt mit der �bergebenen ID wird ausgegeben
+	 * Das Shoppinglist-Objekt mit der uebergebenen ID wird ausgegeben
 	 * @param shoppinglistId ist die ID der gesuchten Shoppinglist
 	 * @return Das erste Shoppinglist-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
@@ -271,25 +271,25 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekten, welche eine bestimmte Prosuktbezeichung enthalten
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> getListitemsOf(ShoppinglistDD shoppinglist, String productname) throws IllegalArgumentException;
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist, String productname) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben
+	 * Saemtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben
 	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen
 	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> getAllListitemsOf(ShoppinglistDD shoppinglist) throws IllegalArgumentException;
+	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Retailer-Objetke werden ausgegeben
+	 * Saemtliche Retailer-Objetke werden ausgegeben
 	 * @return ArrayList mit allen Retailer-Objekten
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Retailer-Objekte mit einem bestimmten Namen werden ausgegeben
+	 * Saemtliche Retailer-Objekte mit einem bestimmten Namen werden ausgegeben
 	 * @param name ist die Bezeichnung der gesuchten Retailer-Objekte
 	 * @return ArrayList mit allen Ratailer-Objekten, welche einen bestimmten Namen besitzen
 	 * @throws IllegalArgumentException
@@ -305,25 +305,25 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Retailer getRetailerById(int retailerId) throws IllegalArgumentException; 
 	
 	/**
-	 * S�mtliche Retailer-Objekte in einer Shoppinglist werden ausgegeben
+	 * Saemtliche Retailer-Objekte in einer Shoppinglist werden ausgegeben
 	 * @param shoppinglist ist die Einkaufsliste, in welcher nach allen Retailer-Objekten gesucht wird
 	 * @return ArrayList mit allen Retailer-Objekten innerhalb einer bestimmten Shoppinglist
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Retailer> getRetailersOf(ShoppinglistDD shoppinglist) throws IllegalArgumentException;
+	public ArrayList<Retailer> getRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Retailer-Objekte einer Shoppinglist, welche einem bestimmten User zugeordnet sind werden ausgegeben
+	 * Saemtliche Retailer-Objekte einer Shoppinglist, welche einem bestimmten User zugeordnet sind werden ausgegeben
 	 * @param shoppinglist shoppinglist ist die Einkaufsliste, in welcher nach allen Retailer-Objekten gesucht wird
-	 * @param user ist der Nutzer, nach wessen zugewiesenen Einzelh�ndlern gesucht wird
+	 * @param user ist der Nutzer, nach wessen zugewiesenen Einzelhaendlern gesucht wird
 	 * @return ArrayList mit allen Retailer-Objekten innerhalb einer bestimmten Shoppinglist, welche einem besimmten Nutzer zugeordnet sind
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Retailer> getRetailersOf(ShoppinglistDD shoppinglist, User user) throws IllegalArgumentException;
+	public ArrayList<Retailer> getRetailersOf(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
 	
 	/**
 	 * Ein Retailer-Objekt wird einem Listitem als Beschaffungsort zugewiesen
-	 * @param retailer ist der Einzel�ndler, welcher als Beschaffungsort eines Eintrags gilt
+	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param listitem ist der Eintrag, welchem der Retailer zugeordnet wird
 	 * @throws IllegalArgumentException
 	 */
@@ -332,7 +332,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Ein Nutzer wird einem Eintrag als Verantwortlicher zugeordnet
 	 * @param user ist der Nutzer, welcher einem Eintrag als Verantwortlicher zugeordnet wird
-	 * @param listitem ist er Eintrag, welcher einen Nutzer als Verantwortlichen erh�lt
+	 * @param listitem ist er Eintrag, welcher einen Nutzer als Verantwortlichen erhaelt
 	 * @throws IllegalArgumentException
 	 */
 	public void assignUser (User user, Listitem listitem) throws IllegalArgumentException;
@@ -350,8 +350,8 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param product ist das Produkt, welches sich in dem Listitem-Objekt befindet
 	 * @param amount ist die Menge des zu besorgenden Produkts bezogen auf die angegebene Mengenienheit
 	 * @param unit ist die Mengeneinheit, in welcher die Menge angegeben wird
-	 * @param retailer ist der Einzelh�ndler, bei welchem das Produkt zu besorgen ist
-	 * @param user ist der Nutzer, welcher f�r das Besorgen des Produkts verantwortlich ist
+	 * @param retailer ist der Einzelhaendler, bei welchem das Produkt zu besorgen ist
+	 * @param user ist der Nutzer, welcher fuer das Besorgen des Produkts verantwortlich ist
 	 */
 	public void setListitem(Product product, float amount, Unit unit, Retailer retailer, User user) throws IllegalArgumentException;
 	
@@ -360,7 +360,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param product ist das Produkt, welches sich in dem Listitem-Objekt befindet
 	 * @param amount ist die Menge des zu besorgenden Produkts bezogen auf die angegebene Mengenienheit
 	 * @param unit ist die Mengeneinheit, in welcher die Menge angegeben wird
-	 * @param retailer ist der Einzelh�ndler, bei welchem das Produkt zu besorgen ist
+	 * @param retailer ist der Einzelhaendler, bei welchem das Produkt zu besorgen ist
 	 */
 	public void setListitem(Product product, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
 	
@@ -370,7 +370,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
 	 * @throws IllegalArgumentException
 	 */
-	public void setStandardListitem(Listitem listitem, GroupDD group) throws IllegalArgumentException; 
+	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException; 
 	
 	/**
 	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
@@ -385,33 +385,33 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekte, welche innerhalb einer Gruppe als StandardListitems markiert wurden
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> getStandardListitemsOf(GroupDD group) throws IllegalArgumentException;
+	public ArrayList<Listitem> getStandardListitemsOf(Group group) throws IllegalArgumentException;
 	
 	/**
 	 * Filtern einer Einkaufsliste nach Verantwortungsbereich eines Nutzers
 	 * @param shoppinglist ist die Einkaufsliste, in welcher nach Verantwortungsbereich eines bestimmten Nutzers gefiltert werden soll
 	 * @param user ist der Nutzer, nach wessen Verantwortungsbereich gefiltert werden soll
-	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungberiehc eines Nutzers liegen
+	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungbereichc eines Nutzers liegen
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByUsername(ShoppinglistDD shoppinglist, User user) throws IllegalArgumentException;
+	public ArrayList<Listitem> filterShoppinglistsByUsername(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
 	
 	/**
-	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelh�ndler zugeordnet sind
-	 * @param shoppinglist ist die Einkaufslsite, in welcher nach Einzelh�ndler gefiltert werden soll
-	 * @param retailer ist der Einzelh�ndler, nach welchem die Einkaufsliste gefiltert werden soll
-	 * @return ArrayList mit Listitem-Objekten, welche einem bestimmten Einzelh�ndler zugeordnet sind
+	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
+	 * @param shoppinglist ist die Einkaufslsite, in welcher nach Einzelhaendler gefiltert werden soll
+	 * @param retailer ist der Einzelhaendler, nach welchem die Einkaufsliste gefiltert werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByRetailer(ShoppinglistDD shoppinglist, Retailer retailer) throws IllegalArgumentException;
+	public ArrayList<Listitem> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
 	 * @param user ist ein Nutzer, welcher einer Gruppe hinzugefuegt wird
-	 * @param group ist eine Gruppe, welcher ein User-Objekt hinzugf�gt wird
+	 * @param group ist eine Gruppe, welcher ein User-Objekt hinzugfuegt wird
 	 * @throws IllegalArgumentException
 	 */
-	public void addUserToGroup(User user, GroupDD group) throws IllegalArgumentException;
+	public void addUserToGroup(User user, Group group) throws IllegalArgumentException;
 	
 	/**
 	 * Ein User-Objekt soll von einer Gruppe entfernt werden
@@ -419,35 +419,35 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param group ist eine Gruppe, von welcher ein User-Objekt entfernt werden soll
 	 * @throws IllegalArgumentException
 	 */
-	public void removeUserFromGroup(User user, GroupDD group) throws IllegalArgumentException;
+	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException;
 	
 	/**
-	 * Setzen einer Bezeichnung f�r ein Produkt
+	 * Setzen einer Bezeichnung fuer ein Produkt
 	 * @param name ist die Bezeichnung des Produkts
-	 * @param product ist das Produkt, welches die Bezcihung erh�lt
+	 * @param product ist das Produkt, welches die Bezeichnung erh�lt
 	 * @throws IllegalArgumentException
 	 */
 	public void setProductName(String name, Product product) throws IllegalArgumentException;
 	
 	/**
-	 * Setzen einer Menge f�r einen Eintrag
+	 * Setzen einer Menge fuer einen Eintrag
 	 * @param amount ist die Menge
-	 * @param listitem ist der Eintrag, f�r welchen die Menge gesetzt wird
+	 * @param listitem ist der Eintrag, fuer welchen die Menge gesetzt wird
 	 * @throws IllegalArgumentException
 	 */
 	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException;
 	
 	/**
-	 * Setzen einer Mengeneinheit f�r ein Listitem-Objekt
-	 * @param unit ist die Mengeneinheit, welche einem Listitem-Objekt hinzugef�gt wird
-	 * @param listitem ist der Eintrag, welchem eine Menge hinzugef�gt wird
+	 * Setzen einer Mengeneinheit fuer ein Listitem-Objekt
+	 * @param unit ist die Mengeneinheit, welche einem Listitem-Objekt hinzugefuegt wird
+	 * @param listitem ist der Eintrag, welchem eine Menge hinzugefuegt wird
 	 * @throws IllegalArgumentException
 	 */
 	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgeben der Mengeneinheit eines Eintrags
-	 * @param listitem ist der Eintrag, dessen Mengeneinheit zur�ckgegeben wird
+	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird
 	 * @return Unit 
 	 * @throws IllegalArgumentException
 	 */
@@ -461,4 +461,3 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public float getAmount(Listitem listitem) throws IllegalArgumentException;
 }
-

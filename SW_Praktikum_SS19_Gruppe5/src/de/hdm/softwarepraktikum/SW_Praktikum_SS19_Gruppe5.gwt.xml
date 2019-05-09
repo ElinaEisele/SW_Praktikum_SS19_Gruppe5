@@ -21,7 +21,7 @@
   <!-- Other module inherits                                      -->
 
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin'/>
+  <entry-point class='de.hdm.softwarepraktikum.client.ShoppinglistEditorEntry'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
