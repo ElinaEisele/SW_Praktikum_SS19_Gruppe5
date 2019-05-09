@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
@@ -63,11 +64,16 @@ public class RetailerMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT retailer_id, name, creationDate FROM retailers");
 
 			while (rs.next()) {
 
 				Retailer retailer = new Retailer();
+				retailer.setId(rs.getInt("retailer_id"));
+				retailer.setName(rs.getString("name"));
+				retailer.setCreationDate(rs.getString("creationDate"));
+				
+				retailers.add(retailer);
 			}
 
 		} catch (SQLException e) {
@@ -92,9 +98,14 @@ public class RetailerMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ... ");
+			ResultSet rs = stmt.executeQuery("SELECT retailer_id, name, creationDate FROM retailers WHERE retailer_id = \" + id);");
 			if (rs.next()) {
 
+				Retailer retailer = new Retailer();
+				retailer.setId(rs.getInt("retailer_id"));
+				retailer.setName(rs.getString("name"));
+				retailer.setCreationDate(rs.getString("creationDate"));
+				return retailer;
 			}
 		} catch (
 
@@ -122,11 +133,16 @@ public class RetailerMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT retailer_id, name, creationDate FROM retailers WHERE name = " + name);
 
 			while (rs.next()) {
 
 				Retailer retailer = new Retailer();
+				retailer.setId(rs.getInt("retailer_id"));
+				retailer.setName(rs.getString("name"));
+				retailer.setCreationDate(rs.getString("creationDate"));
+				
+				retailers.add(retailer);
 			}
 
 		} catch (SQLException e) {
@@ -152,7 +168,7 @@ public class RetailerMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ... ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM retailers ");
 
 			if (rs.next()) {
 
