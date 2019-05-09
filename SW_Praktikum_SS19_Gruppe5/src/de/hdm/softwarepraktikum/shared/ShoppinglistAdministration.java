@@ -15,6 +15,7 @@ import de.hdm.softwarepraktikum.shared.bo.Unit;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
+import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 
 
 /**
@@ -34,6 +35,9 @@ import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 @RemoteServiceRelativePath("administration")
 public interface ShoppinglistAdministration extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
+	
+	//Methode zum Testen der Dummydata fuer die Registrierung
+	public void saveUser(User u) throws IllegalArgumentException;; 
 	
 	ArrayList<Group> getAllGroups();
 
@@ -113,7 +117,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param group Group-Objekt, welches in der Datenbank gespeichert werden soll
 	 * @throws IllegalArgumentException
 	 */
-	public void save(GroupDD group) throws IllegalArgumentException;
+	public void save(Group group) throws IllegalArgumentException;
 	
 	/**
 	 * Speichern eines Shoppinglist-Objekts in der Datenbank
@@ -258,7 +262,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return Das erste Shoppinglist-Objekt, welches den Suchkriterien entspricht
 	 * @throws IllegalArgumentException
 	 */
-	public ShoppinglistDD getShoppinglistById(int shoppinglistId) throws IllegalArgumentException;
+	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException;
 	
 	/**
 	 * S�mtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zur�ckgegeben
