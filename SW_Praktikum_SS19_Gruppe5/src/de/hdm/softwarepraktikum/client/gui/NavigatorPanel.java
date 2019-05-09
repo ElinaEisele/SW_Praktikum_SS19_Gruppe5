@@ -20,6 +20,7 @@ public class NavigatorPanel extends CellTree {
 		// TODO Auto-generated constructor stub
 	}
 
+
 	GroupShoppinglistTreeViewModel gstvm = null;
 	
 	VerticalPanel navigatorPlatzhalter = null;

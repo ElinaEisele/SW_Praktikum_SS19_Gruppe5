@@ -16,6 +16,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
+import de.hdm.softwarepraktikum.client.gui.RegistrationForm;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
@@ -41,8 +42,10 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 
 	private Header header = null;
 	private NavigatorPanel shoppinglistNavigator = null;
+	
 	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private GroupShowForm groupShowForm = null;
+	
 	private Trailer trailer = null;
 
 	/**

@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 
 import de.hdm.softwarepraktikum.shared.CommonSettings;
+import de.hdm.softwarepraktikum.shared.LoginService;
+import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 
@@ -24,6 +26,7 @@ public class ClientsideSettings extends CommonSettings{
 	 */
 
 	private static ShoppinglistAdministrationAsync shoppinglistAdministration = null;
+	private static LoginServiceAsync loginService = null;
 	
 	/**
 	 * Name des Client-seitigen Loggers.
@@ -47,7 +50,7 @@ public class ClientsideSettings extends CommonSettings{
 	   * Anlegen und Auslesen der applikationsweit eindeutigen ShoppinglistAdministration. Diese
 	   * Methode erstellt die ShoppinglistAdministration, sofern sie noch nicht existiert. Bei
 	   * wiederholtem Aufruf dieser Methode wird stets das bereits zuvor angelegte
-	   * Objekt zurückgegeben.
+	   * Objekt zurï¿½ckgegeben.
 	   * </p>
 	   * 
 	   * <p>
@@ -66,5 +69,12 @@ public class ClientsideSettings extends CommonSettings{
 		return shoppinglistAdministration;
 
 	}
+	
+	public static LoginServiceAsync getLoginService() {
+    	if(loginService == null){
+    		loginService = GWT.create(LoginService.class);
+		}
+		return loginService;
+}
 
 }
