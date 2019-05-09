@@ -95,16 +95,16 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		Button b2 = new Button("Report");
 		Button b3 = new Button("Abmelden");
 		
-		b1.setStyleName("HeaderButton");
-		b2.setStyleName("HeaderButton");
-		b3.setStyleName("HeaderButton");
+		b1.setStyleName("HeaderButton1");
+		b2.setStyleName("HeaderButton2");
+		b3.setStyleName("HeaderButton3");
 
 		RootPanel.get("Editor").add(b1);
 		RootPanel.get("Report").add(b2);
 		RootPanel.get("Logout").add(b3);
 
 		RootPanel.get("aside").add(cellTree);
-		RootPanel.get("main").add(groupShowForm);
+		RootPanel.get("main").add(shoppinglistShowForm);
 		RootPanel.get("footer").add(trailer);
 
 	}
