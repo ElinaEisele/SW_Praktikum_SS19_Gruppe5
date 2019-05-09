@@ -33,6 +33,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 public interface ShoppinglistAdministration extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
 	
+		
 	/**
 	 * Alle Gruppen werden ausgegeben.
 	 * @return ArrayList mit Group-Objekten
@@ -413,7 +414,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Setzen einer Bezeichnung fuer ein Produkt
 	 * @param name ist die Bezeichnung des Produkts
-	 * @param product ist das Produkt, welches die Bezeichnung erhält
+	 * @param product ist das Produkt, welches die Bezeichnung erhï¿½lt
 	 * @throws IllegalArgumentException
 	 */
 	public void setProductName(String name, Product product) throws IllegalArgumentException;
