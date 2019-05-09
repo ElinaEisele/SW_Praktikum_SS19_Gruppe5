@@ -19,7 +19,7 @@ public class Header extends HorizontalPanel{
 	Button editor = null;
 	Button reportGenerator = null;
 	Image logo = null;
-	Label applicationLabel = null;
+	
 	Button logout = null;
 	
 	public void onLoad() {
@@ -32,19 +32,18 @@ public class Header extends HorizontalPanel{
 		reportGenerator.setStyleName("report-Button");
 		
 		logo = new Image();
-		logo.setUrl("images/Maultasche.png");
+		logo.setUrl("images/testlogo.png");
 		logo.setPixelSize(100, 70);
 		logo.setStyleName("logo");
 		
-		applicationLabel = new Label("Maul Tasche");
-		applicationLabel.setStyleName("application-Label");
+		
 		logout = new Button("Logout");
 		logout.setStyleName("logout-Button");
 		
 		this.add(editor);
 		this.add(reportGenerator);
 		this.add(logo);
-		this.add(applicationLabel);
+		
 		this.add(logout);
 	}
 

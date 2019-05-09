@@ -1,55 +1,199 @@
-div#TopLevelFrame {
-	max-width: 100%;
-	
-	border: 0px solid gray;	
-	
+/* SW_Praktikum_SS19_Gruppe5.html: Navigationbar (header) */
+ul#header {
+	list-style: none;
+	margin: 0;
+	background: deepskyblue;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	justify-content: flex-end;
+}
+
+ul#header div#Report {
+	text-decoration: none;
+	display: block;
+	padding: 1em;
+	color: white;
+}
+
+ul#header div#Editor {
+	text-decoration: none;
+	display: block;
+	padding: 1em;
+	color: white;
+}
+
+ul#header div#Platzhalter {
+	text-decoration: none;
+	display: block;
+	padding: 1em;
+	color: white;
+}
+
+ul#header div#Logout {
+	text-decoration: none;
+	display: block;
+	padding: 1em;
+	color: white;
+}
+
+/* ul#navigation div#Report:hover {
+  background: darken(deepskyblue, 2%);
+}
+ul#navigation div#Editor:hover {
+  background: darken(deepskyblue, 2%);
+}
+ul#navigation div#Platzhalter:hover {
+  background: darken(deepskyblue, 2%);
+}
+ul#navigation div#Logout:hover {
+  background: darken(deepskyblue, 2%);
+} */
+@media all and (max-width: 800px) {
+	ul#header {
+		justify-content: space-around;
+	}
+}
+
+@media all and (max-width: 600px) {
+	ul#header {
+		-webkit-flex-flow: column wrap;
+		flex-flow: column wrap;
+		padding: 0;
+	}
+	ul#header div#Report {
+		text-align: center;
+		padding: 10px;
+		border-top: 1px solid rgba(255, 255, 255, 0.3);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	}
+	ul#header div#Editor {
+		text-align: center;
+		padding: 10px;
+		border-top: 1px solid rgba(255, 255, 255, 0.3);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	}
+	ul#header div#Platzhalter {
+		text-align: center;
+		padding: 10px;
+		border-top: 1px solid rgba(255, 255, 255, 0.3);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	}
+	ul#header div#Logout {
+		text-align: center;
+		padding: 10px;
+		border-top: 1px solid rgba(255, 255, 255, 0.3);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	}
+}
+
+/* SW_Praktikum_SS19_Gruppe5.html: Elemente in wrapper (footer, main, aside) */
+.wrapper {
+	display: flex;
+	flex-flow: row wrap;
+	font-weight: bold;
 	text-align: center;
-	background: #A9D0F5;
 }
 
-div#Header {
-	margin: 10px;
-	border: 2px solid gray;
-	
+.wrapper>* {
+	padding: 10px;
+	flex: 1 100%;
 }
 
-div#Navigator {
-	height: 500px;	
-	overflow: auto;
-	float: left;
-	width: 26%;
-	
-	border: 0px solid gray;
-	margin: 10px;
-	
-	background: white;
+div#footer {
+	background: tomato;
+	background: deepskyblue;
 }
 
-div#Details {
-	
-	height: 500px;	
-	float: left;
-	width: 68%;
-	border: 0px solid gray;
-	margin: 10px;
-	overflow: auto;
-	background: white;
+div#main {
+	text-align: left;
+	background: lightgreen;
+}
+
+div#aside {
+	background: gold;
+}
+
+@media all and (min-width: 600px) {
+	div#aside {
+		flex: 1 auto;
+	}
+}
+
+@media all and (min-width: 800px) {
+	div#main {
+		flex: 3 0px;
+	}
+	div#aside {
+		order: 1;
+	}
+	div#main {
+		order: 2;
+	}
+	div#footer {
+		order: 3;
+	}
+}
+
+body {
+	padding: 2em;
+}
+
+/* ShoppinglistEditorEntry.java: */
+
+.HeaderButton {
+	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 0px solid white;
+	border-radius: 5px;
+}
+
+.HeaderButton:active {
+	border: 0px inset #ccc;
+	background: transparent;
+	border: 0px solid white;
+	border-radius: 5px;
+}
+
+.HeaderButton:hover {
+	background: skyblue;
+	border-color: transparent;
+	border: opx solid white;
+	border-radius: 5px;
+}
+
+/* Trailer.java: */
+
+.TrailerButton {
+	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 0px solid white;
+	border-radius: 5px;
+}
+
+.TrailerButton:active {
+	border: 0px inset #ccc;
+	background: transparent;
+	border: 0px solid white;
+	border-radius: 5px;
+}
+
+.TrailerButton:hover {
+	background: skyblue;
+	border-color: transparent;
+	border: opx solid white;
+	border-radius: 5px;
 }
 
 
-div#Trailer {
-	padding: 10px 5px;
-	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
-	border-top: 1px dashed silver;
-	font-size: 80%;
-	text-align: center;
-	clear: both;
-	
-	
-	background: #E6E6E6;
-	
-}
-
+/* Klasse? */
 .shoppinglistHeader {
 	border: 2px solid gray;
 	margin: 10px 10px;
@@ -72,22 +216,3 @@ div#Trailer {
 	border: 2px solid gray;
 	margin: 10px 10px;
 }
-
-.logout-Button {
-	margin: 5px 248px;
-	
-}
-
-.application-Label {
-	margin: 5px 50px;
-	width: 60%;
-}
-
-.logo {
-	margin: 5px 100px;
-}
-
-.flex-container {
-  display:flex;
-}
-
