@@ -470,22 +470,37 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 	}
 	
+	/**
+	 * Saemtliche Shoppinglist-Objekte aus einer Gruppe werden ausgegeben
+	 * @param group Gruppe, deren Shoppinglist-Objekte ausgegeben werden sollen
+	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {		
+		return this.groupMapper.getAllShoppinglists();
 	}
 
+	/**
+	 * Saemtliche Shoppinglist-Objekt mit einem bestimmten Namen werden ausgegeben
+	 * @param name ist die Bezeichnung der gesuchten Shoppinglists
+	 * @return ArrayList mit Shoppinglist-Objekten, welche einen bestimmten Namen besitzen
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.groupMapper.getShoppinglistsByName();
 	}
 
+	/**
+	 * Das Shoppinglist-Objekt mit der uebergebenen ID wird ausgegeben
+	 * @param shoppinglistId ist die ID der gesuchten Shoppinglist
+	 * @return Das erste Shoppinglist-Objekt, welches den Suchkriterien entspricht
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.groupMapper.getShoppinglistById();
 	}
 
 	
