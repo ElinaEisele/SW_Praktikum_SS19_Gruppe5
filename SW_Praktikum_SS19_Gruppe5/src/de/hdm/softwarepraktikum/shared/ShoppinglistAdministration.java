@@ -3,7 +3,6 @@ package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -89,15 +88,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
-	 * Ein Standardeintrag anlegen ohne Unit, Retailer und Menge
-	 * @param product zu beschaffender Artikel
-	 * @param group Gruppe, in welcher der Standardartikel hinzugefueft werden soll
-	 * @return fertiges Listitem-Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Listitem standardListitem(Product product, Group group) throws IllegalArgumentException;
-	
-	/**
 	 * Einen Retailer anlegen
 	 * @param name Name des Einzelhaendlers
 	 * @return fertiges Listitem-Objekt
@@ -163,7 +153,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	
 	/**
 	 * Loeschen des uebergebenen Listitem-Objekts
-	 * @param listitem Listitem-Objekt, welches in der Datenbank gel�scht werden soll
+	 * @param listitem Listitem-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void delete(Listitem listitem) throws IllegalArgumentException;
@@ -187,7 +177,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
 	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList s�mtlicher Gruppen eines Users
+	 * @return ArrayList saemtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
@@ -265,7 +255,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zur�ckgegeben
+	 * S�mtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zurueckgegeben
 	 * @param shoppinglist ist die Einkaufsliste, in welcher nach einer bestimmten Produktbezeichnung gesucht werden soll
 	 * @param productname ist die Produktbezeichung nach welcher gesucht werden soll
 	 * @return ArrayList mit Listitem-Objekten, welche eine bestimmte Prosuktbezeichung enthalten
@@ -380,7 +370,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void getProductOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
-	 * Ausgeben von allen Listitems aus einer Gruppe
+	 * Ausgeben von allen Standard-Listitems aus einer Gruppe
 	 * @param group ist die Gruppe, aus welcher die StandardListitems ausgegeben werden sollen
 	 * @return ArrayList mit Listitem-Objekte, welche innerhalb einer Gruppe als StandardListitems markiert wurden
 	 * @throws IllegalArgumentException

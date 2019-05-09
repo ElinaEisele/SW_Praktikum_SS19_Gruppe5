@@ -285,7 +285,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  **/
 	
 	
-	//????
 	public Listitem getListitem() throws IllegalArgumentException {
 		Listitem item = this.getListitem();
 		return item;
@@ -303,12 +302,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit,
 			Retailer retailer) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public Listitem standardListitem(Product product, Group group) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -358,10 +351,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 	}
 	
+	/**
+	 * Ausgeben von allen Standard-Listitems aus einer Gruppe
+	 * @param group ist die Gruppe, aus welcher die StandardListitems ausgegeben werden sollen
+	 * @return ArrayList mit Listitem-Objekte, welche innerhalb einer Gruppe als StandardListitems markiert wurden
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Listitem> getStandardListitemsOf(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.groupMapper.getStandardListitemsOf(group);
 	}
 
 
@@ -491,25 +489,34 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
-	public void deleteShoppinglist(Shoppinglist list) throws IllegalArgumentException {
-		
-	}
-	
+	/**
+	 * Eine Shoppinglist anlegen
+	 * @param group Gruppe, welcher eine Shoppinglist hinzugefuegt werden soll
+	 * @param name Name der Shoppinglist
+	 * @return fertiges Shoppinglist-Objekt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public Shoppinglist createShoppinglist(Group group, String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Shoppinglist sl = new Shoppinglist(name);
+		sl.setGroupId(group.getId());
+		
+		//Standardeinträge hinzufuegen
+		sl.getListitems().addAll(getStandardListitemsOf(group));
+		
+		// Objekt in der Datenbank speichern.
+		return this.shoppinglistMapper.insert(sl);
 	}
 	
 	@Override
 	public void save(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		shoppinglistMapper.update(shoppinglist);
 		
 	}
 	
 	@Override
 	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		shoppinglistMapper.delete(shoppinglist);
 		
 	}
 	
