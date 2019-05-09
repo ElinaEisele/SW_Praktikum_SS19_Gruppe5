@@ -64,12 +64,12 @@ public class RetailerMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT retailer_id, name, creationDate FROM retailers");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM retailers");
 
 			while (rs.next()) {
 
 				Retailer retailer = new Retailer();
-				retailer.setId(rs.getInt("retailer_id"));
+				retailer.setId(rs.getInt("id"));
 				retailer.setName(rs.getString("name"));
 				retailer.setCreationDate(rs.getString("creationDate"));
 				
@@ -98,11 +98,11 @@ public class RetailerMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT retailer_id, name, creationDate FROM retailers WHERE retailer_id = \" + id);");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM retailers WHERE id = " + id);
 			if (rs.next()) {
 
 				Retailer retailer = new Retailer();
-				retailer.setId(rs.getInt("retailer_id"));
+				retailer.setId(rs.getInt("id"));
 				retailer.setName(rs.getString("name"));
 				retailer.setCreationDate(rs.getString("creationDate"));
 				return retailer;
@@ -133,12 +133,12 @@ public class RetailerMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT retailer_id, name, creationDate FROM retailers WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM retailers WHERE name = " + name);
 
 			while (rs.next()) {
 
 				Retailer retailer = new Retailer();
-				retailer.setId(rs.getInt("retailer_id"));
+				retailer.setId(rs.getInt("id"));
 				retailer.setName(rs.getString("name"));
 				retailer.setCreationDate(rs.getString("creationDate"));
 				

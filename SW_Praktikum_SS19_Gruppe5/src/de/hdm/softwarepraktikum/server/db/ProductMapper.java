@@ -63,11 +63,11 @@ public class ProductMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT product_id, name, creationDate FROM products");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM products");
 
 			while (rs.next()) {
 				Product product = new Product();
-				product.setId(rs.getInt("product_id"));
+				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
 				product.setCreationDate(rs.getString("creationDate"));
 				
@@ -98,12 +98,12 @@ public class ProductMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT product_id, name, creationDate FROM products WHERE product_id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM products WHERE id = " + id);
 
 			if (rs.next()) {
 
 				Product product = new Product();
-				product.setId(rs.getInt("product_id"));
+				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
 				product.setCreationDate(rs.getString("creationDate"));
 				return product;
@@ -132,12 +132,12 @@ public class ProductMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT product_id, name, creationDate FROM products WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM products WHERE name = " + name);
 
 			while (rs.next()) {
 
 				Product product = new Product();
-				product.setId(rs.getInt("product_id"));
+				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
 				product.setCreationDate(rs.getString("creationDate"));
 				
