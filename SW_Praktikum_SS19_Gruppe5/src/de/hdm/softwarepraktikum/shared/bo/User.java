@@ -90,7 +90,7 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	}
 
 	/**
-	 * Setzen des Logout URL.
+	 * Setzen der Logout URL.
 	 */
 	public void setLogoutUrl(String logoutUrl) {
 		this.logoutUrl = logoutUrl;
