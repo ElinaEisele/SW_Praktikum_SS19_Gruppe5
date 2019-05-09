@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Product;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import javafx.scene.Group;
 
@@ -62,11 +63,15 @@ public class ProductMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT product_id, name, creationDate FROM products");
 
 			while (rs.next()) {
-
 				Product product = new Product();
+				product.setId(rs.getInt("product_id"));
+				product.setName(rs.getString("name"));
+				product.setCreationDate(rs.getString("creationDate"));
+				
+				products.add(product);
 			}
 
 		} catch (SQLException e) {
@@ -85,21 +90,22 @@ public class ProductMapper {
 	 * @return Das Produkt-Objekt, welches anhand der id gefunden wurde, wird zurueckgegeben.
 	 */
 	public Product findById(int id) {
-
+		
+		Product product = new Product();
 		Connection con = DBConnection.connection();
 
 		try {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, CreationDate, Name FROM Product WHERE Product.id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT product_id, name, creationDate FROM products WHERE product_id = " + id);
 
 			if (rs.next()) {
 
 				Product product = new Product();
-				product.setBOid(rs.getInt("id"));
-				product.setCreationDate(rs.getString("CreationDate"));
-				product.setName(rs.getString("Name"));
+				product.setId(rs.getInt("product_id"));
+				product.setName(rs.getString("name"));
+				product.setCreationDate(rs.getString("creationDate"));
 				return product;
 			}
 
@@ -108,7 +114,7 @@ public class ProductMapper {
 			return null;
 		}
 
-		return null;
+		return product;
 	}
 
 	/**
@@ -126,11 +132,16 @@ public class ProductMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT product_id, name, creationDate FROM products WHERE name = " + name);
 
 			while (rs.next()) {
 
 				Product product = new Product();
+				product.setId(rs.getInt("product_id"));
+				product.setName(rs.getString("name"));
+				product.setCreationDate(rs.getString("creationDate"));
+				
+				products.add(product);
 			}
 
 		} catch (SQLException e) {
