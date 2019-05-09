@@ -13,8 +13,7 @@ import com.google.gwt.user.client.ui.Label;
 
 public class ShoppinglistHeader extends HorizontalPanel {
 
-	Label shoppinlistHeaderLabel = new Label("Hier steht der Name der ausgewählten Liste");
-	
+	Button ausgewaehlteGruppe;	
 	Button addListitem;
 	Button deleteShoppinglist;
 	Button assignUserToRetailer;
@@ -23,32 +22,41 @@ public class ShoppinglistHeader extends HorizontalPanel {
 	public void onLoad() {
 		super.onLoad();
 		
-		addListitem = new Button();
-		deleteShoppinglist = new Button();
-		assignUserToRetailer = new Button();
-		editShoppinglist = new Button();
+		ausgewaehlteGruppe = new Button();
+		addListitem = new Button("Add Item");
+		deleteShoppinglist = new Button("Delete Shoppinglist");
+		assignUserToRetailer = new Button("Nutzer zuordnen");
+		editShoppinglist = new Button("Editieren");
 	
+		ausgewaehlteGruppe.setText("getGroupname |");
+		ausgewaehlteGruppe.setStyleName("ausgewaehlteGruppeShoppinglistHeaderButton ");
+		ausgewaehlteGruppe.getElement().setAttribute("disabled", "disabled");
+		
 		Image addListitemImg = new Image();
 		addListitemImg.setUrl("images/shopping-cart.png");
-		addListitemImg.setSize("32px", "32px");
+		addListitemImg.setSize("16px", "16px");
 		addListitem.getElement().appendChild(addListitemImg.getElement());
+		addListitem.setStyleName("ShoppinglistHeaderButton");
 		
 		Image deleteShoppinglistImg = new Image();
 		deleteShoppinglistImg.setUrl("images/delete.png");
-		deleteShoppinglistImg.setSize("32px", "32px");
+		deleteShoppinglistImg.setSize("16px", "16px");
 		deleteShoppinglist.getElement().appendChild(deleteShoppinglistImg.getElement());
+		deleteShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		
 		Image assignUserToRetailerImg = new Image();
 		assignUserToRetailerImg.setUrl("images/man-pushing-a-shopping-cart.png");
-		assignUserToRetailerImg.setSize("32px", "32px");
+		assignUserToRetailerImg.setSize("16px", "16px");
 		assignUserToRetailer.getElement().appendChild(assignUserToRetailerImg.getElement());
+		assignUserToRetailer.setStyleName("ShoppinglistHeaderButton");
 		
 		Image editShoppinglistImg = new Image();
 		editShoppinglistImg.setUrl("images/edit.png");
-		editShoppinglistImg.setSize("32px", "32px");
+		editShoppinglistImg.setSize("16px", "16px");
 		editShoppinglist.getElement().appendChild(editShoppinglistImg.getElement());
+		editShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		
-		this.add(shoppinlistHeaderLabel);
+		this.add(ausgewaehlteGruppe);
 		this.add(addListitem);
 		this.add(assignUserToRetailer);
 		this.add(editShoppinglist);
