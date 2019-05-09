@@ -118,36 +118,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
-//	public Group getGroup() throws IllegalArgumentException {
-//		Group group = this.getGroup();
-//		return group;
-//	}
-	
-//	public ArrayList<Group> getGroups() throws IllegalArgumentException {
-//		ArrayList<Group> groups = new ArrayList<Group>();
-//		
-//		return groups;
-//	}
-//	
-//	
-//	public void leaveGroup(Group group) throws IllegalArgumentException {
-//		
-//	}
-//	
-//	public void addMember(User user) throws IllegalArgumentException {
-//		
-//	}
-//	
-//	public ArrayList<User> getMembers() throws IllegalArgumentException {
-//		ArrayList<User> members = new ArrayList<User>();
-//		return members;
-//	}
-//	
-//	public ArrayList<Shoppinglist> getShoppinglists() throws IllegalArgumentException {
-//		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
-//		return shoppinglists;
-//	}
-	
 	/**
 	 * Alle Gruppen werden ausgegeben.
 	 * @return ArrayList mit Group-Objekten
@@ -159,16 +129,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Eine Gruppe anlegen
+	 * Eine Gruppe anlegen.
 	 * @param name Gruppenname
 	 * @return fertiges Group-Objekt
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Group createGroup(String name) throws IllegalArgumentException {
+	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
 		this.groupMapper.insert(group);
-		//User hinzuf�gen Methode fehlt
+		group.getUsers().add(this);
 		return group;
 	}
 	
@@ -190,6 +160,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Group group) throws IllegalArgumentException {
+		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistsOf(group);
+		
+		//Bevor eine Gruppe geloescht wird, werden alle Einkauslisten der Gruppe
+		//geloescht.
+		if (shoppinglists != null) {
+			for (Shoppinglist s : shoppinglists) {
+				this.delete(s);
+			}
+		}
+		
 		this.groupMapper.delete(group);
 	}
 	
@@ -200,7 +180,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException {
-		return this.groupMapper.getGroupsOf(user);
+		return this.groupMapper.getGroupsOf(user);;
 	}
 	
 	/**
@@ -216,7 +196,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	/**
 	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
 	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList s�mtlicher Gruppen eines Users
+	 * @return ArrayList sï¿½mtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
 	@Override
@@ -234,7 +214,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Group getGroupById(int id) throws IllegalArgumentException {
 		return this.groupMapper.getGroupsOf(id);
 	}
-	
 	
 	
 /**
@@ -633,7 +612,5 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 	}
-
-
 
 }

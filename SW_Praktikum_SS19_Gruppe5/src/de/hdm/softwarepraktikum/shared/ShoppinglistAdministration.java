@@ -60,11 +60,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	
 	/**
 	 * Eine Gruppe anlegen
+	 * @param user Nutzer der eine Gruppe erstellt
 	 * @param name Gruppenname
 	 * @return fertiges Group-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Group createGroup(String name) throws IllegalArgumentException;
+	public Group createGroupFor(User user, String name) throws IllegalArgumentException;
 	
 	/**
 	 * Eine Shoppinglist anlegen
@@ -73,7 +74,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Shoppinglist-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Shoppinglist createShoppinglist(Group group, String name) throws IllegalArgumentException;
+	public Shoppinglist createShoppinglistFor(Group group, String name) throws IllegalArgumentException;
 	
 	/**
 	 * Ein Listitem anlegen
@@ -450,4 +451,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public float getAmount(Listitem listitem) throws IllegalArgumentException;
+
+	/**
+	 * Zum erstellen eines Produkts, welches einem Eintrag zugeordnet wird.
+	 * @param listitem Eintrag, welchem das Produkt zugeornet wird
+	 * @param name Bezeichung des Produkts
+	 * @return Product-Objekt, mit einem bestimmten Name, welches einem Listitemn-Objekt zugeordnet ist
+	 * @throws IllegalArgumentException
+	 */
+	public Product createProductFor(Listitem listitem, String name) throws IllegalArgumentException;
 }
