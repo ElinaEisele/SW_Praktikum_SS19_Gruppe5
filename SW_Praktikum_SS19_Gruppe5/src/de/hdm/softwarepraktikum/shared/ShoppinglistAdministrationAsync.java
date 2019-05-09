@@ -28,9 +28,11 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createUser(String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
 	
-	void createGroup(String name, AsyncCallback<Group> callback) throws IllegalArgumentException;
+	void createGroupFor(User user, String name, AsyncCallback<Group> callback) throws IllegalArgumentException;
 	
-	void createShoppinglist(Group group, String name, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
+	void createShoppinglistFor(Group group, String name, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
+	
+	void createProductFor(Listitem listitem, String name, AsyncCallback<Product> callback) throws IllegalArgumentException;
 	
 	void getGroupById(int id, AsyncCallback<Group> callback) throws IllegalArgumentException;
 
