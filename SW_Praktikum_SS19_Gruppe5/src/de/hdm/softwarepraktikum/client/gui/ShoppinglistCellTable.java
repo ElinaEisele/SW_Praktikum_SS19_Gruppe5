@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.NumberCell;
-import com.google.gwt.thirdparty.guava.common.collect.Table;
+import com.google.gwt.cell.client.Cell.Context;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.MultiSelectionModel;
 
@@ -23,6 +28,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.RetailerDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
 import de.hdm.softwarepraktikum.shared.dummydata.UnitDD;
 import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
+
 
 /**
  * Celltable that contains the dummy data
@@ -167,6 +173,41 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		};
 		table.addColumn(userNameColumn, "Verantwortlicher");
 
+		
+		Column<ListItemDD, String> imageColumn = 
+			    new Column<ListItemDD, String>(
+			        new ClickableTextCell() 
+			        {
+			            public void render(Context context, 
+			                               SafeHtml value, 
+			                               SafeHtmlBuilder sb)
+			            {
+			                sb.appendHtmlConstant("<img width=\"20\" src=\"images/" 
+			                                       + value.asString() + "\">");
+			            }
+			           
+			        })
+			    
+			        {
+			            @Override
+			            public String getValue(ListItemDD object) {
+			                return "edit.png";
+			            }
+			            public void onBrowserEvent(Context context, Element elem,
+			                    ListItemDD object, NativeEvent event) {
+			                super.onBrowserEvent(context, elem, object, event); 
+			                if ("click".equals(event.getType())) {
+			                	
+								Window.alert("hu");
+			                }
+			            }
+			        };
+			        
+			        table.addColumn(imageColumn, "");
+		
+		
+		
+		
 		// Set the total row count. This isn't strictly necessary,
 		// but it affects paging calculations, so its good habit to
 		// keep the row count up to date.
