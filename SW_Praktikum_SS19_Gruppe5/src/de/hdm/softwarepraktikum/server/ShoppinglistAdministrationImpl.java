@@ -330,20 +330,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
-	
-	@Override
-	public void setListitem(Product product, float amount, Unit unit, Retailer retailer, User user)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setListitem(Product product, float amount, Unit unit, Retailer retailer)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {

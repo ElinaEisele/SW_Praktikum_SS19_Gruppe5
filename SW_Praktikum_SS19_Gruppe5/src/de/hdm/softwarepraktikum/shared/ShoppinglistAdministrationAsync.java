@@ -99,11 +99,7 @@ public interface ShoppinglistAdministrationAsync {
 	void assignUser(User user, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void setProduct (Product product, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
-	void setListitem (Product product, float amount, Unit unit, Retailer retailer, User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
-	void setListitem (Product product, float amount, Unit unit, Retailer retailer, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
+
 	void setStandardListitem(Listitem listitem, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void getProductOf(Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;

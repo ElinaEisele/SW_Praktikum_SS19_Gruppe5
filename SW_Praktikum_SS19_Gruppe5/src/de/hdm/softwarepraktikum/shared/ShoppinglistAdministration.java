@@ -337,25 +337,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void setProduct (Product product, Listitem listitem) throws IllegalArgumentException;
 	
 	/**
-	 * Setzen eines Listitem-Objekts inkl. User-Objekt
-	 * @param product ist das Produkt, welches sich in dem Listitem-Objekt befindet
-	 * @param amount ist die Menge des zu besorgenden Produkts bezogen auf die angegebene Mengenienheit
-	 * @param unit ist die Mengeneinheit, in welcher die Menge angegeben wird
-	 * @param retailer ist der Einzelhaendler, bei welchem das Produkt zu besorgen ist
-	 * @param user ist der Nutzer, welcher fuer das Besorgen des Produkts verantwortlich ist
-	 */
-	public void setListitem(Product product, float amount, Unit unit, Retailer retailer, User user) throws IllegalArgumentException;
-	
-	/**
-	 * Setzen eines Listitem-Objekts ohne User-Objekt
-	 * @param product ist das Produkt, welches sich in dem Listitem-Objekt befindet
-	 * @param amount ist die Menge des zu besorgenden Produkts bezogen auf die angegebene Mengenienheit
-	 * @param unit ist die Mengeneinheit, in welcher die Menge angegeben wird
-	 * @param retailer ist der Einzelhaendler, bei welchem das Produkt zu besorgen ist
-	 */
-	public void setListitem(Product product, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
-	
-	/**
 	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
 	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
 	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
