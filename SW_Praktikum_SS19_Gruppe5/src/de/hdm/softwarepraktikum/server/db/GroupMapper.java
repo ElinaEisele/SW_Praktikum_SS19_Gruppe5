@@ -6,9 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.User;
-import javafx.scene.Group;
+import de.hdm.softwarepraktikum.shared.*;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Mapper Klasse für </code>Group</code> Objekte. Diese umfasst Methoden um
@@ -20,6 +19,7 @@ import javafx.scene.Group;
  */
 
 public class GroupMapper {
+	
 
 	/**
 	 * Speicherung der Instanz dieser Mapperklasse.
@@ -59,11 +59,15 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT usergroup_id, name, creationDate FROM usergroups");
 
 			while (rs.next()) {
 
 				Group group = new Group();
+				group.setId(rs.getInt("usergroup_id"));
+				group.setName(rs.getString("name"));
+				group.setCreationDate(rs.getDate("creationDate"));
+				groups.add(group);
 			}
 
 		} catch (SQLException e) {
@@ -89,14 +93,14 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, CreationDate, Name FROM Groups WHERE Group.id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT usergroup_id, name, creationDate FROM usergroups WHERE usergroup_id = " + id);
 
 			if (rs.next()) {
 
 				Group group = new Group();
-				group.setBOid(rs.getInt("id"));
-				group.setCreationDate(rs.getString("CreationDate"));
-				group.setName(rs.getString("Name"));
+				group.setId(rs.getInt("usergroup_id"));
+				group.setName(rs.getString("name"));
+				group.setCreationDate(rs.getString("creationDate"));
 				return group;
 			}
 

@@ -1,3 +1,4 @@
+
 package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
@@ -27,9 +28,11 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createUser(String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
 	
-	void createGroup(String name, AsyncCallback<Group> callback) throws IllegalArgumentException;
+	void createGroupFor(User user, String name, AsyncCallback<Group> callback) throws IllegalArgumentException;
 	
-	void createShoppinglist(Group group, String name, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
+	void createShoppinglistFor(Group group, String name, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
+	
+	void createProductFor(Listitem listitem, String name, AsyncCallback<Product> callback) throws IllegalArgumentException;
 	
 	void getGroupById(int id, AsyncCallback<Group> callback) throws IllegalArgumentException;
 
@@ -44,8 +47,6 @@ public interface ShoppinglistAdministrationAsync {
 	void getUsersByName(String name, AsyncCallback<ArrayList<User>>callback) throws IllegalArgumentException;
   
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
-	
-	void standardListitem(Product product, Group group, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 	
 	void createRetailer(String name, AsyncCallback<Retailer> callback) throws IllegalArgumentException; 
 	
@@ -127,4 +128,5 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getAmount(Listitem listitem, AsyncCallback<Float> callback) throws IllegalArgumentException;
 	
+	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 }

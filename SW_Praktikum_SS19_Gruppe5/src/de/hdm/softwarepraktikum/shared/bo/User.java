@@ -6,7 +6,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Realisierung der Klasse User, welche einen Nutzer des Programms darestellt. Dieser kann Mitglied von
  * verschiedenen Gruppen sein.
  * 
- * @author Felix Rapp
+ * @author FelixRapp, TimBeutelspacher
  */
 
 public class User extends NamedBusinessObject implements IsSerializable{
@@ -16,7 +16,7 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	/**
 	 * Google Mail Adresse des Nutzers.
 	 */
-	private String gmailAdress;
+	private String gmailAddress;
 	
 	/**
 	 * Login Status
@@ -33,6 +33,13 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	 */
 	private String logoutUrl;
 	
+	/*
+	 * Default-Konstruktor, welcher den Konstruktor in NamedBusinessObject aufruft
+	 */
+	public User() {
+		super();
+	}
+	
 	/**
 	 * Konstruktor zum Setzen des Namens.
 	 */
@@ -43,16 +50,16 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	/**
 	 * Auslesen der Gmail Adresse des Nutzers.
 	 */
-	public String getGmailAdress() {
-		return gmailAdress;
+	public String getGmailAddress() {
+		return gmailAddress;
 	}
 	
 	
 	/**
 	 * Setzen der Google Mail Adresse des Nutzers.
 	 */
-	public void setGmailAdress(String gmailAdress) {
-		this.gmailAdress = gmailAdress;
+	public void setGmailAddress(String gmailAddress) {
+		this.gmailAddress = gmailAddress;
 	}
 	
 	/**
@@ -90,7 +97,7 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	}
 
 	/**
-	 * Setzen des Logout URL.
+	 * Setzen der Logout URL.
 	 */
 	public void setLogoutUrl(String logoutUrl) {
 		this.logoutUrl = logoutUrl;

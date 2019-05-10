@@ -3,7 +3,6 @@ package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -18,7 +17,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * <p>
- * Synchrone Schnittstelle fï¿½r eine RPC-fï¿½hige Klasse zur Verwaltung von Shoppinglists.
+ * Synchrone Schnittstelle fuer eine RPC-faehige Klasse zur Verwaltung von Shoppinglists.
  * </p>
  * <p>
  * <code>@RemoteServiceRelativePath("shoppinglistadministration")</code> ist bei der
@@ -34,6 +33,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 public interface ShoppinglistAdministration extends RemoteService {
 	String greetServer(String name) throws IllegalArgumentException;
 	
+		
 	/**
 	 * Alle Gruppen werden ausgegeben.
 	 * @return ArrayList mit Group-Objekten
@@ -60,11 +60,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	
 	/**
 	 * Eine Gruppe anlegen
+	 * @param user Nutzer der eine Gruppe erstellt
 	 * @param name Gruppenname
 	 * @return fertiges Group-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Group createGroup(String name) throws IllegalArgumentException;
+	public Group createGroupFor(User user, String name) throws IllegalArgumentException;
 	
 	/**
 	 * Eine Shoppinglist anlegen
@@ -73,10 +74,10 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Shoppinglist-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Shoppinglist createShoppinglist(Group group, String name) throws IllegalArgumentException;
+	public Shoppinglist createShoppinglistFor(Group group, String name) throws IllegalArgumentException;
 	
 	/**
-	 * Ein Listitem anlegen
+	 * Ein Listitem anlegen mit Retailer
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
@@ -86,15 +87,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
-	
-	/**
-	 * Ein Standardeintrag anlegen ohne Unit, Retailer und Menge
-	 * @param product zu beschaffender Artikel
-	 * @param group Gruppe, in welcher der Standardartikel hinzugefueft werden soll
-	 * @return fertiges Listitem-Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Listitem standardListitem(Product product, Group group) throws IllegalArgumentException;
 	
 	/**
 	 * Einen Retailer anlegen
@@ -162,7 +154,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	
 	/**
 	 * Loeschen des uebergebenen Listitem-Objekts
-	 * @param listitem Listitem-Objekt, welches in der Datenbank gelï¿½scht werden soll
+	 * @param listitem Listitem-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void delete(Listitem listitem) throws IllegalArgumentException;
@@ -186,7 +178,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
 	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList sï¿½mtlicher Gruppen eines Users
+	 * @return ArrayList saemtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
@@ -264,7 +256,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException;
 	
 	/**
-	 * Sï¿½mtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zurï¿½ckgegeben
+	 * Sï¿½mtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zurueckgegeben
 	 * @param shoppinglist ist die Einkaufsliste, in welcher nach einer bestimmten Produktbezeichnung gesucht werden soll
 	 * @param productname ist die Produktbezeichung nach welcher gesucht werden soll
 	 * @return ArrayList mit Listitem-Objekten, welche eine bestimmte Prosuktbezeichung enthalten
@@ -379,7 +371,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void getProductOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
-	 * Ausgeben von allen Listitems aus einer Gruppe
+	 * Ausgeben von allen Standard-Listitems aus einer Gruppe
 	 * @param group ist die Gruppe, aus welcher die StandardListitems ausgegeben werden sollen
 	 * @return ArrayList mit Listitem-Objekte, welche innerhalb einer Gruppe als StandardListitems markiert wurden
 	 * @throws IllegalArgumentException
@@ -423,7 +415,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Setzen einer Bezeichnung fuer ein Produkt
 	 * @param name ist die Bezeichnung des Produkts
-	 * @param product ist das Produkt, welches die Bezeichnung erhält
+	 * @param product ist das Produkt, welches die Bezeichnung erhï¿½lt
 	 * @throws IllegalArgumentException
 	 */
 	public void setProductName(String name, Product product) throws IllegalArgumentException;
@@ -459,4 +451,26 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public float getAmount(Listitem listitem) throws IllegalArgumentException;
+
+	/**
+	 * Zum erstellen eines Produkts, welches einem Eintrag zugeordnet wird.
+	 * @param listitem Eintrag, welchem das Produkt zugeornet wird
+	 * @param name Bezeichung des Produkts
+	 * @return Product-Objekt, mit einem bestimmten Name, welches einem Listitemn-Objekt zugeordnet ist
+	 * @throws IllegalArgumentException
+	 */
+	public Product createProductFor(Listitem listitem, String name) throws IllegalArgumentException;
+
+
+	/**
+	 * Ein Listitem anlegen ohne Retailer
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param unit Mengeneinheit 
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException;
 }
