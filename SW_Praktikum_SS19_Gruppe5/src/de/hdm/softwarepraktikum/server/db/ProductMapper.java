@@ -1,37 +1,30 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.Product;
-import de.hdm.softwarepraktikum.shared.bo.Retailer;
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.*;
 import javafx.scene.Group;
-
-
 
 /**
  * Mapper Klasse für </code>Product</code> Objekte. Diese umfasst Methoden um
- * Produkt-Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen.
- * Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
- * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
+ * Produkt-Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das
+ * Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen
+ * und DB-Stukturen in Objekte umgewandelt werden.
  * 
  * @author CarlaHofmann
  */
 
 public class ProductMapper {
-	
+
 	/**
 	 * Speicherung der Instanz dieser Mapperklasse.
 	 */
 	private static ProductMapper productMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von ProductMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von
+	 * ProductMapper.
 	 */
 	protected ProductMapper() {
 	}
@@ -48,7 +41,7 @@ public class ProductMapper {
 
 		return productMapper;
 	}
-	
+
 	/**
 	 * Ausgabe einer Liste aller Produkte.
 	 *
@@ -69,8 +62,8 @@ public class ProductMapper {
 				Product product = new Product();
 				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
-				product.setCreationDate(rs.getString("creationDate"));
-				
+				product.setCreationDate(rs.getDate("creationDate"));
+
 				products.add(product);
 			}
 
@@ -82,15 +75,17 @@ public class ProductMapper {
 		return products;
 
 	}
-	
+
 	/**
 	 * Produkt mittels id finden.
 	 *
-	 * @param id: Die id wird uebergeben,um mithilfe dieser ein Produkt-Objekt zu finden.
-	 * @return Das Produkt-Objekt, welches anhand der id gefunden wurde, wird zurueckgegeben.
+	 * @param id: Die id wird uebergeben,um mithilfe dieser ein Produkt-Objekt zu
+	 *        finden.
+	 * @return Das Produkt-Objekt, welches anhand der id gefunden wurde, wird
+	 *         zurueckgegeben.
 	 */
 	public Product findById(int id) {
-		
+
 		Product product = new Product();
 		Connection con = DBConnection.connection();
 
@@ -102,11 +97,11 @@ public class ProductMapper {
 
 			if (rs.next()) {
 
-				Product product = new Product();
-				product.setId(rs.getInt("id"));
-				product.setName(rs.getString("name"));
-				product.setCreationDate(rs.getString("creationDate"));
-				return product;
+				Product p = new Product();
+				p.setId(rs.getInt("id"));
+				p.setName(rs.getString("name"));
+				p.setCreationDate(rs.getDate("creationDate"));
+				return p;
 			}
 
 		} catch (SQLException e) {
@@ -114,7 +109,7 @@ public class ProductMapper {
 			return null;
 		}
 
-		return product;
+		return null;
 	}
 
 	/**
@@ -139,8 +134,8 @@ public class ProductMapper {
 				Product product = new Product();
 				product.setId(rs.getInt("id"));
 				product.setName(rs.getString("name"));
-				product.setCreationDate(rs.getString("creationDate"));
-				
+				product.setCreationDate(rs.getDate("creationDate"));
+
 				products.add(product);
 			}
 
@@ -152,7 +147,7 @@ public class ProductMapper {
 		return products;
 
 	}
-	
+
 	/**
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
@@ -166,19 +161,19 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM products ");
 
 			if (rs.next()) {
-
+				product.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement stmt2 = con.prepareStatement(
-					"INSERT INTO Product (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO products (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-			stmt2.setInt(1, product.getBOid());
-			stmt2.setDate(2, product.getCreationDate());
-			stmt2.setString(3, product.getName());
-			stmt2.executeUpdate();
+			pstmt.setInt(1, product.getId());
+			pstmt.setDate(2, (Date) product.getCreationDate());
+			pstmt.setString(3, product.getName());
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -199,13 +194,19 @@ public class ProductMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
-
+			PreparedStatement pstmt = con.prepareStatement("UPDATE products SET name = ? WHERE id = ? ");
+			
+			pstmt.setString(1, product.getName());
+			pstmt.setInt(2, product.getId());
+			pstmt.executeUpdate();
+			
+			return product;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return product;
+		return null;
 	}
 
 	/**
@@ -220,13 +221,14 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Product WHERE Groups.id =" + product.getBOId());
+			stmt.executeUpdate("DELETE FROM products WHERE id = " + product.getId());
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Methode, um das Produkt eines Listitems zu bekommen.
 	 * 
@@ -240,23 +242,23 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery();
-			
+			ResultSet rs = stmt.executeQuery("SELECT product_id FROM listitems WHERE id = " + listitem.getId());
+
 			if (rs.next()) {
 
-				Product product = new Product();
-				product.setBOid(rs.getInt("id"));
-				product.setCreationDate(rs.getString("CreationDate"));
-				product.setName(rs.getString("Name"));
-				return product;
+				Product p = ProductMapper.productMapper().findById(rs.getInt("id"));
+				p.getId();
+				p.getCreationDate();
+				p.getName();
+				return p;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return null;
 
 	}
-	
-	
 
 }
