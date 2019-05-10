@@ -64,11 +64,17 @@ public class ShoppinglistMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate, usergroup_id FROM shoppinglists");
 
 			while (rs.next()) {
 
 				Shoppinglist shoppinglist = new Shoppinglist();
+				shoppinglist.setId(rs.getInt("id"));
+				shoppinglist.setName(rs.getString("name"));
+				shoppinglist.setCreationDate(rs.getString("creationDate");
+				//shoppinglist.set ("usergroup_id");
+				
+				shoppinglists.add(shoppinglist);
 			}
 
 		} catch (SQLException e) {
@@ -94,9 +100,13 @@ public class ShoppinglistMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ... ");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate, usergroup_id FROM shoppinglists WHERE id = " + id);
 			if (rs.next()) {
-
+				shoppinglist.setId(rs.getInt("id"));
+				shoppinglist.setName(rs.getString("name"));
+				shoppinglist.setCreationDate(rs.getString("creationDate"));
+				//usergroup_id
+				return shoppinglist;
 			}
 		} catch (
 
@@ -124,11 +134,17 @@ public class ShoppinglistMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate, usergroup_id FROM retailers WHERE name = " + name);
 
 			while (rs.next()) {
 
 				Shoppinglist shoppinglist = new Shoppinglist();
+				shoppinglist.setId(rs.getInt("id"));
+				shoppinglist.setName(rs.getString("name"));
+				shoppinglist.setCreationDate(rs.getString("creationDate"));
+				//usergroup_id
+				
+				shoppinglists.add(shoppinglist);
 			}
 
 		} catch (SQLException e) {
@@ -164,13 +180,13 @@ public class ShoppinglistMapper {
 			// gewährleisten.
 			con.setAutoCommit(false);
 
-			PreparedStatement stmt2 = con.prepareStatement("INSERT INTO ...", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt1 = con.prepareStatement("INSERT INTO ...", Statement.RETURN_GENERATED_KEYS);
 
 			// vervollstaendigen
 
 			stmt2.executeUpdate();
 
-			PreparedStatement stmt3 = con.prepareStatement("INSERT INTO ... ", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO ... ", Statement.RETURN_GENERATED_KEYS);
 
 			stmt3.executeUpdate();
 
@@ -200,7 +216,7 @@ public class ShoppinglistMapper {
 			// gewährleisten.
 			con.setAutoCommit(false);
 
-			PreparedStatement stmt = con.prepareStatement("UPDATE ...");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE ...");
 
 			// vervollständigen
 

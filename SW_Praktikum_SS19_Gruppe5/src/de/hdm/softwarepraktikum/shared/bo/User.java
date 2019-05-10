@@ -16,7 +16,7 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	/**
 	 * Google Mail Adresse des Nutzers.
 	 */
-	private String gmailAdress;
+	private String gmailAddress;
 	
 	/**
 	 * Login Status
@@ -50,16 +50,16 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	/**
 	 * Auslesen der Gmail Adresse des Nutzers.
 	 */
-	public String getGmailAdress() {
-		return gmailAdress;
+	public String getGmailAddress() {
+		return gmailAddress;
 	}
 	
 	
 	/**
 	 * Setzen der Google Mail Adresse des Nutzers.
 	 */
-	public void setGmailAdress(String gmailAdress) {
-		this.gmailAdress = gmailAdress;
+	public void setGmailAddress(String gmailAddress) {
+		this.gmailAddress = gmailAddress;
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	}
 
 	/**
-	 * Setzen des Logout URL.
+	 * Setzen der Logout URL.
 	 */
 	public void setLogoutUrl(String logoutUrl) {
 		this.logoutUrl = logoutUrl;

@@ -111,6 +111,7 @@ div#footer {
 div#main {
 	text-align: left;
 	background: lightgreen;
+	min-width: 800px;
 }
 
 div#aside {
@@ -123,7 +124,7 @@ div#aside {
 	}
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 1000px) {
 	div#main {
 		flex: 3 0px;
 	}
@@ -143,71 +144,121 @@ body {
 }
 
 /* ShoppinglistEditorEntry.java: */
-
 .HeaderButton {
 	color: white;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
-	border: 0px solid white;
+	border: 1px solid white;
 	border-radius: 5px;
+	padding: 5px 10px;
 }
 
 .HeaderButton:active {
 	border: 0px inset #ccc;
 	background: transparent;
-	border: 0px solid white;
+	border: 1px solid white;
 	border-radius: 5px;
 }
 
 .HeaderButton:hover {
 	background: skyblue;
 	border-color: transparent;
-	border: opx solid white;
+	border: 1px solid white;
 	border-radius: 5px;
 }
-
-/* Trailer.java: */
-
-.TrailerButton {
+/* .HeaderButton3 {
 	color: white;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
-	border: 0px solid white;
+	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
+	padding: 5px 10px;
+	margin-left: 5px;
+	
+	border-top: 2px solid rgba(255, 255, 255, 0.3);
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1); 
 }
 
-.TrailerButton:active {
+.HeaderButton3:active {
 	border: 0px inset #ccc;
 	background: transparent;
 	border: 0px solid white;
 	border-radius: 5px;
 }
 
-.TrailerButton:hover {
+.HeaderButton3:hover {
 	background: skyblue;
 	border-color: transparent;
-	border: opx solid white;
+	border: 0px solid white;
+	border-radius: 5px;
+} */
+/* Trailer.java: */
+.TrailerButton {
+	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
+	padding: 5px 10px;
+}
+
+.TrailerButton:active {
+	background: transparent;
+	border: 1px solid white;
 	border-radius: 5px;
 }
 
-
-/* Klasse? */
-.shoppinglistHeader {
-	border: 2px solid gray;
-	margin: 10px 10px;
-	padding: 5px;
+.TrailerButton:hover {
+	background: skyblue;
+	border-color: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
 }
 
-.shoppinglistContent {
-	width: 90%;
-	border: 2px solid gray;
-	margin: 10px 10px;
+/* ShoppinglistHeader.java: */
+.ShoppinglistHeaderButton {
+	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
+	padding: 5px 10px;
 }
 
+.ShoppinglistHeaderButton:active {
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+.ShoppinglistHeaderButton:hover {
+	background: skyblue;
+	border-color: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+.ausgewaehlteGruppeShoppinglistHeaderButton {
+	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 0px solid white;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+/* ShoppinglistContent.java */
 .shoppinglistSearchBar {
-	border: 2px solid gray;
+	border: 2px solid white;
 	margin: 10px 10px;
 	padding: 5px;
 }
@@ -216,3 +267,18 @@ body {
 	border: 2px solid gray;
 	margin: 10px 10px;
 }
+
+/* ShoppinglistShowForm.java */
+.shoppinglistContent {
+	width: 90%;
+	border: 2px solid white;
+	margin: 10px 10px;
+}
+
+.shoppinglistHeader {
+	border: 1px solid white;
+	margin: 10px 10px;
+	padding: 5px;
+}
+
+/* platzhalter.java */
