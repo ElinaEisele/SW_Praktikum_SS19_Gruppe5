@@ -256,13 +256,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException;
 	
 	/**
-	 * S�mtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zurueckgegeben
+	 * Saemtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zurueckgegeben
 	 * @param shoppinglist ist die Einkaufsliste, in welcher nach einer bestimmten Produktbezeichnung gesucht werden soll
 	 * @param productname ist die Produktbezeichung nach welcher gesucht werden soll
 	 * @return ArrayList mit Listitem-Objekten, welche eine bestimmte Prosuktbezeichung enthalten
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist, String productname) throws IllegalArgumentException;
+	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname) throws IllegalArgumentException;
 	
 	/**
 	 * Saemtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben
