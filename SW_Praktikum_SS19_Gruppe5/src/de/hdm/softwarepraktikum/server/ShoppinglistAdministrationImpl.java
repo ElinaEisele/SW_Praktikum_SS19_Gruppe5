@@ -272,31 +272,41 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit,
 			Retailer retailer) throws IllegalArgumentException {
 		
+		//Listitem mit den übergebenen Parametern wird erstellt.
 		Listitem li = new Listitem(amount, unit, retailer);
+		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
 		li.setRetailerID(retailer.getId());
-		/**
-		 * Nach dem createProduct()-Aufruf erhält das Produkt die ID welche mit der Datenbank konsistent ist.
-		 * 
-		 * Problem: Product hat ein Attribut "listitemId", welches jedoch erst gesetzt werden kann nach dem 
-		 * Aufruf der insert(Listiitem)-Methode
-		 */
+		
+		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
 		Product p = this.createProductFor(li, productname);
+		//Fremdschluessel vom Listitem zum Product wird gesetzt.
 		li.setProductID(p.getId());
 		
 		return this.listitemMapper.insert(li);
 	}
 	
+	/**
+	 * Speichern eines Listitem-Objekt in der Datenbank
+	 * @param listitem, Listitem-Objekt, welches in der Datenbank gepseichert werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.listitemMapper.update(listitem);
 		
 	}
 	
+	/**
+	 * Loeschen des uebergebenen Listitem-Objekts
+	 * @param listitem Listitem-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.listitemMapper.delete(listitem);
 		
 	}
+	
 	
 	@Override
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist, String productname)
