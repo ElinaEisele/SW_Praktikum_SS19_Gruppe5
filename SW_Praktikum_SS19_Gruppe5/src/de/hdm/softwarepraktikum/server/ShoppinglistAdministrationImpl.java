@@ -364,17 +364,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return null;
 	}
 	
-	@Override
-	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
 	public Unit getUnit(Listitem listitem) throws IllegalArgumentException {
