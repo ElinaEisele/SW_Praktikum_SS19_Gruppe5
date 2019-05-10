@@ -1,11 +1,11 @@
 package de.hdm.softwarepraktikum.server;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import com.google.appengine.api.users.User; 
-import com.google.appengine.api.users.UserService; 
-import com.google.appengine.api.users.UserServiceFactory; 
 
+import de.hdm.softwarepraktikum.server.db.UserMapper;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
@@ -21,20 +21,33 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 	 */
 	@Override
 	public User login(String requestUri) {
-		UserServiceuserService= UserServiceFactory.getUserService(); 
+		UserService userService= UserServiceFactory.getUserService(); 
 		com.google.appengine.api.users.User googleUser= userService.getCurrentUser(); 
-		LoginInfologinInfo= new User();
+		User user = new User();
 		
 		if (googleUser != null) {
-			// setter
-		} else {
-			// setter
+			
+			User existingUser = UserMapper.userMapper().findByGmail(googleUser.getEmail);
+			
+			if (existingUser != null) {
+				existingUser.setLoggedIn(true);
+				existingUser.setLogoutUrl(userService.createLogoutURL(requestUri));
+				
+				return existingUser;
+				
+			}
+			
+			user.setLoggedIn(true);
+			user.setLogoutUrl(userService.getLogoutURL(requestUri));
+			user.setGmailAdress(googleUser.getEmail);
+			UserMapper.userMapper().insert(user);
 		}
 		
+		user.setLoginUrl(userService.createLoginURL(requestUri));
+		
 		return user;
+			
 
 	}
-	
-	
 
 }
