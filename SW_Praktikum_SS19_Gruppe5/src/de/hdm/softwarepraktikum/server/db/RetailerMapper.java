@@ -72,7 +72,7 @@ public class RetailerMapper {
 				retailer.setId(rs.getInt("id"));
 				retailer.setName(rs.getString("name"));
 				retailer.setCreationDate(rs.getString("creationDate"));
-				
+
 				retailers.add(retailer);
 			}
 
@@ -141,7 +141,7 @@ public class RetailerMapper {
 				retailer.setId(rs.getInt("id"));
 				retailer.setName(rs.getString("name"));
 				retailer.setCreationDate(rs.getString("creationDate"));
-				
+
 				retailers.add(retailer);
 			}
 
@@ -242,9 +242,7 @@ public class RetailerMapper {
 			con.setAutoCommit(false);
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("");
-
-			// vervollstaendigen
+			stmt.executeUpdate("DELETE FROM retailers WHERE retailer.id =" + retailer.getId());
 
 			// Wenn alle Statements fehlerfrei ausgefuehrt wurden, wird commited.
 			con.commit();
@@ -261,6 +259,17 @@ public class RetailerMapper {
 		Retailer retailer = new Retailer();
 
 		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("...");
+
+			if (rs.next()) {
+
+				Retailer retailer = new Retailer();
+				retailer.setId(rs.getInt("id"));
+				retailer.setCreationDate(rs.getString("CreationDate"));
+				retailer.setName(rs.getString("Name"));
+				return retailer;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -273,10 +282,24 @@ public class RetailerMapper {
 		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
 
 		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * retailer_id FROM responsibilities WHERE user_id =" + user.getId());
+			
+			while (rs.next()) {
+			
+				Retailer r = RetailerMapper.retailerMapper().findById(rs.getInt("retailer_id"));
+				r.getId();
+				r.getCreationDate();
+				r.getName();
+				retailers.add(r);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		
+
 		return retailers;
 	}
 }
