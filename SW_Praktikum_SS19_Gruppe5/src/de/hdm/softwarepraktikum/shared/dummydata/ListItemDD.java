@@ -2,6 +2,8 @@ package de.hdm.softwarepraktikum.shared.dummydata;
 
 import java.util.Date;
 
+import com.google.gwt.view.client.ProvidesKey;
+
 /**
  * ListItem object for testing purposes
  * 
@@ -18,9 +20,17 @@ public class ListItemDD extends BusinessObjectDD {
 	ShoppinglistDD shoppinglist;
 	UnitDD unit;
 	UserDD user;
+	private Boolean check = false;
 
+	public static final ProvidesKey<ListItemDD> KEY_PROVIDER = new ProvidesKey<ListItemDD>() {
+	      @Override
+	      public Object getKey(ListItemDD item) {
+	        return item == null ? null : item.getId();
+	      }
+	    };
+	
 	public ListItemDD(int id, Date creationDate, int amount, GroupDD group, ProductDD product, RetailerDD retailer,
-			ShoppinglistDD shoppinglist, UnitDD unit, UserDD user) {
+			ShoppinglistDD shoppinglist, UnitDD unit, UserDD user, Boolean check) {
 
 		super(id, creationDate);
 		this.amount = amount;
@@ -30,6 +40,15 @@ public class ListItemDD extends BusinessObjectDD {
 		this.shoppinglist = shoppinglist;
 		this.unit = unit;
 		this.user = user;
+		this.check=check;
+	}
+
+	public Boolean getCheck() {
+		return check;
+	}
+
+	public void setCheck(Boolean check) {
+		this.check = check;
 	}
 
 	public int getAmount() {

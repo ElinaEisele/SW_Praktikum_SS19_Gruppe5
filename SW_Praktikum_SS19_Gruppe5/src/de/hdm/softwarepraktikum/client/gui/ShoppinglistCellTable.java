@@ -5,12 +5,16 @@ import java.util.Date;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.NumberCell;
+import com.google.gwt.thirdparty.guava.common.collect.Table;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.CellPreviewEvent;
+import com.google.gwt.view.client.DefaultSelectionEventManager;
+import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 import de.hdm.softwarepraktikum.shared.dummydata.ListItemDD;
@@ -23,7 +27,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 /**
  * Celltable that contains the dummy data
  * 
- * @author JonasWagenknecht, ElinaEisele 
+ * @author JonasWagenknecht, ElinaEisele
  */
 
 public class ShoppinglistCellTable extends VerticalPanel {
@@ -81,31 +85,44 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		user.add(user3);
 		user.add(user4);
 
-		ListItemDD listitem1 = new ListItemDD(204, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2, user2);
-		ListItemDD listitem2 = new ListItemDD(204, new Date(), 1, group1, product2, retailer2, shoppinglist2, unit2, user2);
-		ListItemDD listitem3 = new ListItemDD(205, new Date(), 1, group1, product1, retailer1, shoppinglist1, unit1, user3);
-		ListItemDD listitem4 = new ListItemDD(206, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2, user4);
+		ListItemDD listitem1 = new ListItemDD(204, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2,
+				user2, true);
+		ListItemDD listitem2 = new ListItemDD(207, new Date(), 1, group1, product2, retailer2, shoppinglist2, unit2,
+				user2, true);
+		ListItemDD listitem3 = new ListItemDD(205, new Date(), 1, group1, product1, retailer1, shoppinglist1, unit1,
+				user3, false);
+		ListItemDD listitem4 = new ListItemDD(206, new Date(), 2, group1, product2, retailer2, shoppinglist2, unit2,
+				user4, true);
 		listitem.add(listitem1);
 		listitem.add(listitem2);
 		listitem.add(listitem3);
 		listitem.add(listitem4);
+
+		// Button dahinter setzen, wenn gelickt wird neues bearbeiten Formular, wenn
+		// speichern, setten und dann refresh zu altem table
 
 		CellTable<ListItemDD> table = new CellTable<>();
 
 		table.setStyleName("shoppinglist-CellTable");
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
+		final MultiSelectionModel<ListItemDD> selectionModel = new MultiSelectionModel<ListItemDD>(
+				ListItemDD.KEY_PROVIDER);
+		table.setSelectionModel(selectionModel, DefaultSelectionEventManager.<ListItemDD>createCheckboxManager());
+
 		Column<ListItemDD, Boolean> checkColumn = new Column<ListItemDD, Boolean>(new CheckboxCell(true, false)) {
 
 			@Override
-			public Boolean getValue(ListItemDD arg0) {
-				// TODO Auto-generated method stub
-				return null;
+			public Boolean getValue(ListItemDD object) {
+
+				return object.getCheck();
 			}
 		};
+
 		checkColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		checkColumn.setCellStyleNames("columncheck");
 		table.addColumn(checkColumn, "Check");
+
 		// table.setColumnWidth(checkColumn, 40, Unit.PX);
 
 		TextColumn<ListItemDD> productNameColumn = new TextColumn<ListItemDD>() {
@@ -114,6 +131,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 				return object.getProduct().getName();
 			}
 		};
+
 		table.addColumn(productNameColumn, "Produkt");
 
 		NumberCell amountCell = new NumberCell();
