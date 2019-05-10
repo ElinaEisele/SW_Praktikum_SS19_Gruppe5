@@ -53,10 +53,11 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Einen User anlegen
 	 * @param mail GoogleMail des Users
+	 * @param name Name des Users
 	 * @return fertiges User-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public User createUser(String mail) throws IllegalArgumentException;
+	public User createUser(String name, String mail) throws IllegalArgumentException;
 	
 	/**
 	 * Eine Gruppe anlegen
@@ -192,9 +193,9 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Group getGroupById(int id) throws IllegalArgumentException;
 	
 	/**
-	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der �bergabe eines Gruppen-Objekts
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der Uebergabe eines Gruppen-Objekts
 	 * @param group Gruppe, deren Mitglieder ausgegeben werden sollen
-	 * @return ArrayList s�mtlicher Mitglieder einer Gruppe
+	 * @return ArrayList saemtlicher Mitglieder einer Gruppe
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<User> getUsersOf(Group group) throws IllegalArgumentException;
