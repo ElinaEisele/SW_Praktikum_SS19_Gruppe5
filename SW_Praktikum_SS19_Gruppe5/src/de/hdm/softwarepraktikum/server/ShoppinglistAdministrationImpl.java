@@ -701,7 +701,18 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
+//		Group g = this.groupMapper.findById(group.getId());
+//		g.getUsers();
 		
+		//Einfacher direkt im Mapper?
+		/*
+		 * Methode im GroupMapper: removeUserFromGroup(int userId, int goupId)
+		 * passendes STATEMENT:
+		 * DELETE * FROM Membership WHERE user_id = userId AND group_id = groupId
+		 * 
+		 * DANN Code in dieser Methode:
+		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
+		 */
 	}
 
 	
