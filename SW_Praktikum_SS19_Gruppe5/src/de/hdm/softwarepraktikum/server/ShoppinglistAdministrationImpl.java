@@ -108,8 +108,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		this.userMapper = UserMapper.userMapper();
 	}
 	
-	
-
 
 /**
  * **********************************************************************************
@@ -138,7 +136,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
 		this.groupMapper.insert(group);
-		group.getUsers().add(this);
+		this.groupMapper.addUserToGroup(user, group);
 		return group;
 	}
 	
@@ -567,73 +565,140 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
+	/**
+	 * Einen User anlegen
+	 * @param mail GoogleMail des Users
+	 * @param name Name des Users
+	 * @return fertiges User-Objekt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public User createUser(String mail) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public User createUser(String name, String mail) throws IllegalArgumentException {
+		User user = new User(name, mail);
+		return this.userMapper.insert(user);
 	}
 	
+	/**
+	 * Speichern eines User-Objekts in der Datenbank
+	 * @param user User-Objekt, welches in der Datenbank gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(User user) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.userMapper.update(user);
 	}
 	
+	/**
+	 * Loeschen des uebergebenen User-Objekts
+	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void delete(User user) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		ArrayList<Group> groups = this.groupMapper.getGroupsOf(user);
+		for (int i=0; groups.size()>i; i++) {
+			Group g = groups.get(i);
+			ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
+			for (int u=0; shoppinglists.size()>i; i++) {
+				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(shoppinglists.get(u));
+			}
+			//Die Einträge, welche dem User zugeteilt wurden müssen hier noch gelöscht werden.
+			//Die Zuweisung von Händlern zu Usern wurde jedoch noch nicht realisiert.
+			
+		}
+		this.userMapper.delete(user);
 	}
 	
+	/**
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der Uebergabe eines Gruppen-Objekts
+	 * @param group Gruppe, deren Mitglieder ausgegeben werden sollen
+	 * @return ArrayList saemtlicher Mitglieder einer Gruppe
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<User> getUsersOf(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getUsersOf(group.getId());
 	}
-
+	
+	/**
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der Uebergabe eines Gruppen-Objekts
+	 * @param groupId Gruppen Id, deren Mitglieder ausgegeben werden sollen
+	 * @return ArrayList saemtlicher Mitglieder einer Gruppe
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//Fehler, da Methode in Mapper noch nicht realisiert.
+		return this.groupMapper.getUsersOf(groupId);
 	}
 
+	/**
+	 * Rueckgabe eines User-Objekts mit einer bestimmten ID
+	 * @param userId ID des gesuchten User-Objekts
+	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public User getUserById(int userId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userMapper.findById(userId);
 	}
-
+	
+	/**
+	 * Saemtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
+	 * @param name Username
+	 * @return ArrayList saemtlicher User-Objekte, welche einen bestimmten Namen besitzen
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<User> getUsersByName(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userMapper.findByName(name);
 	}
 
+	/**
+	 * User-Objekt mit einer bestimmten E-Mail-Adresse wird ausgegeben
+	 * @param mail ist die EMail des gesuchten Users
+	 * @return User, welcher uebergebene EMail-Adresse besitzt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public User getUserByMail(String mail) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userMapper.findByGMail(mail);
 	}
 	
+	/**
+	 * Ein Nutzer wird einem Eintrag als Verantwortlicher zugeordnet
+	 * @param user ist der Nutzer, welcher einem Eintrag als Verantwortlicher zugeordnet wird
+	 * @param listitem ist er Eintrag, welcher einen Nutzer als Verantwortlichen erhaelt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void assignUser(User user, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		//Methode nicht implementiert
 	}
 	
+	/**
+	 * Ein User-Objekt einer Gruppe hinzufuegen
+	 * @param user ist ein Nutzer, welcher einer Gruppe hinzugefuegt wird
+	 * @param group ist eine Gruppe, welcher ein User-Objekt hinzugfuegt wird
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void addUserToGroup(User user, Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.groupMapper.addUserToGroup(user, group);
 	}
-
+	
+	/**
+	 * Ein User-Objekt soll von einer Gruppe entfernt werden
+	 * @param user ist ein Nutzer, welcher von einer Gruppe entfernt wird
+	 * @param group ist eine Gruppe, von welcher ein User-Objekt entfernt werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 		
 	}
 
-
+	
 	
 /**
  * **********************************************************************************
