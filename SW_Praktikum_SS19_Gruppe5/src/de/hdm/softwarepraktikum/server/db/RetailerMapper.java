@@ -11,7 +11,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
  * 
- * @author Leoni Friedrich
+ * @author LeoniFriedrich & CarlaHofmann
  *
  */
 
@@ -222,6 +222,12 @@ public class RetailerMapper {
 
 	}
 
+	/**
+	 * 
+	 * @param listitem
+	 * @return
+	 */
+	
 	public Retailer getRetailerOf(Listitem listitem) {
 
 		Connection con = DBConnection.connection();
@@ -245,6 +251,12 @@ public class RetailerMapper {
 		}
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
 
 	public ArrayList<Retailer> getRetailersOf(User user) {
 		Connection con = DBConnection.connection();
@@ -257,7 +269,7 @@ public class RetailerMapper {
 
 			while (rs.next()) {
 
-				Retailer r = RetailerMapper.retailerMapper().findById(rs.getInt("retailer_id"));
+				Retailer r = RetailerMapper.retailerMapper().findById(rs.getInt("id"));
 				r.getId();
 				r.getCreationDate();
 				r.getName();
