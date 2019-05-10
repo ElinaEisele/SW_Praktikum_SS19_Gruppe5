@@ -45,7 +45,7 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	 */
 	public User(String name, String gmailAddress) {
 		super(name);
-		this.setGmailAdress(gmailAddress);
+		this.setGmailAddress(gmailAddress);
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	/**
 	 * Setzen der Google Mail Adresse des Nutzers.
 	 */
-	public void setGmailAdress(String gmailAddress) {
+	public void setGmailAddress(String gmailAddress) {
 		this.gmailAddress = gmailAddress;
 	}
 	

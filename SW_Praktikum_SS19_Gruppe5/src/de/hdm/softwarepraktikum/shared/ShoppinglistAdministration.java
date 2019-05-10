@@ -78,7 +78,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Shoppinglist createShoppinglistFor(Group group, String name) throws IllegalArgumentException;
 	
 	/**
-	 * Ein Listitem anlegen
+	 * Ein Listitem anlegen mit Retailer
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
@@ -461,4 +461,17 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Product createProductFor(Listitem listitem, String name) throws IllegalArgumentException;
+
+
+	/**
+	 * Ein Listitem anlegen ohne Retailer
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param unit Mengeneinheit 
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException;
 }

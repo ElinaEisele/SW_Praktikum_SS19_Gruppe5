@@ -60,11 +60,17 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems");
 
 			while (rs.next()) {
 
 				Listitem listitem = new Listitem();
+				listitem.setId(rs.getInt("id"));
+				listitem.setCreationDate(rs.getString("creationDate"));
+				listitem.setAmount(rs.getString("amount"));
+				//die IDs 
+				
+				listitems.add(listitem);
 			}
 
 		} catch (SQLException e) {
@@ -92,14 +98,16 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, CreationDate, Name FROM Listitem WHERE Listitem.id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems WHERE id= " + id);
 
 			if (rs.next()) {
 
 				Listitem listitem = new Listitem();
-				listitem.setBOid(rs.getInt("id"));
-				listitem.setCreationDate(rs.getString("CreationDate"));
-				listitem.setName(rs.getString("Name"));
+				listitem.setId(rs.getInt("id"));
+				listitem.setCreationDate(rs.getString("creationDate"));
+				listitem.setAmount(rs.getString("amount"));
+				//die IDs 
+				
 				return listitem;
 			}
 

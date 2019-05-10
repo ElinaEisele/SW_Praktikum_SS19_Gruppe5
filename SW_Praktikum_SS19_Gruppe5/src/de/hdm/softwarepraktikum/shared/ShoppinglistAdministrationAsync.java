@@ -48,8 +48,6 @@ public interface ShoppinglistAdministrationAsync {
   
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 	
-	void standardListitem(Product product, Group group, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
-	
 	void createRetailer(String name, AsyncCallback<Retailer> callback) throws IllegalArgumentException; 
 	
 	void save(User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
@@ -130,4 +128,5 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getAmount(Listitem listitem, AsyncCallback<Float> callback) throws IllegalArgumentException;
 	
+	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 }
