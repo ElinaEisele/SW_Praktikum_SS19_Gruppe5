@@ -108,8 +108,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		this.userMapper = UserMapper.userMapper();
 	}
 	
-	
-
 
 /**
  * **********************************************************************************
@@ -505,22 +503,47 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
+	/**
+	 * Einen User anlegen
+	 * @param mail GoogleMail des Users
+	 * @param name Name des Users
+	 * @return fertiges User-Objekt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public User createUser(String mail) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public User createUser(String name, String mail) throws IllegalArgumentException {
+		User user = new User(name, mail);
+		return this.userMapper.insert(user);
 	}
 	
+	/**
+	 * Speichern eines User-Objekts in der Datenbank
+	 * @param user User-Objekt, welches in der Datenbank gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(User user) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.userMapper.update(user);
 	}
 	
+	/**
+	 * Loeschen des uebergebenen User-Objekts
+	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void delete(User user) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		ArrayList<Group> groups = this.groupMapper.getGroupsOf(user);
+		for (int i=0; groups.size()>i; i++) {
+			Group g = groups.get(i);
+			ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
+			for (int u=0; shoppinglists.size()>i; i++) {
+				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(shoppinglists.get(u));
+			}
+			
+			
+		}
+		this.userMapper.delete(user);
 	}
 	
 	@Override

@@ -53,10 +53,11 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Einen User anlegen
 	 * @param mail GoogleMail des Users
+	 * @param name Name des Users
 	 * @return fertiges User-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public User createUser(String mail) throws IllegalArgumentException;
+	public User createUser(String name, String mail) throws IllegalArgumentException;
 	
 	/**
 	 * Eine Gruppe anlegen

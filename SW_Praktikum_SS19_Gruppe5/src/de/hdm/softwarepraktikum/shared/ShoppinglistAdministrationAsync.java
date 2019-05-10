@@ -26,7 +26,7 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getAllGroups(AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
 	
-	void createUser(String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
+	void createUser(String name, String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
 	
 	void createGroupFor(User user, String name, AsyncCallback<Group> callback) throws IllegalArgumentException;
 	
