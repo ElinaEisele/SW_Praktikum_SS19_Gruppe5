@@ -18,6 +18,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
+import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
@@ -48,7 +49,9 @@ public class ShoppinglistCellTable extends VerticalPanel {
 	ShoppinglistSearchBar shoppinglistSearchBar;
 	ShoppinglistCell shoppinglistCell;
 	VerticalPanel p1;
-
+	CellTable<ShoppinglistObject> table;
+	ListDataProvider<ShoppinglistObject> provider;
+	
 	public void onLoad() {
 		super.onLoad();
 		p1 = new VerticalPanel();
@@ -105,11 +108,13 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		ShoppinglistObject shoppinglistobject1 = new ShoppinglistObject(product1, listitem1, retailer1);
 		shoppinglistobject.add(shoppinglistobject1);
 
-		CellTable<ShoppinglistObject> table = new CellTable<>();
+		table = new CellTable<ShoppinglistObject>();
 
+		
 		table.setStyleName("shoppinglist-CellTable");
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-
+		provider = (ListDataProvider<ShoppinglistObject>)table.getKeyProvider();
+		
 		final MultiSelectionModel<ShoppinglistObject> selectionModel = new MultiSelectionModel<ShoppinglistObject>(
 				ShoppinglistObject.KEY_PROVIDER);
 		table.setSelectionModel(selectionModel,
@@ -183,6 +188,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			public void onBrowserEvent(Context context, Element elem, ShoppinglistObject object, NativeEvent event) {
 				super.onBrowserEvent(context, elem, object, event);
 				if ("click".equals(event.getType())) {
+					
 					p1.clear();
 					p1.add(shoppinglistCell);
 
@@ -195,9 +201,9 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		// Set the total row count
 		table.setRowCount(shoppinglistobject.size(), true);
-
 		// Push the data into the widget.
 		table.setRowData(0, shoppinglistobject);
+		
 		p1.add(table);
 		this.add(p1);
 	}
