@@ -59,9 +59,4 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
-	
-	
-
-	
-	
 }
