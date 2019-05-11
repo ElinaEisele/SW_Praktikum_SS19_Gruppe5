@@ -8,8 +8,11 @@ import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.cellview.client.CellTree;
+import com.google.gwt.user.cellview.client.TreeNode;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -18,9 +21,6 @@ import com.google.gwt.view.client.TreeViewModel;
 import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
 import de.hdm.softwarepraktikum.client.gui.RegistrationForm;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
-import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
-import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
-import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;
 import de.hdm.softwarepraktikum.client.gui.Trailer;
 import de.hdm.softwarepraktikum.client.gui.Editor;
@@ -48,45 +48,32 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	
 	private Trailer trailer = null;
 
-	/**
-	 * The model that defines the nodes in the tree.
-	 */
-	private static class CustomTreeModel implements TreeViewModel {
-
-		/**
-		 * Get the {@link NodeInfo} that provides the children of the specified value.
-		 */
-		public <T> NodeInfo<?> getNodeInfo(T value) {
-			/*
-			 * Create some data in a data provider. Use the parent value as a prefix for the
-			 * next level.
-			 */
-			ListDataProvider<String> dataProvider = new ListDataProvider<String>();
-			for (int i = 0; i < 10; i++) {
-				dataProvider.getList().add(value + "." + String.valueOf(i));
-			}
-
-			// Return a node info that pairs the data with a cell.
-			return new DefaultNodeInfo<String>(dataProvider, new TextCell());
-		}
-
-		/**
-		 * Check if the specified value represents a leaf node. Leaf nodes cannot be
-		 * opened.
-		 */
-		public boolean isLeaf(Object value) {
-			// The maximum length of a value is ten characters.
-			return value.toString().length() > 10;
-		}
-	}
+	
 
 	@Override
 	public void onModuleLoad() {
 
-		TreeViewModel model = new CustomTreeModel();
+		// Create a model for the tree.
+				TreeViewModel model = new NavigatorPanel();
 
-		CellTree cellTree = new CellTree(model, "Gruppe 1");
+				/*
+				 * Create the tree using the model. We use <code>null</code> as the default
+				 * value of the root node. The default value will be passed to
+				 * CustomTreeModel#getNodeInfo();
+				 */
+				CellTree tree = new CellTree(model, null);
+				tree.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
+				// Open the first playlist by default.
+				TreeNode rootNode = tree.getRootTreeNode();
+//				TreeNode firstGruppe = rootNode.setChildOpen(0, true);
+//				firstGruppe.setChildOpen(0, false);
+
+				// Add the tree to the root layout panel.
+				RootPanel.get("aside").add(tree);
+		
+		
+		
 		header = new Header();
 
 		shoppinglistShowForm = new ShoppinglistShowForm();
@@ -106,7 +93,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		RootPanel.get("Report").add(b2);
 		RootPanel.get("Logout").add(b3);
 
-		RootPanel.get("aside").add(cellTree);
+		
 		RootPanel.get("main").add(shoppinglistShowForm);
 		RootPanel.get("footer").add(trailer);
 
