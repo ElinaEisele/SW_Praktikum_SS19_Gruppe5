@@ -1,11 +1,9 @@
 package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.cell.client.AbstractCell;
-import com.google.gwt.cell.client.Cell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
-import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 
 /**
  * Klasse zur Darstellung von Group-Objekten im Navigator.
