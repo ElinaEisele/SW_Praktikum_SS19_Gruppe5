@@ -87,10 +87,10 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		shoppinglist.add(shoppinglist1);
 		shoppinglist.add(shoppinglist2);
 
-		User user1 = new User("Tim");
-		User user2 = new User("Tims Papa");
-		User user3 = new User("Felix");
-		User user4 = new User("Jonas");
+		User user1 = new User("Tim", "Tim@gmail.com");
+		User user2 = new User("Tims Papa", "TimsPapa@gmail.com");
+		User user3 = new User("Felix", "Felix@gmail.com");
+		User user4 = new User("Jonas", "Jonas@gmail.com");
 		user.add(user1);
 		user.add(user2);
 		user.add(user3);
