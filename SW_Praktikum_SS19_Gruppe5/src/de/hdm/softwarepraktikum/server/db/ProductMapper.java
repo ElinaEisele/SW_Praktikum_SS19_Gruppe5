@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
-import javafx.scene.Group;
 
 /**
  * Mapper Klasse für </code>Product</code> Objekte. Diese umfasst Methoden um
@@ -32,7 +31,7 @@ public class ProductMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Gibt den Productmapper zurueck.
+	 * @return Productmapper
 	 */
 	public static ProductMapper productMapper() {
 		if (productMapper == null) {
@@ -45,7 +44,7 @@ public class ProductMapper {
 	/**
 	 * Ausgabe einer Liste aller Produkte.
 	 *
-	 * @return Gibt eine Liste aller Produkte zurueck.
+	 * @return Productlist
 	 */
 	public ArrayList<Product> findAll() {
 
@@ -56,57 +55,51 @@ public class ProductMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM products");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM products");
 
 			while (rs.next()) {
-				Product product = new Product();
-				product.setId(rs.getInt("id"));
-				product.setName(rs.getString("name"));
-				product.setCreationDate(rs.getDate("creationDate"));
-
-				products.add(product);
+				Product p = new Product();
+				p.setId(rs.getInt("id"));
+				p.setCreationDate(rs.getDate("creationDate"));
+				p.setName(rs.getString("name"));
+				products.add(p);
 			}
+			
+			return products;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-		}
-
-		return products;
+		}	
 
 	}
 
 	/**
-	 * Produkt mittels id finden.
+	 * Produkt mittels seiner id finden.
 	 *
-	 * @param id: Die id wird uebergeben,um mithilfe dieser ein Produkt-Objekt zu
-	 *        finden.
-	 * @return Das Produkt-Objekt, welches anhand der id gefunden wurde, wird
-	 *         zurueckgegeben.
+	 * @param id
+	 * @return Product
 	 */
 	public Product findById(int id) {
 
-		Product product = new Product();
 		Connection con = DBConnection.connection();
 
 		try {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM products WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM products WHERE id = " + id);
 
 			if (rs.next()) {
-
 				Product p = new Product();
 				p.setId(rs.getInt("id"));
-				p.setName(rs.getString("name"));
 				p.setCreationDate(rs.getDate("creationDate"));
+				p.setName(rs.getString("name"));
 				return p;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
 
 		return null;
@@ -115,8 +108,8 @@ public class ProductMapper {
 	/**
 	 * Produkt mithilfe des Produktnamens finden.
 	 * 
-	 * @param name: Uebergabe des Namens eines Produkts in Form eines Strings
-	 * @return Produkt(e) mit dem entsprechenden Namen
+	 * @param name
+	 * @return Productlist
 	 */
 	public ArrayList<Product> findByName(String name) {
 
@@ -126,33 +119,31 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM products WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM products WHERE name = " + name);
 
 			while (rs.next()) {
 
 				Product product = new Product();
 				product.setId(rs.getInt("id"));
-				product.setName(rs.getString("name"));
 				product.setCreationDate(rs.getDate("creationDate"));
-
+				product.setName(rs.getString("name"));
 				products.add(product);
 			}
+			
+			return products;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return products;
-
 	}
 
 	/**
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
-	 * @param product: Das gewaehlte Produkt wird uebergeben
-	 * @return Das Produkt wird zurueckgegeben.
+	 * @param product
+	 * @return Product
 	 */
 	public Product insert(Product product) {
 
@@ -167,27 +158,29 @@ public class ProductMapper {
 				product.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO products (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO products (id, creationDate, name) VALUES (?, ?, ?)", 
+					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, product.getId());
 			pstmt.setDate(2, (Date) product.getCreationDate());
 			pstmt.setString(3, product.getName());
 			pstmt.executeUpdate();
+			
+			return product;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 
 		}
-		return product;
 
 	}
 
 	/**
 	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
 	 *
-	 * @param product: Das Produkt wird uebergeben.
-	 * @return Gibt das akutalisierte Produkt zurueck.
+	 * @param product
+	 * @return Product
 	 */
 	public Product update(Product product) {
 
@@ -204,15 +197,15 @@ public class ProductMapper {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 
-		return null;
 	}
 
 	/**
 	 * Delete Methode, um ein Produkt-Objekt aus der Datenbank zu entfernen.
 	 *
-	 * @param product: Das Produkt wird uebergeben.
+	 * @param product
 	 */
 	public void delete(Product product) {
 
@@ -223,16 +216,15 @@ public class ProductMapper {
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM products WHERE id = " + product.getId());
 
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Methode, um das Produkt eines Listitems zu bekommen.
+	 * Methode, um das Produkt eines Listitems zu finden.
 	 * 
-	 * @param listitem: Listitem, von welchem das Produkt abgefragt wird.
+	 * @param listitem
 	 * @return Produkt des Listitems
 	 */
 	public Product getProductOf(Listitem listitem) {
