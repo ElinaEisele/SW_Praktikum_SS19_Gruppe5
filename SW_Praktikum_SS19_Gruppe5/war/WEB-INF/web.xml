@@ -7,18 +7,18 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>shoppinglistAdministrationService</servlet-name>
     <servlet-class>de.hdm.softwarepraktikum.server.ShoppinglistAdministrationImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>shoppinglistAdministrationService</servlet-name>
     <url-pattern>/sw_praktikum_ss19_gruppe5/administration</url-pattern>
   </servlet-mapping>
   
   <servlet> 
   	<servlet-name>loginService</servlet-name>
-  	<servlet-class>de.hdm.softwarepraktikum.server.ShoppinglistAdministrationImpl</servlet-class>
+  	<servlet-class>de.hdm.softwarepraktikum.server.LoginServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>

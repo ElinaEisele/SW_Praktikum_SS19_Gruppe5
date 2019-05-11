@@ -14,7 +14,7 @@ public class Product extends NamedBusinessObject implements IsSerializable{
 	private static final long serialVersionUID = 1L;
 	
 	/*
-	 * Fremdschlüsselbeziehung zum zugeordneten Listitem-Objekt
+	 * Fremdschlï¿½sselbeziehung zum zugeordneten Listitem-Objekt
 	 */
 	private int listitemID;
 	
@@ -22,7 +22,7 @@ public class Product extends NamedBusinessObject implements IsSerializable{
 	 * Default-Konstruktor
 	 */
 	public Product() {
-		super();
+
 	}
 	/*
 	 * Konstruktor, in welchem der Name gesetzt wird.

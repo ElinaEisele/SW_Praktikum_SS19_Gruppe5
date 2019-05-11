@@ -23,17 +23,17 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	private Unit unit;
 	
 	/**
-	 * Fremdschlüsselbeziehung zum Produkt des Eintrags.
+	 * Fremdschlï¿½sselbeziehung zum Produkt des Eintrags.
 	 */
 	private int productID;
 	
 	/**
-	 * Fremdschlüsselbeziehung zur Einkaufsliste des Eintrags.
+	 * Fremdschlï¿½sselbeziehung zur Einkaufsliste des Eintrags.
 	 */
 	private int shoppinglistID;
 	
 	/**
-	 * Fremdschlüsselbeziehung zum Händler des Eintrags.
+	 * Fremdschlï¿½sselbeziehung zum Hï¿½ndler des Eintrags.
 	 */
 	private int retailerID;
 	
@@ -41,7 +41,6 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 * Default-Konstruktor
 	 */
 	public Listitem() {
-		super();
 	}
 	
 	/**

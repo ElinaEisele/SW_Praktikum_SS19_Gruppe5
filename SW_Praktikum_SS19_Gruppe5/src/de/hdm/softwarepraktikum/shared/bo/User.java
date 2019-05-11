@@ -37,7 +37,7 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	 * Default-Konstruktor, welcher den Konstruktor in NamedBusinessObject aufruft
 	 */
 	public User() {
-		super();
+		
 	}
 	
 	/**

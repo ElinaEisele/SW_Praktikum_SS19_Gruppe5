@@ -5,7 +5,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * Realisierung einer exemplarischen Einkaufliste. Eine Einkaufsliste beseteht
- * aus mehreren Einträgen (Listitems).
+ * aus mehreren Eintrï¿½gen (Listitems).
  * 
  * @author TimBeutelspacher
  *
@@ -15,12 +15,12 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * ArrayList mit allen Einträgen (Listitem-Objekten)
+	 * ArrayList mit allen Eintrï¿½gen (Listitem-Objekten)
 	 */
 	private ArrayList<Listitem> listitems;
 	
 	/*
-	 * Fremdschlüsselbeziehung zur Gruppe, in welcher sich die Einkaufsliste befindet
+	 * Fremdschlï¿½sselbeziehung zur Gruppe, in welcher sich die Einkaufsliste befindet
 	 */
 	private int groupId = 1;
 	
@@ -28,7 +28,6 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	 * Default-Konstruktor
 	 */
 	public Shoppinglist() {
-		super();
 	}
 	
 	/**
@@ -40,7 +39,7 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	}
 	
 	/**
-	 * Ausgeben einer ArrayList mit allen Einträgen.
+	 * Ausgeben einer ArrayList mit allen Eintrï¿½gen.
 	 */
 	public ArrayList<Listitem> getListitems() {
 		return listitems;

@@ -16,8 +16,8 @@
     <exclude path="**.gwt.rpc" />
 </static-files>
 
-  <!-- system-properties> 
+  <system-properties> 
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
-  </system-properties>-->
+  </system-properties>
 
 </appengine-web-app>
