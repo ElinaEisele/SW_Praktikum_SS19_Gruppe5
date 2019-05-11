@@ -1,9 +1,6 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.*;
@@ -59,12 +56,12 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT usergroup_id, name, creationDate FROM usergroups");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM usergroups");
 
 			while (rs.next()) {
 
 				Group group = new Group();
-				group.setId(rs.getInt("usergroup_id"));
+				group.setId(rs.getInt("id"));
 				group.setName(rs.getString("name"));
 				group.setCreationDate(rs.getDate("creationDate"));
 				groups.add(group);
@@ -93,14 +90,14 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT usergroup_id, name, creationDate FROM usergroups WHERE usergroup_id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM usergroups WHERE id = " + id);
 
 			if (rs.next()) {
 
 				Group group = new Group();
-				group.setId(rs.getInt("usergroup_id"));
+				group.setId(rs.getInt("id"));
 				group.setName(rs.getString("name"));
-				group.setCreationDate(rs.getString("creationDate"));
+				group.setCreationDate(rs.getDate("creationDate"));
 				return group;
 			}
 
@@ -127,11 +124,16 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate FROM usergroups WHERE name = " + name);
 
 			while (rs.next()) {
 
-				Group group = new Group();
+				Group g = new Group();
+				g.setId(rs.getInt("id"));
+				g.setName(rs.getString("name"));
+				g.setCreationDate(rs.getDate("creationDate"));
+				
+				groups.add(g);
 			}
 
 		} catch (SQLException e) {
@@ -156,19 +158,20 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM usergroups");
 
 			if (rs.next()) {
-
+				
+				group.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement stmt2 = con.prepareStatement(
-					"INSERT INTO Groups (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO usergroups (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-			stmt2.setInt(1, group.getBOid());
-			stmt2.setDate(2, group.getCreationDate());
-			stmt2.setString(3, group.getName());
-			stmt2.executeUpdate();
+			pstmt.setInt(1, group.getId());
+			pstmt.setDate(2, (Date) group.getCreationDate());
+			pstmt.setString(3, group.getName());
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -190,14 +193,12 @@ public class GroupMapper {
 
 		try {
 
-			/**
-			 * PreparedStatement stmt = con.prepareStatement("UPDATE Groups SET
-			 * CreationDate= ?, Name= ? WHERE ID = ?");
-			 * 
-			 * stmt.setString(1, group.get()); stmt.setString(2, group.getName());
-			 * stmt.setInt(3, group.getBO_ID()); stmt.executeUpdate();
-			 */
+			PreparedStatement pstmt = con.prepareStatement("UPDATE usergroups SET name = ? WHERE id = ?");
 
+			pstmt.setString(1, group.getName());
+			pstmt.setInt(2, group.getId());
+			pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -217,7 +218,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Groups WHERE Groups.id =" + group.getId());
+			stmt.executeUpdate("DELETE FROM usergroups WHERE id =" + group.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -230,20 +231,20 @@ public class GroupMapper {
 	 * @param shoppinglist: Shoppingliste, von welcher die Gruppe abgefragt wird.
 	 * @return Gruppe der Shoppingliste
 	 */
-	public Group getGroupOf(Shoppinglist shoppinglist) {
+	public Group getGroupOf (Shoppinglist shoppinglist) {
 
 		Connection con = DBConnection.connection();
 
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery("SELECT ...");
 
 			if (rs.next()) {
 
 				Group group = new Group();
-				group.setBOid(rs.getInt("id"));
-				group.setCreationDate(rs.getString("CreationDate"));
+				group.setId(rs.getInt("id"));
+				group.setCreationDate(rs.getDate("CreationDate"));
 				group.setName(rs.getString("Name"));
 				return group;
 			}

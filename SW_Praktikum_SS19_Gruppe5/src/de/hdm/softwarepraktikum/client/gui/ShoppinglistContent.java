@@ -12,8 +12,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ShoppinglistContent extends VerticalPanel{
 	
-	ShoppinglistSearchBar shoppinglistSearchBar = null;
-	ShoppinglistCellTable shoppinglistCellTable = null;
+	ShoppinglistContent shoppinglistContent;
+	ShoppinglistSearchBar shoppinglistSearchBar ;
+	ShoppinglistCellTable shoppinglistCellTable ;
 	
 	public void onLoad() {
 		super.onLoad();

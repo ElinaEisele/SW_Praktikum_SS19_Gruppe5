@@ -129,7 +129,7 @@ public class UserMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, creationDate, name, gMail FROM Users WHERE Name ='" + name + "'");
+					.executeQuery("SELECT id, creationDate, name, gMail FROM users WHERE Name ='" + name + "'");
 
 			if (rs.next()) {
 
@@ -165,7 +165,7 @@ public class UserMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, creationDate, name, gMail FROM Users WHERE gMail = '" + gmail + "'");
+					.executeQuery("SELECT id, creationDate, name, gMail FROM users WHERE gMail = '" + gmail + "'");
 
 			if (rs.next()) {
 
@@ -237,7 +237,7 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Users WHERE id =" + user.getId());
+			stmt.executeUpdate("DELETE FROM users WHERE id =" + user.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -254,8 +254,12 @@ public class UserMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			PreparedStatement stmt = con.prepareStatement("UPDATE User SET GMail= ?, Name= ? WHERE User_ID = ?");
-			// vervollständigen
+			PreparedStatement pstmt = con.prepareStatement("UPDATE users SET GMail= ?, Name= ? WHERE User_ID = ?");
+			pstmt.setString(1, user.getGmailAddress());
+			pstmt.setString(2, user.getName());
+			pstmt.setInt(2, user.getId());
+			pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -268,8 +272,13 @@ public class UserMapper {
 		User groupMember = new User();
 
 		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT ...");
 
-			//
+			if (rs.next()) {
+				//
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
