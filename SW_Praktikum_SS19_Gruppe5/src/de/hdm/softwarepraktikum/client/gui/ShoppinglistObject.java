@@ -10,7 +10,7 @@ import de.hdm.softwarepraktikum.shared.bo.Retailer;
 public class ShoppinglistObject extends BusinessObject{
 
 	/**
-	 * 
+	 * Objekt zum zum befüllen des Cell Tables
 	 */
 	private static final long serialVersionUID = 1L;
 	
