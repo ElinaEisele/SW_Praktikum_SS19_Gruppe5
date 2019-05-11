@@ -193,14 +193,12 @@ public class GroupMapper {
 
 		try {
 
-			/**
-			 * PreparedStatement stmt = con.prepareStatement("UPDATE Groups SET
-			 * CreationDate= ?, Name= ? WHERE ID = ?");
-			 * 
-			 * stmt.setString(1, group.get()); stmt.setString(2, group.getName());
-			 * stmt.setInt(3, group.getBO_ID()); stmt.executeUpdate();
-			 */
+			PreparedStatement pstmt = con.prepareStatement("UPDATE usergroups SET name = ? WHERE id = ?");
 
+			pstmt.setString(1, group.getName());
+			pstmt.setInt(2, group.getId());
+			pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -220,7 +218,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Groups WHERE Groups.id =" + group.getId());
+			stmt.executeUpdate("DELETE FROM usergroups WHERE id =" + group.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -233,20 +231,20 @@ public class GroupMapper {
 	 * @param shoppinglist: Shoppingliste, von welcher die Gruppe abgefragt wird.
 	 * @return Gruppe der Shoppingliste
 	 */
-	public Group getGroupOf(Shoppinglist shoppinglist) {
+	public Group getGroupOf (Shoppinglist shoppinglist) {
 
 		Connection con = DBConnection.connection();
 
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery("SELECT ...");
 
 			if (rs.next()) {
 
 				Group group = new Group();
-				group.setBOid(rs.getInt("id"));
-				group.setCreationDate(rs.getString("CreationDate"));
+				group.setId(rs.getInt("id"));
+				group.setCreationDate(rs.getDate("CreationDate"));
 				group.setName(rs.getString("Name"));
 				return group;
 			}

@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.server.db;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,9 +72,9 @@ public class ShoppinglistMapper {
 				Shoppinglist shoppinglist = new Shoppinglist();
 				shoppinglist.setId(rs.getInt("id"));
 				shoppinglist.setName(rs.getString("name"));
-				shoppinglist.setCreationDate(rs.getString("creationDate");
-				//shoppinglist.set ("usergroup_id");
-				
+				shoppinglist.setCreationDate(rs.getDate("creationDate"));
+				// shoppinglist.set ("usergroup_id");
+
 				shoppinglists.add(shoppinglist);
 			}
 
@@ -100,12 +101,13 @@ public class ShoppinglistMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate, usergroup_id FROM shoppinglists WHERE id = " + id);
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, name, creationDate, usergroup_id FROM shoppinglists WHERE id = " + id);
 			if (rs.next()) {
 				shoppinglist.setId(rs.getInt("id"));
 				shoppinglist.setName(rs.getString("name"));
-				shoppinglist.setCreationDate(rs.getString("creationDate"));
-				//usergroup_id
+				shoppinglist.setCreationDate(rs.getDate("creationDate"));
+				// usergroup_id
 				return shoppinglist;
 			}
 		} catch (
@@ -134,16 +136,17 @@ public class ShoppinglistMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate, usergroup_id FROM retailers WHERE name = " + name);
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, name, creationDate, usergroup_id FROM retailers WHERE name = " + name);
 
 			while (rs.next()) {
 
 				Shoppinglist shoppinglist = new Shoppinglist();
 				shoppinglist.setId(rs.getInt("id"));
 				shoppinglist.setName(rs.getString("name"));
-				shoppinglist.setCreationDate(rs.getString("creationDate"));
-				//usergroup_id
-				
+				shoppinglist.setCreationDate(rs.getDate("creationDate"));
+				shoppinglist.setGroupId(rs.getInt("usergroup_id"));
+
 				shoppinglists.add(shoppinglist);
 			}
 
@@ -171,27 +174,20 @@ public class ShoppinglistMapper {
 
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT ... ");
+			ResultSet rs = stmt.executeQuery("MAX(id) AS maxid FROM shoppinglists ");
 
 			if (rs.next()) {
-
+				shoppinglist.setId(rs.getInt("maxid") + 1);
 			}
-			// Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu
-			// gewährleisten.
-			con.setAutoCommit(false);
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO shoppinglists (id, creationDate, name, usergroup_id) VALUES (?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
 
-			PreparedStatement pstmt1 = con.prepareStatement("INSERT INTO ...", Statement.RETURN_GENERATED_KEYS);
-
-			// vervollstaendigen
-
-			stmt2.executeUpdate();
-
-			PreparedStatement pstmt2 = con.prepareStatement("INSERT INTO ... ", Statement.RETURN_GENERATED_KEYS);
-
-			stmt3.executeUpdate();
-
-			// Wenn alle Statements fehlerfrei ausgefuehrt wurden, wird commited.
-			con.commit();
+			pstmt.setInt(1, shoppinglist.getId());
+			pstmt.setDate(2, (Date) shoppinglist.getCreationDate());
+			pstmt.setString(3, shoppinglist.getName());
+			pstmt.setInt(4, shoppinglist.getGroupId());
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -211,17 +207,11 @@ public class ShoppinglistMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			PreparedStatement pstmt = con.prepareStatement("UPDATE shoppinglists SET name = ? WHERE id = ?");
 
-			// Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu
-			// gewährleisten.
-			con.setAutoCommit(false);
-
-			PreparedStatement pstmt = con.prepareStatement("UPDATE ...");
-
-			// vervollständigen
-
-			// Wenn alle Statements fehlerfrei ausgeführt wurden, wird commited.
-			con.commit();
+			pstmt.setString(1, shoppinglist.getName());
+			pstmt.setInt(2, shoppinglist.getId());
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -233,24 +223,15 @@ public class ShoppinglistMapper {
 	/**
 	 * Loeschen einer Shoppinglist aus der Datenbank.
 	 * 
-	 * @param shoppinglist: Die Shoppinglist wird uebergeben 
+	 * @param shoppinglist: Die Shoppinglist wird uebergeben
 	 */
 	public void delete(Shoppinglist shoppinglist) {
 
 		Connection con = DBConnection.connection();
-	
 
 		try {
-			//Setzt den AutoCommit auf false, um das sichere Schreiben in die Datenbank zu gewährleisten.
-			con.setAutoCommit(false);
-			
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("");
-
-			//vervollständigen
-			
-			//Wenn alle Statements fehlerfrei ausgeführt wurden, wird commited.
-			con.commit();
+			stmt.executeUpdate("DELETE FROM shoppinglists WHERE id =" + shoppinglist.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -270,28 +251,28 @@ public class ShoppinglistMapper {
 		}
 		return shoppinglist;
 	}
-	
+
 	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) {
-		
+
 		Connection con = DBConnection.connection();
 		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
-		
+
 		try {
-			
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return shoppinglists;
 	}
-	
-	public ArrayList<Shoppinglist> getShoppinglistsOf(User user){
-		
+
+	public ArrayList<Shoppinglist> getShoppinglistsOf(User user) {
+
 		Connection con = DBConnection.connection();
 		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
-		
+
 		try {
-			
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return shoppinglists;

@@ -1,14 +1,9 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.Retailer;
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 
 /**
@@ -66,8 +61,8 @@ public class ListitemMapper {
 
 				Listitem listitem = new Listitem();
 				listitem.setId(rs.getInt("id"));
-				listitem.setCreationDate(rs.getString("creationDate"));
-				listitem.setAmount(rs.getString("amount"));
+				listitem.setCreationDate(rs.getDate("creationDate"));
+				listitem.setAmount(rs.getFloat("amount"));
 				//die IDs 
 				
 				listitems.add(listitem);
@@ -104,8 +99,8 @@ public class ListitemMapper {
 
 				Listitem listitem = new Listitem();
 				listitem.setId(rs.getInt("id"));
-				listitem.setCreationDate(rs.getString("creationDate"));
-				listitem.setAmount(rs.getString("amount"));
+				listitem.setCreationDate(rs.getDate("creationDate"));
+				listitem.setAmount(rs.getFloat("amount"));
 				//die IDs 
 				
 				return listitem;
@@ -131,19 +126,20 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers ");
 
 			if (rs.next()) {
-
+				
+				listitem.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement stmt2 = con.prepareStatement(
-					"INSERT INTO Listitem (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO Listitem (id, creationDate, amount) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-			stmt2.setInt(1, listitem.getBOid());
-			stmt2.setDate(2, listitem.getCreationDate());
-			stmt2.setString(3, listitem.getName());
-			stmt2.executeUpdate();
+			pstmt.setInt(1, listitem.getId());
+			pstmt.setDate(2, (Date) listitem.getCreationDate());
+			pstmt.setFloat(3, listitem.getAmount());
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,6 +160,11 @@ public class ListitemMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? WHERE id = ?");
+
+			pstmt.setFloat(1, listitem.getAmount());
+			pstmt.setInt(2, listitem.getId());
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -184,7 +185,7 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Listitem WHERE Listitem.id =" + listitem.getBOId());
+			stmt.executeUpdate("DELETE FROM listitems WHERE id =" + listitem.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -205,14 +206,13 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery("...");
 
 			if (rs.next()) {
 
 				Listitem listitem = new Listitem();
-				listitem.setBOid(rs.getInt("id"));
-				listitem.setCreationDate(rs.getString("CreationDate"));
-				listitem.setName(rs.getString("Name"));
+				listitem.setId(rs.getInt("id"));
+				listitem.setCreationDate(rs.getDate("CreationDate"));
 				return listitem;
 			}
 
