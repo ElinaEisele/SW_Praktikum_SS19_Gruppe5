@@ -30,7 +30,7 @@ public class UserMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Gibt den User Mapper zurück.
+	 * @return Usermapper
 	 */
 	public static UserMapper userMapper() {
 		if (userMapper == null) {
