@@ -1,27 +1,13 @@
 package de.hdm.softwarepraktikum.server;
 
-import java.sql.Date;
+import java.sql.*;
 import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.softwarepraktikum.server.db.GroupMapper;
-import de.hdm.softwarepraktikum.server.db.ListitemMapper;
-import de.hdm.softwarepraktikum.server.db.ProductMapper;
-import de.hdm.softwarepraktikum.server.db.RetailerMapper;
-import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
-import de.hdm.softwarepraktikum.server.db.UserMapper;
-import de.hdm.softwarepraktikum.shared.FieldVerifier;
-import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
-import de.hdm.softwarepraktikum.shared.bo.Group;
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.Product;
-import de.hdm.softwarepraktikum.shared.bo.Retailer;
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.Unit;
-import de.hdm.softwarepraktikum.shared.bo.User;
-import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
-import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
+import de.hdm.softwarepraktikum.server.db.*;
+import de.hdm.softwarepraktikum.shared.*;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Die Klasse <code>ShoppinglistAdministrationImpl</code> implementiert das Interface
@@ -108,8 +94,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		this.userMapper = UserMapper.userMapper();
 	}
 	
-	
-
 
 /**
  * **********************************************************************************
@@ -138,7 +122,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
 		this.groupMapper.insert(group);
-		group.getUsers().add(this);
+		this.groupMapper.addUserToGroup(user, group);
 		return group;
 	}
 	
@@ -196,7 +180,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	/**
 	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
 	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList sÃ¯Â¿Â½mtlicher Gruppen eines Users
+	 * @return ArrayList saemtlicher Gruppen eines Users
 	 * @throws IllegalArgumentException
 	 */
 	@Override
@@ -223,52 +207,113 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
+	/**
+	 * Ein Listitem anlegen mit Retailer
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param unit Mengeneinheit 
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException {
+		
+		Listitem li = new Listitem(amount, unit);
+		// Fremdschluessel zum Retailer wird auf default-Wert 0 gesetzt.
+		li.setRetailerID(0);
+		
+		/**
+		 * Nach dem createProduct()-Aufruf erhält das Produkt die ID welche mit der Datenbank konsistent ist.
+		 * Somit kann die Fremdschluesselbeziehung vom Listitem zum Product gesetzt werden.
+		 */
+		Product p = this.createProductFor(li, productname);
+		li.setProductID(p.getId());
+		
+		/*
+		 * Problem: Product hat ein Attribut "listitemId", welches jedoch erst gesetzt werden kann nach dem 
+		 * Aufruf der insert(Listiitem)-Methode.
+		 * Lösung: In der Insert-Methode des Listitem-Objekts muss die Fremdschluesselbeziehung vom enthaltenen Produkt mit der
+		 * korrekten und konsistenten ID des Listitems überschrieben werden.
+		 */
+
+		//In der Insert-Methode erhält das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
+		return this.listitemMapper.insert(li);
+	}
 	
+	/**
+	 * Ein Listitem anlegen mit Retailer
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param unit Mengeneinheit 
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit,
 			Retailer retailer) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//Listitem mit den übergebenen Parametern wird erstellt.
+		Listitem li = new Listitem(amount, unit, retailer);
+		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
+		li.setRetailerID(retailer.getId());
+		
+		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
+		Product p = this.createProductFor(li, productname);
+		//Fremdschluessel vom Listitem zum Product wird gesetzt.
+		li.setProductID(p.getId());
+		
+		return this.listitemMapper.insert(li);
 	}
 	
+	/**
+	 * Speichern eines Listitem-Objekt in der Datenbank
+	 * @param listitem, Listitem-Objekt, welches in der Datenbank gepseichert werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.listitemMapper.update(listitem);
 		
 	}
 	
+	/**
+	 * Loeschen des uebergebenen Listitem-Objekts
+	 * @param listitem Listitem-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.listitemMapper.delete(listitem);
 		
 	}
 	
+	/**
+	 * Saemtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zurueckgegeben
+	 * @param shoppinglist ist die Einkaufsliste, in welcher nach einer bestimmten Produktbezeichnung gesucht werden soll
+	 * @param productname ist die Produktbezeichung nach welcher gesucht werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche eine bestimmte Prosuktbezeichung enthalten
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist, String productname)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname) throws IllegalArgumentException {
+		return this.listitemMapper.getListitemsByNameOf(shoppinglist, productname);
 	}
 
+	/**
+	 * Saemtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben
+	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen
+	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
-	@Override
-	public void setListitem(Product product, float amount, Unit unit, Retailer retailer, User user)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setListitem(Product product, float amount, Unit unit, Retailer retailer)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
@@ -303,17 +348,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return null;
 	}
 	
-	@Override
-	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
 	public Unit getUnit(Listitem listitem) throws IllegalArgumentException {
@@ -512,73 +557,151 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
+	/**
+	 * Einen User anlegen
+	 * @param mail GoogleMail des Users
+	 * @param name Name des Users
+	 * @return fertiges User-Objekt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public User createUser(String mail) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public User createUser(String name, String mail) throws IllegalArgumentException {
+		User user = new User(name, mail);
+		return this.userMapper.insert(user);
 	}
 	
+	/**
+	 * Speichern eines User-Objekts in der Datenbank
+	 * @param user User-Objekt, welches in der Datenbank gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(User user) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.userMapper.update(user);
 	}
 	
+	/**
+	 * Loeschen des uebergebenen User-Objekts
+	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void delete(User user) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		ArrayList<Group> groups = this.groupMapper.getGroupsOf(user);
+		for (int i=0; groups.size()>i; i++) {
+			Group g = groups.get(i);
+			ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
+			for (int u=0; shoppinglists.size()>i; i++) {
+				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(shoppinglists.get(u));
+			}
+			//Die Einträge, welche dem User zugeteilt wurden müssen hier noch gelöscht werden.
+			//Die Zuweisung von Händlern zu Usern wurde jedoch noch nicht realisiert.
+			
+		}
+		this.userMapper.delete(user);
 	}
 	
+	/**
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der Uebergabe eines Gruppen-Objekts
+	 * @param group Gruppe, deren Mitglieder ausgegeben werden sollen
+	 * @return ArrayList saemtlicher Mitglieder einer Gruppe
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<User> getUsersOf(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getUsersOf(group.getId());
 	}
-
+	
+	/**
+	 * Saemliche Mitglieder einer Gruppe ausgeben mit Hilfe der Uebergabe eines Gruppen-Objekts
+	 * @param groupId Gruppen Id, deren Mitglieder ausgegeben werden sollen
+	 * @return ArrayList saemtlicher Mitglieder einer Gruppe
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		//Fehler, da Methode in Mapper noch nicht realisiert.
+		return this.groupMapper.getUsersOf(groupId);
 	}
 
+	/**
+	 * Rueckgabe eines User-Objekts mit einer bestimmten ID
+	 * @param userId ID des gesuchten User-Objekts
+	 * @return Das erste User-Objekt, welches den Suchkriterien entspricht
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public User getUserById(int userId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userMapper.findById(userId);
 	}
-
+	
+	/**
+	 * Saemtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
+	 * @param name Username
+	 * @return ArrayList saemtlicher User-Objekte, welche einen bestimmten Namen besitzen
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<User> getUsersByName(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userMapper.findByName(name);
 	}
 
+	/**
+	 * User-Objekt mit einer bestimmten E-Mail-Adresse wird ausgegeben
+	 * @param mail ist die EMail des gesuchten Users
+	 * @return User, welcher uebergebene EMail-Adresse besitzt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public User getUserByMail(String mail) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userMapper.findByGMail(mail);
 	}
 	
+	/**
+	 * Ein Nutzer wird einem Eintrag als Verantwortlicher zugeordnet
+	 * @param user ist der Nutzer, welcher einem Eintrag als Verantwortlicher zugeordnet wird
+	 * @param listitem ist er Eintrag, welcher einen Nutzer als Verantwortlichen erhaelt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void assignUser(User user, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		//Methode nicht implementiert
 	}
 	
+	/**
+	 * Ein User-Objekt einer Gruppe hinzufuegen
+	 * @param user ist ein Nutzer, welcher einer Gruppe hinzugefuegt wird
+	 * @param group ist eine Gruppe, welcher ein User-Objekt hinzugfuegt wird
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void addUserToGroup(User user, Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		this.groupMapper.addUserToGroup(user, group);
 	}
-
+	
+	/**
+	 * Ein User-Objekt soll von einer Gruppe entfernt werden
+	 * @param user ist ein Nutzer, welcher von einer Gruppe entfernt wird
+	 * @param group ist eine Gruppe, von welcher ein User-Objekt entfernt werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+//		Group g = this.groupMapper.findById(group.getId());
+//		g.getUsers();
 		
+		//Einfacher direkt im Mapper?
+		/*
+		 * Methode im GroupMapper: removeUserFromGroup(int userId, int goupId)
+		 * passendes STATEMENT:
+		 * DELETE * FROM Membership WHERE user_id = userId AND group_id = groupId
+		 * 
+		 * DANN Code in dieser Methode:
+		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
+		 */
 	}
 
-
+	
 	
 /**
  * **********************************************************************************

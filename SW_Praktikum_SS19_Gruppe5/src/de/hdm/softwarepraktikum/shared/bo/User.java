@@ -43,8 +43,9 @@ public class User extends NamedBusinessObject implements IsSerializable{
 	/**
 	 * Konstruktor zum Setzen des Namens.
 	 */
-	public User(String name) {
+	public User(String name, String gmailAddress) {
 		super(name);
+		this.setGmailAddress(gmailAddress);
 	}
 	
 	/**

@@ -3,7 +3,6 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
-import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
 
 
 /**

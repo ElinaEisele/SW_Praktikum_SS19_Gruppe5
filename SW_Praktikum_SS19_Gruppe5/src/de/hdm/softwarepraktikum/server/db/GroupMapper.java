@@ -1,12 +1,8 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.shared.*;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
@@ -19,7 +15,6 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  */
 
 public class GroupMapper {
-	
 
 	/**
 	 * Speicherung der Instanz dieser Mapperklasse.
@@ -35,7 +30,7 @@ public class GroupMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Gibt den Groupmapper zurueck.
+	 * @return Groupmapper
 	 */
 	public static GroupMapper groupMapper() {
 		if (groupMapper == null) {
@@ -48,7 +43,7 @@ public class GroupMapper {
 	/**
 	 * Ausgabe einer Liste aller Gruppen.
 	 *
-	 * @return Gibt eine Liste aller Gruppen zurueck.
+	 * @return Groupliste
 	 */
 	public ArrayList<Group> findAll() {
 
@@ -58,32 +53,30 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT usergroup_id, name, creationDate FROM usergroups");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM usergroups");
 
 			while (rs.next()) {
-
-				Group group = new Group();
-				group.setId(rs.getInt("usergroup_id"));
-				group.setName(rs.getString("name"));
-				group.setCreationDate(rs.getDate("creationDate"));
-				groups.add(group);
+				Group g = new Group();
+				g.setId(rs.getInt("id"));
+				g.setCreationDate(rs.getDate("creationDate"));
+				g.setName(rs.getString("name"));
+				groups.add(g);
 			}
+
+			return groups;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return groups;
-
 	}
 
 	/**
 	 * Gruppe mittels id finden.
 	 *
-	 * @param id: Die id wird uebergeben,um daran die Gruppe zu finden.
-	 * @return Die Gruppe, die anhand der id gefunden wurde, wird zurueckgegeben.
+	 * @param id
+	 * @return Group
 	 */
 	public Group findById(int id) {
 
@@ -92,21 +85,19 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT usergroup_id, name, creationDate FROM usergroups WHERE usergroup_id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM usergroups WHERE id = " + id);
 
 			if (rs.next()) {
 
-				Group group = new Group();
-				group.setId(rs.getInt("usergroup_id"));
-				group.setName(rs.getString("name"));
-				group.setCreationDate(rs.getString("creationDate"));
-				return group;
+				Group g = new Group();
+				g.setId(rs.getInt("id"));
+				g.setCreationDate(rs.getDate("creationDate"));
+				g.setName(rs.getString("name"));
+				return g;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
 
 		return null;
@@ -115,8 +106,8 @@ public class GroupMapper {
 	/**
 	 * Gruppe mithilfe des Gruppennamen finden.
 	 * 
-	 * @param name: Uebergabe des Namens einer Gruppe in Form eines Strings
-	 * @return Gruppe(n) mit dem entsprechenden Namen
+	 * @param name
+	 * @return Groupliste
 	 */
 	public ArrayList<Group> findByName(String name) {
 
@@ -126,28 +117,31 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM usergroups WHERE name = " + name);
 
 			while (rs.next()) {
 
-				Group group = new Group();
+				Group g = new Group();
+				g.setId(rs.getInt("id"));
+				g.setCreationDate(rs.getDate("creationDate"));
+				g.setName(rs.getString("name"));
+				groups.add(g);
 			}
+
+			return groups;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return groups;
-
 	}
 
 	/**
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
-	 * @param group: Die gewaehlte Gruppe wird uebergeben
-	 * @return Die group wird zurueckgegeben.
+	 * @param group
+	 * @return Group
 	 */
 	public Group insert(Group group) {
 
@@ -156,33 +150,38 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM usergroups");
 
 			if (rs.next()) {
 
+				group.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement stmt2 = con.prepareStatement(
-					"INSERT INTO Groups (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO usergroups (id, creationDate, name) VALUES (?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
 
-			stmt2.setInt(1, group.getBOid());
-			stmt2.setDate(2, group.getCreationDate());
-			stmt2.setString(3, group.getName());
-			stmt2.executeUpdate();
+			pstmt.setInt(1, group.getId());
+			pstmt.setDate(2, (Date) group.getCreationDate());
+			pstmt.setString(3, group.getName());
+			pstmt.executeUpdate();
+
+			return group;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 
+			return null;
+
 		}
-		return group;
 
 	}
 
 	/**
 	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
 	 *
-	 * @param group: Die Gruppe wird uebergeben.
-	 * @return Gibt die akutalisierte Gruppe zurueck.
+	 * @param group
+	 * @return Group
 	 */
 	public Group update(Group group) {
 
@@ -190,25 +189,26 @@ public class GroupMapper {
 
 		try {
 
-			/**
-			 * PreparedStatement stmt = con.prepareStatement("UPDATE Groups SET
-			 * CreationDate= ?, Name= ? WHERE ID = ?");
-			 * 
-			 * stmt.setString(1, group.get()); stmt.setString(2, group.getName());
-			 * stmt.setInt(3, group.getBO_ID()); stmt.executeUpdate();
-			 */
+			PreparedStatement pstmt = con.prepareStatement("UPDATE usergroups SET name = ? WHERE id = ?");
+
+			pstmt.setString(1, group.getName());
+			pstmt.setInt(2, group.getId());
+			pstmt.executeUpdate();
+			
+			return group;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
 
-		return group;
 	}
 
 	/**
 	 * Delete Methode, um ein Gruppen-Objekt aus der Datenbank zu entfernen.
 	 *
-	 * @param group: Die Gruppe wird uebergeben.
+	 * @param group
 	 */
 	public void delete(Group group) {
 
@@ -217,7 +217,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Groups WHERE Groups.id =" + group.getId());
+			stmt.executeUpdate("DELETE FROM usergroups WHERE id =" + group.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -227,8 +227,8 @@ public class GroupMapper {
 	/**
 	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen.
 	 * 
-	 * @param shoppinglist: Shoppingliste, von welcher die Gruppe abgefragt wird.
-	 * @return Gruppe der Shoppingliste
+	 * @param shoppinglist
+	 * @return Group
 	 */
 	public Group getGroupOf(Shoppinglist shoppinglist) {
 
@@ -237,28 +237,26 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery("SELECT ...");
 
 			if (rs.next()) {
 
-				Group group = new Group();
-				group.setBOid(rs.getInt("id"));
-				group.setCreationDate(rs.getString("CreationDate"));
-				group.setName(rs.getString("Name"));
-				return group;
+				//
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return null;
 
 	}
 
 	/**
 	 * Methode, um alle Gruppen eines Users zu finden.
 	 * 
-	 * @param user: User, von welchem alle Gruppen gefunden werden sollen.
-	 * @return Gruppen, zu welchen der User gehört.
+	 * @param user
+	 * @return Group
 	 */
 	public ArrayList<Group> getGroupsOf(User user) {
 
@@ -268,19 +266,20 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
 			ResultSet rs = stmt.executeQuery("SELECT ...");
 
 			while (rs.next()) {
 
-				Group group = new Group();
+				//
 			}
+			
+			return groups;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
-
-		return groups;
 
 	}
 
