@@ -43,7 +43,7 @@ public class GroupMapper {
 	/**
 	 * Ausgabe einer Liste aller Gruppen.
 	 *
-	 * @return Groupliste
+	 * @return ArrayList<Group>
 	 */
 	public ArrayList<Group> findAll() {
 
@@ -76,7 +76,7 @@ public class GroupMapper {
 	 * Gruppe mittels id finden.
 	 *
 	 * @param id
-	 * @return Group
+	 * @return Group-Objekt
 	 */
 	public Group findById(int id) {
 
@@ -281,6 +281,26 @@ public class GroupMapper {
 			return null;
 		}
 
+	}
+	
+	/**
+	 * 
+	 * @param group
+	 * @return ArrayList<User>
+	 */
+	
+	public ArrayList<User> getUsersOf(Group group){
+		
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @param group
+	 */
+	
+	public void addUserToGroup(User user, Group group) {
+		
 	}
 
 }
