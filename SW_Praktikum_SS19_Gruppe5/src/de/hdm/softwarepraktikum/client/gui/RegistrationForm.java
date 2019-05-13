@@ -58,7 +58,7 @@ public class RegistrationForm extends VerticalPanel{
 			public void onClick(ClickEvent event) {
 				String userName= lastNameTextBox.getText() +" "+ firstNameTextBox.getText();
 				u.setName(userName);
-				shoppinglistAdministration.saveUser(u, new SaveUserCallback());
+				shoppinglistAdministration.save(u, new SaveUserCallback());
 			}
 			
 		});
@@ -67,7 +67,7 @@ public class RegistrationForm extends VerticalPanel{
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel.get("Container").clear();
-//				Window.open(u.getLogoutUrl(), "_self", ""); 
+				Window.open(u.getLogoutUrl(), "_self", ""); 
 			}
 		});
 		

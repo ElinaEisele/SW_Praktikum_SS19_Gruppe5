@@ -3,8 +3,8 @@ package de.hdm.softwarepraktikum.shared.bo;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * Realisierung der Klasse Retailer, welche einen Händler darstellt. Dieser ist für alle Nutzer
- * des Systems sichtbar und kann einzelnen Einträgen hinzugefügt werden.
+ * Realisierung der Klasse Retailer, welche einen Hï¿½ndler darstellt. Dieser ist fï¿½r alle Nutzer
+ * des Systems sichtbar und kann einzelnen Eintrï¿½gen hinzugefï¿½gt werden.
  * 
  * @author Felix Rapp
  */
@@ -17,11 +17,11 @@ public class Retailer extends NamedBusinessObject implements IsSerializable{
 	 * Default-Konstruktor
 	 */
 	public Retailer() {
-		super();
+		
 	}
 	
 	/**
-	 * Konstruktor zum Setzen des Namens des Händlers.
+	 * Konstruktor zum Setzen des Namens des Hï¿½ndlers.
 	 */
 	public Retailer(String retailername) {
 		super(retailername);

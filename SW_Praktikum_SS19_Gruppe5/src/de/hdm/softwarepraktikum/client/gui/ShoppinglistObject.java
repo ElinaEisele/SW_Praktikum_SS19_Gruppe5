@@ -10,7 +10,7 @@ import de.hdm.softwarepraktikum.shared.bo.Retailer;
 public class ShoppinglistObject extends BusinessObject{
 
 	/**
-	 * 
+	 * Objekt zum zum befüllen des Cell Tables
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -18,12 +18,18 @@ public class ShoppinglistObject extends BusinessObject{
 	private Product product;
 	private Listitem listitem;
 	private Retailer retailer;
+	
 
 	public ShoppinglistObject(Product product, Listitem listitem, Retailer retailer) {
 		this.product = product;
 		this.listitem = listitem;
 		this.retailer=retailer;
+		
 	}
+
+	
+	
+
 
 	public Product getProduct() {
 		return product;
