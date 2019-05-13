@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.shared.LoginInfo;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
@@ -27,6 +28,7 @@ import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 public class RegistrationForm extends VerticalPanel{
 	
 	private User user;
+	private LoginInfo loginInfo; // statt User
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
@@ -47,18 +49,21 @@ public class RegistrationForm extends VerticalPanel{
 	private Button registerButton = new Button("Registrieren");
 	private Button cancelButton = new Button("Abbrechen");
 	
-	private Anchor startFormUrl = new Anchor();
+	private Anchor destinationUrl = new Anchor();
 	
-	public RegistrationForm(Anchor startFormUrl, User u) {
-		this.startFormUrl = startFormUrl;
-		this.user = u;
+// statt LoginInfo eigentlich User	
+	public RegistrationForm(Anchor destinationUrl, LoginInfo loginInfo) {
+		this.destinationUrl = destinationUrl;
+//		this.user = u;
+		this.loginInfo = loginInfo;
 		
 		registerButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				String userName= lastNameTextBox.getText() +" "+ firstNameTextBox.getText();
-				u.setName(userName);
-				shoppinglistAdministration.save(u, new SaveUserCallback());
+//				u.setName(userName);
+				loginInfo.setNickname(userName);
+				shoppinglistAdministration.save(loginInfo, new SaveUserCallback());
 			}
 			
 		});
@@ -66,8 +71,9 @@ public class RegistrationForm extends VerticalPanel{
 		cancelButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				RootPanel.get("Container").clear();
-				Window.open(u.getLogoutUrl(), "_self", ""); 
+				RootPanel.get("wrapper").clear();
+				//statt wrapper noch einen container um Inhalt 
+				Window.open(loginInfo.getLogoutUrl(), "_self", ""); 
 			}
 		});
 		
@@ -130,7 +136,6 @@ public class RegistrationForm extends VerticalPanel{
 			this.text = text;
 		}
 		
-		
 	}
 	
 	private class SaveUserCallback implements AsyncCallback<Void>{
@@ -142,7 +147,7 @@ public class RegistrationForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Void u) {
-		Window.open(startFormUrl.getHref(), "_self", "");
+		Window.open(destinationUrl.getHref(), "_self", "");
 
 	}			
 }

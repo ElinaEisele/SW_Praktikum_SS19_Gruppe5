@@ -54,6 +54,9 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void save(User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
+// statt User
+	void save(LoginInfo loginInfo, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
 	void save(Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void save(Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
