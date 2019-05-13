@@ -8,81 +8,150 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.gui.Editor;
+import de.hdm.softwarepraktikum.client.gui.GroupShowForm;
+import de.hdm.softwarepraktikum.client.gui.Header;
+import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
 import de.hdm.softwarepraktikum.client.gui.RegistrationForm;
+import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;
+import de.hdm.softwarepraktikum.client.gui.Trailer;
+import de.hdm.softwarepraktikum.shared.LoginInfo;
+import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 public class ShoppinglistEditorEntryLogin implements EntryPoint{
 	
-	private LoginServiceAsync loginService = null;
-	private Button loginButton = new Button("Login");
-	private Anchor signInLink = new Anchor("Login");
+//	private LoginServiceAsync loginService = null;
+//	private Button loginButton = new Button("Login");
+//	private Anchor signInLink = new Anchor("Login");
+//	private VerticalPanel loginPanel = new VerticalPanel();
+//	private Label loginLabel = new Label("Bitte melde dich mit deinem Google-Account an!");
+	
+	private Header header = null;
+	private VerticalPanel navigator = null;
+	private GroupShowForm groupShowForm = null;	
+	private HorizontalPanel hp = null;
+	private Trailer trailer = null;
+	private VerticalPanel vp = null;
+	
+	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
-	private Label loginLabel = new Label("Bitte melde dich mit deinem Google-Account an!");
+	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
+	private Anchor signInLink = new Anchor("Einloggen");
 
 	@Override
 	public void onModuleLoad() {
-		loginService = ClientsideSettings.getLoginService();
-		loginService.login(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html", new LoginServiceCallback());
+		
+		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(LoginInfo result) {
+				loginInfo = result;
+				if (loginInfo.isLoggedIn()) {
+					loadEditor();
+				} else {
+					loadLogin();
+				}
+				
+			}
+			
+		});
+	
+//		loginService = ClientsideSettings.getLoginService();
+//		loginService.login(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html", new LoginServiceCallback());
 	}
 	
-	private class LoginServiceCallback implements AsyncCallback<User>{
-
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void onSuccess(User u) {
-			CurrentUser.setUser(u);
-			
-			if (u.isLoggedIn()) {
-				if (u.getName() == null) {
-					Anchor shoppinglistEditorLink = new Anchor();
-					shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL() + "SW_PRaktikum_SS19_Gruppe5.html");
-					
-					RootPanel.get("Navigator").setVisible(false);
-					RootPanel.get("Details").add(new RegistrationForm(shoppinglistEditorLink, u));
-				} else {
-					Editor editor = new Editor();
-					editor.loadForms();
-				}
-			}else {
-				loadLogin();
-			}
-		}
+//	private class LoginServiceCallback implements AsyncCallback<User>{
+//
+//		@Override
+//		public void onSuccess(User u) {
+//			CurrentUser.setUser(u);
+//			
+//			if (u.isLoggedIn()) {
+//				if (u.getName() == null) {
+//					Anchor shoppinglistEditorLink = new Anchor();
+//					shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL() + "SW_PRaktikum_SS19_Gruppe5.html");
+//					
+//					RootPanel.get("Navigator").setVisible(false);
+//					RootPanel.get("Details").add(new RegistrationForm(shoppinglistEditorLink, u));
+//				} else {
+//					Editor editor = new Editor();
+//					editor.loadForms();
+//				}
+//			}else {
+//				loadLogin();
+//			}
+//		}
+//		
+//
+//		@Override
+//		public void onFailure(Throwable caught) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//
+//		
+//	}
+	
+	public void loadEditor() {
 		
+		header = new Header();
+		navigator = new VerticalPanel();
+		groupShowForm = new GroupShowForm();
+		hp = new HorizontalPanel();
+		trailer = new Trailer();
+		vp = new VerticalPanel();
+		
+		hp.add(navigator);
+		hp.add(groupShowForm);
+		vp.add(header);
+		vp.add(hp);
+		vp.add(trailer);
+		
+		RootPanel.get("Main").add(vp);
 	}
 	
 	public void loadLogin() {
 		
-		RootPanel.get("Details").setVisible(false);
-		RootPanel.get("Navigator").setVisible(false);
-		RootPanel.get("Container").add(loginPanel);
-		
-		loginLabel.setStylePrimaryName("loginLabel");
-		loginButton.setStylePrimaryName("loginButton");
-		
+		signInLink.setHref(loginInfo.getLoginUrl());
 		loginPanel.add(loginLabel);
-		loginPanel.add(loginButton);
+		loginPanel.add(signInLink);
 		
-		signInLink.setHref(CurrentUser.getUser().getLoginUrl());
+		RootPanel.get("Main").add(loginPanel);
 		
-		loginButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Window.open(signInLink.getHref(), "_self", "");
-			}
-			
-		});
+//		RootPanel.get("Details").setVisible(false);
+//		RootPanel.get("Navigator").setVisible(false);
+//		RootPanel.get("Container").add(loginPanel);
+		
+//		RootPanel.get("header").add(loginPanel);
+//		
+//		loginLabel.setStylePrimaryName("loginLabel");
+//		loginButton.setStylePrimaryName("loginButton");
+//		
+//		loginPanel.add(loginLabel);
+//		loginPanel.add(loginButton);
+//		
+//		signInLink.setHref(CurrentUser.getUser().getLoginUrl());
+//		
+//		loginButton.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				Window.open(signInLink.getHref(), "_self", "");
+//			}
+//			
+//		});
 	}
 	
 	public static class CurrentUser {

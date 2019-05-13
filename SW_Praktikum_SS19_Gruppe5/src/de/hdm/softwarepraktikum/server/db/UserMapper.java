@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>User</code> Objekte. Diese umfasst Methoden um User
- * Objekte zu erstellen, zu suchen, zu modifizieren und zu löschen. Das Mapping
- * funktioniert dabei bidirektional. Es können Objekte in DB-Strukturen und
+ * Mapper Klasse fï¿½r </code>User</code> Objekte. Diese umfasst Methoden um User
+ * Objekte zu erstellen, zu suchen, zu modifizieren und zu lï¿½schen. Das Mapping
+ * funktioniert dabei bidirektional. Es kï¿½nnen Objekte in DB-Strukturen und
  * DB-Stukturen in Objekte umgewandelt werden.
  * 
  * @author LeoniFriedrich & CarlaHofmann
@@ -31,6 +31,7 @@ public class UserMapper {
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
 	 * @return Usermapper
+	 * @return Gibt den User Mapper zurï¿½ck.
 	 */
 	public static UserMapper userMapper() {
 		if (userMapper == null) {
@@ -78,6 +79,8 @@ public class UserMapper {
 	 * 
 	 * @param id
 	 * @return User
+	 * @param id: Die id wird uebergeben, um daran den User zu finden.
+	 * @return Der User der mittels der Id gefunden wurde, wird zurï¿½ckgegeben.
 	 */
 	public User findById(int id) {
 
@@ -174,7 +177,7 @@ public class UserMapper {
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufügen.
+	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufï¿½gen.
 	 *
 	 * @param user
 	 * @return User
@@ -248,6 +251,8 @@ public class UserMapper {
 			pstmt.setInt(2, user.getId());
 			pstmt.executeUpdate();
 			
+			PreparedStatement stmt = con.prepareStatement("UPDATE User SET GMail= ?, Name= ? WHERE User_ID = ?");
+			// vervollstï¿½ndigen
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -257,13 +262,13 @@ public class UserMapper {
 
 	/**
 	 * 
-	 * User finden, welcher dem übergebenen Listitem zugeordnet ist.
+	 * User finden, welcher dem ï¿½bergebenen Listitem zugeordnet ist.
 	 * 
 	 * @param listitem
 	 * @return User
 	 */
-	
-	public User getGroupMemberOf(Listitem listitem) {
+  
+	public User getGroupMemberOf(Listitem listitem){
 
 		Connection con = DBConnection.connection();
 
