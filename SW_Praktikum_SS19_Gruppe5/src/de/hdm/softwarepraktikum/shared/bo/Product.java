@@ -13,6 +13,7 @@ public class Product extends NamedBusinessObject implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+
 	/*
 	 * Fremdschl�sselbeziehung zum zugeordneten Listitem-Objekt
 	 */
@@ -31,17 +32,5 @@ public class Product extends NamedBusinessObject implements IsSerializable{
 		super(productname);
 	}
 
-	/*
-	 * Ausgeben der ID, des zugeordneten Listitem-Objekts
-	 */
-	public int getListitemID() {
-		return listitemID;
-	}
-
-	/*
-	 *setzen der ID, des zugeordneten Listitem-Objekts 
-	 */
-	public void setListitemID(int listitemID) {
-		this.listitemID = listitemID;
-	}
+	
 }

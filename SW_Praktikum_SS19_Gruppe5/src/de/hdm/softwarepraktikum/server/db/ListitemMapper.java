@@ -1,14 +1,9 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.Retailer;
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 
 /**
@@ -36,7 +31,7 @@ public class ListitemMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Gibt den Listitemmapper zurueck.
+	 * @return Listitemmapper
 	 */
 	public static ListitemMapper listitemMapper() {
 		if (listitemMapper == null) {
@@ -49,7 +44,7 @@ public class ListitemMapper {
 	/**
 	 * Ausgabe einer Liste aller Listitems.
 	 *
-	 * @return Gibt eine Liste aller Listitems zurueck.
+	 * @return Listitemliste
 	 */
 	public ArrayList<Listitem> findAll() {
 
@@ -59,26 +54,27 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, "
+					+ "unit_id, group_id, retailer_id FROM listitems");
 
 			while (rs.next()) {
 
 				Listitem listitem = new Listitem();
 				listitem.setId(rs.getInt("id"));
-				listitem.setCreationDate(rs.getString("creationDate"));
-				listitem.setAmount(rs.getString("amount"));
+				listitem.setCreationDate(rs.getDate("creationDate"));
+				listitem.setAmount(rs.getFloat("amount"));
 				//die IDs 
 				
 				listitems.add(listitem);
 			}
+			
+			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
 			return null;
 		}
-
-		return listitems;
 
 	}
 
@@ -97,15 +93,14 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
 			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems WHERE id= " + id);
 
 			if (rs.next()) {
 
 				Listitem listitem = new Listitem();
 				listitem.setId(rs.getInt("id"));
-				listitem.setCreationDate(rs.getString("creationDate"));
-				listitem.setAmount(rs.getString("amount"));
+				listitem.setCreationDate(rs.getDate("creationDate"));
+				listitem.setAmount(rs.getFloat("amount"));
 				//die IDs 
 				
 				return listitem;
@@ -113,16 +108,17 @@ public class ListitemMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		
+		return null;
 
 	}
 
 	/**
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
-	 * @param listitem: Das gewaehlte Listitem wird uebergeben
-	 * @return Das Listitem wird zurueckgegeben.
+	 * @param listitem
+	 * @return Listitem
 	 */
 	public Listitem insert(Listitem listitem) {
 
@@ -131,19 +127,20 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers ");
 
 			if (rs.next()) {
-
+				
+				listitem.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement stmt2 = con.prepareStatement(
-					"INSERT INTO Listitem (id, creationDate,name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(
+					"INSERT INTO Listitem (id, creationDate, amount) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-			stmt2.setInt(1, listitem.getBOid());
-			stmt2.setDate(2, listitem.getCreationDate());
-			stmt2.setString(3, listitem.getName());
-			stmt2.executeUpdate();
+			pstmt.setInt(1, listitem.getId());
+			pstmt.setDate(2, (Date) listitem.getCreationDate());
+			pstmt.setFloat(3, listitem.getAmount());
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -156,26 +153,35 @@ public class ListitemMapper {
 	/**
 	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
 	 *
-	 * @param listitem: Das Listitem wird uebergeben.
-	 * @return Gibt das akutalisierte Listitem zurueck.
+	 * @param listitem
+	 * @return Listitem
 	 */
 	public Listitem update(Listitem listitem) {
 
 		Connection con = DBConnection.connection();
 
 		try {
+			
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? WHERE id = ?");
+
+			pstmt.setFloat(1, listitem.getAmount());
+			pstmt.setInt(2, listitem.getId());
+			pstmt.executeUpdate();
+			
+			return listitem;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
 
-		return listitem;
 	}
 
 	/**
 	 * Delete Methode, um ein Listitem-Objekt aus der Datenbank zu entfernen.
 	 *
-	 * @param listitem: Das Listitem wird uebergeben.
+	 * @param listitem
 	 */
 	public void delete(Listitem listitem) {
 
@@ -184,7 +190,7 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM Listitem WHERE Listitem.id =" + listitem.getBOId());
+			stmt.executeUpdate("DELETE FROM listitems WHERE id =" + listitem.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -194,8 +200,8 @@ public class ListitemMapper {
 	/**
 	 * Methode, um alle Listitems einer Shoppingliste auszugeben.
 	 * 
-	 * @param shoppinglist: Shoppingliste, von welcher die Listitems gesucht werden.
-	 * @return Listitems der Shoppinglist
+	 * @param shoppinglist
+	 * @return Listitemliste
 	 */
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) {
 
@@ -205,19 +211,22 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery("...");
 
 			if (rs.next()) {
 
-				Listitem listitem = new Listitem();
-				listitem.setBOid(rs.getInt("id"));
-				listitem.setCreationDate(rs.getString("CreationDate"));
-				listitem.setName(rs.getString("Name"));
-				return listitem;
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("CreationDate"));
+				listitems.add(li);
 			}
+			
+			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
 
 	}
@@ -225,8 +234,8 @@ public class ListitemMapper {
 	/**
 	 * Methode, um alle Listitems eines Retailers zu finden.
 	 * 
-	 * @param retailer: Retailer, von welchem alle Listitems gefunden werden sollen.
-	 * @return Listitems eines Händlers.
+	 * @param retailer
+	 * @return Listitemliste
 	 */
 	public ArrayList<Listitem> getListitemsOf(Retailer retailer) {
 
@@ -236,19 +245,20 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
 			ResultSet rs = stmt.executeQuery("SELECT ...");
 
 			while (rs.next()) {
 
-				Listitem listitem = new Listitem();
+				//
 			}
+			
+			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
-
-		return listitems;
 
 	}
 
