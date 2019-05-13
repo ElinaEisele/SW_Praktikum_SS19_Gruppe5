@@ -26,8 +26,8 @@ public class Group extends NamedBusinessObject implements IsSerializable{
 	private ArrayList<Shoppinglist> shoppinglists;
 	
 	/**
-	 * Liste aller Einträge, welche als Standard zu jeder neuen Einkaufsliste der Gruppe 
-	 * hinzugefügt werden.
+	 * Liste aller Eintrï¿½ge, welche als Standard zu jeder neuen Einkaufsliste der Gruppe 
+	 * hinzugefï¿½gt werden.
 	 */
 	private ArrayList<Listitem> standardListitem;
 	
@@ -35,7 +35,6 @@ public class Group extends NamedBusinessObject implements IsSerializable{
 	 * Default-Konstruktor
 	 */
 	public Group() {
-		super();
 	}
 	
 	/**
@@ -74,14 +73,14 @@ public class Group extends NamedBusinessObject implements IsSerializable{
 	}
 	
 	/**
-	 * Auslesen der Liste aller Einträge, welche die Nutzer als Standardartikel markiert haben.
+	 * Auslesen der Liste aller Eintrï¿½ge, welche die Nutzer als Standardartikel markiert haben.
 	 */
 	public ArrayList<Listitem> getStandardListitem() {
 		return standardListitem;
 	}
 	
 	/**
-	 * Setzen der Liste aller Einträge, welche die Nutzer als Standardartikel markiert haben.
+	 * Setzen der Liste aller Eintrï¿½ge, welche die Nutzer als Standardartikel markiert haben.
 	 */
 	public void setStandardListitem(ArrayList<Listitem> standardListitem) {
 		this.standardListitem = standardListitem;

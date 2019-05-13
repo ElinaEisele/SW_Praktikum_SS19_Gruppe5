@@ -1,27 +1,13 @@
 package de.hdm.softwarepraktikum.server;
 
-import java.sql.Date;
+import java.sql.*;
 import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.softwarepraktikum.server.db.GroupMapper;
-import de.hdm.softwarepraktikum.server.db.ListitemMapper;
-import de.hdm.softwarepraktikum.server.db.ProductMapper;
-import de.hdm.softwarepraktikum.server.db.RetailerMapper;
-import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
-import de.hdm.softwarepraktikum.server.db.UserMapper;
-import de.hdm.softwarepraktikum.shared.FieldVerifier;
-import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
-import de.hdm.softwarepraktikum.shared.bo.Group;
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.Product;
-import de.hdm.softwarepraktikum.shared.bo.Retailer;
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.Unit;
-import de.hdm.softwarepraktikum.shared.bo.User;
-import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
-import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
+import de.hdm.softwarepraktikum.server.db.*;
+import de.hdm.softwarepraktikum.shared.*;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Die Klasse <code>ShoppinglistAdministrationImpl</code> implementiert das Interface
@@ -270,58 +256,64 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit,
 			Retailer retailer) throws IllegalArgumentException {
 		
+		//Listitem mit den übergebenen Parametern wird erstellt.
 		Listitem li = new Listitem(amount, unit, retailer);
+		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
 		li.setRetailerID(retailer.getId());
-		/**
-		 * Nach dem createProduct()-Aufruf erhält das Produkt die ID welche mit der Datenbank konsistent ist.
-		 * 
-		 * Problem: Product hat ein Attribut "listitemId", welches jedoch erst gesetzt werden kann nach dem 
-		 * Aufruf der insert(Listiitem)-Methode
-		 */
+		
+		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
 		Product p = this.createProductFor(li, productname);
+		//Fremdschluessel vom Listitem zum Product wird gesetzt.
 		li.setProductID(p.getId());
 		
 		return this.listitemMapper.insert(li);
 	}
 	
+	/**
+	 * Speichern eines Listitem-Objekt in der Datenbank
+	 * @param listitem, Listitem-Objekt, welches in der Datenbank gepseichert werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.listitemMapper.update(listitem);
 		
 	}
 	
+	/**
+	 * Loeschen des uebergebenen Listitem-Objekts
+	 * @param listitem Listitem-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.listitemMapper.delete(listitem);
 		
 	}
 	
+	/**
+	 * Saemtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zurueckgegeben
+	 * @param shoppinglist ist die Einkaufsliste, in welcher nach einer bestimmten Produktbezeichnung gesucht werden soll
+	 * @param productname ist die Produktbezeichung nach welcher gesucht werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche eine bestimmte Prosuktbezeichung enthalten
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist, String productname)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname) throws IllegalArgumentException {
+		return this.listitemMapper.getListitemsByNameOf(shoppinglist, productname);
 	}
 
+	/**
+	 * Saemtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben
+	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen
+	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
-	@Override
-	public void setListitem(Product product, float amount, Unit unit, Retailer retailer, User user)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setListitem(Product product, float amount, Unit unit, Retailer retailer)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
@@ -356,17 +348,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return null;
 	}
 	
-	@Override
-	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	@Override
 	public Unit getUnit(Listitem listitem) throws IllegalArgumentException {
