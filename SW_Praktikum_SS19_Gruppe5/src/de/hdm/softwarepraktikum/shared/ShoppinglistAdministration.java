@@ -436,7 +436,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 
 	/**
 	 * Zum erstellen eines Produkts, welches einem Eintrag zugeordnet wird.
-	 * @param listitem Eintrag, welchem das Produkt zugeornet wird
 	 * @param name Bezeichung des Produkts
 	 * @return Product-Objekt, mit einem bestimmten Name, welches einem Listitemn-Objekt zugeordnet ist
 	 * @throws IllegalArgumentException

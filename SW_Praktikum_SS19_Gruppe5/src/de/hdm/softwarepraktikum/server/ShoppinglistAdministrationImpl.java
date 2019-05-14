@@ -387,12 +387,23 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 //		
 //	}
 
-	
+	/**
+	 * Ausgeben der Mengeneinheit eines Eintrags
+	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird
+	 * @return Unit 
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public Unit getUnitOf(Listitem listitem) throws IllegalArgumentException {
 		return this.listitemMapper.getUnitOf(listitem);
 	}
 
+	/**
+	 * Ausgeben der Menge eines Eintrags
+	 * @param listitem ist der Eintrag, dessen Menge ausgegeben wird
+	 * @return float
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public float getAmountOf(Listitem listitem) throws IllegalArgumentException {
 		return this.listitemMapper.getAmountOf(listitem);
@@ -405,9 +416,14 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * 
  * **********************************************************************************
  **/
-	
+	/**
+	 * Zum erstellen eines Produkts, welches einem Eintrag zugeordnet wird.
+	 * @param name Bezeichung des Produkts
+	 * @return Product-Objekt, mit einem bestimmten Name, welches einem Listitemn-Objekt zugeordnet ist
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public Product createProductFor(String name) throws IllegalArgumentException {
+	public Product createProduct(String name) throws IllegalArgumentException {
 		Product product = new Product(name);
 		return this.productMapper.insert(product);
 	}
