@@ -48,18 +48,31 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 	@Override
 	public void onModuleLoad() {
 		
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
-
+		LoginServiceAsync loginService = ClientsideSettings.getLoginService();
+		loginService.login(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html", new AsyncCallback<LoginInfo>() {
+			
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 
 			@Override
 			public void onSuccess(LoginInfo result) {
+				
+//				CurrentUser.setUser(result); // gilt erst wenn statt LoginInfo User in onSucess uebergeben wird
+				
 				loginInfo = result;
+				
 				if (loginInfo.isLoggedIn()) {
-					loadEditor();
+					if (loginInfo.getNickname() == null) {
+						Anchor shoppinglistEditorLink = new Anchor();
+						shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html");
+						
+						RootPanel.get("aside").setVisible(false);
+						RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, loginInfo));
+					} else {
+						Editor editor = new Editor();
+						editor.loadForms();
+					}
 				} else {
 					loadLogin();
 				}
@@ -104,23 +117,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 //		
 //	}
 	
-	public void loadEditor() {
-		
-		header = new Header();
-		navigator = new VerticalPanel();
-		groupShowForm = new GroupShowForm();
-		hp = new HorizontalPanel();
-		trailer = new Trailer();
-		vp = new VerticalPanel();
-		
-		hp.add(navigator);
-		hp.add(groupShowForm);
-		vp.add(header);
-		vp.add(hp);
-		vp.add(trailer);
-		
-		RootPanel.get("Main").add(vp);
-	}
 	
 	public void loadLogin() {
 		
@@ -128,7 +124,8 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
 		
-		RootPanel.get("Main").add(loginPanel);
+		RootPanel.get("header").setVisible(false);
+		RootPanel.get("wrapper").add(loginPanel);
 		
 //		RootPanel.get("Details").setVisible(false);
 //		RootPanel.get("Navigator").setVisible(false);

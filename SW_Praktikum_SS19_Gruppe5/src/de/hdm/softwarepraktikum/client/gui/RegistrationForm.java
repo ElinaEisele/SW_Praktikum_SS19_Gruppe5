@@ -14,9 +14,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.shared.LoginInfo;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
-import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 
 /**
  * Diese Klasse stellt ein Formular zur Registrierung des Nutzers dar.
@@ -26,7 +26,8 @@ import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
  */
 public class RegistrationForm extends VerticalPanel{
 	
-	private User user;
+//	private User user;
+	private LoginInfo loginInfo; // statt User
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
@@ -47,29 +48,19 @@ public class RegistrationForm extends VerticalPanel{
 	private Button registerButton = new Button("Registrieren");
 	private Button cancelButton = new Button("Abbrechen");
 	
-	private Anchor startFormUrl = new Anchor();
+	private Anchor destinationUrl = new Anchor();
 	
-	public RegistrationForm(Anchor startFormUrl, User u) {
-		this.startFormUrl = startFormUrl;
-		this.user = u;
+
+	
+// statt LoginInfo eigentlich User	
+	public RegistrationForm(Anchor destinationUrl, LoginInfo loginInfo) {
+		this.destinationUrl = destinationUrl;
+//		this.user = u;
+		this.loginInfo = loginInfo;
 		
-		registerButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				String userName= lastNameTextBox.getText() +" "+ firstNameTextBox.getText();
-				u.setName(userName);
-				shoppinglistAdministration.save(u, new SaveUserCallback());
-			}
-			
-		});
+		registerButton.addClickHandler(new RegistrationClickHandler());
 		
-		cancelButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				RootPanel.get("Container").clear();
-				Window.open(u.getLogoutUrl(), "_self", ""); 
-			}
-		});
+		cancelButton.addClickHandler(new CancelClickHandler());
 		
 		buttons.add(registerButton);
 		buttons.add(cancelButton);
@@ -130,7 +121,6 @@ public class RegistrationForm extends VerticalPanel{
 			this.text = text;
 		}
 		
-		
 	}
 	
 	private class SaveUserCallback implements AsyncCallback<Void>{
@@ -142,9 +132,36 @@ public class RegistrationForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Void u) {
-		Window.open(startFormUrl.getHref(), "_self", "");
+		Window.open(destinationUrl.getHref(), "_self", "");
 
-	}			
-}
+		}			
+	}
+	
+	/**
+	 * ClickHandler Klassen
+	 */
+	
+	private class RegistrationClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+//			u.setName(userName);
+			String userName = lastNameTextBox.getText() +" "+ firstNameTextBox.getText();
+			loginInfo.setNickname(userName);
+			shoppinglistAdministration.save(loginInfo, new SaveUserCallback());
+		}
+		
+	}
+	
+	private class CancelClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel.get("wrapper").clear();
+			//statt wrapper noch einen container um Inhalt 
+			Window.open(loginInfo.getLogoutUrl(), "_self", ""); 
+		}
+		
+	}
 
 }
