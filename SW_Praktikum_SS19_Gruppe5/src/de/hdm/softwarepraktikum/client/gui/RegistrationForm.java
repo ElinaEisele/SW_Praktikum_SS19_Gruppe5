@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.shared.LoginInfo;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
@@ -25,7 +26,8 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 public class RegistrationForm extends VerticalPanel{
 	
-	private User user;
+//	private User user;
+	private LoginInfo loginInfo; // statt User
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
@@ -48,15 +50,19 @@ public class RegistrationForm extends VerticalPanel{
 	
 	private Anchor destinationUrl = new Anchor();
 	
-	public RegistrationForm(Anchor destinationUrl, User user) {
+
+// statt LoginInfo eigentlich User	
+	public RegistrationForm(Anchor destinationUrl, LoginInfo loginInfo) {
 		this.destinationUrl = destinationUrl;
-		this.user = user;
+//		this.user = u;
+		this.loginInfo = loginInfo;
 		
 		registerButton.addClickHandler(new RegistrationClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
-		
+
 		buttonsPanel.add(registerButton);
 		buttonsPanel.add(cancelButton);
+		cancelButton.addClickHandler(new CancelClickHandler());
 		
 	}
 	
@@ -65,7 +71,7 @@ public class RegistrationForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			String userName = lastNameTextBox.getText()+" "+firstNameTextBox.getText();
-			user.setName(userName);
+			loginInfo.setNickname(userName);
 //			shoppinglistAdministration.save(user, new SaveUserCallback());
 		}
 		
@@ -76,7 +82,7 @@ public class RegistrationForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			RootPanel.get("main").clear();
-			Window.open(user.getLogoutUrl(), "_self", "");
+			Window.open(loginInfo.getLogoutUrl(), "_self", "");
 		}
 		
 	}
@@ -135,7 +141,6 @@ public class RegistrationForm extends VerticalPanel{
 			this.text = text;
 		}
 		
-		
 	}
 	
 	private class SaveUserCallback implements AsyncCallback<Void>{
@@ -149,7 +154,8 @@ public class RegistrationForm extends VerticalPanel{
 		public void onSuccess(Void u) {
 		Window.open(destinationUrl.getHref(), "_self", "");
 
-	}			
-}
+		}			
+	}
+
 
 }

@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * Diese Klasse stellt den Startpunkt des Editor-Clients dar. Alle dazu
@@ -34,6 +35,7 @@ public class Editor {
 		RootPanel.get("footer").add(trailer);
 		RootPanel.get("aside").add(navigator);
 		RootPanel.get("header").add(header);
+
 	
 	}
 	

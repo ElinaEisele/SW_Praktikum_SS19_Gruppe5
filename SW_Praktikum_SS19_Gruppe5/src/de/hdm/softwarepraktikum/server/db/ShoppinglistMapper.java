@@ -241,22 +241,28 @@ public class ShoppinglistMapper {
 	public Shoppinglist getShoppinglistOf(Listitem listitem) {
 
 		Connection con = DBConnection.connection();
-		Shoppinglist shoppinglist = new Shoppinglist();
 
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN shoppinglists "
+					+ "ON listitems.shoppinglist_id=shoppinglists.id "
+					+ "WHERE listitems.id = " + listitem.getId());
 			
-			//
-			
-			return shoppinglist;
+			while (rs.next()) {
+				Shoppinglist sl = new Shoppinglist();
+				sl.setId(rs.getInt("id"));
+				sl.setCreationDate(rs.getDate("creationDate"));
+				sl.setName(rs.getString("name"));
+				
+				return sl;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
-			return null;
 		}
+		
+		return null;
 
 	}
 
@@ -274,9 +280,17 @@ public class ShoppinglistMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN usergroups "
+					+ "ON shoppinglists.usergroup_id = usergroup.id"
+					+ "WHERE usergroups.id = " + group.getId());
 			
-			//
+			while (rs.next()) {
+				Shoppinglist sl = new Shoppinglist();
+				sl.setId(rs.getInt("id"));
+				sl.setCreationDate(rs.getDate("creationDate"));
+				sl.setName(rs.getString("name"));
+				shoppinglists.add(sl);
+			}
 			
 			return shoppinglists;
 
@@ -302,9 +316,17 @@ public class ShoppinglistMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN users"
+					+ "ON shoppinglists.user_id = users.id"
+					+ "WHERE users.id = " + user.getId());
 			
-			//
+			while (rs.next()) {
+				Shoppinglist sl = new Shoppinglist();
+				sl.setId(rs.getInt("id"));
+				sl.setCreationDate(rs.getDate("creationDate"));
+				sl.setName(rs.getString("name"));
+				shoppinglists.add(sl);
+			}
 			
 			return shoppinglists;
 

@@ -45,6 +45,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
+
 	
 	}
 	
@@ -91,6 +92,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 
 	}
 	
+
 	public void loadEditor() {
 		
 		header = new Header();
@@ -108,6 +110,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		
 		RootPanel.get("main").add(vp);
 	}
+
 	
 	public void loadLogin() {
 		
@@ -115,8 +118,10 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
+
+		RootPanel.get("header").setVisible(false);
+		RootPanel.get("wrapper").add(loginPanel);
 		
-				
 //		loginLabel.setStylePrimaryName("loginLabel");
 //		loginButton.setStylePrimaryName("loginButton");
 //		
@@ -124,7 +129,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		
 //		RootPanel.get("header").setVisible(false);
 //		RootPanel.get("aside").setVisible(false);
-		RootPanel.get("main").add(loginPanel);
 
 		
 	}
