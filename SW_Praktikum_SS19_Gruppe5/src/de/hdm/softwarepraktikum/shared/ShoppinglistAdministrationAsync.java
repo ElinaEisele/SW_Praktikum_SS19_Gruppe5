@@ -20,8 +20,6 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 public interface ShoppinglistAdministrationAsync {
 	
-	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
-	
 	void init(AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void getAllGroups(AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
@@ -113,10 +111,6 @@ public interface ShoppinglistAdministrationAsync {
 	void addUserToGroup(User user, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void removeUserFromGroup(User user, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
-	void setAmount(float amount, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
-	void setUnit(Unit unit, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void getUnitOf(Listitem listitem, AsyncCallback<Unit> callback) throws IllegalArgumentException;
 	
