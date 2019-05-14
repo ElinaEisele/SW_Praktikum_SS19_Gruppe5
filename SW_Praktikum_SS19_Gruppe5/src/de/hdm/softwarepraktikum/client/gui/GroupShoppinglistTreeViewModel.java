@@ -258,7 +258,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 				}
 			});
 			// Zurueckgeben der Node Info, die die Daten in einer Zelle gruppiert.
-			return new DefaultNodeInfo<Shoppinglist>(shoppinglistsProvider, null);
+			return new DefaultNodeInfo<Shoppinglist>(shoppinglistsProvider, new ShoppinglistCell(), selectionModel, null);
 			}
 		return null;
 		}

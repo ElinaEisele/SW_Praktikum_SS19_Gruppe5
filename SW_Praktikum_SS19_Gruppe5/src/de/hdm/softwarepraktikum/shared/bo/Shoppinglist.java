@@ -39,15 +39,6 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	}
 	
 	/**
-	 * Konstruktor zum befüllen des CellTables
-	 */
-	public Shoppinglist(String name, ArrayList <Listitem>listitems) {
-		super(name);
-		this.setGroupId(1);
-		this.listitems=listitems;		
-	}
-	
-	/**
 	 * Ausgeben einer ArrayList mit allen Eintrï¿½gen.
 	 */
 	public ArrayList<Listitem> getListitems() {
