@@ -395,24 +395,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException;
 	
-
-	
-	/**
-	 * Setzen einer Menge fuer einen Eintrag
-	 * @param amount ist die Menge
-	 * @param listitem ist der Eintrag, fuer welchen die Menge gesetzt wird
-	 * @throws IllegalArgumentException
-	 */
-	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException;
-	
-	/**
-	 * Setzen einer Mengeneinheit fuer ein Listitem-Objekt
-	 * @param unit ist die Mengeneinheit, welche einem Listitem-Objekt hinzugefuegt wird
-	 * @param listitem ist der Eintrag, welchem eine Menge hinzugefuegt wird
-	 * @throws IllegalArgumentException
-	 */
-	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException;
-	
 	/**
 	 * Ausgeben der Mengeneinheit eines Eintrags
 	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird

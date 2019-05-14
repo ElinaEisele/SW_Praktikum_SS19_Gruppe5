@@ -114,10 +114,6 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void removeUserFromGroup(User user, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void setAmount(float amount, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
-	void setUnit(Unit unit, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
 	void getUnitOf(Listitem listitem, AsyncCallback<Unit> callback) throws IllegalArgumentException;
 	
 	void getAmountOf(Listitem listitem, AsyncCallback<Float> callback) throws IllegalArgumentException;

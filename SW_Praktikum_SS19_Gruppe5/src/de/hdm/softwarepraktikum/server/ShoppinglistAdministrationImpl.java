@@ -362,18 +362,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.listitemMapper.filterShoppinglistByRetailer(shoppinglist, retailer.getName());
 	}
 	
-//	@Override
-//	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
 	/**
 	 * Ausgeben der Mengeneinheit eines Eintrags
 	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird
@@ -736,24 +724,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
 		 */
 	}
-
-
-	/*
-	 * werden diese Methoden benoetigt?
-	 */
-	@Override
-	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	
 
