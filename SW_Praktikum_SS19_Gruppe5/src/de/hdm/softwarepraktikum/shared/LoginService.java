@@ -5,7 +5,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.softwarepraktikum.shared.bo.User;
 
-
 /**
  * Interface zur Realisierung des Logins.
  * 
@@ -14,6 +13,6 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 @RemoteServiceRelativePath("login")
 public interface LoginService extends RemoteService{
-	 public User login(String requestUri);
+	 public LoginInfo login(String requestUri);
 
 }

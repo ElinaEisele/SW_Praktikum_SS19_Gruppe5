@@ -1,27 +1,13 @@
 package de.hdm.softwarepraktikum.server;
 
-import java.sql.Date;
+import java.sql.*;
 import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.softwarepraktikum.server.db.GroupMapper;
-import de.hdm.softwarepraktikum.server.db.ListitemMapper;
-import de.hdm.softwarepraktikum.server.db.ProductMapper;
-import de.hdm.softwarepraktikum.server.db.RetailerMapper;
-import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
-import de.hdm.softwarepraktikum.server.db.UserMapper;
-import de.hdm.softwarepraktikum.shared.FieldVerifier;
-import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
-import de.hdm.softwarepraktikum.shared.bo.Group;
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.Product;
-import de.hdm.softwarepraktikum.shared.bo.Retailer;
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.Unit;
-import de.hdm.softwarepraktikum.shared.bo.User;
-import de.hdm.softwarepraktikum.shared.dummydata.GroupDD;
-import de.hdm.softwarepraktikum.shared.dummydata.ShoppinglistDD;
+import de.hdm.softwarepraktikum.server.db.*;
+import de.hdm.softwarepraktikum.shared.*;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Die Klasse <code>ShoppinglistAdministrationImpl</code> implementiert das Interface
@@ -737,7 +723,18 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
+//		Group g = this.groupMapper.findById(group.getId());
+//		g.getUsers();
 		
+		//Einfacher direkt im Mapper?
+		/*
+		 * Methode im GroupMapper: removeUserFromGroup(int userId, int goupId)
+		 * passendes STATEMENT:
+		 * DELETE * FROM Membership WHERE user_id = userId AND group_id = groupId
+		 * 
+		 * DANN Code in dieser Methode:
+		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
+		 */
 	}
 
 	
