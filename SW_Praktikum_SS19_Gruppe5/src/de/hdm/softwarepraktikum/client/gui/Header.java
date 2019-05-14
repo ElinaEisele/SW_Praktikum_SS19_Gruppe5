@@ -41,6 +41,9 @@ public class Header extends HorizontalPanel{
 		reportGenerator = new Button("Report");
 		reportGenerator.setStyleName("report-Button");
 		
+		logout = new Button("Logout");
+		logout.addClickHandler(new LogoutClickHandler());
+		
 		logo = new Image();
 		logo.setUrl("images/testlogo.png");
 		logo.setPixelSize(100, 70);
@@ -59,15 +62,15 @@ public class Header extends HorizontalPanel{
 		
 	}
 	
-//	private class LogoutClickHandler implements ClickHandler{
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			user.setLogoutUrl(user.getLogoutUrl());
-//			Window.open(user.getLogoutUrl(), "_self", "");
-//
-//		}
-//		
-//	}
+	private class LogoutClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			user.setLogoutUrl(user.getLogoutUrl());
+			Window.open(user.getLogoutUrl(), "_self", "");
+
+		}
+		
+	}
 
 }

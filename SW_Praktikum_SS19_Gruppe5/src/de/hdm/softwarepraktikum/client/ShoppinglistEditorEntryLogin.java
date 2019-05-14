@@ -37,7 +37,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
-	private User user = null;
 	
 	@Override
 	public void onModuleLoad() {
@@ -55,10 +54,13 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		}
 
 		@Override
-		public void onSuccess(User result) {
-			user = result;
+		public void onSuccess(User user) {
+			
+			CurrentUser.setUser(user);
+			
 			if (user.isLoggedIn()) {
-				loadEditor();
+				Editor editor = new Editor();
+				editor.loadForms();
 			} else {
 				loadLogin();
 			}
@@ -90,28 +92,28 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 	}
 	
 
-	public void loadEditor() {
-		
-		header = new Header();
-		navigator = new VerticalPanel();
-		groupShowForm = new GroupShowForm();
-		hp = new HorizontalPanel();
-		trailer = new Trailer();
-		vp = new VerticalPanel();
-		
-		hp.add(navigator);
-		hp.add(groupShowForm);
-		vp.add(header);
-		vp.add(hp);
-		vp.add(trailer);
-		
-		RootPanel.get("main").add(vp);
-	}
+//	public void loadEditor() {
+//		
+//		header = new Header();
+//		navigator = new VerticalPanel();
+//		groupShowForm = new GroupShowForm();
+//		hp = new HorizontalPanel();
+//		trailer = new Trailer();
+//		vp = new VerticalPanel();
+//		
+//		hp.add(navigator);
+//		hp.add(groupShowForm);
+//		vp.add(header);
+//		vp.add(hp);
+//		vp.add(trailer);
+//		
+//		RootPanel.get("main").add(vp);
+//	}
 
 	
 	public void loadLogin() {
 		
-		signInLink.setHref(user.getLoginUrl());
+		signInLink.setHref(CurrentUser.getUser().getLoginUrl());
 		
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
