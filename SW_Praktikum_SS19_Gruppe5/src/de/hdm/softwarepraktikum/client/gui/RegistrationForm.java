@@ -31,8 +31,8 @@ public class RegistrationForm extends VerticalPanel{
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
-	private HorizontalPanel registrationFormHeader = new HorizontalPanel();
-	private HorizontalPanel buttons = new HorizontalPanel();
+	private HorizontalPanel registrationFormHeaderPanel = new HorizontalPanel();
+	private HorizontalPanel buttonsPanel = new HorizontalPanel();
 	
 	private Label welcomeLabel = new Label("Herzlich Willkommen zum Einkaufserlebnis mit Maul Tasche!");
 	private Label registrationInfoLabel = new Label("Bitte registrieren Sie sich hier:");
@@ -51,7 +51,6 @@ public class RegistrationForm extends VerticalPanel{
 	private Anchor destinationUrl = new Anchor();
 	
 
-	
 // statt LoginInfo eigentlich User	
 	public RegistrationForm(Anchor destinationUrl, LoginInfo loginInfo) {
 		this.destinationUrl = destinationUrl;
@@ -59,24 +58,45 @@ public class RegistrationForm extends VerticalPanel{
 		this.loginInfo = loginInfo;
 		
 		registerButton.addClickHandler(new RegistrationClickHandler());
-		
+		cancelButton.addClickHandler(new CancelClickHandler());
+
+		buttonsPanel.add(registerButton);
+		buttonsPanel.add(cancelButton);
 		cancelButton.addClickHandler(new CancelClickHandler());
 		
-		buttons.add(registerButton);
-		buttons.add(cancelButton);
+	}
+	
+	private class RegistrationClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			String userName = lastNameTextBox.getText()+" "+firstNameTextBox.getText();
+			loginInfo.setNickname(userName);
+//			shoppinglistAdministration.save(user, new SaveUserCallback());
+		}
+		
+	}
+	
+	private class CancelClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel.get("main").clear();
+			Window.open(loginInfo.getLogoutUrl(), "_self", "");
+		}
 		
 	}
 	
 	public void onLoad() {
 		
 		this.setWidth("100%");
-		registrationFormHeader.setHeight("8vh");
-		registrationFormHeader.setWidth("100%");
+		registrationFormHeaderPanel.setHeight("8vh");
+		registrationFormHeaderPanel.setWidth("100%");
 		cancelButton.setPixelSize(130, 40);
 		registerButton.setPixelSize(130, 40);
 		
-		registrationFormHeader.add(welcomeLabel);
-		registrationFormHeader.setCellVerticalAlignment(welcomeLabel, ALIGN_BOTTOM);
+		registrationFormHeaderPanel.add(welcomeLabel);
+		registrationFormHeaderPanel.setCellVerticalAlignment(welcomeLabel, ALIGN_BOTTOM);
 		
 //		buttons.setSpacing(20);
 		
@@ -93,10 +113,10 @@ public class RegistrationForm extends VerticalPanel{
 		registrationGrid.setWidget(1, 0, lastNameLabel);
 		registrationGrid.setWidget(1, 1, lastNameTextBox);
 		
-		this.add(registrationFormHeader);
+		this.add(registrationFormHeaderPanel);
 		this.add(welcomeLabel);
 		this.add(registrationGrid);
-		this.add(buttons);
+		this.add(buttonsPanel);
 		
 	}
 	
@@ -136,32 +156,6 @@ public class RegistrationForm extends VerticalPanel{
 
 		}			
 	}
-	
-	/**
-	 * ClickHandler Klassen
-	 */
-	
-	private class RegistrationClickHandler implements ClickHandler{
 
-		@Override
-		public void onClick(ClickEvent event) {
-//			u.setName(userName);
-			String userName = lastNameTextBox.getText() +" "+ firstNameTextBox.getText();
-			loginInfo.setNickname(userName);
-			shoppinglistAdministration.save(loginInfo, new SaveUserCallback());
-		}
-		
-	}
-	
-	private class CancelClickHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			RootPanel.get("wrapper").clear();
-			//statt wrapper noch einen container um Inhalt 
-			Window.open(loginInfo.getLogoutUrl(), "_self", ""); 
-		}
-		
-	}
 
 }

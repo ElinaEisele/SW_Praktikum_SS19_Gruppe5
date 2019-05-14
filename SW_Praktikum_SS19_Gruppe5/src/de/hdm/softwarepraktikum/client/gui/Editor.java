@@ -32,9 +32,10 @@ public class Editor {
 		RootPanel.get("main").setVisible(true);
 		RootPanel.get("aside").setVisible(true);
 		
-		RootPanel.get("header").add(header);
+		RootPanel.get("footer").add(trailer);
 		RootPanel.get("aside").add(navigator);
-		RootPanel.get("trailer").add(trailer);
+		RootPanel.get("header").add(header);
+
 	
 	}
 	
