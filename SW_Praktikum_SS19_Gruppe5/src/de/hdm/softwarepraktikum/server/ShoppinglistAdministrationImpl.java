@@ -258,7 +258,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Listitem mit den übergebenen Parametern wird erstellt.
 		Listitem li = new Listitem(amount, unit, retailer);
 		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
-		li.setRetailerID(retailer.getId());
+		this.assignRetailer(retailer, li);
 		
 		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
 		Product p = this.createProduct(productname);
@@ -434,28 +434,50 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
+	/**
+	 * Einen Retailer anlegen
+	 * @param name Name des Einzelhaendlers
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public Retailer createRetailer(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Retailer retailer = new Retailer(name);
+		return this.retailerMapper.insert(retailer);
 	}
 	
+	/**
+	 * Speichern eines Retailer-Objekts in der Datenbank
+	 * @param retailer Retailer-Objekt, welches in der Datenbank gepseichert werden soll
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void save(Retailer retailer) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.retailerMapper.update(retailer);
 		
 	}
 	
+	/**
+	 * Saemtliche Retailer-Objetke werden ausgegeben
+	 * @return ArrayList mit allen Retailer-Objekten
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.retailerMapper.findAll();
+		
 	}
 
+	/**
+	 * Saemtliche Retailer-Objekte mit einem bestimmten Namen werden ausgegeben
+	 * @param name ist die Bezeichnung der gesuchten Retailer-Objekte
+	 * @return ArrayList mit allen Ratailer-Objekten, welche einen bestimmten Namen besitzen
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Retailer> getRetailersByName(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.retailerMapper.findByName(name);
+		
 	}
 
 // AB HIER FELIX 
