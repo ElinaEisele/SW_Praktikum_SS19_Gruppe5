@@ -259,7 +259,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Listitem mit den übergebenen Parametern wird erstellt.
 		Listitem li = new Listitem(amount, unit, retailer);
 		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
-		li.setRetailerID(retailer.getId());
+		this.assignRetailer(retailer, li);
 		
 		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
 		Product p = this.createProduct(productname);
