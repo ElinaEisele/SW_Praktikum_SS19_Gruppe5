@@ -31,8 +31,6 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 
 @RemoteServiceRelativePath("administration")
 public interface ShoppinglistAdministration extends RemoteService {
-	String greetServer(String name) throws IllegalArgumentException;
-	
 		
 	/**
 	 * Alle Gruppen werden ausgegeben.
