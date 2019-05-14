@@ -41,9 +41,9 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Ausgabe einer Liste aller Gruppen.
+	 * Ausgabe einer Liste aller Gruppen
 	 *
-	 * @return Groupliste
+	 * @return ArrayList<Group>
 	 */
 	public ArrayList<Group> findAll() {
 
@@ -73,10 +73,10 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Gruppe mittels id finden.
+	 * Gruppe mittels id finden
 	 *
 	 * @param id
-	 * @return Group
+	 * @return Group-Objekt
 	 */
 	public Group findById(int id) {
 
@@ -104,10 +104,10 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Gruppe mithilfe des Gruppennamen finden.
+	 * Gruppe mithilfe des Gruppennamen finden
 	 * 
 	 * @param name
-	 * @return Groupliste
+	 * @return ArrayList<Group>
 	 */
 	public ArrayList<Group> findByName(String name) {
 
@@ -138,10 +138,10 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
+	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen
 	 *
 	 * @param group
-	 * @return Group
+	 * @return Group-Objekt
 	 */
 	public Group insert(Group group) {
 
@@ -178,10 +178,10 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
+	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank
 	 *
 	 * @param group
-	 * @return Group
+	 * @return Group-Objekt
 	 */
 	public Group update(Group group) {
 
@@ -206,7 +206,7 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Delete Methode, um ein Gruppen-Objekt aus der Datenbank zu entfernen.
+	 * Delete Methode, um ein Gruppen-Objekt aus der Datenbank zu entfernen
 	 *
 	 * @param group
 	 */
@@ -225,10 +225,10 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen.
+	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen
 	 * 
 	 * @param shoppinglist
-	 * @return Group
+	 * @return Group-Objekt
 	 */
 	public Group getGroupOf(Shoppinglist shoppinglist) {
 
@@ -237,11 +237,15 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN usergroups "
+					+ "ON shoppinglists.usergroup_id=usergroups.id");
 
 			if (rs.next()) {
-
-				//
+				Group g = new Group();
+				g.setId(rs.getInt("id"));
+				g.setCreationDate(rs.getDate("creationDate"));
+				g.setName(rs.getString("name"));
+				return g;
 			}
 
 		} catch (SQLException e) {
@@ -256,7 +260,7 @@ public class GroupMapper {
 	 * Methode, um alle Gruppen eines Users zu finden.
 	 * 
 	 * @param user
-	 * @return Group
+	 * @return Group-Objekt
 	 */
 	public ArrayList<Group> getGroupsOf(User user) {
 
@@ -266,11 +270,16 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN usergroups "
+					+ "ON memberships.usergroup_id=usergroups.id "
+					+ "WHERE user_id = " + user.getId());
 
 			while (rs.next()) {
-
-				//
+				Group g = new Group();
+				g.setId(rs.getInt("id"));
+				g.setCreationDate(rs.getDate("creationDate"));
+				g.setName(rs.getString("name"));
+				groups.add(g);
 			}
 			
 			return groups;
@@ -281,6 +290,80 @@ public class GroupMapper {
 			return null;
 		}
 
+	}
+	
+	/**
+	 * 
+	 * @param group
+	 * @return ArrayList<User>
+	 */
+	
+	public ArrayList<User> getUsersOf(Group group){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<User> groups = new ArrayList<User>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN users"
+					+ "ON memberships.user_id=users.id "
+					+ "WHERE usergroup_id = " + group.getId());
+
+			while (rs.next()) {
+				User u = new User();
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setName(rs.getString("name"));
+				u.setGmailAddress(rs.getString("gMail"));
+				groups.add(u);
+			}
+			
+			return groups;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * User zu einer Gruppe hinzufügen.
+	 * 
+	 * @param user
+	 * @param group
+	 */
+	
+	public void addUserToGroup(User user, Group group) {
+		
+		Connection con = DBConnection.connection();
+		membership m = new membership();
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM usergroups");
+
+			if (rs.next()) {
+
+				membership.setId(rs.getInt("maxid") + 1);
+			}
+
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (id, user_id, usergroups_id) VALUES (?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
+			pstmt.setInt(1, membership.getId());
+			pstmt.setInt(2, user.getId());
+			pstmt.setInt(3, group.getId());
+			pstmt.executeUpdate();
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
