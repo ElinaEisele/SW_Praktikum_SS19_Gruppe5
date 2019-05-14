@@ -14,7 +14,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl sämtliche
  * Applikationslogik vorhanden.
  * 
- * @author CarlaHofmann & TimBeutelspacher
+ * @author TimBeutelspacher, FelixRapp, CarlaHofmann
  * 
  */
 
@@ -228,7 +228,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 * Nach dem createProduct()-Aufruf erhält das Produkt die ID welche mit der Datenbank konsistent ist.
 		 * Somit kann die Fremdschluesselbeziehung vom Listitem zum Product gesetzt werden.
 		 */
-		Product p = this.createProductFor(li, productname);
+		Product p = this.createProduct(productname);
 		li.setProductID(p.getId());
 		
 		/*
@@ -459,6 +459,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return null;
 	}
 
+// AB HIER FELIX 
 	@Override
 	public Retailer getRetailerById(int retailerId) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -724,7 +725,5 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
 		 */
 	}
-
 	
-
 }
