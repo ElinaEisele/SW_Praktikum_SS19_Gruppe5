@@ -236,7 +236,7 @@ public class UserMapper {
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 *
 	 * @param user 
-	 * @return User
+	 * @return User-Objekt
 	 */
 	
 	public User update(User user) {
@@ -262,10 +262,10 @@ public class UserMapper {
 
 	/**
 	 * 
-	 * User finden, welcher dem �bergebenen Listitem zugeordnet ist.
+	 * User finden, welcher dem uebergebenen Listitem zugeordnet ist.
 	 * 
 	 * @param listitem
-	 * @return User
+	 * @return User-Objekt
 	 */
   
 	public User getGroupMemberOf(Listitem listitem){
