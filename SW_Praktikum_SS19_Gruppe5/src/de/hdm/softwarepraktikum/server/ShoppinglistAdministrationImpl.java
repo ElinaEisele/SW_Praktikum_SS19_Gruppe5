@@ -195,8 +195,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Group getGroupById(int id) throws IllegalArgumentException {
-		return this.groupMapper.getGroupsOf(id);
+	public Group getGroupById(int groupId) throws IllegalArgumentException {
+		return this.groupMapper.getGroupsOf(groupId);
 	}
 	
 	
@@ -596,6 +596,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 			}
 			//Die Einträge, welche dem User zugeteilt wurden müssen hier noch gelöscht werden.
 			//Die Zuweisung von Händlern zu Usern wurde jedoch noch nicht realisiert.
+			//Außerdem könnte hier noch abgefragt werden, ob die Gruppen nach löschen eines Users
+			//noch Mitglieder haben oder nicht. Sollen Gruppen ohne Mitglieder gelöscht werden?
 			
 		}
 		this.userMapper.delete(user);
