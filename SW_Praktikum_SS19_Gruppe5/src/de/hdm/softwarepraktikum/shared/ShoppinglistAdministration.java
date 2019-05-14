@@ -424,7 +424,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return Unit 
 	 * @throws IllegalArgumentException
 	 */
-	public Unit getUnit(Listitem listitem) throws IllegalArgumentException;
+	public Unit getUnitOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgeben der Menge eines Eintrags
@@ -432,7 +432,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return float
 	 * @throws IllegalArgumentException
 	 */
-	public float getAmount(Listitem listitem) throws IllegalArgumentException;
+	public float getAmountOf(Listitem listitem) throws IllegalArgumentException;
 
 	/**
 	 * Zum erstellen eines Produkts, welches einem Eintrag zugeordnet wird.
@@ -441,7 +441,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return Product-Objekt, mit einem bestimmten Name, welches einem Listitemn-Objekt zugeordnet ist
 	 * @throws IllegalArgumentException
 	 */
-	public Product createProductFor(Listitem listitem, String name) throws IllegalArgumentException;
+	public Product createProduct(String name) throws IllegalArgumentException;
 
 
 	/**

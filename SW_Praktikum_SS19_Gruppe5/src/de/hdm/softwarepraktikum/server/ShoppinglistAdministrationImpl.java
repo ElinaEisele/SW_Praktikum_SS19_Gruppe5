@@ -136,7 +136,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
 		this.groupMapper.insert(group);
-		this.groupMapper.addUserToGroup(user, group);
+//		this.groupMapper.addUserToGroup(user, group);
 		return group;
 	}
 	
@@ -276,7 +276,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setRetailerID(retailer.getId());
 		
 		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
-		Product p = this.createProductFor(li, productname);
+		Product p = this.createProduct(productname);
 		//Fremdschluessel vom Listitem zum Product wird gesetzt.
 		li.setProductID(p.getId());
 		
@@ -302,6 +302,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
 		this.listitemMapper.delete(listitem);
+		//Beim Löschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelöscht.
+		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
 		
 	}
 	
@@ -329,9 +331,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 
+	
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		return this.listitemMapper.setStandardListitemIn(group, listitem);
 		
 	}
 	
@@ -346,20 +349,30 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.groupMapper.getStandardListitemsOf(group);
 	}
 
-
+	/**
+	 * Filtern einer Einkaufsliste nach Verantwortungsbereich eines Nutzers
+	 * @param shoppinglist ist die Einkaufsliste, in welcher nach Verantwortungsbereich eines bestimmten Nutzers gefiltert werden soll
+	 * @param user ist der Nutzer, nach wessen Verantwortungsbereich gefiltert werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungbereichc eines Nutzers liegen
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Listitem> filterShoppinglistsByUsername(Shoppinglist shoppinglist, User user)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listitemMapper.filterShoppinglistByUsername(shoppinglist, user.getName());
 	}
 
-
+	/**
+	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
+	 * @param shoppinglist ist die Einkaufslsite, in welcher nach Einzelhaendler gefiltert werden soll
+	 * @param retailer ist der Einzelhaendler, nach welchem die Einkaufsliste gefiltert werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Listitem> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listitemMapper.filterShoppinglistByRetailer(shoppinglist, retailer.getName());
 	}
 	
 //	@Override
@@ -374,16 +387,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 //		
 //	}
 
+	
 	@Override
-	public Unit getUnit(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Unit getUnitOf(Listitem listitem) throws IllegalArgumentException {
+		return this.listitemMapper.getUnitOf(listitem);
 	}
 
 	@Override
-	public float getAmount(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getAmountOf(Listitem listitem) throws IllegalArgumentException {
+		return this.listitemMapper.getAmountOf(listitem);
 	}
 
 	
@@ -395,9 +407,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  **/
 	
 	@Override
-	public Product createProductFor(Listitem listitem, String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Product createProductFor(String name) throws IllegalArgumentException {
+		Product product = new Product(name);
+		return this.productMapper.insert(product);
 	}
 	
 	@Override
@@ -744,6 +756,23 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 			return null;
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
+
+
+	/*
+	 * werden diese Methoden benoetigt?
+	 */
+	@Override
+	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
 	}
 
 
