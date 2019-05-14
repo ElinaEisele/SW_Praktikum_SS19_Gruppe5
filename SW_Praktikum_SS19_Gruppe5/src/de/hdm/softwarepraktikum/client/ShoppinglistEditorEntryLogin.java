@@ -26,54 +26,46 @@ import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 public class ShoppinglistEditorEntryLogin implements EntryPoint{
-	
-//	private LoginServiceAsync loginService = null;
-//	private Button loginButton = new Button("Login");
-//	private Anchor signInLink = new Anchor("Login");
-//	private VerticalPanel loginPanel = new VerticalPanel();
-//	private Label loginLabel = new Label("Bitte melde dich mit deinem Google-Account an!");
-	
+		
 	private Header header = null;
 	private VerticalPanel navigator = null;
-	private GroupShowForm groupShowForm = null;	
+	private GroupShowForm groupShowForm = null;
 	private HorizontalPanel hp = null;
 	private Trailer trailer = null;
 	private VerticalPanel vp = null;
 	
-	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
-	private Anchor signInLink = new Anchor("Einloggen");
-
+	private Anchor signInLink = new Anchor("Login");
+	
+	private User user = null;
+	
 	@Override
 	public void onModuleLoad() {
 		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-
-			@Override
-			public void onSuccess(LoginInfo result) {
-				loginInfo = result;
-				if (loginInfo.isLoggedIn()) {
-					loadEditor();
-				} else {
-					loadLogin();
-				}
-				
-			}
-			
-		});
+		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 	
-//		loginService = ClientsideSettings.getLoginService();
-//		loginService.login(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html", new LoginServiceCallback());
 	}
 	
-//	private class LoginServiceCallback implements AsyncCallback<User>{
-//
+	private class LoginServiceCallback implements AsyncCallback<User>{
+		
+		@Override
+		public void onFailure(Throwable caught) {
+//			Window.alert(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			user = result;
+			if (user.isLoggedIn()) {
+				Editor editor = new Editor();
+				editor.loadForms();
+			} else {
+				loadLogin();
+			}
+		}
+		
 //		@Override
 //		public void onSuccess(User u) {
 //			CurrentUser.setUser(u);
@@ -81,10 +73,11 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 //			if (u.isLoggedIn()) {
 //				if (u.getName() == null) {
 //					Anchor shoppinglistEditorLink = new Anchor();
-//					shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL() + "SW_PRaktikum_SS19_Gruppe5.html");
+//					shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL());
 //					
-//					RootPanel.get("Navigator").setVisible(false);
-//					RootPanel.get("Details").add(new RegistrationForm(shoppinglistEditorLink, u));
+//					RootPanel.get("header").setVisible(false);
+//					RootPanel.get("aside").setVisible(false);
+//					RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, u));
 //				} else {
 //					Editor editor = new Editor();
 //					editor.loadForms();
@@ -93,16 +86,10 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 //				loadLogin();
 //			}
 //		}
-//		
-//
-//		@Override
-//		public void onFailure(Throwable caught) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//
-//		
-//	}
+		
+
+
+	}
 	
 	public void loadEditor() {
 		
@@ -119,40 +106,37 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		vp.add(hp);
 		vp.add(trailer);
 		
-		RootPanel.get("Main").add(vp);
+		RootPanel.get("main").add(vp);
 	}
 	
 	public void loadLogin() {
 		
-		signInLink.setHref(loginInfo.getLoginUrl());
+		signInLink.setHref(user.getLoginUrl());
+		
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
 		
-		RootPanel.get("Main").add(loginPanel);
-		
-//		RootPanel.get("Details").setVisible(false);
-//		RootPanel.get("Navigator").setVisible(false);
-//		RootPanel.get("Container").add(loginPanel);
-		
-//		RootPanel.get("header").add(loginPanel);
-//		
+				
 //		loginLabel.setStylePrimaryName("loginLabel");
 //		loginButton.setStylePrimaryName("loginButton");
 //		
-//		loginPanel.add(loginLabel);
-//		loginPanel.add(loginButton);
-//		
-//		signInLink.setHref(CurrentUser.getUser().getLoginUrl());
-//		
-//		loginButton.addClickHandler(new ClickHandler() {
-//
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				Window.open(signInLink.getHref(), "_self", "");
-//			}
-//			
-//		});
+//		loginButton.addClickHandler(new LoginClickHandler());
+		
+//		RootPanel.get("header").setVisible(false);
+//		RootPanel.get("aside").setVisible(false);
+		RootPanel.get("main").add(loginPanel);
+
+		
 	}
+	
+//	private class LoginClickHandler implements ClickHandler{
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			Window.open(signInLink.getHref(), "_self", "");
+//		}
+//		
+//	}
 	
 	public static class CurrentUser {
 		
@@ -166,6 +150,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 			CurrentUser.u = u;
 		}
 	
-}
+	}
 
 }

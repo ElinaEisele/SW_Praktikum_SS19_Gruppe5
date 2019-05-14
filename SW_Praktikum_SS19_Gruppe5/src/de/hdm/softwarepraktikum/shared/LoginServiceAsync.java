@@ -12,5 +12,5 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  *
  */
 public interface LoginServiceAsync{
-	 void login(String requestUri, AsyncCallback<LoginInfo> asyncCallback);
+	 void login(String requestUri, AsyncCallback<User> callback);
 }

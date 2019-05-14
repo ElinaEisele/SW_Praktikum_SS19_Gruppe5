@@ -25,15 +25,15 @@ public class Editor {
 		navigator = new HorizontalPanel();
 		trailer= new Trailer();
 		
-		RootPanel.get("Details").clear();
-		RootPanel.get("Navigator").clear();
+		RootPanel.get("main").clear();
+		RootPanel.get("aside").clear();
 		
-		RootPanel.get("Details").setVisible(true);
-		RootPanel.get("Navigator").setVisible(true);
+		RootPanel.get("main").setVisible(true);
+		RootPanel.get("aside").setVisible(true);
 		
-		RootPanel.get("Trailer").add(trailer);
-		RootPanel.get("Navigator").add(navigator);
-		RootPanel.get("Header").add(header);
+		RootPanel.get("footer").add(trailer);
+		RootPanel.get("aside").add(navigator);
+		RootPanel.get("header").add(header);
 	
 	}
 	

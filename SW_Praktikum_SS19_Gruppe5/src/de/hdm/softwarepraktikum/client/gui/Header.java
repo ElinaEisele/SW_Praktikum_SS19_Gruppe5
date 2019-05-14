@@ -1,9 +1,19 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+
+import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
+import de.hdm.softwarepraktikum.shared.LoginService;
+import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
 
 /**
@@ -16,14 +26,14 @@ import com.google.gwt.user.client.ui.Label;
  */
 public class Header extends HorizontalPanel{
 	
+	private User user = CurrentUser.getUser();
+	
 	Button editor = null;
 	Button reportGenerator = null;
 	Image logo = null;
-	
 	Button logout = null;
 	
 	public void onLoad() {
-		super.onLoad();
 		
 		editor = new Button("Editor");
 		editor.setStyleName("editor-Button");
@@ -37,14 +47,27 @@ public class Header extends HorizontalPanel{
 		logo.setStyleName("logo");
 		
 		
-		logout = new Button("Logout");
-		logout.setStyleName("logout-Button");
+//		logout = new Anchor("Logout");
+//		logout.setHref(user.getLogoutUrl());
+//		logout.addClickHandler(new LogoutClickHandler());
+//		logout.setStyleName("logout-Button");
 		
 		this.add(editor);
 		this.add(reportGenerator);
 		this.add(logo);
-		
 		this.add(logout);
+		
 	}
+	
+//	private class LogoutClickHandler implements ClickHandler{
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			user.setLogoutUrl(user.getLogoutUrl());
+//			Window.open(user.getLogoutUrl(), "_self", "");
+//
+//		}
+//		
+//	}
 
 }
