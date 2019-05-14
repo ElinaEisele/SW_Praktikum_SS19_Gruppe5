@@ -15,11 +15,6 @@ public class Product extends NamedBusinessObject implements IsSerializable{
 	
 
 	/*
-	 * Fremdschl�sselbeziehung zum zugeordneten Listitem-Objekt
-	 */
-	private int listitemID;
-	
-	/*
 	 * Default-Konstruktor
 	 */
 	public Product() {

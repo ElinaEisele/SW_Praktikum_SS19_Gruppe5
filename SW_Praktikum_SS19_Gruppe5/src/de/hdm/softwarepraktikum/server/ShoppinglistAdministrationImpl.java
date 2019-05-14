@@ -14,7 +14,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl sämtliche
  * Applikationslogik vorhanden.
  * 
- * @author CarlaHofmann & TimBeutelspacher
+ * @author TimBeutelspacher, FelixRapp, CarlaHofmann
  * 
  */
 
@@ -122,7 +122,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
 		this.groupMapper.insert(group);
-		this.groupMapper.addUserToGroup(user, group);
+//		this.groupMapper.addUserToGroup(user, group);
 		return group;
 	}
 	
@@ -228,7 +228,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 * Nach dem createProduct()-Aufruf erhält das Produkt die ID welche mit der Datenbank konsistent ist.
 		 * Somit kann die Fremdschluesselbeziehung vom Listitem zum Product gesetzt werden.
 		 */
-		Product p = this.createProductFor(li, productname);
+		Product p = this.createProduct(productname);
 		li.setProductID(p.getId());
 		
 		/*
@@ -262,9 +262,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setRetailerID(retailer.getId());
 		
 		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
-		Product p = this.createProductFor(li, productname);
+		Product p = this.createProduct(productname);
+		
 		//Fremdschluessel vom Listitem zum Product wird gesetzt.
-		li.setProductID(p.getId());
+		this.setProduct(p, li);
 		
 		return this.listitemMapper.insert(li);
 	}
@@ -288,6 +289,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
 		this.listitemMapper.delete(listitem);
+		//Beim Löschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelöscht.
+		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
 		
 	}
 	
@@ -315,9 +318,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 
+	
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		return this.listitemMapper.setStandardListitemIn(group, listitem);
 		
 	}
 	
@@ -332,44 +336,52 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.groupMapper.getStandardListitemsOf(group);
 	}
 
-
+	/**
+	 * Filtern einer Einkaufsliste nach Verantwortungsbereich eines Nutzers
+	 * @param shoppinglist ist die Einkaufsliste, in welcher nach Verantwortungsbereich eines bestimmten Nutzers gefiltert werden soll
+	 * @param user ist der Nutzer, nach wessen Verantwortungsbereich gefiltert werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungbereichc eines Nutzers liegen
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Listitem> filterShoppinglistsByUsername(Shoppinglist shoppinglist, User user)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listitemMapper.filterShoppinglistByUsername(shoppinglist, user.getName());
 	}
 
-
+	/**
+	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
+	 * @param shoppinglist ist die Einkaufslsite, in welcher nach Einzelhaendler gefiltert werden soll
+	 * @param retailer ist der Einzelhaendler, nach welchem die Einkaufsliste gefiltert werden soll
+	 * @return ArrayList mit Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public ArrayList<Listitem> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listitemMapper.filterShoppinglistByRetailer(shoppinglist, retailer.getName());
 	}
 	
-//	@Override
-//	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
+	/**
+	 * Ausgeben der Mengeneinheit eines Eintrags
+	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird
+	 * @return Unit 
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public Unit getUnit(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Unit getUnitOf(Listitem listitem) throws IllegalArgumentException {
+		return this.listitemMapper.getUnitOf(listitem);
 	}
 
+	/**
+	 * Ausgeben der Menge eines Eintrags
+	 * @param listitem ist der Eintrag, dessen Menge ausgegeben wird
+	 * @return float
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public float getAmount(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getAmountOf(Listitem listitem) throws IllegalArgumentException {
+		return this.listitemMapper.getAmountOf(listitem);
 	}
 
 	
@@ -379,30 +391,42 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * 
  * **********************************************************************************
  **/
-	
+	/**
+	 * Zum erstellen eines Produkts, welches einem Eintrag zugeordnet wird.
+	 * @param name Bezeichung des Produkts
+	 * @return Product-Objekt, mit einem bestimmten Name, welches einem Listitemn-Objekt zugeordnet ist
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public Product createProductFor(Listitem listitem, String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Product createProduct(String name) throws IllegalArgumentException {
+		Product product = new Product(name);
+		return this.productMapper.insert(product);
 	}
 	
+	/**
+	 * Einem Eintrag wird Produkt zugeordnet
+	 * @param product ist das Produkt, welches einem Eintrag zugeordnet wird
+	 * @param listitem ist der Eintrag, welchem ein Produkt zugeordnet wird
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void setProduct(Product product, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		listitem.setProductID(product.getId());
 		
 	}
 	
+	/**
+	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
+	 * @param listitem ist der Eintrag, aus welchem das Produkt ausgegeben werden soll
+	 * @return Product-Objekt, welches in bestimmtem Listitem enthalten ist
+	 * @throws IllegalArgumentException
+	 */
 	@Override
-	public void getProductOf(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public Product getProductOf(Listitem listitem) throws IllegalArgumentException {
+		return this.productMapper.getProductOf(listitem);
 		
 	}
 	
-	@Override
-	public void setProductName(String name, Product product) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
 	
 /**
  * **********************************************************************************
@@ -435,6 +459,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return null;
 	}
 
+// AB HIER FELIX 
 	@Override
 	public Retailer getRetailerById(int retailerId) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -702,50 +727,5 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
 		 */
 	}
-
 	
-	
-/**
- * **********************************************************************************
- * ABSCHNITT, Beginn: vorgefertigte Methoden
- * 
- * **********************************************************************************
- **/
-	
-	public String greetServer(String input) throws IllegalArgumentException {
-		// Verify that the input is valid. 
-		if (!FieldVerifier.isValidName(input)) {
-			// If the input is not valid, throw an IllegalArgumentException back to
-			// the client .
-			throw new IllegalArgumentException("Name must be at least 4 characters long");
-		}
-
-		String serverInfo = getServletContext().getServerInfo();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
-
-		// Escape data from the client to avoid cross-site script vulnerabilities.
-		input = escapeHtml(input);
-		userAgent = escapeHtml(userAgent);
-
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo + ".<br><br>It looks like you are using:<br>"
-				+ userAgent;
-	}
-
-	/**
-	 * Escape an html string. Escaping data received from the client helps to
-	 * prevent cross-site script vulnerabilities.
-	 * 
-	 * @param html the html string to escape
-	 * @return the escaped string
-	 */
-	private String escapeHtml(String html) {
-		if (html == null) {
-			return null;
-		}
-		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-	}
-
-
-	
-
 }

@@ -261,5 +261,37 @@ public class ListitemMapper {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param shoppinglist
+	 * @param productname
+	 * @return
+	 */
+	
+	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT ...");
+
+			while (rs.next()) {
+
+				//
+			}
+			
+			return listitems;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+			return null;
+		}
+		
+	}
 
 }
