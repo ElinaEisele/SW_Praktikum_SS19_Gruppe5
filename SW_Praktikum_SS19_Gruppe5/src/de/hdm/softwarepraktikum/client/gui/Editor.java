@@ -18,12 +18,15 @@ public class Editor {
 	// wird noch zu CellTable, aktuell nur Platzhalter
 	private HorizontalPanel navigator = null;
 	
+	private ShoppinglistShowForm shoppinglistShowForm = null;
+	
 	private Trailer trailer = null;
 	
 	public void loadForms() {
 		
 		header = new Header();
 		navigator = new HorizontalPanel();
+		shoppinglistShowForm = new ShoppinglistShowForm();
 		trailer= new Trailer();
 		
 		RootPanel.get("main").clear();
@@ -34,6 +37,7 @@ public class Editor {
 		
 		RootPanel.get("footer").add(trailer);
 		RootPanel.get("aside").add(navigator);
+		RootPanel.get("main").add(shoppinglistShowForm);
 		RootPanel.get("header").add(header);
 
 	
