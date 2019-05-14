@@ -32,7 +32,7 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createShoppinglistFor(Group group, String name, AsyncCallback<Shoppinglist> callback) throws IllegalArgumentException;
 	
-	void createProductFor(Listitem listitem, String name, AsyncCallback<Product> callback) throws IllegalArgumentException;
+	void createProduct(String name, AsyncCallback<Product> callback) throws IllegalArgumentException;
 	
 	void getGroupById(int id, AsyncCallback<Group> callback) throws IllegalArgumentException;
 
@@ -102,7 +102,7 @@ public interface ShoppinglistAdministrationAsync {
 
 	void setStandardListitem(Listitem listitem, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void getProductOf(Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	void getProductOf(Listitem listitem, AsyncCallback<Product> callback) throws IllegalArgumentException;
 	
 	void getStandardListitemsOf(Group group, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
 	
@@ -114,15 +114,13 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void removeUserFromGroup(User user, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void setProductName(String name, Product product, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
 	void setAmount(float amount, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void setUnit(Unit unit, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void getUnit(Listitem listitem, AsyncCallback<Unit> callback) throws IllegalArgumentException;
+	void getUnitOf(Listitem listitem, AsyncCallback<Unit> callback) throws IllegalArgumentException;
 	
-	void getAmount(Listitem listitem, AsyncCallback<Float> callback) throws IllegalArgumentException;
+	void getAmountOf(Listitem listitem, AsyncCallback<Float> callback) throws IllegalArgumentException;
 	
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 }
