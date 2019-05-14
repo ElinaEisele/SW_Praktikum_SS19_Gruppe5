@@ -1,19 +1,14 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>User</code> Objekte. Diese umfasst Methoden um User
- * Objekte zu erstellen, zu suchen, zu modifizieren und zu löschen. Das Mapping
- * funktioniert dabei bidirektional. Es können Objekte in DB-Strukturen und
+ * Mapper Klasse fï¿½r </code>User</code> Objekte. Diese umfasst Methoden um User
+ * Objekte zu erstellen, zu suchen, zu modifizieren und zu lï¿½schen. Das Mapping
+ * funktioniert dabei bidirektional. Es kï¿½nnen Objekte in DB-Strukturen und
  * DB-Stukturen in Objekte umgewandelt werden.
  * 
  * @author LeoniFriedrich & CarlaHofmann
@@ -35,7 +30,8 @@ public class UserMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Gibt den User Mapper zurück.
+	 * @return Usermapper
+	 * @return Gibt den User Mapper zurï¿½ck.
 	 */
 	public static UserMapper userMapper() {
 		if (userMapper == null) {
@@ -48,7 +44,7 @@ public class UserMapper {
 	/**
 	 * Ausgabe einer Liste aller User.
 	 * 
-	 * @return Gibt eine Liste aller User zurueck.
+	 * @return Userliste
 	 */
 	public ArrayList<User> findAll() {
 
@@ -58,31 +54,33 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Users");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, gMail FROM users ORDER BY id");
 
 			while (rs.next()) {
-
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setCreationDate(rs.getDate("creationDate"));
-				user.setName(rs.getString("name"));
-				user.setGmailAddress(rs.getString("gMail"));
-				users.add(user);
+				User u = new User();
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setName(rs.getString("name"));
+				u.setGmailAddress(rs.getString("gMail"));
+				users.add(u);
 			}
+			
+			return users;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		return users;
+
 	}
 
 	/**
 	 * User mittels Id finden.
 	 * 
+	 * @param id
+	 * @return User
 	 * @param id: Die id wird uebergeben, um daran den User zu finden.
-	 * @return Der User der mittels der Id gefunden wurde, wird zurückgegeben.
+	 * @return Der User der mittels der Id gefunden wurde, wird zurï¿½ckgegeben.
 	 */
 	public User findById(int id) {
 
@@ -94,19 +92,16 @@ public class UserMapper {
 			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, gMail FROM Users WHERE id = " + id);
 
 			if (rs.next()) {
-
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setCreationDate(rs.getDate("creationDate"));
-				user.setName(rs.getString("name"));
-				user.setGmailAddress(rs.getString("gMail"));
-				return user;
-
+				User u = new User();
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setName(rs.getString("name"));
+				u.setGmailAddress(rs.getString("gMail"));
+				return u;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
 
 		return null;
@@ -115,8 +110,8 @@ public class UserMapper {
 	/**
 	 * User mittels des Namens finden.
 	 * 
-	 * @param name: Der Name des Users wird uebergeben.
-	 * @return Der User der ueber dessen Namen gefunden wurde, wird zurueckgegeben
+	 * @param name
+	 * @return Userliste
 	 * 
 	 */
 	public ArrayList<User> findByName(String name) {
@@ -127,33 +122,32 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT id, creationDate, name, gMail FROM users WHERE Name ='" + name + "'");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, gMail FROM users WHERE Name ='" + name + "'");
 
 			if (rs.next()) {
 
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setCreationDate(rs.getDate("creationDate"));
-				user.setName(rs.getString("name"));
-				user.setGmailAddress(rs.getString("gMail"));
-				users.add(user);
+				User u = new User();
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setName(rs.getString("name"));
+				u.setGmailAddress(rs.getString("gMail"));
+				users.add(u);
 			}
+			
+			return users;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		return users;
 
 	}
 
 	/**
 	 * User mittels der Gmail Adresse finden.
 	 * 
-	 * @param gmail: Die gmail des Users wird uebergeben.
-	 * @return Der User der ueber dessen GMail gefunden wurde, wird zurueckgegeben
+	 * @param gmail
+	 * @return User
 	 * 
 	 */
 	public User findByGMail(String gmail) {
@@ -163,23 +157,19 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT id, creationDate, name, gMail FROM users WHERE gMail = '" + gmail + "'");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, gMail FROM users WHERE gMail = '" + gmail + "'");
 
 			if (rs.next()) {
-
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setCreationDate(rs.getDate("creationDate"));
-				user.setGmailAddress(rs.getString("gMail"));
-				user.setName(rs.getString("name"));
-				return user;
+				User u = new User();
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setGmailAddress(rs.getString("gMail"));
+				u.setName(rs.getString("name"));
+				return u;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
 
 		return null;
@@ -187,10 +177,10 @@ public class UserMapper {
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufügen.
+	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufï¿½gen.
 	 *
-	 * @param user: Der eingeloggte User wird uebergeben.
-	 * @return Der user wird zurueckgegeben.
+	 * @param user
+	 * @return User
 	 */
 	public User insert(User user) {
 
@@ -202,13 +192,10 @@ public class UserMapper {
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM Users ");
 
 			if (rs.next()) {
-
 				user.setId(rs.getInt("maxid") + 1);
-
 			}
 
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO Users (id, creationDate, name, gMail)" + "VALUES (?, ?, ?, ?)",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO Users (id, creationDate, name, gMail)" + "VALUES (?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, user.getId());
@@ -219,19 +206,20 @@ public class UserMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
+		
 		return user;
 
 	}
 
 	/**
-	 * Delete Methode: um User-Datensatz aus der DB zu entfernen
+	 * Delete Methode um User-Datensatz aus der DB zu entfernen.
 	 * 
-	 * @param user: Der User wird uebergeben.
+	 * @param user
 	 */
 
 	public void delete(User user) {
+		
 		Connection con = DBConnection.connection();
 
 		try {
@@ -247,44 +235,61 @@ public class UserMapper {
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 *
-	 * @param user Der User wird uebergeben.
-	 * @return Gibt den aktualisierten User zurueck.
+	 * @param user 
+	 * @return User
 	 */
+	
 	public User update(User user) {
+		
 		Connection con = DBConnection.connection();
 
 		try {
+			
 			PreparedStatement pstmt = con.prepareStatement("UPDATE users SET GMail= ?, Name= ? WHERE User_ID = ?");
 			pstmt.setString(1, user.getGmailAddress());
 			pstmt.setString(2, user.getName());
 			pstmt.setInt(2, user.getId());
 			pstmt.executeUpdate();
 			
+			PreparedStatement stmt = con.prepareStatement("UPDATE User SET GMail= ?, Name= ? WHERE User_ID = ?");
+			// vervollstï¿½ndigen
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return user;
 	}
 
-	public User getGroupMemberOf(Listitem listitem) {
+	/**
+	 * 
+	 * User finden, welcher dem ï¿½bergebenen Listitem zugeordnet ist.
+	 * 
+	 * @param listitem
+	 * @return User
+	 */
+  
+	public User getGroupMemberOf(Listitem listitem){
 
 		Connection con = DBConnection.connection();
-		User groupMember = new User();
 
 		try {
+			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT ...");
 
 			if (rs.next()) {
+				
+				User u = new User();
 				//
+				return u;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
-		}
 
-		return groupMember;
+		}
+		
+		return null;
+
 	}
 }

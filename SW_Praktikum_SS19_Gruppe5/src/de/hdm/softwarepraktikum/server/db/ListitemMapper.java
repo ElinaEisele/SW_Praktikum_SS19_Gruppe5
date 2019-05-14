@@ -31,7 +31,7 @@ public class ListitemMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Gibt den Listitemmapper zurueck.
+	 * @return Listitemmapper
 	 */
 	public static ListitemMapper listitemMapper() {
 		if (listitemMapper == null) {
@@ -44,7 +44,7 @@ public class ListitemMapper {
 	/**
 	 * Ausgabe einer Liste aller Listitems.
 	 *
-	 * @return Gibt eine Liste aller Listitems zurueck.
+	 * @return Listitemliste
 	 */
 	public ArrayList<Listitem> findAll() {
 
@@ -54,8 +54,8 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, "
+					+ "unit_id, group_id, retailer_id FROM listitems");
 
 			while (rs.next()) {
 
@@ -67,13 +67,14 @@ public class ListitemMapper {
 				
 				listitems.add(listitem);
 			}
+			
+			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
 			return null;
 		}
-
-		return listitems;
 
 	}
 
@@ -92,7 +93,6 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
 			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems WHERE id= " + id);
 
 			if (rs.next()) {
@@ -108,16 +108,17 @@ public class ListitemMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		
+		return null;
 
 	}
 
 	/**
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
-	 * @param listitem: Das gewaehlte Listitem wird uebergeben
-	 * @return Das Listitem wird zurueckgegeben.
+	 * @param listitem
+	 * @return Listitem
 	 */
 	public Listitem insert(Listitem listitem) {
 
@@ -152,31 +153,35 @@ public class ListitemMapper {
 	/**
 	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
 	 *
-	 * @param listitem: Das Listitem wird uebergeben.
-	 * @return Gibt das akutalisierte Listitem zurueck.
+	 * @param listitem
+	 * @return Listitem
 	 */
 	public Listitem update(Listitem listitem) {
 
 		Connection con = DBConnection.connection();
 
 		try {
+			
 			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? WHERE id = ?");
 
 			pstmt.setFloat(1, listitem.getAmount());
 			pstmt.setInt(2, listitem.getId());
 			pstmt.executeUpdate();
+			
+			return listitem;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
 
-		return listitem;
 	}
 
 	/**
 	 * Delete Methode, um ein Listitem-Objekt aus der Datenbank zu entfernen.
 	 *
-	 * @param listitem: Das Listitem wird uebergeben.
+	 * @param listitem
 	 */
 	public void delete(Listitem listitem) {
 
@@ -195,8 +200,8 @@ public class ListitemMapper {
 	/**
 	 * Methode, um alle Listitems einer Shoppingliste auszugeben.
 	 * 
-	 * @param shoppinglist: Shoppingliste, von welcher die Listitems gesucht werden.
-	 * @return Listitems der Shoppinglist
+	 * @param shoppinglist
+	 * @return Listitemliste
 	 */
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) {
 
@@ -210,14 +215,18 @@ public class ListitemMapper {
 
 			if (rs.next()) {
 
-				Listitem listitem = new Listitem();
-				listitem.setId(rs.getInt("id"));
-				listitem.setCreationDate(rs.getDate("CreationDate"));
-				return listitem;
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("CreationDate"));
+				listitems.add(li);
 			}
+			
+			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
 
 	}
@@ -225,8 +234,8 @@ public class ListitemMapper {
 	/**
 	 * Methode, um alle Listitems eines Retailers zu finden.
 	 * 
-	 * @param retailer: Retailer, von welchem alle Listitems gefunden werden sollen.
-	 * @return Listitems eines Händlers.
+	 * @param retailer
+	 * @return Listitemliste
 	 */
 	public ArrayList<Listitem> getListitemsOf(Retailer retailer) {
 
@@ -236,19 +245,20 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
 			ResultSet rs = stmt.executeQuery("SELECT ...");
 
 			while (rs.next()) {
 
-				Listitem listitem = new Listitem();
+				//
 			}
+			
+			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
-
-		return listitems;
 
 	}
 

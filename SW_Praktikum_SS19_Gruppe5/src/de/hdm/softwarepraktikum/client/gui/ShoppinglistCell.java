@@ -1,7 +1,14 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import java.util.Set;
+
+import com.google.gwt.cell.client.Cell;
+import com.google.gwt.cell.client.ValueUpdater;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -12,6 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.softwarepraktikum.shared.bo.Product;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
  * Klasse zur Darstellung von Shoppinglist-Objekte. Erweiterungen von
@@ -36,7 +44,7 @@ import de.hdm.softwarepraktikum.shared.bo.Product;
 //
 //}
 
-public class ShoppinglistCell extends VerticalPanel {
+public class ShoppinglistCell extends VerticalPanel implements Cell<Shoppinglist> {
 Product productToDisplay = null;
 	VerticalPanel v1;
 	ShoppinglistCellTable shoppinglistCellTable;
@@ -116,6 +124,47 @@ Product productToDisplay = null;
 			v1.clear();
 			v1.add(shoppinglistCellTable);
 		}
+	}
+	@Override
+	public boolean dependsOnSelection() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public Set<String> getConsumedEvents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean handlesSelection() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isEditing(Context context, Element parent, Shoppinglist value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void onBrowserEvent(Context context, Element parent, Shoppinglist value, NativeEvent event,
+			ValueUpdater<Shoppinglist> valueUpdater) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void render(Context context, Shoppinglist value, SafeHtmlBuilder sb) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean resetFocus(Context context, Element parent, Shoppinglist value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void setValue(Context context, Element parent, Shoppinglist value) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

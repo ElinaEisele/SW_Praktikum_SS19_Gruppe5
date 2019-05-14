@@ -348,9 +348,10 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
 	 * @param listitem ist der Eintrag, aus welchem das Produkt ausgegeben werden soll
+	 * @return Product-Objekt, welches in bestimmtem Listitem enthalten ist
 	 * @throws IllegalArgumentException
 	 */
-	public void getProductOf(Listitem listitem) throws IllegalArgumentException;
+	public Product getProductOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgeben von allen Standard-Listitems aus einer Gruppe
@@ -394,13 +395,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException;
 	
-	/**
-	 * Setzen einer Bezeichnung fuer ein Produkt
-	 * @param name ist die Bezeichnung des Produkts
-	 * @param product ist das Produkt, welches die Bezeichnung erh�lt
-	 * @throws IllegalArgumentException
-	 */
-	public void setProductName(String name, Product product) throws IllegalArgumentException;
+
 	
 	/**
 	 * Setzen einer Menge fuer einen Eintrag
@@ -424,7 +419,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return Unit 
 	 * @throws IllegalArgumentException
 	 */
-	public Unit getUnit(Listitem listitem) throws IllegalArgumentException;
+	public Unit getUnitOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgeben der Menge eines Eintrags
@@ -432,16 +427,15 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return float
 	 * @throws IllegalArgumentException
 	 */
-	public float getAmount(Listitem listitem) throws IllegalArgumentException;
+	public float getAmountOf(Listitem listitem) throws IllegalArgumentException;
 
 	/**
 	 * Zum erstellen eines Produkts, welches einem Eintrag zugeordnet wird.
-	 * @param listitem Eintrag, welchem das Produkt zugeornet wird
 	 * @param name Bezeichung des Produkts
 	 * @return Product-Objekt, mit einem bestimmten Name, welches einem Listitemn-Objekt zugeordnet ist
 	 * @throws IllegalArgumentException
 	 */
-	public Product createProductFor(Listitem listitem, String name) throws IllegalArgumentException;
+	public Product createProduct(String name) throws IllegalArgumentException;
 
 
 	/**

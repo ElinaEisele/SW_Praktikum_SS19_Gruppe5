@@ -1,17 +1,9 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.User;
-import javafx.scene.Group;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Mapper Klasse für </code>Shoppinglist</code> Objekte. Diese umfasst Methoden
@@ -19,7 +11,7 @@ import javafx.scene.Group;
  * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
  * 
- * @author LeoniFriedrich
+ * @author LeoniFriedrich & CarlaHofmann
  */
 
 public class ShoppinglistMapper {
@@ -41,7 +33,7 @@ public class ShoppinglistMapper {
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 * 
-	 * @return Gibt den Shoppinglist Mapper zurück.
+	 * @return Shoppinglistmapper
 	 */
 
 	public static ShoppinglistMapper shoppinglistMapper() {
@@ -54,7 +46,7 @@ public class ShoppinglistMapper {
 	/**
 	 * Ausgabe einer Liste aller Shoppinglist Objekte
 	 * 
-	 * @return gibt eine Liste aller Shoppinglist Objekte zurück.
+	 * @return Shoppinglist-Liste
 	 */
 	public ArrayList<Shoppinglist> findAll() {
 
@@ -64,68 +56,64 @@ public class ShoppinglistMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, name, creationDate, usergroup_id FROM shoppinglists");
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id FROM shoppinglists");
 
 			while (rs.next()) {
-
-				Shoppinglist shoppinglist = new Shoppinglist();
-				shoppinglist.setId(rs.getInt("id"));
-				shoppinglist.setName(rs.getString("name"));
-				shoppinglist.setCreationDate(rs.getDate("creationDate"));
-				// shoppinglist.set ("usergroup_id");
-
-				shoppinglists.add(shoppinglist);
+				Shoppinglist sl = new Shoppinglist();
+				sl.setId(rs.getInt("id"));
+				sl.setCreationDate(rs.getDate("creationDate"));
+				sl.setName(rs.getString("name"));
+				sl.setId(rs.getInt("usergroup_id"));
+				shoppinglists.add(sl);
 			}
+			
+			return shoppinglists;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return shoppinglists;
-
 	}
 
 	/**
 	 * Methode um Shoppinglist mittels Id zu finden.
 	 * 
-	 * @param id: die Id wird uebergeben.
-	 * @return Die Shoppinglist mit der jeweiligen id wird zurueckgegeben.
+	 * @param id
+	 * @return Shoppinglist
 	 */
 	public Shoppinglist findById(int id) {
+		
 		Connection con = DBConnection.connection();
 
-		Shoppinglist shoppinglist = new Shoppinglist();
-
 		try {
+			
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, creationDate, usergroup_id FROM shoppinglists WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id FROM shoppinglists WHERE id = " + id);
+			
 			if (rs.next()) {
-				shoppinglist.setId(rs.getInt("id"));
-				shoppinglist.setName(rs.getString("name"));
-				shoppinglist.setCreationDate(rs.getDate("creationDate"));
-				// usergroup_id
-				return shoppinglist;
+				Shoppinglist sl = new Shoppinglist();
+				sl.setId(rs.getInt("id"));
+				sl.setCreationDate(rs.getDate("creationDate"));
+				sl.setName(rs.getString("name"));
+				sl.setId(rs.getInt("usergroup_id"));
+				return sl;
 			}
-		} catch (
-
-		SQLException e) {
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
 
-		return shoppinglist;
+		return null;
+		
 	}
 
 	/**
 	 * Shoppinglist mittels Shoppinglist Namen finden
 	 * 
-	 * @param name: Uebergabe des Namens einer Shoppinglist in Form eines Strings
+	 * @param name
 	 * 
-	 * @return Shoppinglist(n) mit dem entsprechenden Namen
+	 * @return Shoppinglist-Liste
 	 */
 	public ArrayList<Shoppinglist> findByName(String name) {
 
@@ -135,35 +123,31 @@ public class ShoppinglistMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, creationDate, usergroup_id FROM retailers WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id FROM retailers WHERE name = " + name);
 
 			while (rs.next()) {
-
-				Shoppinglist shoppinglist = new Shoppinglist();
-				shoppinglist.setId(rs.getInt("id"));
-				shoppinglist.setName(rs.getString("name"));
-				shoppinglist.setCreationDate(rs.getDate("creationDate"));
-				shoppinglist.setGroupId(rs.getInt("usergroup_id"));
-
-				shoppinglists.add(shoppinglist);
+				Shoppinglist sl = new Shoppinglist();
+				sl.setId(rs.getInt("id"));
+				sl.setCreationDate(rs.getDate("creationDate"));
+				sl.setName(rs.getString("name"));
+				sl.setGroupId(rs.getInt("usergroup_id"));
+				shoppinglists.add(sl);
 			}
+			
+			return shoppinglists;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
-		return shoppinglists;
-
 	}
 
 	/**
 	 * Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen.
 	 * 
-	 * @param shoppinglist: Die Shoppinglist wird uebergeben.
-	 * @return Die aktualisierte Shoppinglist wird zurueckgegeben.
+	 * @param shoppinglist
+	 * @return Shoppinglist
 	 */
 
 	public Shoppinglist insert(Shoppinglist shoppinglist) {
@@ -173,14 +157,14 @@ public class ShoppinglistMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
 			ResultSet rs = stmt.executeQuery("MAX(id) AS maxid FROM shoppinglists ");
 
 			if (rs.next()) {
 				shoppinglist.setId(rs.getInt("maxid") + 1);
 			}
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO shoppinglists (id, creationDate, name, usergroup_id) VALUES (?, ?, ?)",
+			
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO shoppinglists (id, creationDate, name, usergroup_id) "
+					+ "VALUES (?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, shoppinglist.getId());
@@ -188,48 +172,55 @@ public class ShoppinglistMapper {
 			pstmt.setString(3, shoppinglist.getName());
 			pstmt.setInt(4, shoppinglist.getGroupId());
 			pstmt.executeUpdate();
+			
+			return shoppinglist;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
+			
+			return null;
 		}
-		return shoppinglist;
 
 	}
 
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 * 
-	 * @param shoppinglist: die Shoppinglist wird uebergeben.
-	 * @return Die aktualisierte Shoppinglist wird zurueckgegeben.
+	 * @param shoppinglist
+	 * @return Shoppinglist
 	 */
 	public Shoppinglist update(Shoppinglist shoppinglist) {
 		Connection con = DBConnection.connection();
 
 		try {
+			
 			PreparedStatement pstmt = con.prepareStatement("UPDATE shoppinglists SET name = ? WHERE id = ?");
 
 			pstmt.setString(1, shoppinglist.getName());
 			pstmt.setInt(2, shoppinglist.getId());
 			pstmt.executeUpdate();
+			
+			return shoppinglist;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
 
-		return shoppinglist;
 	}
 
 	/**
 	 * Loeschen einer Shoppinglist aus der Datenbank.
 	 * 
-	 * @param shoppinglist: Die Shoppinglist wird uebergeben
+	 * @param shoppinglist
 	 */
 	public void delete(Shoppinglist shoppinglist) {
 
 		Connection con = DBConnection.connection();
 
 		try {
+			
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM shoppinglists WHERE id =" + shoppinglist.getId());
 
@@ -239,42 +230,89 @@ public class ShoppinglistMapper {
 
 	}
 
+	/**
+	 * 
+	 * Die übergeordnete Shoppinglist eines listitems finden.
+	 * 
+	 * @param listitem
+	 * @return Shoppinglist
+	 */
+	
 	public Shoppinglist getShoppinglistOf(Listitem listitem) {
 
 		Connection con = DBConnection.connection();
 		Shoppinglist shoppinglist = new Shoppinglist();
 
 		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("");
+			
+			//
+			
+			return shoppinglist;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
-		return shoppinglist;
+
 	}
 
+	/**
+	 * 
+	 * @param group
+	 * @return
+	 */
+	
 	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) {
 
 		Connection con = DBConnection.connection();
 		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
 
 		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("");
+			
+			//
+			
+			return shoppinglists;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
-		return shoppinglists;
+		
 	}
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	
 	public ArrayList<Shoppinglist> getShoppinglistsOf(User user) {
 
 		Connection con = DBConnection.connection();
 		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
 
 		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("");
+			
+			//
+			
+			return shoppinglists;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
-		return shoppinglists;
+		
 	}
 }
