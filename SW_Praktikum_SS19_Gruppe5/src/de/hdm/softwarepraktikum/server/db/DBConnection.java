@@ -2,7 +2,7 @@ package de.hdm.softwarepraktikum.server.db;
 
 import java.sql.*;
 
-//import com.google.appengine.api.utils.SystemProperty;
+import com.google.appengine.api.utils.SystemProperty;
 
 	/**
 	 * Verwalten einer Verbindung zur Datenbank.
@@ -25,7 +25,7 @@ public class DBConnection {
     private static Connection con = null;
     
     private static String googleUrl = "jdbc:google:mysql://swpraktikumss19g5:europe-west3:sw-praktikum-ss19-g5?user=CarlaHofmann&password=CarlaHofmann";
-    private static String localUrl = "jdbc:mysql://127.0.0.1:3306/sw_praktikum_ss19_gruppe5?user=root&password=CarlaHofmann123&serverTimezone=UTC";
+    private static String localUrl = "jdbc:mysql://localhost:3306/swpraktikum?user=root&password=&serverTimezone=UTC";
     
     /**
      * Diese statische Methode kann aufgrufen werden durch
@@ -46,7 +46,7 @@ public class DBConnection {
 		if (con == null) {
 			try {
                 
-				if (url != null) {
+				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                 	
                     //Klasse laden, welche das neue Präfix "jdbc: google: mysql: //" bereitstellt.
                 	
