@@ -441,7 +441,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 	}
 	
-	
+	/**
+	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
+	 * @param listitem ist der Eintrag, aus welchem das Produkt ausgegeben werden soll
+	 * @return Product-Objekt, welches in bestimmtem Listitem enthalten ist
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public Product getProductOf(Listitem listitem) throws IllegalArgumentException {
 		return this.productMapper.getProductOf(listitem);
