@@ -102,7 +102,7 @@ public interface ShoppinglistAdministrationAsync {
 
 	void setStandardListitem(Listitem listitem, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void getProductOf(Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	void getProductOf(Listitem listitem, AsyncCallback<Product> callback) throws IllegalArgumentException;
 	
 	void getStandardListitemsOf(Group group, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
 	
@@ -113,8 +113,6 @@ public interface ShoppinglistAdministrationAsync {
 	void addUserToGroup(User user, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void removeUserFromGroup(User user, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
-	void setProductName(String name, Product product, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void setAmount(float amount, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	

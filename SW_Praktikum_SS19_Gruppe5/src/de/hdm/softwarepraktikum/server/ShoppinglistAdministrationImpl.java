@@ -277,8 +277,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
 		Product p = this.createProduct(productname);
+		
 		//Fremdschluessel vom Listitem zum Product wird gesetzt.
-		li.setProductID(p.getId());
+		this.setProduct(p, li);
 		
 		return this.listitemMapper.insert(li);
 	}
@@ -428,23 +429,25 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.productMapper.insert(product);
 	}
 	
+	/**
+	 * Einem Eintrag wird Produkt zugeordnet
+	 * @param product ist das Produkt, welches einem Eintrag zugeordnet wird
+	 * @param listitem ist der Eintrag, welchem ein Produkt zugeordnet wird
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void setProduct(Product product, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		listitem.setProductID(product.getId());
 		
 	}
 	
+	
 	@Override
-	public void getProductOf(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public Product getProductOf(Listitem listitem) throws IllegalArgumentException {
+		return this.productMapper.getProductOf(listitem);
 		
 	}
 	
-	@Override
-	public void setProductName(String name, Product product) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
 	
 /**
  * **********************************************************************************

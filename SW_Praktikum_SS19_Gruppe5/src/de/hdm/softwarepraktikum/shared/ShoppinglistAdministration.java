@@ -348,9 +348,10 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
 	 * @param listitem ist der Eintrag, aus welchem das Produkt ausgegeben werden soll
+	 * @return Product-Objekt, welches in bestimmtem Listitem enthalten ist
 	 * @throws IllegalArgumentException
 	 */
-	public void getProductOf(Listitem listitem) throws IllegalArgumentException;
+	public Product getProductOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgeben von allen Standard-Listitems aus einer Gruppe
@@ -394,13 +395,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException;
 	
-	/**
-	 * Setzen einer Bezeichnung fuer ein Produkt
-	 * @param name ist die Bezeichnung des Produkts
-	 * @param product ist das Produkt, welches die Bezeichnung erh�lt
-	 * @throws IllegalArgumentException
-	 */
-	public void setProductName(String name, Product product) throws IllegalArgumentException;
+
 	
 	/**
 	 * Setzen einer Menge fuer einen Eintrag
