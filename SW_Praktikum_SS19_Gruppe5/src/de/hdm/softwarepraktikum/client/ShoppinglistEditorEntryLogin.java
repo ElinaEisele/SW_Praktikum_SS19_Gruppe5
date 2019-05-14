@@ -37,7 +37,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
-	
 	private User user = null;
 	
 	@Override
@@ -45,7 +44,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
-
 	
 	}
 	
@@ -60,8 +58,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		public void onSuccess(User result) {
 			user = result;
 			if (user.isLoggedIn()) {
-				Editor editor = new Editor();
-				editor.loadForms();
+				loadEditor();
 			} else {
 				loadLogin();
 			}
@@ -120,7 +117,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		loginPanel.add(signInLink);
 
 		RootPanel.get("header").setVisible(false);
-		RootPanel.get("wrapper").add(loginPanel);
+		RootPanel.get("main").add(loginPanel);
 		
 //		loginLabel.setStylePrimaryName("loginLabel");
 //		loginButton.setStylePrimaryName("loginButton");

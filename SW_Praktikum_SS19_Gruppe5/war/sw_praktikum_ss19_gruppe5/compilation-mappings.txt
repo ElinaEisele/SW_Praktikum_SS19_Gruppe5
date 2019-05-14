@@ -1,36 +1,16 @@
-<<<<<<< HEAD
-0B42FF4E2B015A6D9DF66B6749250740.cache.js
+1DB222083C37371F4FC943BA79A00496.cache.js
+user.agent gecko1_8
+
+7EA11118BED59A0C1CEAEDE7E5646EC6.cache.js
 user.agent ie10
 
-45F2F0FE39F5D32DFCA069FBF5ED263B.cache.js
-user.agent gecko1_8
-=======
-6519FC35A139B70E0479F118B87E5932.cache.js
-user.agent safari
->>>>>>> branch 'ElinaEisele' of https://github.com/ElinaEisele/SW_Praktikum_SS19_Gruppe5.git
-
-<<<<<<< HEAD
-9F576AF5CE0FCD07AF805CF6DD804FF5.cache.js
-=======
-73A92F3C0EFA6783FFB66AE8F1703CDA.cache.js
->>>>>>> branch 'ElinaEisele' of https://github.com/ElinaEisele/SW_Praktikum_SS19_Gruppe5.git
+9B8B82EC3A2D85494FC5E74F45AC733F.cache.js
 user.agent ie9
 
-<<<<<<< HEAD
-B469CDC6D49F96374C7CADF1513EE0C1.cache.js
-user.agent ie8
-
-C8F6EBF925FC81BB5E9F77C2B3251A6C.cache.js
+F7EA07554490AA4A25BEE207F61BE1EE.cache.js
 user.agent safari
-=======
-977619C66BCC42E219F2698CA6C23BC8.cache.js
-user.agent gecko1_8
->>>>>>> branch 'ElinaEisele' of https://github.com/ElinaEisele/SW_Praktikum_SS19_Gruppe5.git
 
-AF896D32999A7A65D5E2E5CF173D36EC.cache.js
-user.agent ie10
-
-D6850EC3E7908C5389A2C487C103D11F.cache.js
+F8FC68A943FB71E8B9B5E1F7879EE297.cache.js
 user.agent ie8
 
 Devmode:devmode.js
