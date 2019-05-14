@@ -23,6 +23,11 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	private Unit unit;
 	
 	/**
+	 * Angabe des einzukaufenden Produkts.
+	 */
+	private Product product;
+	
+	/**
 	 * Fremdschlï¿½sselbeziehung zum Produkt des Eintrags.
 	 */
 	private int productID;
@@ -58,10 +63,33 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	public Listitem (float amount, Unit unit, Retailer retailer) {
 		super();
 		this.setAmount(amount);
-		this.setUnit(unit);
-		
+		this.setUnit(unit);		
 	}
 	
+	/**
+	 * Konstruktor zum Setzen des Namen, der Menge, der Einheit und des Einzelhändlers.
+	 */
+	public Listitem (float amount, Unit unit, Retailer retailer, Product product) {
+		super();
+		this.setAmount(amount);
+		this.setUnit(unit);		
+		this.setProduct(product);
+	}
+	
+	/**
+	 * Ausgeben des zu einkaufenden Produkts.
+	 */
+	public Product getProduct() {
+		return product;
+	}
+
+	/**
+	 * Setzen des zu einkaufenden Produkts.
+	 */
+	private void setProduct(Product product) {
+		this.product = product;		
+	}
+
 	/**
 	 * Ausgeben der zu einkaufenden Menge.
 	 */
