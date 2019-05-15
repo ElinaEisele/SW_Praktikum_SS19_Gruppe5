@@ -106,5 +106,6 @@ public class NavigatorPanel implements TreeViewModel {
 		}
 		return false;
 	}
+	
 
 }

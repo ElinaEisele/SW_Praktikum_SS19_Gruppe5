@@ -1,44 +1,40 @@
 package de.hdm.softwarepraktikum.server;
 
-
-import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-
 import de.hdm.softwarepraktikum.shared.LoginInfo;
 import de.hdm.softwarepraktikum.shared.LoginService;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
 
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService{
 	
 	 private static final long serialVersionUID = 1L;
-	 private UserService userService = null;
-	 User user = null;
-
+	 
 	/**
 	 * Login-Methode pruef, ob der User dem System bekannt ist. Wenn dies der Fall ist,
 	 * werden die Attribute fuer dieses Objekt gesetzte. Ansonsten wird ein neuer Datensatz
 	 * in die Datenbank geschrieben und der User ist eingeloggt.
 	 */
 	@Override
-	public LoginInfo login(String continuationURL) {
+	public User login(String continuationURL) {
 		UserService userService= UserServiceFactory.getUserService(); 
-		User user = userService.getCurrentUser(); 
-		LoginInfo loginInfo = new LoginInfo();
+		com.google.appengine.api.users.User googleUser = userService.getCurrentUser(); 
+		User user = new User();
 		
-		if (user != null) {
+		if (googleUser != null) { // Google User
 			
-			loginInfo.setLoggedIn(true);
-			loginInfo.setEmailAddress(user.getEmail());
-			loginInfo.setNickname(user.getNickname());
-			loginInfo.setLogoutUrl(userService.createLogoutURL(continuationURL));
+			user.setLoggedIn(true);
+			user.setGmailAddress(googleUser.getEmail());
+			user.setName(googleUser.getNickname());
+			user.setLogoutUrl(userService.createLogoutURL(continuationURL));
 		} else {
-			loginInfo.setLoggedIn(false);
-			loginInfo.setLoginUrl(userService.createLoginURL(continuationURL));
+			user.setLoggedIn(false);
+			user.setLoginUrl(userService.createLoginURL(continuationURL));
 		}
-		return loginInfo;
+		return user;
 			
 //			User existingUser = UserMapper.userMapper().findByGMail(googleUser.getEmail());
 //			if (existingUser != null) {
@@ -59,6 +55,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 //		
 //		return user;
 	}
+
+
 }
 
 
