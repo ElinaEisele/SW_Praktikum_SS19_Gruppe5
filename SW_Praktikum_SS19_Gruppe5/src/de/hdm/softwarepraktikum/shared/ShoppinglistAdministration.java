@@ -31,8 +31,6 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 
 @RemoteServiceRelativePath("administration")
 public interface ShoppinglistAdministration extends RemoteService {
-	String greetServer(String name) throws IllegalArgumentException;
-	
 		
 	/**
 	 * Alle Gruppen werden ausgegeben.
@@ -103,6 +101,9 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void save(User user) throws IllegalArgumentException;
+	
+// statt User
+	public void save (LoginInfo loginInfo) throws IllegalArgumentException;
 	
 	/**
 	 * Speichern eines Group-Objekts in der Datenbank
@@ -395,24 +396,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException;
 	
-
-	
-	/**
-	 * Setzen einer Menge fuer einen Eintrag
-	 * @param amount ist die Menge
-	 * @param listitem ist der Eintrag, fuer welchen die Menge gesetzt wird
-	 * @throws IllegalArgumentException
-	 */
-	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException;
-	
-	/**
-	 * Setzen einer Mengeneinheit fuer ein Listitem-Objekt
-	 * @param unit ist die Mengeneinheit, welche einem Listitem-Objekt hinzugefuegt wird
-	 * @param listitem ist der Eintrag, welchem eine Menge hinzugefuegt wird
-	 * @throws IllegalArgumentException
-	 */
-	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException;
-	
 	/**
 	 * Ausgeben der Mengeneinheit eines Eintrags
 	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird
@@ -449,4 +432,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException;
+	
+	/**
+	 * Methode, welche den Namen des zugeordneten Produktes zurückgibt.
+	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
+	 * @return String Name des Produktes
+	 * @throws IllegalArgumentException
+	 */
+	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException;
 }

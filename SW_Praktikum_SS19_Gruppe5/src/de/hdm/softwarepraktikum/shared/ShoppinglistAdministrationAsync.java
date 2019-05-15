@@ -20,8 +20,6 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 public interface ShoppinglistAdministrationAsync {
 	
-	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
-	
 	void init(AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void getAllGroups(AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
@@ -51,6 +49,9 @@ public interface ShoppinglistAdministrationAsync {
 	void createRetailer(String name, AsyncCallback<Retailer> callback) throws IllegalArgumentException; 
 	
 	void save(User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+// statt User
+	void save(LoginInfo loginInfo, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void save(Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
@@ -114,13 +115,11 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void removeUserFromGroup(User user, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void setAmount(float amount, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
-	void setUnit(Unit unit, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
 	void getUnitOf(Listitem listitem, AsyncCallback<Unit> callback) throws IllegalArgumentException;
 	
 	void getAmountOf(Listitem listitem, AsyncCallback<Float> callback) throws IllegalArgumentException;
 	
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
+
+	void getProductnameOf(Listitem listitem, AsyncCallback<String> callback) throws IllegalArgumentException;
 }
