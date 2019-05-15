@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.LoginService;
@@ -53,8 +54,9 @@ public class Header extends HorizontalPanel{
 //		logout = new Anchor("Logout");
 //		logout.setHref(user.getLogoutUrl());
 //		logout.addClickHandler(new LogoutClickHandler());
-//		logout.setStyleName("logout-Button");
+		logout.setStyleName("logout-Button");
 		
+//		RootPanel.get("Editor").add(editor);
 		this.add(editor);
 		this.add(reportGenerator);
 		this.add(logo);
@@ -66,7 +68,7 @@ public class Header extends HorizontalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			user.setLogoutUrl(user.getLogoutUrl());
+//			user.setLogoutUrl(user.getLogoutUrl()); // braucht man nicht
 			Window.open(user.getLogoutUrl(), "_self", "");
 
 		}

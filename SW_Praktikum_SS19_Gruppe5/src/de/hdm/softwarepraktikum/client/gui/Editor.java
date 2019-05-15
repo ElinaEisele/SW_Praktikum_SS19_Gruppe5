@@ -28,7 +28,6 @@ public class Editor {
 		CellTree tree = new CellTree(model, null);
 		
 		header = new Header();
-		
 		shoppinglistShowForm = new ShoppinglistShowForm();
 		trailer= new Trailer();
 		
@@ -39,8 +38,8 @@ public class Editor {
 		RootPanel.get("aside").setVisible(true);
 		
 		RootPanel.get("trailer").add(trailer);
-RootPanel.get("aside").add(tree);
-RootPanel.get("main").add(shoppinglistShowForm);
+		RootPanel.get("aside").add(tree);
+		RootPanel.get("main").add(shoppinglistShowForm);
 		RootPanel.get("header").add(header);
 
 	
