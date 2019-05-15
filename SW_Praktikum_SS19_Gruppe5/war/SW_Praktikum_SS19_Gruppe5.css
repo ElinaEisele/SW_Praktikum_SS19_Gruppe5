@@ -1,5 +1,5 @@
 /* SW_Praktikum_SS19_Gruppe5.html: Navigationbar (header) */
-ul#header {
+div#header {
 	list-style: none;
 	margin: 0;
 	background: deepskyblue;
@@ -12,28 +12,28 @@ ul#header {
 	justify-content: flex-end;
 }
 
-ul#header div#Report {
+div#header div#Report {
 	text-decoration: none;
 	display: block;
 	padding: 1em;
 	color: white;
 }
 
-ul#header div#Editor {
+div#header div#Editor {
 	text-decoration: none;
 	display: block;
 	padding: 1em;
 	color: white;
 }
 
-ul#header div#Platzhalter {
+div#header div#Platzhalter {
 	text-decoration: none;
 	display: block;
 	padding: 1em;
 	color: white;
 }
 
-ul#header div#Logout {
+div#header div#Logout {
 	text-decoration: none;
 	display: block;
 	padding: 1em;
@@ -53,36 +53,36 @@ ul#navigation div#Logout:hover {
   background: darken(deepskyblue, 2%);
 } */
 @media all and (max-width: 800px) {
-	ul#header {
+	div#header {
 		justify-content: space-around;
 	}
 }
 
 @media all and (max-width: 600px) {
-	ul#header {
+	div#header {
 		-webkit-flex-flow: column wrap;
 		flex-flow: column wrap;
 		padding: 0;
 	}
-	ul#header div#Report {
+	div#header div#Report {
 		text-align: center;
 		padding: 10px;
 		border-top: 1px solid rgba(255, 255, 255, 0.3);
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	}
-	ul#header div#Editor {
+	div#header div#Editor {
 		text-align: center;
 		padding: 10px;
 		border-top: 1px solid rgba(255, 255, 255, 0.3);
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	}
-	ul#header div#Platzhalter {
+	div#header div#Platzhalter {
 		text-align: center;
 		padding: 10px;
 		border-top: 1px solid rgba(255, 255, 255, 0.3);
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	}
-	ul#header div#Logout {
+	div#header div#Logout {
 		text-align: center;
 		padding: 10px;
 		border-top: 1px solid rgba(255, 255, 255, 0.3);
