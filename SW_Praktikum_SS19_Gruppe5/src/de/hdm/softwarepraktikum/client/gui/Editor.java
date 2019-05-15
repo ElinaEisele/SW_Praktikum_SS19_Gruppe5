@@ -1,8 +1,10 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.TreeViewModel;
 
 /**
  * Diese Klasse stellt den Startpunkt des Editor-Clients dar. Alle dazu
@@ -15,8 +17,6 @@ public class Editor {
 	
 	private Header header = null;
 	
-	// wird noch zu CellTable, aktuell nur Platzhalter
-	private HorizontalPanel navigator = null;
 	
 	private ShoppinglistShowForm shoppinglistShowForm = null;
 	
@@ -24,8 +24,10 @@ public class Editor {
 	
 	public void loadForms() {
 		
+		TreeViewModel model = new NavigatorPanel();
+		CellTree tree = new CellTree(model, null);
+		
 		header = new Header();
-		navigator = new HorizontalPanel();
 		shoppinglistShowForm = new ShoppinglistShowForm();
 		trailer= new Trailer();
 		
@@ -36,7 +38,7 @@ public class Editor {
 		RootPanel.get("aside").setVisible(true);
 		
 		RootPanel.get("trailer").add(trailer);
-		RootPanel.get("aside").add(navigator);
+		RootPanel.get("aside").add(tree);
 		RootPanel.get("main").add(shoppinglistShowForm);
 		RootPanel.get("header").add(header);
 
