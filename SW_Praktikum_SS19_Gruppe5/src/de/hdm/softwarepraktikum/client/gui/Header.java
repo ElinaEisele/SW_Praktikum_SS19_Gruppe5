@@ -52,7 +52,6 @@ public class Header extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			user.setLogoutUrl(user.getLogoutUrl()); // braucht man nicht
 			Window.open(user.getLogoutUrl(), "_self", "");
 
 		}
