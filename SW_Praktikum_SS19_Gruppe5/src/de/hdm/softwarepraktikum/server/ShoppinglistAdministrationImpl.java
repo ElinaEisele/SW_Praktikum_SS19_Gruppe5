@@ -97,7 +97,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden fï¿½r Group-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Group-Objekte
  * 
  * **********************************************************************************
  **/
@@ -150,6 +150,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//geloescht.
 		if (shoppinglists != null) {
 			for (Shoppinglist s : shoppinglists) {
+				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(s);
 				this.delete(s);
 			}
 		}
@@ -300,7 +301,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden fï¿½r Listitem-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Listitem-Objekte
  * 
  * **********************************************************************************
  **/
@@ -392,9 +393,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
 		this.listitemMapper.delete(listitem);
-		//Beim Lï¿½schen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelï¿½scht.
+		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelscht.
 		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
-		
 	}
 	
 	/**
@@ -420,8 +420,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
-
-	
+	/**
+	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
+	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
 		return this.listitemMapper.setStandardListitemIn(group, listitem);
@@ -487,6 +491,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.listitemMapper.getAmountOf(listitem);
 	}
 
+	
+	/**
+	 * Methode, welche den Namen des zugeordneten Produktes zurückgibt.
+	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
+	 * @return String Name des Produktes
+	 * @throws IllegalArgumentException
+	 */
+	public String getProductnameOf(Listitem listitem)throws IllegalArgumentException {
+		return this.listitemMapper.getProductnameOf(Listitem listitem);
+	}
 	
 /**
  * **********************************************************************************
@@ -927,186 +941,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 	}
-
-
-	@Override
-	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Group getGroupById(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Listitem> getStandardListitemsOf(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public void addUserToGroup(User user, Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	
-
-	public void save(LoginInfo loginInfo) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Group getGroupById(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public ArrayList<Listitem> getStandardListitemsOf(Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public void addUserToGroup(User user, Group group) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 	
 }
