@@ -18,13 +18,13 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
-import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
+import de.hdm.softwarepraktikum.client.gui.GroupShoppinglistTreeViewModel;
 import de.hdm.softwarepraktikum.client.gui.RegistrationForm;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;
 import de.hdm.softwarepraktikum.client.gui.Trailer;
 import de.hdm.softwarepraktikum.client.gui.Editor;
-import de.hdm.softwarepraktikum.client.gui.GroupShoppinglistTreeViewModel;
+import de.hdm.softwarepraktikum.client.gui.TestTreeViewModel;
 import de.hdm.softwarepraktikum.client.gui.GroupShowForm;
 import de.hdm.softwarepraktikum.client.gui.Header;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable;
@@ -41,18 +41,18 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 
 	private Header header = null;
-	private NavigatorPanel shoppinglistNavigator = null;
+	private GroupShoppinglistTreeViewModel shoppinglistNavigator = null;
 	
 	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private GroupShowForm groupShowForm = null;
 	
 	private Trailer trailer = null;
-private NavigatorPanel np;
+private GroupShoppinglistTreeViewModel np;
 	
 
 	@Override
 	public void onModuleLoad() {
-		np = new NavigatorPanel();
+		np = new GroupShoppinglistTreeViewModel();
 		// Create a model for the tree.
 				//TreeViewModel model = new NavigatorPanel();
 

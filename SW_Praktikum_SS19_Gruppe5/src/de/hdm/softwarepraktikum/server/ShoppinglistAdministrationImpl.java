@@ -14,7 +14,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl s�mtliche
  * Applikationslogik vorhanden.
  * 
- * @author TimBeutelspacher, FelixRapp, CarlaHofmann
+ * @author TimBeutelspacher, FelixRapp, CarlaHofmann, ElinaEisele
  * 
  */
 
@@ -1106,6 +1106,21 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException {
+
+		ArrayList<Group> groups = this.getGroupsOf(u);
+
+		if (groups != null && g != null) {
+
+			if (!g.equals(groups)) {
+				return true;
+			}
+
+			return false;
+		}
+		return false;
+}
 
 
 

@@ -3,6 +3,7 @@ package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -432,4 +433,8 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException;
+
+	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException;
+
+
 }
