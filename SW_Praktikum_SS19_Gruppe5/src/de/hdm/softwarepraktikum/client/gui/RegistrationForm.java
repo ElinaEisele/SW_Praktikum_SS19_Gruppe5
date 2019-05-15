@@ -14,9 +14,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.shared.LoginInfo;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
-import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
 
 /**
  * Diese Klasse stellt ein Formular zur Registrierung des Nutzers dar.
@@ -26,12 +26,13 @@ import de.hdm.softwarepraktikum.shared.dummydata.UserDD;
  */
 public class RegistrationForm extends VerticalPanel{
 	
-	private User user;
+//	private User user;
+	private LoginInfo loginInfo; // statt User
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
-	private HorizontalPanel registrationFormHeader = new HorizontalPanel();
-	private HorizontalPanel buttons = new HorizontalPanel();
+	private HorizontalPanel registrationFormHeaderPanel = new HorizontalPanel();
+	private HorizontalPanel buttonsPanel = new HorizontalPanel();
 	
 	private Label welcomeLabel = new Label("Herzlich Willkommen zum Einkaufserlebnis mit Maul Tasche!");
 	private Label registrationInfoLabel = new Label("Bitte registrieren Sie sich hier:");
@@ -47,45 +48,55 @@ public class RegistrationForm extends VerticalPanel{
 	private Button registerButton = new Button("Registrieren");
 	private Button cancelButton = new Button("Abbrechen");
 	
-	private Anchor startFormUrl = new Anchor();
+	private Anchor destinationUrl = new Anchor();
 	
-	public RegistrationForm(Anchor startFormUrl, User u) {
-		this.startFormUrl = startFormUrl;
-		this.user = u;
+
+// statt LoginInfo eigentlich User	
+	public RegistrationForm(Anchor destinationUrl, LoginInfo loginInfo) {
+		this.destinationUrl = destinationUrl;
+//		this.user = u;
+		this.loginInfo = loginInfo;
 		
-		registerButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				String userName= lastNameTextBox.getText() +" "+ firstNameTextBox.getText();
-				u.setName(userName);
-				shoppinglistAdministration.save(u, new SaveUserCallback());
-			}
-			
-		});
+		registerButton.addClickHandler(new RegistrationClickHandler());
+		cancelButton.addClickHandler(new CancelClickHandler());
+
+		buttonsPanel.add(registerButton);
+		buttonsPanel.add(cancelButton);
+		cancelButton.addClickHandler(new CancelClickHandler());
 		
-		cancelButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				RootPanel.get("Container").clear();
-				Window.open(u.getLogoutUrl(), "_self", ""); 
-			}
-		});
+	}
+	
+	private class RegistrationClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			String userName = lastNameTextBox.getText()+" "+firstNameTextBox.getText();
+			loginInfo.setNickname(userName);
+//			shoppinglistAdministration.save(user, new SaveUserCallback());
+		}
 		
-		buttons.add(registerButton);
-		buttons.add(cancelButton);
+	}
+	
+	private class CancelClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel.get("main").clear();
+			Window.open(loginInfo.getLogoutUrl(), "_self", "");
+		}
 		
 	}
 	
 	public void onLoad() {
 		
 		this.setWidth("100%");
-		registrationFormHeader.setHeight("8vh");
-		registrationFormHeader.setWidth("100%");
+		registrationFormHeaderPanel.setHeight("8vh");
+		registrationFormHeaderPanel.setWidth("100%");
 		cancelButton.setPixelSize(130, 40);
 		registerButton.setPixelSize(130, 40);
 		
-		registrationFormHeader.add(welcomeLabel);
-		registrationFormHeader.setCellVerticalAlignment(welcomeLabel, ALIGN_BOTTOM);
+		registrationFormHeaderPanel.add(welcomeLabel);
+		registrationFormHeaderPanel.setCellVerticalAlignment(welcomeLabel, ALIGN_BOTTOM);
 		
 //		buttons.setSpacing(20);
 		
@@ -102,10 +113,10 @@ public class RegistrationForm extends VerticalPanel{
 		registrationGrid.setWidget(1, 0, lastNameLabel);
 		registrationGrid.setWidget(1, 1, lastNameTextBox);
 		
-		this.add(registrationFormHeader);
+		this.add(registrationFormHeaderPanel);
 		this.add(welcomeLabel);
 		this.add(registrationGrid);
-		this.add(buttons);
+		this.add(buttonsPanel);
 		
 	}
 	
@@ -130,7 +141,6 @@ public class RegistrationForm extends VerticalPanel{
 			this.text = text;
 		}
 		
-		
 	}
 	
 	private class SaveUserCallback implements AsyncCallback<Void>{
@@ -142,9 +152,10 @@ public class RegistrationForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Void u) {
-		Window.open(startFormUrl.getHref(), "_self", "");
+		Window.open(destinationUrl.getHref(), "_self", "");
 
-	}			
-}
+		}			
+	}
+
 
 }

@@ -1,7 +1,8 @@
 package de.hdm.softwarepraktikum.client.gui;
 
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.view.client.TreeViewModel;
 
 /**
  * Diese Klasse stellt den Startpunkt des Editor-Clients dar. Alle dazu
@@ -11,31 +12,34 @@ import com.google.gwt.user.client.ui.RootPanel;
  *
  */
 public class Editor {
-	
+
 	private Header header = null;
-	
-	// wird noch zu CellTable, aktuell nur Platzhalter
-	private HorizontalPanel navigator = null;
-	
+
+	private ShoppinglistShowForm shoppinglistShowForm = null;
+
 	private Trailer trailer = null;
-	
+
 	public void loadForms() {
-		
+
+		TreeViewModel model = new NavigatorPanel();
+		CellTree tree = new CellTree(model, null);
+
 		header = new Header();
-		navigator = new HorizontalPanel();
-		trailer= new Trailer();
-		
-		RootPanel.get("Details").clear();
-		RootPanel.get("Navigator").clear();
-		
-		RootPanel.get("Details").setVisible(true);
-		RootPanel.get("Navigator").setVisible(true);
-		
-		RootPanel.get("Trailer").add(trailer);
-		RootPanel.get("Navigator").add(navigator);
-		RootPanel.get("Header").add(header);
-	
+		shoppinglistShowForm = new ShoppinglistShowForm();
+		trailer = new Trailer();
+
+		RootPanel.get("main").clear();
+		RootPanel.get("aside").clear();
+
+		RootPanel.get("main").setVisible(true);
+		RootPanel.get("aside").setVisible(true);
+
+
+		RootPanel.get("trailer").add(trailer);
+		RootPanel.get("aside").add(tree);
+		RootPanel.get("main").add(shoppinglistShowForm);
+		RootPanel.get("header").add(header);
+
 	}
-	
 
 }
