@@ -12,46 +12,24 @@ div#header {
 	justify-content: flex-end;
 }
 
-div#header div#Report {
-	text-decoration: none;
-	display: block;
-	padding: 1em;
+.HeaderButton {
 	color: white;
+	border: 1px solid white;
+	margin: 10px 10px;
+	padding: 5px;
 }
 
-div#header div#Editor {
-	text-decoration: none;
-	display: block;
-	padding: 1em;
+.HeaderPlatzhalterButton {
+	padding: 5px;
+	margin: 10px 10px;
 	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 0px solid white;
+	border-radius: 5px;
 }
 
-div#header div#Platzhalter {
-	text-decoration: none;
-	display: block;
-	padding: 1em;
-	color: white;
-}
-
-div#header div#Logout {
-	text-decoration: none;
-	display: block;
-	padding: 1em;
-	color: white;
-}
-
-/* ul#navigation div#Report:hover {
-  background: darken(deepskyblue, 2%);
-}
-ul#navigation div#Editor:hover {
-  background: darken(deepskyblue, 2%);
-}
-ul#navigation div#Platzhalter:hover {
-  background: darken(deepskyblue, 2%);
-}
-ul#navigation div#Logout:hover {
-  background: darken(deepskyblue, 2%);
-} */
 @media all and (max-width: 800px) {
 	div#header {
 		justify-content: space-around;
@@ -60,29 +38,15 @@ ul#navigation div#Logout:hover {
 
 @media all and (max-width: 600px) {
 	div#header {
-		-webkit-flex-flow: column wrap;
+		justify-content: space-around;
+		webkit-flex-flow: column wrap;
 		flex-flow: column wrap;
 		padding: 0;
 	}
-	div#header div#Report {
-		text-align: center;
-		padding: 10px;
-		border-top: 1px solid rgba(255, 255, 255, 0.3);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	}
-	div#header div#Editor {
-		text-align: center;
-		padding: 10px;
-		border-top: 1px solid rgba(255, 255, 255, 0.3);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	}
-	div#header div#Platzhalter {
-		text-align: center;
-		padding: 10px;
-		border-top: 1px solid rgba(255, 255, 255, 0.3);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	}
-	div#header div#Logout {
+	.HeaderButton {
+		-webkit-flex-flow: column wrap;
+		flex-flow: column wrap;
+		padding: 0;
 		text-align: center;
 		padding: 10px;
 		border-top: 1px solid rgba(255, 255, 255, 0.3);
@@ -91,14 +55,14 @@ ul#navigation div#Logout:hover {
 }
 
 /* SW_Praktikum_SS19_Gruppe5.html: Elemente in wrapper (footer, main, aside) */
-.wrapper {
+div#wrapper {
 	display: flex;
 	flex-flow: row wrap;
 	font-weight: bold;
 	text-align: center;
 }
- 
-.wrapper>* {
+
+div#wrapper>* {
 	padding: 10px;
 	flex: 1 100%;
 }
@@ -140,11 +104,11 @@ body {
 	padding: 2em;
 }
 
-div#container{
+div#container {
 	
 }
 
-div#trailer{
+div#trailer {
 	padding: 10px;
 }
 
