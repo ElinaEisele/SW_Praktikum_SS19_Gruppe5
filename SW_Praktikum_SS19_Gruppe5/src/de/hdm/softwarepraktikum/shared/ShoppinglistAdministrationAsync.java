@@ -120,4 +120,6 @@ public interface ShoppinglistAdministrationAsync {
 	void getAmountOf(Listitem listitem, AsyncCallback<Float> callback) throws IllegalArgumentException;
 	
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
+
+	void getProductnameOf(Listitem listitem, AsyncCallback<String> callback) throws IllegalArgumentException;
 }
