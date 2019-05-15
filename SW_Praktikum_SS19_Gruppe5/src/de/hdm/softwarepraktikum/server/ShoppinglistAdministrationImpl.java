@@ -480,7 +480,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 	}
 
-// AB HIER FELIX 
 	/**
 	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
 	 * @param retailerId ist die ID des gesuchten Einzelh�ndlers
