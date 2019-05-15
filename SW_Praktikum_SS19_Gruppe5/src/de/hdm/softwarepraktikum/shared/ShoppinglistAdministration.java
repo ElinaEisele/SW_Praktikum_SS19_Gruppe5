@@ -434,7 +434,16 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException;
 
+
 	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException;
 
+	
+	/**
+	 * Methode, welche den Namen des zugeordneten Produktes zur�ckgibt.
+	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
+	 * @return String Name des Produktes
+	 * @throws IllegalArgumentException
+	 */
+	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException;
 
 }

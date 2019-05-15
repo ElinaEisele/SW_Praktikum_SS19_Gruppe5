@@ -47,22 +47,24 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	private GroupShowForm groupShowForm = null;
 	
 	private Trailer trailer = null;
-private GroupShoppinglistTreeViewModel np;
+	private GroupShoppinglistTreeViewModel np;
+
 	
 
 	@Override
 	public void onModuleLoad() {
 		np = new GroupShoppinglistTreeViewModel();
+
 		// Create a model for the tree.
-				//TreeViewModel model = new NavigatorPanel();
+				GroupShoppinglistTreeViewModel model = new GroupShoppinglistTreeViewModel();
 
 				/*
 				 * Create the tree using the model. We use <code>null</code> as the default
 				 * value of the root node. The default value will be passed to
 				 * CustomTreeModel#getNodeInfo();
 				 */
-				//CellTree tree = new CellTree(model, null);
-				//tree.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+				CellTree tree = new CellTree(model, null);
+				tree.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 				// Open the first playlist by default.
 				//TreeNode rootNode = tree.getRootTreeNode();
@@ -70,30 +72,17 @@ private GroupShoppinglistTreeViewModel np;
 //				firstGruppe.setChildOpen(0, false);
 
 				// Add the tree to the root layout panel.
-				//RootPanel.get("aside").add();
+				
 		
 		
 		
 		header = new Header();
-
 		shoppinglistShowForm = new ShoppinglistShowForm();
 		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
 
-		
-		Button b1 = new Button("Editor");
-		Button b2 = new Button("Report");
-		Button b3 = new Button("Abmelden");
-		
-		b1.setStyleName("HeaderButton");
-		b2.setStyleName("HeaderButton");
-		b3.setStyleName("HeaderButton");
-
-		RootPanel.get("Editor").add(b1);
-		RootPanel.get("Report").add(b2);
-		RootPanel.get("Logout").add(b3);
-
-		
+		RootPanel.get("header").add(header);	
+		RootPanel.get("aside").add(tree);
 		RootPanel.get("main").add(shoppinglistShowForm);
 		RootPanel.get("trailer").add(trailer);
 

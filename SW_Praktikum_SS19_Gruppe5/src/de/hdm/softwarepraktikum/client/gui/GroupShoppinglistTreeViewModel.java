@@ -105,9 +105,10 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 
 			// Use the shared selection model.
 			return new DefaultNodeInfo<String>(dataProvider, new TextCell(), selectionModel, null);
+			
 		}
-
-		return null;
+			
+			return null;
 	}
 
 	/**

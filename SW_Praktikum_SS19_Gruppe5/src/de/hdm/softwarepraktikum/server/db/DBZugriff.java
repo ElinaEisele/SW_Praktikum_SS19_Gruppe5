@@ -12,7 +12,7 @@ public class DBZugriff {
 		ResultSet rs;
 		
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?user=root&password=");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?user=root&password=&serverTimezone=UTC");
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("SELECT * from users");
 			

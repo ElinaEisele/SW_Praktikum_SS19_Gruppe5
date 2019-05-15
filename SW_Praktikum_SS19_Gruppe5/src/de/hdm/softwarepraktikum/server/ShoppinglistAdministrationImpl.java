@@ -97,7 +97,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden f�r Group-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Group-Objekte
  * 
  * **********************************************************************************
  **/
@@ -150,6 +150,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//geloescht.
 		if (shoppinglists != null) {
 			for (Shoppinglist s : shoppinglists) {
+				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(s);
 				this.delete(s);
 			}
 		}
@@ -300,7 +301,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden f�r Listitem-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Listitem-Objekte
  * 
  * **********************************************************************************
  **/
@@ -392,9 +393,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
 		this.listitemMapper.delete(listitem);
-		//Beim L�schen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gel�scht.
+		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelscht.
 		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
-		
 	}
 	
 	/**
@@ -420,8 +420,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
-
-	
+	/**
+	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
+	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
 		return this.listitemMapper.setStandardListitemIn(group, listitem);
@@ -487,6 +491,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.listitemMapper.getAmountOf(listitem);
 	}
 
+	
+	/**
+	 * Methode, welche den Namen des zugeordneten Produktes zur�ckgibt.
+	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
+	 * @return String Name des Produktes
+	 * @throws IllegalArgumentException
+	 */
+	public String getProductnameOf(Listitem listitem)throws IllegalArgumentException {
+		return this.listitemMapper.getProductnameOf(Listitem listitem);
+	}
 	
 /**
  * **********************************************************************************
@@ -584,7 +598,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 	}
 
-// AB HIER FELIX 
 	/**
 	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
 	 * @param retailerId ist die ID des gesuchten Einzelh�ndlers
@@ -930,6 +943,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 
 
+
 	@Override
 	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -1120,9 +1134,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 			return false;
 		}
 		return false;
-}
-
-
+	}
 
 	
 }
