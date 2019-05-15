@@ -47,30 +47,30 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	private GroupShowForm groupShowForm = null;
 	
 	private Trailer trailer = null;
-
+private NavigatorPanel np;
 	
 
 	@Override
 	public void onModuleLoad() {
-
+		np = new NavigatorPanel();
 		// Create a model for the tree.
-				TreeViewModel model = new NavigatorPanel();
+				//TreeViewModel model = new NavigatorPanel();
 
 				/*
 				 * Create the tree using the model. We use <code>null</code> as the default
 				 * value of the root node. The default value will be passed to
 				 * CustomTreeModel#getNodeInfo();
 				 */
-				CellTree tree = new CellTree(model, null);
-				tree.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+				//CellTree tree = new CellTree(model, null);
+				//tree.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 				// Open the first playlist by default.
-				TreeNode rootNode = tree.getRootTreeNode();
+				//TreeNode rootNode = tree.getRootTreeNode();
 //				TreeNode firstGruppe = rootNode.setChildOpen(0, true);
 //				firstGruppe.setChildOpen(0, false);
 
 				// Add the tree to the root layout panel.
-				RootPanel.get("aside").add(tree);
+				//RootPanel.get("aside").add();
 		
 		
 		
