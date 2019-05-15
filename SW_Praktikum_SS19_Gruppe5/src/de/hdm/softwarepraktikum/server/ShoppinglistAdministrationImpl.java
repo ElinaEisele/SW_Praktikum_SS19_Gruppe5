@@ -14,7 +14,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl sï¿½mtliche
  * Applikationslogik vorhanden.
  * 
- * @author TimBeutelspacher, FelixRapp, CarlaHofmann
+ * @author TimBeutelspacher, FelixRapp, CarlaHofmann, ElinaEisele
  * 
  */
 
@@ -493,7 +493,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 	
 	/**
-	 * Methode, welche den Namen des zugeordneten Produktes zurückgibt.
+	 * Methode, welche den Namen des zugeordneten Produktes zurï¿½ckgibt.
 	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
 	 * @return String Name des Produktes
 	 * @throws IllegalArgumentException
@@ -940,6 +940,200 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 			return null;
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
+
+
+
+	@Override
+	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Group getGroupById(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Listitem> getStandardListitemsOf(Group group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void addUserToGroup(User user, Group group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
+
+	public void save(LoginInfo loginInfo) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setAmount(float amount, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void setUnit(Unit unit, Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Group getGroupById(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Listitem> getStandardListitemsOf(Group group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void addUserToGroup(User user, Group group) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException {
+
+		ArrayList<Group> groups = this.getGroupsOf(u);
+
+		if (groups != null && g != null) {
+
+			if (!g.equals(groups)) {
+				return true;
+			}
+
+			return false;
+		}
+		return false;
 	}
 
 	
