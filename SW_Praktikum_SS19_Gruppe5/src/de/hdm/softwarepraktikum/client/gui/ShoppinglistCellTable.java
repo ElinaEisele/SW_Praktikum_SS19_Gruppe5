@@ -37,21 +37,18 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 
 public class ShoppinglistCellTable extends VerticalPanel {
 
-	ArrayList<Group> group;
-	ArrayList<Product> product;
+	ArrayList<Product> products;
 	ArrayList<Retailer> retailer;
-	ArrayList<Shoppinglist> shoppinglist;
-	ArrayList<User> user;
-	ArrayList<Listitem> listitem;
-	ArrayList<ShoppinglistObject> shoppinglistobject;
+	ArrayList<Listitem> listitems;
 
 	ShoppinglistContent shoppinglistContent;
 	ShoppinglistSearchBar shoppinglistSearchBar;
 	ShoppinglistCell shoppinglistCell;
 	VerticalPanel p1;
-	CellTable<ShoppinglistObject> table;
-	ListDataProvider<ShoppinglistObject> provider;
-	
+
+	CellTable<Listitem> table;
+	ListDataProvider<Listitem> provider;
+
 	public void onLoad() {
 		super.onLoad();
 		p1 = new VerticalPanel();
@@ -59,72 +56,46 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		shoppinglistCell = new ShoppinglistCell();
 		shoppinglistContent = new ShoppinglistContent();
 
-		group = new ArrayList<>();
-		listitem = new ArrayList<>();
-		product = new ArrayList<>();
+		listitems = new ArrayList<>();
+		products = new ArrayList<>();
 		retailer = new ArrayList<>();
-		shoppinglist = new ArrayList<>();
-		user = new ArrayList<>();
-		shoppinglistobject = new ArrayList<>();
 
-		Group group1 = new Group("Tims Geburtstag");
-		Group group2 = new Group("Tims Familie");
-		group.add(group1);
-		group.add(group2);
-
+		/**
+		 * Testdata
+		 * 
+		 */
 		Product product1 = new Product("Tomate");
 		Product product2 = new Product("Apfel");
-		product.add(product1);
-		product.add(product2);
+		products.add(product1);
+		products.add(product2);
 
 		Retailer retailer1 = new Retailer("Aldi");
 		Retailer retailer2 = new Retailer("Kaufland");
 		retailer.add(retailer1);
 		retailer.add(retailer2);
 
-		Shoppinglist shoppinglist1 = new Shoppinglist("Party");
-		Shoppinglist shoppinglist2 = new Shoppinglist("Familieneinkauf");
-		shoppinglist.add(shoppinglist1);
-		shoppinglist.add(shoppinglist2);
+		Listitem listitem1 = new Listitem(2.0f, Unit.St, retailer1, product1);
+		Listitem listitem2 = new Listitem(0.5f, Unit.Kg, retailer2, product1);
+		Listitem listitem3 = new Listitem(5.0f, Unit.St, retailer2, product2);
+		Listitem listitem4 = new Listitem(1.0f, Unit.L, retailer1, product2);
+		listitems.add(listitem1);
+		listitems.add(listitem2);
+		listitems.add(listitem3);
+		listitems.add(listitem4);
 
-		User user1 = new User("Tim", "Tim@gmail.com");
-		User user2 = new User("Tims Papa", "TimsPapa@gmail.com");
-		User user3 = new User("Felix", "Felix@gmail.com");
-		User user4 = new User("Jonas", "Jonas@gmail.com");
-		user.add(user1);
-		user.add(user2);
-		user.add(user3);
-		user.add(user4);
+		table = new CellTable<Listitem>();
 
-		Listitem listitem1 = new Listitem(2.0f, Unit.St);
-		Listitem listitem2 = new Listitem(0.5f, Unit.Kg);
-		Listitem listitem3 = new Listitem(5.0f, Unit.St);
-		Listitem listitem4 = new Listitem(1.0f, Unit.L);
-		listitem.add(listitem1);
-		listitem.add(listitem2);
-		listitem.add(listitem3);
-		listitem.add(listitem4);
-
-		ShoppinglistObject shoppinglistobject1 = new ShoppinglistObject(product1, listitem1, retailer1);
-		shoppinglistobject.add(shoppinglistobject1);
-
-		table = new CellTable<ShoppinglistObject>();
-
-		
 		table.setStyleName("shoppinglist-CellTable");
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-		provider = (ListDataProvider<ShoppinglistObject>)table.getKeyProvider();
-		
-		final MultiSelectionModel<ShoppinglistObject> selectionModel = new MultiSelectionModel<ShoppinglistObject>(
-				ShoppinglistObject.KEY_PROVIDER);
-		table.setSelectionModel(selectionModel,
-				DefaultSelectionEventManager.<ShoppinglistObject>createCheckboxManager());
+		provider = (ListDataProvider<Listitem>) table.getKeyProvider();
 
-		Column<ShoppinglistObject, Boolean> checkColumn = new Column<ShoppinglistObject, Boolean>(
-				new CheckboxCell(true, false)) {
+		final MultiSelectionModel<Listitem> selectionModel = new MultiSelectionModel<Listitem>(Listitem.KEY_PROVIDER);
+		table.setSelectionModel(selectionModel, DefaultSelectionEventManager.<Listitem>createCheckboxManager());
+
+		Column<Listitem, Boolean> checkColumn = new Column<Listitem, Boolean>(new CheckboxCell(true, false)) {
 
 			@Override
-			public Boolean getValue(ShoppinglistObject object) {
+			public Boolean getValue(Listitem object) {
 				return null;
 
 			}
@@ -133,62 +104,78 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		checkColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		checkColumn.setCellStyleNames("columncheck");
 		table.addColumn(checkColumn, "Check");
-
 		// table.setColumnWidth(checkColumn, 40, Unit.PX);
 
-		TextColumn<ShoppinglistObject> productNameColumn = new TextColumn<ShoppinglistObject>() {
-
-			public String getValue(ShoppinglistObject object) {
+		/**
+		 * Product Name Column
+		 * 
+		 */
+		TextColumn<Listitem> productNameColumn = new TextColumn<Listitem>() {
+			public String getValue(Listitem object) {
 				return object.getProduct().getName();
 			}
-
 		};
-
 		table.addColumn(productNameColumn, "Produkt");
 
+		/**
+		 * Amount Column
+		 * 
+		 */
 		NumberCell amountCell = new NumberCell();
-		Column<ShoppinglistObject, Number> listItemAmountColumn = new Column<ShoppinglistObject, Number>(amountCell) {
+		Column<Listitem, Number> listItemAmountColumn = new Column<Listitem, Number>(amountCell) {
 			@Override
-			public Number getValue(ShoppinglistObject object) {
-				return object.getListitem().getAmount();
+			public Number getValue(Listitem object) {
+				return object.getAmount();
 			}
 		};
 		table.addColumn(listItemAmountColumn, "Menge");
 
-		TextColumn<ShoppinglistObject> unitNameColumn = new TextColumn<ShoppinglistObject>() {
+		/**
+		 * Unit Name Column
+		 * 
+		 */
+		TextColumn<Listitem> unitNameColumn = new TextColumn<Listitem>() {
 			@Override
-			public String getValue(ShoppinglistObject object) {
-				return object.getListitem().getUnit().toString();
+			public String getValue(Listitem object) {
+				return object.getUnit().toString();
 			}
 		};
 		table.addColumn(unitNameColumn, "Einheit");
 
-		TextColumn<ShoppinglistObject> retailerNameColumn = new TextColumn<ShoppinglistObject>() {
+		/**
+		 * Retailer Name Column
+		 * 
+		 */
+		NumberCell retailerNameCell = new NumberCell();
+		Column<Listitem, Number> retailerNameColumn = new Column<Listitem, Number>(retailerNameCell) {
 			@Override
-			public String getValue(ShoppinglistObject object) {
-				return object.getRetailer().getName();
+			public Number getValue(Listitem object) {
+				return object.getRetailerID();
 			}
 		};
-		table.addColumn(retailerNameColumn, "Haendler");
+		table.addColumn(retailerNameColumn, "Haendler ID");
 
-		Column<ShoppinglistObject, String> imageColumn = new Column<ShoppinglistObject, String>(
-				new ClickableTextCell() {
-					public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
-						sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
-					}
+		/**
+		 * Clickable edit button containing an image
+		 * 
+		 */
+		Column<Listitem, String> imageColumn = new Column<Listitem, String>(new ClickableTextCell() {
+			public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
+				sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+			}
 
-				})
+		})
 
 		{
 			@Override
-			public String getValue(ShoppinglistObject object) {
+			public String getValue(Listitem object) {
 				return "edit.png";
 			}
 
-			public void onBrowserEvent(Context context, Element elem, ShoppinglistObject object, NativeEvent event) {
+			public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
 				super.onBrowserEvent(context, elem, object, event);
 				if ("click".equals(event.getType())) {
-					
+
 					p1.clear();
 					p1.add(shoppinglistCell);
 
@@ -200,10 +187,10 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(imageColumn, "");
 
 		// Set the total row count
-		table.setRowCount(shoppinglistobject.size(), true);
+		table.setRowCount(listitems.size(), true);
 		// Push the data into the widget.
-		table.setRowData(0, shoppinglistobject);
-		
+		table.setRowData(0, listitems);
+
 		p1.add(table);
 		this.add(p1);
 	}

@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.google.gwt.view.client.ProvidesKey;
 
 /**
  * Realisierung der Klasse Listitem, welche einen Eintrag in einer Shoppingliste darstellt.
@@ -11,11 +12,18 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class Listitem extends BusinessObject implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
+
+	public static final ProvidesKey<Listitem> KEY_PROVIDER = null;
 	
 	/**
 	 * Angabe zur Menge des zu einzukaufenden Produkts.
 	 */
 	private float amount;
+	
+	/**
+	 * Angabe des einzukaufenden Produkts.
+	 */
+	private Product product;
 	
 	/**
 	 * Einheit der Menge.
@@ -60,6 +68,30 @@ public class Listitem extends BusinessObject implements IsSerializable{
 		this.setAmount(amount);
 		this.setUnit(unit);
 		
+	}
+	
+	/**
+	 * Konstruktor zum Setzen des Namen, der Menge, der Einheit und des Einzelhändlers.
+	 */
+	public Listitem (float amount, Unit unit, Retailer retailer, Product product) {
+		super();
+		this.setAmount(amount);
+		this.setUnit(unit);		
+		this.setProduct(product);
+	}
+
+ 	/**
+	 * Ausgeben des zu einkaufenden Produkts.
+	 */
+	public Product getProduct() {
+		return product;
+	}
+
+ 	/**
+	 * Setzen des zu einkaufenden Produkts.
+	 */
+	private void setProduct(Product product) {
+		this.product = product;		
 	}
 	
 	/**
