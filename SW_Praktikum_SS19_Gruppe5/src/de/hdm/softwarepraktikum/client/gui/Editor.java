@@ -35,7 +35,7 @@ public class Editor {
 		RootPanel.get("main").setVisible(true);
 		RootPanel.get("aside").setVisible(true);
 		
-		RootPanel.get("footer").add(trailer);
+		RootPanel.get("trailer").add(trailer);
 		RootPanel.get("aside").add(navigator);
 		RootPanel.get("main").add(shoppinglistShowForm);
 		RootPanel.get("header").add(header);

@@ -50,7 +50,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		
 		@Override
 		public void onFailure(Throwable caught) {
-//			Window.alert(caught.toString());
+//			Window.alert(caught.toString()); // hat Server Error verursacht
 		}
 
 		@Override
