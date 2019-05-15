@@ -17,8 +17,8 @@ public class Editor {
 	
 	private Header header = null;
 	
-	// wird noch zu CellTable, aktuell nur Platzhalter
-	private HorizontalPanel navigator = null;
+	
+	private ShoppinglistShowForm shoppinglistShowForm = null;
 	
 	private Trailer trailer = null;
 	
@@ -28,7 +28,8 @@ public class Editor {
 		CellTree tree = new CellTree(model, null);
 		
 		header = new Header();
-		navigator = new HorizontalPanel();
+		
+		shoppinglistShowForm = new ShoppinglistShowForm();
 		trailer= new Trailer();
 		
 		RootPanel.get("main").clear();
@@ -37,8 +38,9 @@ public class Editor {
 		RootPanel.get("main").setVisible(true);
 		RootPanel.get("aside").setVisible(true);
 		
-		RootPanel.get("footer").add(trailer);
-		RootPanel.get("aside").add(tree);
+		RootPanel.get("trailer").add(trailer);
+RootPanel.get("aside").add(tree);
+RootPanel.get("main").add(shoppinglistShowForm);
 		RootPanel.get("header").add(header);
 
 	
