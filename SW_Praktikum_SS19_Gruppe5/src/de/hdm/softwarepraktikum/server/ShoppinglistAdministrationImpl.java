@@ -148,13 +148,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 		//Bevor eine Gruppe geloescht wird, werden alle Einkauslisten der Gruppe
 		//geloescht.
+		//In der Methode delete(Shoppinglist) werden dann die Listitems gelöscht.
 		if (shoppinglists != null) {
 			for (Shoppinglist s : shoppinglists) {
-				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(s);
 				this.delete(s);
 			}
 		}
-		
 		this.groupMapper.delete(group);
 	}
 	
