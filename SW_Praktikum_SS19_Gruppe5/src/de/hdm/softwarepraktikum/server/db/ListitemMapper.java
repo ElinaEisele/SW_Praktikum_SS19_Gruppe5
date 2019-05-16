@@ -63,7 +63,7 @@ public class ListitemMapper {
 				listitem.setId(rs.getInt("id"));
 				listitem.setCreationDate(rs.getDate("creationDate"));
 				listitem.setAmount(rs.getFloat("amount"));
-				//die IDs 
+				
 				
 				listitems.add(listitem);
 			}
@@ -97,13 +97,13 @@ public class ListitemMapper {
 
 			if (rs.next()) {
 
-				Listitem listitem = new Listitem();
-				listitem.setId(rs.getInt("id"));
-				listitem.setCreationDate(rs.getDate("creationDate"));
-				listitem.setAmount(rs.getFloat("amount"));
-				//die IDs 
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
 				
-				return listitem;
+				
+				return li;
 			}
 
 		} catch (SQLException e) {
@@ -201,7 +201,7 @@ public class ListitemMapper {
 	 * Methode, um alle Listitems einer Shoppingliste auszugeben.
 	 * 
 	 * @param shoppinglist
-	 * @return Listitemliste
+	 * @return ArrayList<Listitem>
 	 */
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) {
 
@@ -211,13 +211,16 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("...");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN listitems "
+					+ "ON shoppinglists.listitem_id=listitems.id "
+					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {
 
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("CreationDate"));
+				li.setAmount(rs.getFloat("amount"));
 				listitems.add(li);
 			}
 			
@@ -235,7 +238,7 @@ public class ListitemMapper {
 	 * Methode, um alle Listitems eines Retailers zu finden.
 	 * 
 	 * @param retailer
-	 * @return Listitemliste
+	 * @return ArrayList<Listitem>
 	 */
 	public ArrayList<Listitem> getListitemsOf(Retailer retailer) {
 
@@ -245,11 +248,18 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
+					+ "ON listitems.retailer_id = retailer.id"
+					+ "WHERE retailers.id = " + retailer.getId());
 
 			while (rs.next()) {
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
+				listitems.add(li);
 
-				//
+				
 			}
 			
 			return listitems;
@@ -277,11 +287,16 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN products "
+					+ "ON listitems.product_id = products.id "
+					+ "WHERE listitems.shoppinglist_id= " + shoppinglist.getId() + "and products.name= " + productname);
 
 			while (rs.next()) {
-
-				//
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
+				listitems.add(li);
 			}
 			
 			return listitems;
