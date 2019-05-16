@@ -3,6 +3,7 @@ package de.hdm.softwarepraktikum.server;
 import java.sql.*;
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.softwarepraktikum.server.db.*;
@@ -198,6 +199,25 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.groupMapper.findById(groupId);
 	}
 	
+	/**
+	 * Gibt einen zurück ob es in der Gruppe Änderungen gab
+	 * @param g Übergebene Liste mit allen Gruppen
+	 * @param u User, der den Gruppen zugeordnet ist
+	 * @return Boolean Wert, welcher true ist, falls es Änderungen gab
+	 */
+	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException {
+
+		ArrayList<Group> groups = this.getGroupsOf(u);
+
+		if (groups != null && g != null) {
+
+			if (!g.equals(groups)) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
 	
 /**
  * **********************************************************************************
@@ -382,6 +402,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public float getAmountOf(Listitem listitem) throws IllegalArgumentException {
 		return this.listitemMapper.getAmountOf(listitem);
 	}
+	
+	/**
+	 * Methode, welche den Namen des zugeordneten Produktes zurueckgibt.
+	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
+	 * @return String Name des Produktes
+	 * @throws IllegalArgumentException
+	 */
+	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException{
+		return this.listitemMapper.getProductnameOf(listitem);
+	}
 
 	
 /**
@@ -547,7 +577,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		sl.setGroupId(group.getId());
 		
 		//Standardeinträge hinzufuegen
-		sl.getListitems().addAll(getStandardListitemsOf(group));
+		sl.getListitems().addAll(this.getStandardListitemsOf(group));
 		
 		// Objekt in der Datenbank speichern.
 		return this.shoppinglistMapper.insert(sl);
