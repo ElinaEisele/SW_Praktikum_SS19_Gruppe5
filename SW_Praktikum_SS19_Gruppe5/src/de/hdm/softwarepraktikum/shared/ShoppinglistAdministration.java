@@ -3,7 +3,6 @@ package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -103,9 +102,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public void save(User user) throws IllegalArgumentException;
 	
-// statt User
-	public void save (LoginInfo loginInfo) throws IllegalArgumentException;
-	
 	/**
 	 * Speichern eines Group-Objekts in der Datenbank
 	 * @param group Group-Objekt, welches in der Datenbank gespeichert werden soll
@@ -177,14 +173,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException;
-	
-	/**
-	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
-	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList saemtlicher Gruppen eines Users
-	 * @throws IllegalArgumentException
-	 */
-	public ArrayList<Group> getGroupsOf(String username) throws IllegalArgumentException;
 	
 	/**
 	 * Rueckgabe eines bestimmten Group-Objekts

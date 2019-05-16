@@ -173,18 +173,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
-		return this.groupMapper.getGroupsOf(this.getUserById(userId));
-	}
-	
-	/**
-	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
-	 * @param username eines Nutzers Nutzer, dessen Gruppen angezeigt werden sollen
-	 * @return ArrayList saemtlicher Gruppen eines Users
-	 * @throws IllegalArgumentException
-	 */
-	@Override
-	public ArrayList<Group> getGroupsOf(String gMail) throws IllegalArgumentException {
-		return this.groupMapper.getGroupsOf(this.getUserByMail(gMail));
+		return this.getGroupsOf(this.getUserById(userId));
 	}
 	
 	/**
@@ -383,6 +372,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.listitemMapper.getAmountOf(listitem);
 	}
 
+	@Override
+	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 /**
  * **********************************************************************************
@@ -425,6 +419,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.productMapper.getProductOf(listitem);
 		
 	}
+	
 	
 	
 /**
@@ -770,6 +765,13 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 * DANN Code in dieser Methode:
 		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
 		 */
+	}
+
+
+	@Override
+	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

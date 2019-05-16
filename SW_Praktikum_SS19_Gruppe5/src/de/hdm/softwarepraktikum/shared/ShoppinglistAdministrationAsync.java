@@ -50,9 +50,6 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void save(User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-// statt User
-	void save(LoginInfo loginInfo, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
 	void save(Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void save(Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
@@ -72,8 +69,6 @@ public interface ShoppinglistAdministrationAsync {
 	void getGroupsOf(User user, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
 	
 	void getGroupsOf(int userId, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
-	
-	void getGroupsOf(String username, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
 	
 	void getUserByMail(String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
 	
@@ -119,11 +114,10 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getAmountOf(Listitem listitem, AsyncCallback<Float> callback) throws IllegalArgumentException;
 	
-
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 
 	void refreshData(ArrayList<Group> g, User u, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
-
 	void getProductnameOf(Listitem listitem, AsyncCallback<String> callback) throws IllegalArgumentException;
+
 }
