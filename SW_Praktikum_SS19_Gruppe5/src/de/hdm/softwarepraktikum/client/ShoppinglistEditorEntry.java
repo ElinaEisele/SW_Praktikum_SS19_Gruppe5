@@ -47,13 +47,13 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	private GroupShowForm groupShowForm = null;
 	
 	private Trailer trailer = null;
-	private GroupShoppinglistTreeViewModel np;
+	
 
 	
 
 	@Override
 	public void onModuleLoad() {
-		np = new GroupShoppinglistTreeViewModel();
+		
 
 		// Create a model for the tree.
 				GroupShoppinglistTreeViewModel model = new GroupShoppinglistTreeViewModel();
