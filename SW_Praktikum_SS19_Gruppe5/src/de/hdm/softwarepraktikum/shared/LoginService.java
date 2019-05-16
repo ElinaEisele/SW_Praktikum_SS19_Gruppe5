@@ -13,6 +13,6 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 @RemoteServiceRelativePath("login")
 public interface LoginService extends RemoteService{
-	 public LoginInfo login(String requestUri);
+	 public User login(String requestUri);
 
 }
