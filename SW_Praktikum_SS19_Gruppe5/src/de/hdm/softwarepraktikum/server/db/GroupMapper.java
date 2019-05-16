@@ -340,24 +340,14 @@ public class GroupMapper {
 	public void addUserToGroup(User user, Group group) {
 		
 		Connection con = DBConnection.connection();
-		membership m = new membership();
 		
 		try {
-			
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM usergroups");
 
-			if (rs.next()) {
-
-				membership.setId(rs.getInt("maxid") + 1);
-			}
-
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (id, user_id, usergroups_id) VALUES (?, ?, ?)",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroups_id) VALUES (?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			pstmt.setInt(1, membership.getId());
-			pstmt.setInt(2, user.getId());
-			pstmt.setInt(3, group.getId());
+			pstmt.setInt(1, user.getId());
+			pstmt.setInt(2, group.getId());
 			pstmt.executeUpdate();
 			
 

@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.softwarepraktikum.client.gui.Editor;
 import de.hdm.softwarepraktikum.client.gui.GroupShowForm;
 import de.hdm.softwarepraktikum.client.gui.Header;
-import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
+import de.hdm.softwarepraktikum.client.gui.GroupShoppinglistTreeViewModel;
 import de.hdm.softwarepraktikum.client.gui.RegistrationForm;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;
 import de.hdm.softwarepraktikum.client.gui.Trailer;
