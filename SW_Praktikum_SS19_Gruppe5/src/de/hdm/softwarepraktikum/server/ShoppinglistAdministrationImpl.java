@@ -198,6 +198,80 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Group getGroupById(int id) throws IllegalArgumentException {
 		return this.groupMapper.getGroupsOf(id);
 	}
+	/**
+	 * Alle Gruppen werden ausgegeben.
+	 * @return ArrayList mit Group-Objekten
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public ArrayList<Group> getAllGroups() throws IllegalArgumentException {
+		return this.groupMapper.findAll();
+	}
+	
+	/**
+	 * Eine Gruppe anlegen.
+	 * @param name Gruppenname
+	 * @return fertiges Group-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
+		Group group = new Group(name);
+		this.groupMapper.insert(group);
+//		this.groupMapper.addUserToGroup(user, group);
+		return group;
+	}
+	
+	/**
+	 * Speichern eines Group-Objekts in der Datenbank
+	 * @param group Group-Objekt, welches in der Datenbank gespeichert werden soll
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void save(Group group) throws IllegalArgumentException {
+		this.groupMapper.update(group);
+	}
+	
+	
+	/**
+	 * Loeschen des uebergebenen Group-Objekts
+	 * @param group Group-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void delete(Group group) throws IllegalArgumentException {
+		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistsOf(group);
+		
+		//Bevor eine Gruppe geloescht wird, werden alle Einkauslisten der Gruppe
+		//geloescht.
+		if (shoppinglists != null) {
+			for (Shoppinglist s : shoppinglists) {
+				this.delete(s);
+			}
+		}
+		this.groupMapper.delete(group);
+	}
+	
+	/**
+	 * Saemtliche Gruppen eines Users-Objekts ausgeben
+	 * @param user Nutzer, dessen Gruppen angezeigt werden sollen
+	 * @return ArrayList saemtlicher Gruppen eines Users
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException {
+		return this.groupMapper.getGroupsOf(user);
+	}
+	
+	/**
+	 * Saemtliche Gruppen eines Users mit Hilfe der UserID ausgeben
+	 * @param userId ID eines Nutzers, dessen Gruppen angezeigt werden sollen
+	 * @return ArrayList saemtlicher Gruppen eines Users
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
+		return this.groupMapper.getGroupsOf(this.getUserById(userId));
+	}
+
 	
 	/**
 	 * Saemtliche Gruppen eines Users mit Hilfe des Usernames ausgeben
@@ -571,7 +645,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden fuer Shoppinglist-Objekte
+ * ABSCHNITT, Beginn: Methoden f�r Shoppinglist-Objekte
  * 
  * **********************************************************************************
  **/
