@@ -219,7 +219,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
 		this.groupMapper.insert(group);
-//		this.groupMapper.addUserToGroup(user, group);
+		this.groupMapper.addUserToGroup(user, group);
 		return group;
 	}
 	

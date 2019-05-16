@@ -22,7 +22,7 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void init(AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void getAllGroups(AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
+	void getAllGroups(User u, AsyncCallback<ArrayList<Group>> callback) throws IllegalArgumentException;
 	
 	void createUser(String name, String mail, AsyncCallback<User> callback) throws IllegalArgumentException;
 	

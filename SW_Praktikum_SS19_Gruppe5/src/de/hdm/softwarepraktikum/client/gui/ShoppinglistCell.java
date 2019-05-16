@@ -20,31 +20,9 @@ import com.google.gwt.view.client.ListDataProvider;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Product;
 
-/**
- * Klasse zur Darstellung von Shoppinglist-Objekte. Erweiterungen von
- * <code>AbstractCell<T></code> dienen zur Erzeugung von HTML-Code fuer
- * benutzerdefinierte Objekte.
- * 
- * @author ElinaEisele, JonasWagenknecht
- *
- */
-//public class ShoppinglistCell extends AbstractCell<Shoppinglist> {
-//
-//	@Override
-//	public void render(Context context, Shoppinglist value, SafeHtmlBuilder sb) {
-//		if (value == null) {
-//			return;
-//		}
-//		
-//		sb.appendHtmlConstant("<div>");
-//		sb.appendEscaped(value.getName());
-//		sb.appendHtmlConstant("</div>");
-//	}
-//
-//}
 
 public class ShoppinglistCell extends VerticalPanel implements Cell<Group> {
-Product productToDisplay = null;
+	Product productToDisplay = null;
 	VerticalPanel v1;
 	ShoppinglistCellTable shoppinglistCellTable;
 	ListDataProvider<Group> provider;
@@ -70,7 +48,7 @@ Product productToDisplay = null;
 		
 		/*
 		 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-		 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
+		 * angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen Widgets
 		 * bestimmt.
 		 */
 
@@ -97,7 +75,7 @@ Product productToDisplay = null;
 		shoppinglistGrid.setWidget(2, 1, unitNameTextBox);	
 		unitNameTextBox.setText("Test");
 		
-		Label retailerNameLabel = new Label("Händler");
+		Label retailerNameLabel = new Label("Hï¿½ndler");
 		shoppinglistGrid.setWidget(3, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(3, 1, retailerNameTextBox);
 		retailerNameTextBox.setText("Test");
