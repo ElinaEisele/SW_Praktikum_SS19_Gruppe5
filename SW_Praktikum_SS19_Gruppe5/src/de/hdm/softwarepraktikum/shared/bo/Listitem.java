@@ -55,7 +55,6 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 * Konstruktor zum Setzen des Namen, der Menge und der Einheit.
 	 */
 	public Listitem (float amount, Unit unit) {
-		super();
 		this.setAmount(amount);
 		this.setUnit(unit);
 	}
@@ -64,7 +63,6 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 * Konstruktor zum Setzen des Namen, der Menge, der Einheit und des Einzelhändlers.
 	 */
 	public Listitem (float amount, Unit unit, Retailer retailer) {
-		super();
 		this.setAmount(amount);
 		this.setUnit(unit);
 		

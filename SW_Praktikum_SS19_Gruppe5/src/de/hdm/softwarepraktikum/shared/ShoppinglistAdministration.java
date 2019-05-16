@@ -103,9 +103,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public void save(User user) throws IllegalArgumentException;
 	
-// statt User
-	public void save (LoginInfo loginInfo) throws IllegalArgumentException;
-	
 	/**
 	 * Speichern eines Group-Objekts in der Datenbank
 	 * @param group Group-Objekt, welches in der Datenbank gespeichert werden soll
@@ -434,12 +431,17 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException;
 
-
+	/**
+	 * Gibt einen zurück ob es in der Gruppe Änderungen gab
+	 * @param g Übergebene Liste mit allen Gruppen
+	 * @param u User, der den Gruppen zugeordnet ist
+	 * @return Boolean Wert, welcher true ist, falls es Änderungen gab
+	 */
 	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException;
 
 	
 	/**
-	 * Methode, welche den Namen des zugeordneten Produktes zurï¿½ckgibt.
+	 * Methode, welche den Namen des zugeordneten Produktes zurueckgibt.
 	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
 	 * @return String Name des Produktes
 	 * @throws IllegalArgumentException
