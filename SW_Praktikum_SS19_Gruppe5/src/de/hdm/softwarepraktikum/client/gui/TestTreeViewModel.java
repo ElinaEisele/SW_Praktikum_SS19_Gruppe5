@@ -236,7 +236,7 @@ public class TestTreeViewModel implements TreeViewModel{
 				
 			});
 			
-			return new DefaultNodeInfo<Group>(groupDataProvider, new GroupCell(), selectionModel, null);	
+			return new DefaultNodeInfo<Group>(groupDataProvider, new NavigatorGroupCell(), selectionModel, null);	
 		}
 		
 		if (value instanceof Group) {

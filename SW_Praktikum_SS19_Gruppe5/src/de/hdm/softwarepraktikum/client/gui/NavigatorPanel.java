@@ -47,7 +47,7 @@ public class NavigatorPanel extends VerticalPanel{
 	}
 	
 	public void refreshInfo() {
-		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroup(), user, new RefreshDataCallback());
+		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroups(), user, new RefreshDataCallback());
 	}
 	
 	private class RefreshDataCallback implements AsyncCallback<Boolean>{

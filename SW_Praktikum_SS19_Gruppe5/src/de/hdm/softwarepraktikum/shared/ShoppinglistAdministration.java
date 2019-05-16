@@ -38,7 +38,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Group-Objekten
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Group> getAllGroups() throws IllegalArgumentException;
+	public ArrayList<Group> getAllGroups(User u) throws IllegalArgumentException;
 
 	  /**
 	   * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT

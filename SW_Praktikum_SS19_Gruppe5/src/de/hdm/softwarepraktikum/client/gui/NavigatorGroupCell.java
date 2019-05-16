@@ -13,7 +13,7 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class GroupCell extends AbstractCell<Group> {
+public class NavigatorGroupCell extends AbstractCell<Group> {
 
 	@Override
 	public void render(Context context, Group value, SafeHtmlBuilder sb) {
