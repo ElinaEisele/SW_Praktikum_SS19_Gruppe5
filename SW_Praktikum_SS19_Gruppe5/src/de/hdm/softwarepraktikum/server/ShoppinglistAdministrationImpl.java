@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.server;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -828,4 +829,20 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return false;
 	}
+	
+	/**
+	 * Suche eines Listite-Objekts anhand eines Suchbegriffs.
+	 * @param searchString ist der String, nach welchem gestucht wird.
+	 * @param shoppinglist ist die Einkaufsliste, in welcher gesucht wird.
+	 * @return Map, in welcher sich die Shoppinglist sowie die darin enthaltenen Listitems befinden.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }
