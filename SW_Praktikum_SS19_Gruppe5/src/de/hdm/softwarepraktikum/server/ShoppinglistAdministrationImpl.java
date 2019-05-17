@@ -357,7 +357,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ListitemUnit getUnitOf(Listitem listitem) throws IllegalArgumentException {
+	public ListitemUnit getListitemUnitOf(Listitem listitem) throws IllegalArgumentException {
 		return this.listitemMapper.getListitemUnitOf(listitem);
 	}
 
@@ -754,7 +754,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
-		return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
+		this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
 		
 		//Einfacher direkt im Mapper?
 		/*
@@ -772,6 +772,5 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
+	}	
 }
