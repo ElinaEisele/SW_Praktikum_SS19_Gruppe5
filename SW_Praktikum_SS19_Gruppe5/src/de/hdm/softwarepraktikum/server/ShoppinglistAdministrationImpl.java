@@ -372,10 +372,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.listitemMapper.getAmountOf(listitem);
 	}
 
+	/**
+	 * Methode, welche den Namen des zugeordneten Produktes zurueckgibt.
+	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
+	 * @return String Name des Produktes
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listitemMapper.getProductnameOf(listitem);
 	}
 	
 /**
@@ -767,10 +772,25 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 */
 	}
 
-
+	/**
+	 * Gibt einen Boolean Wert zurück ob sich in den Gruppen des Nutzers etwas veraendert hat
+	 * @param groups Gruppen des Nutzers
+	 * @param u Objekt des Nutzers 
+	 * @return Boolean
+	 * @throws IllegalArgumentException
+	 */
 	@Override
 	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}	
+
+		ArrayList<Group> groups = this.getGroupsOf(u);
+
+		if (groups != null && g != null) {
+
+			if (!g.equals(groups)) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
 }
