@@ -28,14 +28,14 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	
 	private User u = CurrentUser.getUser();
 	
-	private ArrayList<Group> userGroup = new ArrayList<Group>();
+	private ArrayList<Group> userGroups = new ArrayList<Group>();
 
-	public ArrayList<Group> getUserGroup() {
-		return userGroup;
+	public ArrayList<Group> getUserGroups() {
+		return userGroups;
 	}
 
-	public void setUserGroup(ArrayList<Group> userGroup) {
-		this.userGroup = userGroup;
+	public void setUserGroups(ArrayList<Group> userGroup) {
+		this.userGroups = userGroup;
 	}
 
 	/**

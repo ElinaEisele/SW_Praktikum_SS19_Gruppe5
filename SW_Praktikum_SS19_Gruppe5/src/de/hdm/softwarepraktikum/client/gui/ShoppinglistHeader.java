@@ -13,25 +13,24 @@ import com.google.gwt.user.client.ui.Label;
 
 public class ShoppinglistHeader extends HorizontalPanel {
 
-	Button ausgewaehlteGruppe;	
+	Label listLabel;
 	Button addListitem;
 	Button deleteShoppinglist;
 	Button assignUserToRetailer;
 	Button editShoppinglist;
 
+
 	public void onLoad() {
 		super.onLoad();
 		
-		ausgewaehlteGruppe = new Button();
-		addListitem = new Button("Add Item");
-		deleteShoppinglist = new Button("Delete Shoppinglist");
+		listLabel = new Label("getListName");
+		addListitem = new Button("Eintrag hinzufügen");
+		deleteShoppinglist = new Button("Einkaufsliste löschen");
 		assignUserToRetailer = new Button("Nutzer zuordnen");
 		editShoppinglist = new Button("Editieren");
 	
-		ausgewaehlteGruppe.setText("getGroupname |");
-		ausgewaehlteGruppe.setStyleName("ausgewaehlteGruppeShoppinglistHeaderButton ");
-		ausgewaehlteGruppe.getElement().setAttribute("disabled", "disabled");
-		
+		listLabel.setStyleName("ListLabel");
+				
 		Image addListitemImg = new Image();
 		addListitemImg.setUrl("images/shopping-cart.png");
 		addListitemImg.setSize("16px", "16px");
@@ -56,7 +55,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		editShoppinglist.getElement().appendChild(editShoppinglistImg.getElement());
 		editShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		
-		this.add(ausgewaehlteGruppe);
+		this.add(listLabel);
 		this.add(addListitem);
 		this.add(assignUserToRetailer);
 		this.add(editShoppinglist);
