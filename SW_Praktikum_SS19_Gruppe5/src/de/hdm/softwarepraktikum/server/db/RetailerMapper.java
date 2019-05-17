@@ -290,4 +290,81 @@ public class RetailerMapper {
 		}
 
 	}
+	
+	
+	/**
+	 * 
+	 * Retailer, welche in einer Shoppingliste verwendet werden, finden.
+	 * 
+	 * @param shoppinglist
+	 * @return ArrayList<Retailer>
+	 */
+	public ArrayList<Retailer> getRetailersOf(Shoppinglist shoppinglist){
+	
+		Connection con = DBConnection.connection();
+		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
+					+ "ON listitems.retailer_id = retailers.id "
+					+ "WHERE shoppinglist_id =" + shoppinglist.getId());
+
+			while (rs.next()) {
+
+				Retailer r = new Retailer();
+				r.getId();
+				r.getCreationDate();
+				r.getName();
+				retailers.add(r);
+			}
+			
+			return retailers;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+	
+	/**
+	 * 
+	 * Alle Retailer einer Shoppingliste finden, welche einem User zugeordnet sind.
+	 * 
+	 * @param shoppinglist
+	 * @param user
+	 * @return ArrayList<Retailer
+	 */
+	
+	public ArrayList<Retailer> getAssignedRetailersOf(Shoppinglist shoppinglist, User user){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN retailers"
+					+ "ON responsibilities.retailer_id = retailers.id "
+					+ "WHERE shoppinglist_id =" + shoppinglist.getId() + "and user_id =" + user.getId());
+
+			while (rs.next()) {
+
+				Retailer r = new Retailer();
+				r.getId();
+				r.getCreationDate();
+				r.getName();
+				retailers.add(r);
+			}
+			
+			return retailers;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>Unit</code> Objekte. Diese umfasst Methoden um Unit
+ * Mapper Klasse für </code>ListitemUnit</code> Objekte. Diese umfasst Methoden um ListitemUnit
  * Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das Mapping
  * funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen und
  * DB-Stukturen in Objekte umgewandelt werden.
@@ -14,30 +14,30 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * @author CarlaHofmann & LeoniFriedrich
  */
 
-public class UnitMapper {
+public class ListitemUnitMapper {
 
 	/**
 	 * Speicherung der Instanz dieser Mapperklasse.
 	 */
-	private static UnitMapper unitMapper = null;
+	private static ListitemUnitMapper listitemUnitMapper = null;
 
 	/**
 	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UnitMapper.
 	 */
-	protected UnitMapper() {
+	protected ListitemUnitMapper() {
 	}
 
 	/**
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
-	 * @return Unitmapper
+	 * @return Listitemunitmapper
 	 */
-	public static UnitMapper unitMapper() {
-		if (unitMapper == null) {
-			unitMapper = new UnitMapper();
+	public static ListitemUnitMapper listitemUnitMapper() {
+		if (listitemUnitMapper == null) {
+			listitemUnitMapper = new ListitemUnitMapper();
 		}
 
-		return unitMapper;
+		return listitemUnitMapper;
 	}
 	
 	/**
@@ -47,10 +47,10 @@ public class UnitMapper {
 	 * 
 	 */
 
-	public ArrayList<Unit> findAll() {
+	public ArrayList<ListitemUnit> findAll() {
 
 		Connection con = DBConnection.connection();
-		ArrayList<Unit> units = new ArrayList<Unit>();
+		ArrayList<ListitemUnit> units = new ArrayList<ListitemUnit>();
 
 		try {
 
@@ -58,7 +58,7 @@ public class UnitMapper {
 			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM units ORDER BY id");
 
 			while (rs.next()) {
-				Unit u = new Unit();
+				ListitemUnit u = new ListitemUnit();
 				u.setId(rs.getInt("id"));
 				u.setCreationDate(rs.getDate("creationDate"));
 				u.setName(rs.getString("name"));
@@ -79,7 +79,7 @@ public class UnitMapper {
 	 * @param id
 	 * @return Unit
 	 */
-	public Unit findById(int id) {
+	public ListitemUnit findById(int id) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -88,7 +88,7 @@ public class UnitMapper {
 			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM units WHERE id = " + id);
 
 			if (rs.next()) {
-				Unit u = new Unit();
+				ListitemUnit u = new ListitemUnit();
 				u.setId(rs.getInt("id"));
 				u.setCreationDate(rs.getDate("creationDate"));
 				u.setName(rs.getString("name"));
@@ -109,10 +109,10 @@ public class UnitMapper {
 	 * @param name
 	 * @return Unitliste 
 	 */
-	public ArrayList<Unit> findByName(String name) {
+	public ArrayList<ListitemUnit> findByName(String name) {
 
 		Connection con = DBConnection.connection();
-		ArrayList<Unit> units = new ArrayList<Unit>();
+		ArrayList<ListitemUnit> units = new ArrayList<ListitemUnit>();
 
 		try {
 
@@ -120,7 +120,7 @@ public class UnitMapper {
 			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM units WHERE name = " + name);
 
 			while (rs.next()) {
-				Unit u = new Unit();
+				ListitemUnit u = new ListitemUnit();
 				u.setId(rs.getInt("id"));
 				u.setCreationDate(rs.getDate("creationDate"));
 				u.setName(rs.getString("name"));
@@ -142,7 +142,7 @@ public class UnitMapper {
 	 * @param unit
 	 * @return Unit
 	 */
-	public Unit insert(Unit unit) {
+	public ListitemUnit insert(ListitemUnit unit) {
 
 		Connection con = DBConnection.connection();
 
@@ -178,7 +178,7 @@ public class UnitMapper {
 	 * @param unit
 	 * @return Unit 
 	 */
-	public Unit update(Unit unit) {
+	public ListitemUnit update(ListitemUnit unit) {
 
 		Connection con = DBConnection.connection();
 
@@ -204,7 +204,7 @@ public class UnitMapper {
 	 * 
 	 * @param unit
 	 */
-	public void delete(Unit unit) {
+	public void delete(ListitemUnit unit) {
 
 		Connection con = DBConnection.connection();
 
