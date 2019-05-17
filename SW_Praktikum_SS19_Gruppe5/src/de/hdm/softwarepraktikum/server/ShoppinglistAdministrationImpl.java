@@ -305,7 +305,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
@@ -389,7 +389,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Product-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
  * 
  * **********************************************************************************
  **/
@@ -624,7 +624,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für User-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer User-Objekte
  * 
  * **********************************************************************************
  **/
@@ -667,9 +667,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(shoppinglists.get(u));
 				
 			}
-			//Die Einträge, welche dem User zugeteilt wurden müssen hier noch gelöscht werden.
-			//Die Zuweisung von Händlern zu Usern wurde jedoch noch nicht realisiert.
-			//Außerdem könnte hier noch abgefragt werden, ob die Gruppen nach löschen eines Users
+			//Die Eintraege, welche dem User zugeteilt wurden muessen hier noch geloescht werden.
+			//Die Zuweisung von Haendlern zu Usern wurde jedoch noch nicht realisiert.
+			//Ausserdem koennte hier noch abgefragt werden, ob die Gruppen nach loeschen eines Users
 			//noch Mitglieder haben oder nicht. Sollen Gruppen ohne Mitglieder gelöscht werden?
 			
 		}
@@ -778,7 +778,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für ListitemUnit-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer ListitemUnit-Objekte
  * 
  * **********************************************************************************
  **/	
@@ -814,7 +814,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 	
 	/**
-	 * Gibt einen Boolean Wert zurück ob sich in den Gruppen des Nutzers etwas veraendert hat
+	 * Gibt einen Boolean Wert zurueck ob sich in den Gruppen des Nutzers etwas veraendert hat
 	 * @param groups Gruppen des Nutzers
 	 * @param u Objekt des Nutzers 
 	 * @return Boolean
