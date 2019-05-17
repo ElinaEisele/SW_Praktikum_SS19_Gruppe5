@@ -389,7 +389,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Product-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
  * 
  * **********************************************************************************
  **/
@@ -778,7 +778,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für ListitemUnit-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer ListitemUnit-Objekte
  * 
  * **********************************************************************************
  **/	
@@ -814,7 +814,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 	
 	/**
-	 * Gibt einen Boolean Wert zurück ob sich in den Gruppen des Nutzers etwas veraendert hat
+	 * Gibt einen Boolean Wert zurueck ob sich in den Gruppen des Nutzers etwas veraendert hat
 	 * @param groups Gruppen des Nutzers
 	 * @param u Objekt des Nutzers 
 	 * @return Boolean
