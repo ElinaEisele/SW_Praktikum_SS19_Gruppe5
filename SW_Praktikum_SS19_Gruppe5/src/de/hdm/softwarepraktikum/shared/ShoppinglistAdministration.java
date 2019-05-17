@@ -261,7 +261,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Saemtliche Retailer-Objetke werden ausgegeben
@@ -446,7 +446,8 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public ListitemUnit getListitemUnitById(int id) throws IllegalArgumentException;
 
-	 * Gibt einen Boolean Wert zurück ob sich in den Gruppen des Nutzers etwas veraendert hat
+	/**
+	 * Gibt einen Boolean Wert zurueck ob sich in den Gruppen des Nutzers etwas veraendert hat
 	 * @param groups Gruppen des Nutzers
 	 * @param u Objekt des Nutzers 
 	 * @return Boolean
