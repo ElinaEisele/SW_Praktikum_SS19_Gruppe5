@@ -119,5 +119,4 @@ public interface ShoppinglistAdministrationAsync {
 	void refreshData(ArrayList<Group> g, User u, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
 	void getProductnameOf(Listitem listitem, AsyncCallback<String> callback) throws IllegalArgumentException;
-
 }
