@@ -346,9 +346,7 @@ public class ListitemMapper {
 	public void setStandardListitemOf (Group group, Listitem listitem) {
 		Connection con = DBConnection.connection();
 	
-		try {
-			PreparedStatement pstmt = con.prepareStatement("...");
-
+		try { //vervollständigen
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -374,10 +372,11 @@ public class ListitemMapper {
 
 			while (rs.next()){
 
-				int retailer_id = rs.getInt("retailer_id");
+				int r_id = rs.getInt("retailer_id");
 					    
 				Statement stmt2 = con.createStatement();
-			    ResultSet rs1 = stmt2.executeQuery("SELECT * FROM listitems WHERE retailer_id =" + retailer_id);
+			    ResultSet rs1 = stmt2.executeQuery("SELECT * FROM listitems WHERE retailer_id =" + r_id 
+			    		+ "and shoppinglist_id = " + shoppinglist.getId());
 
 			    while (rs1.next()){
 			        Listitem li = new Listitem();
@@ -409,18 +408,22 @@ public class ListitemMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT...");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
+					+ "ON listitems.retailer_id = retailers_id "
+					+ "WHERE shoppinglist_id = " +shoppinglist.getId() + "and retailername = " + retailername);
 
 			while (rs.next()) {
-				Listitem li = new Listitem();
-				li.setId(rs.getInt("id"));
-				li.setCreationDate(rs.getDate("creationDate"));
-				li.setAmount(rs.getFloat("amount"));
-				listitems.add(li);
+			 
+			        Listitem li = new Listitem();
+			        li.setId(rs.getInt("id"));
+			        li.setCreationDate (rs.getDate("creationDate"));
+			        li.setAmount(rs.getFloat("amount"));
+			        //
+			        listitems.add(li);
 			}
 
 			return listitems;
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 
@@ -436,7 +439,7 @@ public class ListitemMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("...");
+		//vervollständigen 
 
 		} catch (SQLException e) {
 			e.printStackTrace();
