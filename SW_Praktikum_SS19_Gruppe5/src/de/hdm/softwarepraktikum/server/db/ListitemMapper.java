@@ -361,25 +361,35 @@ public class ListitemMapper {
 	 */
 	
 	public ArrayList<Listitem> filterShoppinglistByUsername(Shoppinglist shoppinglist,  String username){
+		
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN users"
-					+ "ON responsibilities.user_id= users.id"
-					+ "WHERE shoppinglist_id= "+ shoppinglist.getId() + "and name= " + username);
-					
+			ResultSet rs = stmt.executeQuery("SELECT responsibilities.retailer_id, responsibilities.user_id, "
+					+ "responsibilities.shoppinglist_id, users.name FROM responsibilities INNER JOIN users"
+					+ "ON responsibilities.user_id = users.id"
+					+ "WHERE shoppinglist_id = " + shoppinglist.getId() + "and username=" + username);
 
-			while (rs.next()) {
-				Retailer r = new Retailer();
-				r.setId(rs.getInt("id"));
-				r.setName(rs.getString("name"));
-				r.setCreationDate(rs.getDate("creationDate"));
-				
-				listitems.add(r);
+			while (rs.next()){
+
+				int retailer_id = rs.getInt("retailer_id");
+					    
+				Statement stmt2 = con.createStatement();
+			    ResultSet rs1 = stmt2.executeQuery("SELECT * FROM listitems WHERE retailer_id =" + retailer_id);
+
+			    while (rs1.next()){
+			        Listitem li = new Listitem();
+			        li.setId(rs1.getInt("id"));
+			        li.setCreationDate(rs1.getDate("creationDate"));
+			        li.setAmount(rs.getFloat("amount"));
+			        //
+			        listitems.add(li);
+			    }
+				   
 			}
-
+			
 			return listitems;
 
 		} catch (SQLException e) {
