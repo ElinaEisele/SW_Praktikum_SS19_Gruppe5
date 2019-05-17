@@ -14,17 +14,17 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * @author CarlaHofmann & LeoniFriedrich
  */
 
-public class UnitMapper {
+public class ListitemUnitMapper {
 
 	/**
 	 * Speicherung der Instanz dieser Mapperklasse.
 	 */
-	private static UnitMapper unitMapper = null;
+	private static ListitemUnitMapper unitMapper = null;
 
 	/**
 	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UnitMapper.
 	 */
-	protected UnitMapper() {
+	protected ListitemUnitMapper() {
 	}
 
 	/**
@@ -32,9 +32,9 @@ public class UnitMapper {
 	 *
 	 * @return Unitmapper
 	 */
-	public static UnitMapper unitMapper() {
+	public static ListitemUnitMapper unitMapper() {
 		if (unitMapper == null) {
-			unitMapper = new UnitMapper();
+			unitMapper = new ListitemUnitMapper();
 		}
 
 		return unitMapper;
