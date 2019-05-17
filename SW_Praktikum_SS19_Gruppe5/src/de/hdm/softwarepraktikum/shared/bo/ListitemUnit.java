@@ -1,19 +1,14 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
-public enum ListitemUnit {
+public class ListitemUnit extends NamedBusinessObject{
 
-//	Kilogramm,
-//	Gramm,
-//	Stueck,
-//	Liter,
-//	Milliliter,
-//	Packungen,
-	
-	Kg,
-	g,
-	St,
-	L,
-	ml,
-	Pck
+	private static final long serialVersionUID = 1L;
+
+	/*
+	 * Default-Konstruktor
+	 */
+	public ListitemUnit() {
+		
+	}
 	
 }
