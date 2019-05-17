@@ -57,7 +57,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	private GroupMapper groupMapper = null;
 	
-	
+	/**
+	 * Referenz auf den ListitemUnitMapper, welcher ListitemUnit-Objekte mit der Datenbank
+	 * abgleicht.
+	 */
+	private ListitemUnitMapper listitemUnitMapper = null;
 	
 	/**
 	 * Ein <code>RemoteServiceServlet</code> wird unter GWT mittels
@@ -280,7 +284,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Beim Löschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelöscht.
 		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
 		
-	}
+	}	
 	
 	/**
 	 * Saemtliche Listitem-Objekte mit einer bestimmten Produktbezeichnung in einer bestimmen Einkaufsliste werden zurueckgegeben
@@ -475,7 +479,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 	}
 
-// AB HIER FELIX 
 	/**
 	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
 	 * @param retailerId ist die ID des gesuchten Einzelhï¿½ndlers
@@ -495,7 +498,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<Retailer> getRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		return this.retailerMapper.findRetailersOf(shoppinglist);
+		return this.retailerMapper.getRetailersOf(shoppinglist);
 	}
 
 	/**
@@ -507,7 +510,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<Retailer> getRetailersOf(Shoppinglist shoppinglist, User user) throws IllegalArgumentException {
-		return this.retailerMapper.findAssignedRetailersOf(shoppinglist, user);
+		return this.retailerMapper.getAssignedRetailersOf(shoppinglist, user);
 	}
 
 	/**
@@ -587,7 +590,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) throws IllegalArgumentException {		
-		return this.groupMapper.getAllShoppinglists();
+		return this.shoppinglistMapper.getShoppinglistsOf(group);
 	}
 
 	/**
@@ -598,7 +601,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<Shoppinglist> getShoppinglistsByName(String name) throws IllegalArgumentException {
-		return this.groupMapper.getShoppinglistsByName();
+		return this.shoppinglistMapper.findByName(name);
 	}
 
 	/**
@@ -609,7 +612,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public Shoppinglist getShoppinglistById(int shoppinglistId) throws IllegalArgumentException {
-		return this.groupMapper.getShoppinglistById();
+		return this.shoppinglistMapper.findById(shoppinglistId);
 	}
 
 	
@@ -768,9 +771,48 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 
 
+/**
+ * **********************************************************************************
+ * ABSCHNITT, Beginn: Methoden für ListitemUnit-Objekte
+ * 
+ * **********************************************************************************
+ **/	
+	
+	/**
+	 * Ausgabe aller vorhandenen Mengeneinheiten.
+	 * @return ArrayList mit allen vorhandenen ListitemUnit-Objekten.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public ArrayList<ListitemUnit> getAllListitemUnits() throws IllegalArgumentException {
+		return this.listitemUnitMapper.findAll();
+	}
+	
+	/**
+	 * Ausgabe einer bestimmten Mengeneinheit anhand der übergebenen ID.
+	 * @param id ist die ID der gesuchten Mengeneinheit.
+	 * @return ListitemUnit, welches eine bestimmte ID enthaelt
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public ListitemUnit getListitemUnitById(int id) throws IllegalArgumentException {
+		return this.listitemUnitMapper.findById(id);
+	}	
+	
+
+/**
+ * **********************************************************************************
+ * ABSCHNITT, Beginn: sonstige Methoden
+ * 
+ * **********************************************************************************
+ **/	
 	@Override
 	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
-	}	
+	}
+
+
+	
+	
 }

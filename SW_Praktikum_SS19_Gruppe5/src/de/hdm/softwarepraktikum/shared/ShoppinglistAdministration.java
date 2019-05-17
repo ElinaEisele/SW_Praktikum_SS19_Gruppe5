@@ -427,11 +427,25 @@ public interface ShoppinglistAdministration extends RemoteService {
 
 	
 	/**
-	 * Methode, welche den Namen des zugeordneten Produktes zurï¿½ckgibt.
+	 * Methode, welche den Namen des zugeordneten Produktes zurueckgibt.
 	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
 	 * @return String Name des Produktes
 	 * @throws IllegalArgumentException
 	 */
 	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe aller vorhandenen Mengeneinheiten.
+	 * @return ArrayList mit allen vorhandenen ListitemUnit-Objekten.
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<ListitemUnit> getAllListitemUnits() throws IllegalArgumentException;
 
+	/**
+	 * Ausgabe einer bestimmten Mengeneinheit anhand der übergebenen ID.
+	 * @param id ist die ID der gesuchten Mengeneinheit.
+	 * @return ListitemUnit, welches eine bestimmte ID enthaelt
+	 * @throws IllegalArgumentException
+	 */
+	public ListitemUnit getListitemUnitById(int id) throws IllegalArgumentException;
 }
