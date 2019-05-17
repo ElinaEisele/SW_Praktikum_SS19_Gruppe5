@@ -1,6 +1,6 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
-public enum Unit {
+public enum ListitemUnit {
 
 //	Kilogramm,
 //	Gramm,

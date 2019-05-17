@@ -26,7 +26,7 @@ import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Product;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.Unit;
+import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
@@ -74,10 +74,10 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		retailer.add(retailer1);
 		retailer.add(retailer2);
 
-		Listitem listitem1 = new Listitem(2.0f, Unit.St, retailer1, product1);
-		Listitem listitem2 = new Listitem(0.5f, Unit.Kg, retailer2, product1);
-		Listitem listitem3 = new Listitem(5.0f, Unit.St, retailer2, product2);
-		Listitem listitem4 = new Listitem(1.0f, Unit.L, retailer1, product2);
+		Listitem listitem1 = new Listitem(2.0f, ListitemUnit.St, retailer1, product1);
+		Listitem listitem2 = new Listitem(0.5f, ListitemUnit.Kg, retailer2, product1);
+		Listitem listitem3 = new Listitem(5.0f, ListitemUnit.St, retailer2, product2);
+		Listitem listitem4 = new Listitem(1.0f, ListitemUnit.L, retailer1, product2);
 		listitems.add(listitem1);
 		listitems.add(listitem2);
 		listitems.add(listitem3);
