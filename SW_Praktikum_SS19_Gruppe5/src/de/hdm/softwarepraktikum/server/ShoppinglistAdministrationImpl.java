@@ -221,14 +221,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 * Somit kann die Fremdschluesselbeziehung vom Listitem zum Product gesetzt werden.
 		 */
 		Product p = this.createProduct(productname);
-		li.setProductID(p.getId());
 		
-		/*
-		 * Problem: Product hat ein Attribut "listitemId", welches jedoch erst gesetzt werden kann nach dem 
-		 * Aufruf der insert(Listiitem)-Methode.
-		 * Lösung: In der Insert-Methode des Listitem-Objekts muss die Fremdschluesselbeziehung vom enthaltenen Produkt mit der
-		 * korrekten und konsistenten ID des Listitems überschrieben werden.
-		 */
+		this.setProduct(p, li);
 
 		//In der Insert-Methode erhält das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
 		return this.listitemMapper.insert(li);
