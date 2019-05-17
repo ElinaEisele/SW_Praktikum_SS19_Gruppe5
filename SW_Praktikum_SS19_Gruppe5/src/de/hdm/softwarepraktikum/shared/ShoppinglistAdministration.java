@@ -80,12 +80,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
-	 * @param unit Mengeneinheit 
+	 * @param listitemUnit Mengeneinheit 
 	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit unit, Retailer retailer) throws IllegalArgumentException;
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Einen Retailer anlegen
@@ -388,10 +388,10 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Ausgeben der Mengeneinheit eines Eintrags
 	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird
-	 * @return Unit 
+	 * @return listitemUnit
 	 * @throws IllegalArgumentException
 	 */
-	public ListitemUnit getUnitOf(Listitem listitem) throws IllegalArgumentException;
+	public ListitemUnit getListitemUnitOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgeben der Menge eines Eintrags
@@ -415,12 +415,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
-	 * @param unit Mengeneinheit 
+	 * @param listitemUnit Mengeneinheit 
 	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit unit) throws IllegalArgumentException;
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
 
 
 	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException;

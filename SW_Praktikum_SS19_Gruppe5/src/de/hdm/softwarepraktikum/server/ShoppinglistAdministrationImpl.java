@@ -200,15 +200,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
-	 * @param unit Mengeneinheit 
+	 * @param listitemUnit Mengeneinheit 
 	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit unit) throws IllegalArgumentException {
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException {
 		
-		Listitem li = new Listitem(amount, unit);
+		Listitem li = new Listitem(amount, listitemUnit);
 		// Fremdschluessel zum Retailer wird auf default-Wert 0 gesetzt.
 		li.setRetailerID(0);
 		
@@ -235,17 +235,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
-	 * @param unit Mengeneinheit 
+	 * @param listitemUnit Mengeneinheit 
 	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit unit,
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit,
 			Retailer retailer) throws IllegalArgumentException {
 		
 		//Listitem mit den übergebenen Parametern wird erstellt.
-		Listitem li = new Listitem(amount, unit, retailer);
+		Listitem li = new Listitem(amount, listitemUnit, retailer);
 		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
 		this.assignRetailer(retailer, li);
 		
@@ -353,12 +353,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	/**
 	 * Ausgeben der Mengeneinheit eines Eintrags
 	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird
-	 * @return Unit 
+	 * @return ListitemUnit 
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ListitemUnit getUnitOf(Listitem listitem) throws IllegalArgumentException {
-		return this.listitemMapper.getUnitOf(listitem);
+	public ListitemUnit getListitemUnitOf(Listitem listitem) throws IllegalArgumentException {
+		return this.listitemMapper.getListitemUnitOf(listitem);
 	}
 
 	/**
@@ -754,7 +754,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
-		return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
+		this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
 		
 		//Einfacher direkt im Mapper?
 		/*
@@ -772,6 +772,5 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
+	}	
 }
