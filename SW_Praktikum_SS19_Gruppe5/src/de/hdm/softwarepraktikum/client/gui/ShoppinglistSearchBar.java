@@ -78,7 +78,7 @@ public class ShoppinglistSearchBar extends HorizontalPanel{
 		searchGrid.setWidget(0, 0, searchSuggestBox);
 		searchGrid.setWidget(0, 1, cancelButton);
 		
-		shoppinglistAdministration.getAllListitemsOf(selectedShoppinglist, new GetListitemCallback());
+		shoppinglistAdministration.getListitemsOf(selectedShoppinglist, new GetListitemCallback());
 		
 		this.add(searchGrid);
 	}
@@ -92,7 +92,7 @@ public class ShoppinglistSearchBar extends HorizontalPanel{
 
 		@Override
 		public void onClick(Widget sender) {
-			shoppinglistAdministration.getAllListitemsOf(selectedShoppinglist, new GetListitemCallback());
+			shoppinglistAdministration.getListitemsOf(selectedShoppinglist, new GetListitemCallback());
 		}
 		
 	}
@@ -105,7 +105,7 @@ public class ShoppinglistSearchBar extends HorizontalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			searchSuggestBox.setValue("");
-			shoppinglistCellTable.refresh();
+//			shoppinglistCellTable.refresh();
 		}
 		
 	}
@@ -140,7 +140,7 @@ public class ShoppinglistSearchBar extends HorizontalPanel{
 
 		@Override
 		public void onSuccess(Map<Shoppinglist, ArrayList<Listitem>> resultMap) {
-			shoppinglistCellTable.showSearchResult(resultMap);
+//			shoppinglistCellTable.showSearchResult(resultMap);
 		}
 		
 	}
@@ -155,7 +155,7 @@ public class ShoppinglistSearchBar extends HorizontalPanel{
 		@Override
 		public void onSuccess(ArrayList<Listitem> result) {
 			for (Listitem l : result) {
-				searchbar.add(l.getProduct().getName());
+//				searchbar.add(l.getProduct().getName());
 				
 			}
 		}
