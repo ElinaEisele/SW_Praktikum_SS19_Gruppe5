@@ -21,7 +21,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * </p>
  * <p>
  * <code>@RemoteServiceRelativePath("shoppinglistadministration")</code> ist bei der
- * Adressierung des aus der zugeh�rigen Impl-Klasse entstehenden
+ * Adressierung des aus der zugehï¿½rigen Impl-Klasse entstehenden
  * Servlet-Kompilats behilflich. Es gibt im Wesentlichen einen Teil der URL des
  * Servlets an.
  * </p>
@@ -280,7 +280,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	
 	/**
 	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
-	 * @param retailerId ist die ID des gesuchten Einzelh�ndlers
+	 * @param retailerId ist die ID des gesuchten Einzelhï¿½ndlers
 	 * @return Das erste Retailer-Objekt, welches den Suchkriterien entspricht wird ausgegeben
 	 * @throws IllegalArgumentException
 	 */
@@ -422,9 +422,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
 
-
-	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException;
-
 	
 	/**
 	 * Methode, welche den Namen des zugeordneten Produktes zurueckgibt.
@@ -442,10 +439,18 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<ListitemUnit> getAllListitemUnits() throws IllegalArgumentException;
 
 	/**
-	 * Ausgabe einer bestimmten Mengeneinheit anhand der �bergebenen ID.
+	 * Ausgabe einer bestimmten Mengeneinheit anhand der übergebenen ID.
 	 * @param id ist die ID der gesuchten Mengeneinheit.
 	 * @return ListitemUnit, welches eine bestimmte ID enthaelt
 	 * @throws IllegalArgumentException
 	 */
 	public ListitemUnit getListitemUnitById(int id) throws IllegalArgumentException;
+
+	 * Gibt einen Boolean Wert zurück ob sich in den Gruppen des Nutzers etwas veraendert hat
+	 * @param groups Gruppen des Nutzers
+	 * @param u Objekt des Nutzers 
+	 * @return Boolean
+	 * @throws IllegalArgumentException
+	 */
+	public Boolean refreshData(ArrayList<Group> groups, User u) throws IllegalArgumentException;
 }
