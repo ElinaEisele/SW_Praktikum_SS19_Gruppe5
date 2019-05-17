@@ -252,5 +252,9 @@ public class ProductMapper {
 		return null;
 
 	}
+	
+	public Product getProductnameOf(Listitem listitem) {
+		
+	}
 
 }
