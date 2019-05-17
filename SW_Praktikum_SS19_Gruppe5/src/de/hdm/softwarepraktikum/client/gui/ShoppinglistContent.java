@@ -20,12 +20,15 @@ public class ShoppinglistContent extends VerticalPanel{
 		super.onLoad();
 		
 		shoppinglistSearchBar = new ShoppinglistSearchBar();
+		shoppinglistSearchBar.setShoppinglistCellTable(shoppinglistCellTable);
 		shoppinglistCellTable = new ShoppinglistCellTable();
 		
 		shoppinglistSearchBar.setStylePrimaryName("shoppinglistSearchBar");
 		shoppinglistCellTable.setStylePrimaryName("shoppinglistCellTable");
 		
-		this.add(shoppinglistSearchBar);
+		
+// die SearchBar ist noch nicht fertig!		
+//		this.add(shoppinglistSearchBar);		
 		this.add(shoppinglistCellTable);
 	}
 

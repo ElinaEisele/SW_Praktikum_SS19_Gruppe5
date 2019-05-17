@@ -215,7 +215,7 @@ div#trailer {
 	border-radius: 5px;
 }
 
-.ausgewaehlteGruppeShoppinglistHeaderButton {
+.ListLabel {
 	color: white;
 	font-weight: bold;
 	font-size: 150%;
@@ -245,6 +245,19 @@ div#trailer {
 }
 
 .shoppinglistHeader {
+	border: 1px solid white;
+	margin: 10px 10px;
+	padding: 5px;
+}
+
+/* GroupShowForm.java */
+.groupContent{
+	width: 90%;
+	border: 2px solid white;
+	margin: 10px 1opx;
+}
+
+.groupHeader {
 	border: 1px solid white;
 	margin: 10px 10px;
 	padding: 5px;
