@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.shared;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -11,7 +12,7 @@ import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Product;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.Unit;
+import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 
@@ -21,7 +22,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * </p>
  * <p>
  * <code>@RemoteServiceRelativePath("shoppinglistadministration")</code> ist bei der
- * Adressierung des aus der zugeh�rigen Impl-Klasse entstehenden
+ * Adressierung des aus der zugehï¿½rigen Impl-Klasse entstehenden
  * Servlet-Kompilats behilflich. Es gibt im Wesentlichen einen Teil der URL des
  * Servlets an.
  * </p>
@@ -80,12 +81,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
-	 * @param unit Mengeneinheit 
+	 * @param listitemUnit Mengeneinheit 
 	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Einen Retailer anlegen
@@ -261,7 +262,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Saemtliche Retailer-Objetke werden ausgegeben
@@ -280,7 +281,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	
 	/**
 	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
-	 * @param retailerId ist die ID des gesuchten Einzelh�ndlers
+	 * @param retailerId ist die ID des gesuchten Einzelhï¿½ndlers
 	 * @return Das erste Retailer-Objekt, welches den Suchkriterien entspricht wird ausgegeben
 	 * @throws IllegalArgumentException
 	 */
@@ -388,10 +389,10 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Ausgeben der Mengeneinheit eines Eintrags
 	 * @param listitem ist der Eintrag, dessen Mengeneinheit zurueckgegeben wird
-	 * @return Unit 
+	 * @return listitemUnit
 	 * @throws IllegalArgumentException
 	 */
-	public Unit getUnitOf(Listitem listitem) throws IllegalArgumentException;
+	public ListitemUnit getListitemUnitOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgeben der Menge eines Eintrags
@@ -415,23 +416,52 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
-	 * @param unit Mengeneinheit 
+	 * @param listitemUnit Mengeneinheit 
 	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException;
-
-
-	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException;
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
 
 	
 	/**
-	 * Methode, welche den Namen des zugeordneten Produktes zur�ckgibt.
+	 * Methode, welche den Namen des zugeordneten Produktes zurueckgibt.
 	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
 	 * @return String Name des Produktes
 	 * @throws IllegalArgumentException
 	 */
 	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe aller vorhandenen Mengeneinheiten.
+	 * @return ArrayList mit allen vorhandenen ListitemUnit-Objekten.
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<ListitemUnit> getAllListitemUnits() throws IllegalArgumentException;
 
+	/**
+	 * Ausgabe einer bestimmten Mengeneinheit anhand der übergebenen ID.
+	 * @param id ist die ID der gesuchten Mengeneinheit.
+	 * @return ListitemUnit, welches eine bestimmte ID enthaelt
+	 * @throws IllegalArgumentException
+	 */
+	public ListitemUnit getListitemUnitById(int id) throws IllegalArgumentException;
+
+	/**
+	 * Gibt einen Boolean Wert zurueck ob sich in den Gruppen des Nutzers etwas veraendert hat
+	 * @param groups Gruppen des Nutzers
+	 * @param u Objekt des Nutzers 
+	 * @return Boolean
+	 * @throws IllegalArgumentException
+	 */
+	public Boolean refreshData(ArrayList<Group> groups, User u) throws IllegalArgumentException;
+	
+	/**
+	 * Suche eines Listite-Objekts anhand eines Suchbegriffs.
+	 * @param searchString ist der String, nach welchem gestucht wird.
+	 * @param shoppinglist ist die Einkaufsliste, in welcher gesucht wird.
+	 * @return Map, in welcher sich die Shoppinglist sowie die darin enthaltenen Listitems befinden.
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist) throws IllegalArgumentException; 
 }
