@@ -119,4 +119,8 @@ public interface ShoppinglistAdministrationAsync {
 	void refreshData(ArrayList<Group> groups, User u, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
 	void getProductnameOf(Listitem listitem, AsyncCallback<String> callback) throws IllegalArgumentException;
+	
+	void getAllListitemUnits(AsyncCallback<ArrayList<ListitemUnit>> callback) throws IllegalArgumentException;
+	
+	void getListitemUnitById(int id, AsyncCallback<ListitemUnit> callback) throws IllegalArgumentException;
 }
