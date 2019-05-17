@@ -26,22 +26,22 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	private Product product;
 	
 	/**
-	 * Einheit der Menge.
+	 * Fremdschluesselbeziehung zur Mengeneinheit des Eintrags.
 	 */
-	private ListitemUnit unit;
+	private int ListitemUnitID;
 	
 	/**
-	 * Fremdschl�sselbeziehung zum Produkt des Eintrags.
+	 * Fremdschluesselbeziehung zum Produkt des Eintrags.
 	 */
 	private int productID;
 	
 	/**
-	 * Fremdschl�sselbeziehung zur Einkaufsliste des Eintrags.
+	 * Fremdschluesselbeziehung zur Einkaufsliste des Eintrags.
 	 */
 	private int shoppinglistID;
 	
 	/**
-	 * Fremdschl�sselbeziehung zum H�ndler des Eintrags.
+	 * Fremdschluesselbeziehung zum H�ndler des Eintrags.
 	 */
 	private int retailerID;
 	
@@ -109,20 +109,6 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	}
 	
 	/**
-	 * Auslesen der Einheit zu der Menge.
-	 */
-	public ListitemUnit getUnit() {
-		return unit;
-	}
-	
-	/**
-	 * Setzen der Einheit.
-	 */
-	public void setUnit(ListitemUnit unit) {
-		this.unit = unit;
-	}
-	
-	/**
 	 * Auslesen der Produkt ID.
 	 */
 	public int getProductID() {
@@ -162,5 +148,19 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 */
 	public void setRetailerID(int retailerID) {
 		this.retailerID = retailerID;
+	}
+
+	/*
+	 * Ausgeben der ListitemUnit ID
+	 */
+	public int getListitemUnitID() {
+		return ListitemUnitID;
+	}
+
+	/*
+	 * Setzen der ListitemUnit ID
+	 */
+	public void setListitemUnitID(int listitemUnitID) {
+		ListitemUnitID = listitemUnitID;
 	}
 }
