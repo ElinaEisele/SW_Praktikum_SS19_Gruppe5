@@ -28,7 +28,7 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	/**
 	 * Einheit der Menge.
 	 */
-	private Unit unit;
+	private ListitemUnit unit;
 	
 	/**
 	 * Fremdschlï¿½sselbeziehung zum Produkt des Eintrags.
@@ -54,7 +54,7 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	/**
 	 * Konstruktor zum Setzen des Namen, der Menge und der Einheit.
 	 */
-	public Listitem (float amount, Unit unit) {
+	public Listitem (float amount, ListitemUnit unit) {
 		super();
 		this.setAmount(amount);
 		this.setUnit(unit);
@@ -63,7 +63,7 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	/**
 	 * Konstruktor zum Setzen des Namen, der Menge, der Einheit und des Einzelhändlers.
 	 */
-	public Listitem (float amount, Unit unit, Retailer retailer) {
+	public Listitem (float amount, ListitemUnit unit, Retailer retailer) {
 		super();
 		this.setAmount(amount);
 		this.setUnit(unit);
@@ -73,7 +73,7 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	/**
 	 * Konstruktor zum Setzen des Namen, der Menge, der Einheit und des Einzelhändlers.
 	 */
-	public Listitem (float amount, Unit unit, Retailer retailer, Product product) {
+	public Listitem (float amount, ListitemUnit unit, Retailer retailer, Product product) {
 		super();
 		this.setAmount(amount);
 		this.setUnit(unit);		
@@ -111,14 +111,14 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	/**
 	 * Auslesen der Einheit zu der Menge.
 	 */
-	public Unit getUnit() {
+	public ListitemUnit getUnit() {
 		return unit;
 	}
 	
 	/**
 	 * Setzen der Einheit.
 	 */
-	public void setUnit(Unit unit) {
+	public void setUnit(ListitemUnit unit) {
 		this.unit = unit;
 	}
 	
