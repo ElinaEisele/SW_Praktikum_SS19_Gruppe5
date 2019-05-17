@@ -355,5 +355,32 @@ public class GroupMapper {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * User aus einer Gruppe entfernen.
+	 * 
+	 * @param user
+	 * @param group
+	 */
+	
+	public void removeUserFromGroup(int user_id, int group_id) {
+		
+		Connection con = DBConnection.connection();
+		
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement("DELETE FROM memberships (user_id, usergroups_id) VALUES (?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
+			pstmt.setInt(1, user_id);
+			pstmt.setInt(2, group_id);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }

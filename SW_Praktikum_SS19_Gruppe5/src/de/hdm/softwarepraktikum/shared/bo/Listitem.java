@@ -21,27 +21,22 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	private float amount;
 	
 	/**
-	 * Angabe des einzukaufenden Produkts.
+	 * Fremdschluesselbeziehung zur Mengeneinheit des Eintrags.
 	 */
-	private Product product;
+	private int ListitemUnitID;
 	
 	/**
-	 * Einheit der Menge.
-	 */
-	private ListitemUnit unit;
-	
-	/**
-	 * Fremdschlï¿½sselbeziehung zum Produkt des Eintrags.
+	 * Fremdschluesselbeziehung zum Produkt des Eintrags.
 	 */
 	private int productID;
 	
 	/**
-	 * Fremdschlï¿½sselbeziehung zur Einkaufsliste des Eintrags.
+	 * Fremdschluesselbeziehung zur Einkaufsliste des Eintrags.
 	 */
 	private int shoppinglistID;
 	
 	/**
-	 * Fremdschlï¿½sselbeziehung zum Hï¿½ndler des Eintrags.
+	 * Fremdschluesselbeziehung zum Hï¿½ndler des Eintrags.
 	 */
 	private int retailerID;
 	
@@ -52,48 +47,24 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	}
 	
 	/**
-	 * Konstruktor zum Setzen des Namen, der Menge und der Einheit.
+	 * Konstruktor zum Setzen der Menge und der Einheit.
 	 */
-	public Listitem (float amount, ListitemUnit unit) {
-		super();
+	public Listitem (float amount, ListitemUnit listitemUnit) {
 		this.setAmount(amount);
-		this.setUnit(unit);
+		this.setListitemUnitID(listitemUnit.getId());
 	}
 	
 	/**
-	 * Konstruktor zum Setzen des Namen, der Menge, der Einheit und des Einzelhändlers.
+	 * Konstruktor zum Setzen der Menge, der Einheit und des Einzelhändlers.
 	 */
-	public Listitem (float amount, ListitemUnit unit, Retailer retailer) {
-		super();
+	public Listitem (float amount, ListitemUnit listitemUnit, Retailer retailer) {
 		this.setAmount(amount);
-		this.setUnit(unit);
+		this.setListitemUnitID(listitemUnit.getId());
+		this.setRetailerID(retailer.getId());
 		
 	}
-	
-	/**
-	 * Konstruktor zum Setzen des Namen, der Menge, der Einheit und des Einzelhändlers.
-	 */
-	public Listitem (float amount, ListitemUnit unit, Retailer retailer, Product product) {
-		super();
-		this.setAmount(amount);
-		this.setUnit(unit);		
-		this.setProduct(product);
-	}
 
- 	/**
-	 * Ausgeben des zu einkaufenden Produkts.
-	 */
-	public Product getProduct() {
-		return product;
-	}
 
- 	/**
-	 * Setzen des zu einkaufenden Produkts.
-	 */
-	private void setProduct(Product product) {
-		this.product = product;		
-	}
-	
 	/**
 	 * Ausgeben der zu einkaufenden Menge.
 	 */
@@ -106,20 +77,6 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 */
 	public void setAmount(float amount) {
 		this.amount = amount;
-	}
-	
-	/**
-	 * Auslesen der Einheit zu der Menge.
-	 */
-	public ListitemUnit getUnit() {
-		return unit;
-	}
-	
-	/**
-	 * Setzen der Einheit.
-	 */
-	public void setUnit(ListitemUnit unit) {
-		this.unit = unit;
 	}
 	
 	/**
@@ -162,5 +119,19 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 */
 	public void setRetailerID(int retailerID) {
 		this.retailerID = retailerID;
+	}
+
+	/*
+	 * Ausgeben der ListitemUnit ID
+	 */
+	public int getListitemUnitID() {
+		return ListitemUnitID;
+	}
+
+	/*
+	 * Setzen der ListitemUnit ID
+	 */
+	public void setListitemUnitID(int listitemUnitID) {
+		ListitemUnitID = listitemUnitID;
 	}
 }

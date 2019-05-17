@@ -2,6 +2,7 @@
 package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -78,7 +79,7 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getListitemsByNameOf(Shoppinglist shoppinglist, String productname, AsyncCallback<ArrayList<Listitem>>callback) throws IllegalArgumentException;
 
-	void getAllListitemsOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
+	void getListitemsOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Listitem>> callback);
 	
 	void getAllRetailers(AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
 	
@@ -116,7 +117,13 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 
-	void refreshData(ArrayList<Group> g, User u, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
+	void refreshData(ArrayList<Group> groups, User u, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
 	void getProductnameOf(Listitem listitem, AsyncCallback<String> callback) throws IllegalArgumentException;
+	
+	void getAllListitemUnits(AsyncCallback<ArrayList<ListitemUnit>> callback) throws IllegalArgumentException;
+	
+	void getListitemUnitById(int id, AsyncCallback<ListitemUnit> callback) throws IllegalArgumentException;
+	
+	void getListitemMapBy(String searchString, Shoppinglist shoppinglist, AsyncCallback<Map<Shoppinglist, ArrayList<Listitem>>> callback) throws IllegalArgumentException;
 }
