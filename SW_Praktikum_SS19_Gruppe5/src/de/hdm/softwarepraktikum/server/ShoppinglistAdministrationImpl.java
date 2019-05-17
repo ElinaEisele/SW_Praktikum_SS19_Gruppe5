@@ -206,7 +206,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException {
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit unit) throws IllegalArgumentException {
 		
 		Listitem li = new Listitem(amount, unit);
 		// Fremdschluessel zum Retailer wird auf default-Wert 0 gesetzt.
@@ -241,7 +241,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit,
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit unit,
 			Retailer retailer) throws IllegalArgumentException {
 		
 		//Listitem mit den übergebenen Parametern wird erstellt.
@@ -357,7 +357,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Unit getUnitOf(Listitem listitem) throws IllegalArgumentException {
+	public ListitemUnit getUnitOf(Listitem listitem) throws IllegalArgumentException {
 		return this.listitemMapper.getUnitOf(listitem);
 	}
 

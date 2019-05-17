@@ -11,7 +11,7 @@ import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Product;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.Unit;
+import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 
@@ -85,7 +85,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit, Retailer retailer) throws IllegalArgumentException;
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit unit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Einen Retailer anlegen
@@ -391,7 +391,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return Unit 
 	 * @throws IllegalArgumentException
 	 */
-	public Unit getUnitOf(Listitem listitem) throws IllegalArgumentException;
+	public ListitemUnit getUnitOf(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgeben der Menge eines Eintrags
@@ -420,7 +420,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, Unit unit) throws IllegalArgumentException;
+	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit unit) throws IllegalArgumentException;
 
 
 	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException;
