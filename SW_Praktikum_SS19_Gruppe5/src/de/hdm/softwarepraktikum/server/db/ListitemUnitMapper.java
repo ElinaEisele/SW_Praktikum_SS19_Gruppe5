@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>ListitemUnit</code> Objekte. Diese umfasst Methoden um ListitemUnit
+ * Mapper Klasse fÃ¼r </code>ListitemUnit</code> Objekte. Diese umfasst Methoden um ListitemUnit
  * Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das Mapping
  * funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen und
  * DB-Stukturen in Objekte umgewandelt werden.
@@ -19,6 +19,7 @@ public class ListitemUnitMapper {
 	/**
 	 * Speicherung der Instanz dieser Mapperklasse.
 	 */
+
 	private static ListitemUnitMapper listitemUnitMapper = null;
 
 	/**
