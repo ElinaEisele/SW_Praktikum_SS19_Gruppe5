@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.server;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -840,7 +841,31 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		
+		if(searchString != null && shoppinglist != null) {
+			
+			// Alle Listitems der übergebenen Shoppinglist werden abgerufen.
+			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
+			
+			HashMap<Shoppinglist, ArrayList<Listitem>> result = new HashMap<Shoppinglist, ArrayList<Listitem>>();
+			
+			for(Listitem l : listitems) {
+				
+				//Zwischenspeichern der Listitems, welche den Suchkriterien entsprechen
+				ArrayList<Listitem> resultListitems = new ArrayList<Listitem>();
+				
+				// Prüfen, ob der Name des aktuellen Listitems dem SearchString entspricht.
+				if(this.productMapper.findById(l.getProductID()).getName().equals(searchString)) {
+					
+					//Listitem in der ArrayList zwischenspeichern
+					resultListitems.add(l);
+					
+					//aktualisieren der Map
+					result.put(shoppinglist, resultListitems);
+				}
+			}
+			return result;
+		}
 		return null;
 	}
 	
