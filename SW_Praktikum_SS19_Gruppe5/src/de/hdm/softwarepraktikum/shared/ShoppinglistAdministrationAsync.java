@@ -116,7 +116,7 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 
-	void refreshData(ArrayList<Group> g, User u, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
+	void refreshData(ArrayList<Group> groups, User u, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
 	void getProductnameOf(Listitem listitem, AsyncCallback<String> callback) throws IllegalArgumentException;
 }
