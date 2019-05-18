@@ -472,4 +472,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Map<Listitem, String> getListitemsNameMapBy(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe des zugewiesenen Retailers eines Listitems.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
+	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException;
 }
