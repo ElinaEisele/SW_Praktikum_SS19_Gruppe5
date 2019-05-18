@@ -43,9 +43,9 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	ShoppinglistContent shoppinglistContent;
 	ShoppinglistSearchBar shoppinglistSearchBar;
-	ShoppinglistCell shoppinglistCell;
+	//ShoppinglistCell shoppinglistCell;
 	VerticalPanel p1;
-
+	
 	CellTable<Listitem> table;
 	ListDataProvider<Listitem> provider;
 
@@ -53,7 +53,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		super.onLoad();
 		p1 = new VerticalPanel();
 		shoppinglistSearchBar = new ShoppinglistSearchBar();
-		shoppinglistCell = new ShoppinglistCell();
+		//shoppinglistCell = new ShoppinglistCell();
 		shoppinglistContent = new ShoppinglistContent();
 
 		listitems = new ArrayList<>();
@@ -82,6 +82,17 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		listitems.add(listitem2);
 		listitems.add(listitem3);
 		listitems.add(listitem4);
+		
+		//User user1 = this.shoppinglistAdministrationImpl.createUser("Tim", "Tim@gmail.com");
+//		Group group1 = this.shoppinglistAdministrationImpl.createGroupFor(user1, "Gruppe1");
+//		Product product1 = this.shoppinglistAdministrationImpl.createProduct("Banana");
+//		Shoppinglist shoppinglist1 = this.shoppinglistAdministrationImpl.createShoppinglistFor(group1,
+//				"Shoppinglist11");
+//
+//		Listitem listitem1 = this.shoppinglistAdministrationImpl.createListitem(shoppinglist1, "", 2.0f,
+//				ListitemUnit.Kg);
+//
+//		listitems.add(listitem1);
 
 		table = new CellTable<Listitem>();
 
@@ -177,7 +188,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 				if ("click".equals(event.getType())) {
 
 					p1.clear();
-					p1.add(shoppinglistCell);
+				//	p1.add(shoppinglistCell);
 
 					Window.alert("clicked");
 				}
