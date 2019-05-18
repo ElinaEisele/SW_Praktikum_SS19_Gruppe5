@@ -895,6 +895,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return null;
 	}
+
+	/**
+	 * Ausgabe des zugewiesenen Retailers eines Listitems.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
+	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException {
+		return this.retailerMapper.findById(listitem.getRetailerID());
+	}
 	
 	
 	
