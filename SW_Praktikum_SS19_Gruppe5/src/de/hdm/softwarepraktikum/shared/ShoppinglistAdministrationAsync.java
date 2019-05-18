@@ -126,4 +126,6 @@ public interface ShoppinglistAdministrationAsync {
 	void getListitemUnitById(int id, AsyncCallback<ListitemUnit> callback) throws IllegalArgumentException;
 	
 	void getListitemMapBy(String searchString, Shoppinglist shoppinglist, AsyncCallback<Map<Shoppinglist, ArrayList<Listitem>>> callback) throws IllegalArgumentException;
+	
+	void getListitemsNameMapBy(Shoppinglist shoppinglist, AsyncCallback<Map<Listitem, String>> callback) throws IllegalArgumentException;
 }
