@@ -241,10 +241,10 @@ public class ListitemForm extends VerticalPanel {
 //	}
 //	
 
-	/**
-	 * Die Änderung eines Kunden bezieht sich auf seinen Vor- und/oder Nachnamen. Es
-	 * erfolgt der Aufruf der Service-Methode "save".
-	 * 
+	/*
+	 * Wenn das anzuzeigende Listitem gesetzt bzw. gelöscht wird, werden die
+	 * zugehörenden Textfelder mit den Informationen aus dem Listitem Objekt
+	 * gefüllt bzw. gelöscht.
 	 */
 
 	void setSelected(Listitem l) {

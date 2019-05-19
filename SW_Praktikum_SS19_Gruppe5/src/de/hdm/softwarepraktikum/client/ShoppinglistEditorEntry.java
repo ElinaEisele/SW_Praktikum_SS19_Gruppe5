@@ -24,7 +24,7 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;
 import de.hdm.softwarepraktikum.client.gui.Trailer;
 import de.hdm.softwarepraktikum.client.gui.Editor;
-import de.hdm.softwarepraktikum.client.gui.TestTreeViewModel;
+import de.hdm.softwarepraktikum.client.gui.GroupShoppinglistTreeViewModel;
 import de.hdm.softwarepraktikum.client.gui.GroupShowForm;
 import de.hdm.softwarepraktikum.client.gui.Header;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable;
