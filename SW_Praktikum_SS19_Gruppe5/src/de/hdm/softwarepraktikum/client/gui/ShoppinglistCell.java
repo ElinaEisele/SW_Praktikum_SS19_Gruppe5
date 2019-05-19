@@ -70,7 +70,7 @@ Product productToDisplay = null;
 		
 		/*
 		 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-		 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
+		 * angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen Widgets
 		 * bestimmt.
 		 */
 
@@ -97,7 +97,7 @@ Product productToDisplay = null;
 		shoppinglistGrid.setWidget(2, 1, unitNameTextBox);	
 		unitNameTextBox.setText("Test");
 		
-		Label retailerNameLabel = new Label("Händler");
+		Label retailerNameLabel = new Label("Hï¿½ndler");
 		shoppinglistGrid.setWidget(3, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(3, 1, retailerNameTextBox);
 		retailerNameTextBox.setText("Test");
