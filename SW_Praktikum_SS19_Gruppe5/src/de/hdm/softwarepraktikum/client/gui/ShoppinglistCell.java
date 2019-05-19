@@ -15,6 +15,7 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
  */
 public class ShoppinglistCell extends AbstractCell<Shoppinglist> {
 
+
 	@Override
 	public void render(Context context, Shoppinglist value, SafeHtmlBuilder sb) {
 		if (value == null) {
