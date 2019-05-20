@@ -659,21 +659,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(User user) throws IllegalArgumentException {
-		ArrayList<Group> groups = this.groupMapper.getGroupsOf(user);
-		for (int i=0; groups.size()>i; i++) {
-			Group g = groups.get(i);
-			ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
-			for (int u=0; shoppinglists.size()>i; i++) {
-				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(shoppinglists.get(u));
-				
-			}
-			//Die Eintraege, welche dem User zugeteilt wurden muessen hier noch geloescht werden.
-			//Die Zuweisung von Haendlern zu Usern wurde jedoch noch nicht realisiert.
-			//Ausserdem koennte hier noch abgefragt werden, ob die Gruppen nach loeschen eines Users
-			//noch Mitglieder haben oder nicht. Sollen Gruppen ohne Mitglieder gelöscht werden?
-			
-		}
+		
+		this.userMapper.deleteResponsibilities(user.getId());
+		this.userMapper.deleteMembership(user.getId());
 		this.userMapper.delete(user);
+		
 	}
 	
 	/**
