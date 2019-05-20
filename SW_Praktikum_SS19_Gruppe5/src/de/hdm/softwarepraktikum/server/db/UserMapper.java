@@ -259,6 +259,27 @@ public class UserMapper {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * Zuweisung löschen.
+	 * 
+	 * @param userId
+	 */
+	public void deleteResponsibilities(int userId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM responsibilities WHERE shoppinglist_id =" + userId);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * 
