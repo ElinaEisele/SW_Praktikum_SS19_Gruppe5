@@ -15,17 +15,17 @@ public class Editor {
 
 	private Header header = null;
 
-	private ShoppinglistShowForm shoppinglistShowForm = null;
+	private GroupShowForm groupShowForm = null;
 
 	private Trailer trailer = null;
 
 	public void loadForms() {
-
+		
 		TreeViewModel model = new GroupShoppinglistTreeViewModel();
 		CellTree tree = new CellTree(model, null);
 
 		header = new Header();
-		shoppinglistShowForm = new ShoppinglistShowForm();
+		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
 
 		RootPanel.get("main").clear();
@@ -38,7 +38,7 @@ public class Editor {
 		RootPanel.get("trailer").add(trailer);
 		RootPanel.get("aside").add(tree);
 
-		RootPanel.get("main").add(shoppinglistShowForm);
+		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("header").add(header);
 
 	}

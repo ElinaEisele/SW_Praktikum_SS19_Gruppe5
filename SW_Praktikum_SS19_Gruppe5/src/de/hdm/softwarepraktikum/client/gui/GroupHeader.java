@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.Label;
 
 public class GroupHeader extends HorizontalPanel {
 
-	Label groupHeaderLabel = new Label("Hier steht der Name der ausgewählten Gruppe");
+	Label groupHeaderLabel = new Label("Gruppenname");
 
 	Button addUser;
 	Button leaveGroup;

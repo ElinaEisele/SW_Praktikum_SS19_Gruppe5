@@ -25,6 +25,7 @@ import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
+
 public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		
 	private Header header = null;
@@ -118,7 +119,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
 
-		RootPanel.get("header").setVisible(false);
 		RootPanel.get("main").add(loginPanel);
 		
 //		loginLabel.setStylePrimaryName("loginLabel");
