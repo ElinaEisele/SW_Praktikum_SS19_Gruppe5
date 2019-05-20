@@ -30,7 +30,7 @@ public class NavigatorPanel extends VerticalPanel{
 	
 	private CellTree cellTree = new CellTree(gstvm, "Root");
 	private Label refreshInfoLabel = new Label();
-	
+		
 	public void onLoad() {
 		
 		final Timer timer = new Timer() {
@@ -42,6 +42,7 @@ public class NavigatorPanel extends VerticalPanel{
 			}
 			
 		};
+		
 	}
 	
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
