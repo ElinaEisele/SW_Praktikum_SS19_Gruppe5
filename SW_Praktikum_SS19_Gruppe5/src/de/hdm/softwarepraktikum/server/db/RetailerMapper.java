@@ -221,6 +221,33 @@ public class RetailerMapper {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * Eine neue Zuweisung erstellen.
+	 * 
+	 * @param retailer_id
+	 * @param user_id
+	 * @param shoppinglist_id
+	 */
+	public void insertResponsibilities(int retailerId, int userId, int shoppinglistId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO responsibilities (retailer_id, user_id, shoppinglist_id) "
+					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+			pstmt.setInt(1, retailerId);
+			pstmt.setInt(2, userId);
+			pstmt.setInt(3, shoppinglistId);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * 

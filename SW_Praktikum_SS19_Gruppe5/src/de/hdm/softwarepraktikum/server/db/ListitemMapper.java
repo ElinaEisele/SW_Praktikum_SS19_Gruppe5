@@ -92,9 +92,8 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems WHERE id= "
-							+ id);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, "
+					+ "unit_id, group_id, retailer_id FROM listitems WHERE id= " + id);
 
 			if (rs.next()) {
 
@@ -212,8 +211,8 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM shoppinglists INNER JOIN listitems " + "ON shoppinglists.listitem_id=listitems.id "
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN listitems " 
+							+ "ON shoppinglists.listitem_id=listitems.id"
 							+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {
@@ -250,7 +249,8 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
-					+ "ON listitems.retailer_id = retailer.id" + "WHERE retailers.id = " + retailer.getId());
+					+ "ON listitems.retailer_id = retailer.id" 
+					+ "WHERE retailers.id = " + retailer.getId());
 
 			while (rs.next()) {
 				Listitem li = new Listitem();
@@ -287,8 +287,8 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN products "
-					+ "ON listitems.product_id = products.id " + "WHERE listitems.shoppinglist_id= "
-					+ shoppinglist.getId() + "and products.name= " + productname);
+					+ "ON listitems.product_id = products.id " 
+					+ "WHERE listitems.shoppinglist_id= " + shoppinglist.getId() + "and products.name= " + productname);
 
 			while (rs.next()) {
 				Listitem li = new Listitem();
@@ -313,6 +313,7 @@ public class ListitemMapper {
 	 */
 
 	public ArrayList<Listitem> getStandardListitemsOf(Group group) {
+		
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
 
@@ -341,12 +342,25 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * set StandardListitemOf (Group group Listitem listitem)
+	 * 
+	 * Ein Listitem einer Gruppe als Standard setzen
+	 * 
+	 * @param group
+	 * @param listitem
 	 */
 	public void setStandardListitemOf (Group group, Listitem listitem) {
+		
 		Connection con = DBConnection.connection();
 	
-		try { //vervollständigen
+		try { 
+			
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET isStandard =" + true
+					+ "WHERE usergroup_id = ? and id = ?");
+
+			pstmt.setFloat(1, group.getId());
+			pstmt.setInt(2, listitem.getId());
+			pstmt.executeUpdate();
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -354,8 +368,14 @@ public class ListitemMapper {
 		}
 
 	}
+	
 	/**
-	 * ArrayList<Listitem> filterShoppinglistByUsername(Shoppinglist shoppinglist,  String username)
+	 * 
+	 * Eine Shoppingliste nach Username filtern
+	 * 
+	 * @param shoppinglist
+	 * @param username
+	 * @return ArrayList<Listitem>
 	 */
 	
 	public ArrayList<Listitem> filterShoppinglistByUsername(Shoppinglist shoppinglist,  String username){
@@ -399,10 +419,16 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * ArrayList<Listitem> filterShoppinglistByRetailer(Shoppinglist shoppinglist, String retailername)
+	 * 
+	 * Eine Shoppingliste nach Retailern filtern
+	 * 
+	 * @param shoppinglist
+	 * @param retailername
+	 * @return ArrayList<Listitem>
 	 */
 
 	public ArrayList<Listitem> filterShoppinglistByRetailer(Shoppinglist shoppinglist, String retailername){
+		
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
 
@@ -432,21 +458,64 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * float getAmountOf(Listitem listitem)
+	 * 
+	 * Ausgeben des Amounts eines Listitems
+	 * 
+	 * @param listitem
+	 * @return float amount
 	 */
 	public float getAmountOf (Listitem listitem) {
+		
 		Connection con = DBConnection.connection();
+		float amount;
 
 		try {
-
-		//vervollständigen 
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT amount FROM listitems WHERE id=" + listitem.getId());
+			
+			amount = rs.getFloat("amount");
+			
+			return amount;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
-			return null;
+			return (Float) null;
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * Produktname eines Eintrags finden.
+	 * 
+	 * @param listitem
+	 * @return String productname
+	 */
+	public String getProductnameOf(Listitem listitem) {
+		
+		Connection con = DBConnection.connection();
+		String productname;
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT name FROM products INNER JOIN listitems "
+					+ "ON products.id = listitems.product_id"
+					+ "WHERE id=" + listitem.getId());
+			
+			productname = rs.getString("productname");
+			
+			return productname;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+			return (String) null;
 		}
 	}
+
 }
 
 
