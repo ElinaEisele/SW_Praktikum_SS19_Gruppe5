@@ -277,9 +277,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
-		this.listitemMapper.delete(listitem);
-		//Beim Löschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelöscht.
+		
+		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt geloescht.
 		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
+		
+		// Sobald das enthaltene Product-Objekt geloescht wurde, kann das Listitem-Objekt ebenfalls geloescht werden.
+		this.listitemMapper.delete(listitem);
 		
 	}	
 	
@@ -430,7 +433,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Retailer-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Retailer-Objekte
  * 
  * **********************************************************************************
  **/
@@ -546,7 +549,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		Shoppinglist sl = new Shoppinglist(name);
 		sl.setGroupId(group.getId());
 		
-		//Standardeinträge hinzufuegen
+		//Standardeintraege hinzufuegen
 		sl.getListitems().addAll(getStandardListitemsOf(group));
 		
 		// Objekt in der Datenbank speichern.
@@ -571,15 +574,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		ArrayList<Listitem> listitems = this.getAllListitemsOf(shoppinglist);
+		ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
 		
-		// Beim Löschen einer Shoppinglist, müssen auch alle enthaltenen Listitems geloescht werden
+		// Beim Loeschen einer Shoppinglist, muessen auch alle enthaltenen Listitems geloescht werden
 		if(listitems != null) {
 			for(Listitem l : listitems) {
 				this.delete(l);
 			}
 		}
-		// Sobald alle enthaltenen Listitems gelöscht wurden, kann die Shoppinglist gelöscht werden
+		// Sobald alle enthaltenen Listitems geloescht wurden, kann die Shoppinglist geloescht werden
 		this.shoppinglistMapper.delete(shoppinglist);
 		
 	}
