@@ -7,6 +7,6 @@ package de.hdm.softwarepraktikum.client.gui;
  * @author ElinaEisele, JonasWagenknecht	
  *
  */
-public class RemoveUserDialogBox {
+public class LeaveGroupDialogBox {
 
 }
