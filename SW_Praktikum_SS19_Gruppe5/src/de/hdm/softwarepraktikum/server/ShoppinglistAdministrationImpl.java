@@ -736,9 +736,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public void assignUser(User user, Listitem listitem) throws IllegalArgumentException {
-		//Methode nicht implementiert
-	}
+	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
+		this.userMapper.insertRelationship(user, retailer, shoppinglist);
+		}
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
