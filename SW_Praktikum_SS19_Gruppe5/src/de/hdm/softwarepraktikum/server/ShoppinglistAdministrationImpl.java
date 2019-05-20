@@ -14,7 +14,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Die Klasse <code>ShoppinglistAdministrationImpl</code> implementiert das Interface
- * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl sämtliche
+ * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl saemtliche
  * Applikationslogik vorhanden.
  * 
  * @author TimBeutelspacher, FelixRapp, CarlaHofmann
@@ -89,8 +89,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void init() throws IllegalArgumentException {
 
 		/**
-		 * Um mit der Datenbank kommunizieren zu können benäftigt die Klasse
-		 * ContactadministrationImpl einen vollständigen Satz von Mappern.
+		 * Um mit der Datenbank kommunizieren zu koennen benfoetigt die Klasse
+		 * ShoppinglistAdministrationImpl einen vollstaendigen Satz von Mappern.
 		 */
 
 		this.groupMapper = GroupMapper.groupMapper();
@@ -104,7 +104,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Group-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Group-Objekte
  * 
  * **********************************************************************************
  **/
@@ -197,18 +197,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Listitem-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Listitem-Objekte
  * 
  * **********************************************************************************
  **/
 	
 	/**
-	 * Ein Listitem anlegen mit Retailer
+	 * Ein Listitem anlegen ohne Retailer
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
 	 * @param listitemUnit Mengeneinheit 
-	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
@@ -430,7 +429,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Retailer-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Retailer-Objekte
  * 
  * **********************************************************************************
  **/
@@ -466,7 +465,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException {
 		return this.retailerMapper.findAll();
-		
 	}
 
 	/**
@@ -546,7 +544,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		Shoppinglist sl = new Shoppinglist(name);
 		sl.setGroupId(group.getId());
 		
-		//Standardeinträge hinzufuegen
+		//Standardeintraege hinzufuegen
 		sl.getListitems().addAll(getStandardListitemsOf(group));
 		
 		// Objekt in der Datenbank speichern.
@@ -692,7 +690,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
-		//Fehler, da Methode in Mapper noch nicht realisiert.
 		return this.getUsersOf(this.groupMapper.findById(groupId));
 	}
 
@@ -760,16 +757,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
 		this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
-		
-		//Einfacher direkt im Mapper?
-		/*
-		 * Methode im GroupMapper: removeUserFromGroup(int userId, int goupId)
-		 * passendes STATEMENT:
-		 * DELETE * FROM Membership WHERE user_id = userId AND group_id = groupId
-		 * 
-		 * DANN Code in dieser Methode:
-		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
-		 */
 	}
   
 
@@ -833,7 +820,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Suche eines Listite-Objekts anhand eines Suchbegriffs.
+	 * Suche eines Listitem-Objekts anhand eines Suchbegriffs.
 	 * @param searchString ist der String, nach welchem gestucht wird.
 	 * @param shoppinglist ist die Einkaufsliste, in welcher gesucht wird.
 	 * @return Map, in welcher sich die Shoppinglist sowie die darin enthaltenen Listitems befinden.
