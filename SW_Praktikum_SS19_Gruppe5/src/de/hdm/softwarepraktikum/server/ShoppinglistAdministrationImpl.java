@@ -2,6 +2,9 @@ package de.hdm.softwarepraktikum.server;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -378,7 +381,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException {
-		return this.listitemMapper.getProductnameOf(listitem);
+		return this.productMapper.findById(listitem.getProductID()).getName();
 	}
 	
 /**
@@ -526,7 +529,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden fÃ¼r Shoppinglist-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Shoppinglist-Objekte
  * 
  * **********************************************************************************
  **/
@@ -828,4 +831,82 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return false;
 	}
+	
+	/**
+	 * Suche eines Listite-Objekts anhand eines Suchbegriffs.
+	 * @param searchString ist der String, nach welchem gestucht wird.
+	 * @param shoppinglist ist die Einkaufsliste, in welcher gesucht wird.
+	 * @return Map, in welcher sich die Shoppinglist sowie die darin enthaltenen Listitems befinden.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist)
+			throws IllegalArgumentException {
+		
+		if(searchString != null && shoppinglist != null) {
+			
+			// Alle Listitems der übergebenen Shoppinglist werden abgerufen.
+			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
+			
+			HashMap<Shoppinglist, ArrayList<Listitem>> result = new HashMap<Shoppinglist, ArrayList<Listitem>>();
+			
+			for(Listitem l : listitems) {
+				
+				//Zwischenspeichern der Listitems, welche den Suchkriterien entsprechen
+				ArrayList<Listitem> resultListitems = new ArrayList<Listitem>();
+				
+				// Prüfen, ob der Name des aktuellen Listitems dem SearchString entspricht.
+				if(this.productMapper.findById(l.getProductID()).getName().equals(searchString)) {
+					
+					//Listitem in der ArrayList zwischenspeichern
+					resultListitems.add(l);
+					
+					//aktualisieren der Map
+					result.put(shoppinglist, resultListitems);
+				}
+			}
+			return result;
+		}
+		return null;
+	}
+
+	/**
+	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verknüpft.
+	 * @param shoppinglist ist die aktuell selektierte Shoppingliste.
+	 * @return Map, welche Listitems mit dem dazugehörigen Produktname ausgibt.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Map<Listitem, String> getListitemsNameMapBy(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		
+		if(shoppinglist != null) {
+			HashMap<Listitem, String> listitemNameMap = new LinkedHashMap<Listitem, String>();
+			
+			// Alle Listitems aus der übergebenen Shoppinglist werden zwischengespeichert.
+			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
+			
+			String nameToDisplay;
+			
+			for(Listitem l : listitems) {
+				
+				listitemNameMap.put(l, this.getProductnameOf(l));
+			}
+			return listitemNameMap;
+		}
+		return null;
+	}
+
+	/**
+	 * Ausgabe des zugewiesenen Retailers eines Listitems.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
+	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException {
+		return this.retailerMapper.findById(listitem.getRetailerID());
+	}
+	
+	
+	
 }

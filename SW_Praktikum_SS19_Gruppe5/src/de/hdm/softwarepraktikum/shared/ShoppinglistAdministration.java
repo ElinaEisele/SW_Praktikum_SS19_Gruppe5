@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.shared;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -454,4 +455,29 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Boolean refreshData(ArrayList<Group> groups, User u) throws IllegalArgumentException;
+	
+	/**
+	 * Suche eines Listite-Objekts anhand eines Suchbegriffs.
+	 * @param searchString ist der String, nach welchem gestucht wird.
+	 * @param shoppinglist ist die Einkaufsliste, in welcher gesucht wird.
+	 * @return Map, in welcher sich die Shoppinglist sowie die darin enthaltenen Listitems befinden.
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verknüpft.
+	 * @param shoppinglist ist die aktuell selektierte Shoppingliste.
+	 * @return Map, welche Listitems mit dem dazugehörigen Produktname ausgibt.
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Listitem, String> getListitemsNameMapBy(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe des zugewiesenen Retailers eines Listitems.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
+	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException;
 }
