@@ -229,6 +229,26 @@ public class ShoppinglistMapper {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * Zuweisung löschen.
+	 * 
+	 * @param shoppinglistId
+	 */
+	public void deleteResponsibilities(int shoppinglistId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM responsibilities WHERE shoppinglist_id =" + shoppinglistId);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * 
