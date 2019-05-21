@@ -95,15 +95,13 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void setProduct (Product product, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
-
 	void setStandardListitem(Listitem listitem, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void getProductOf(Listitem listitem, AsyncCallback<Product> callback) throws IllegalArgumentException;
 	
 	void getStandardListitemsOf(Group group, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
 	
-	void filterShoppinglistsByUsername(Shoppinglist shoppinglist, User user, AsyncCallback<ArrayList<Listitem>> callback)throws IllegalArgumentException;
+	void filterShoppinglistsByUser(Shoppinglist shoppinglist, User user, AsyncCallback<ArrayList<Listitem>> callback)throws IllegalArgumentException;
 	
 	void filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer, AsyncCallback<ArrayList<Listitem>>callback) throws IllegalArgumentException;
 	
