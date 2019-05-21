@@ -309,12 +309,14 @@ public class UserMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT ...");
+			ResultSet rs = stmt.executeQuery("SELECT ");
 
 			if (rs.next()) {
-				
 				User u = new User();
-				//
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setName(rs.getString("name"));
+				u.setGmailAddress(rs.getString("gMail"));
 				return u;
 			}
 
