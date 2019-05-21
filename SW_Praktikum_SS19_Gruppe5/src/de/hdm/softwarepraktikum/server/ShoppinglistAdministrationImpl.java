@@ -865,8 +865,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 			// Alle Listitems aus der übergebenen Shoppinglist werden zwischengespeichert.
 			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
 			
-			String nameToDisplay;
-			
 			for(Listitem l : listitems) {
 				
 				listitemNameMap.put(l, this.getProductnameOf(l));
