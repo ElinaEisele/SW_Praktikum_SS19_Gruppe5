@@ -276,9 +276,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
-		this.listitemMapper.delete(listitem);
-		//Beim Löschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelöscht.
+		
+		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt geloescht.
 		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
+		
+		// Sobald das enthaltene Product-Objekt geloescht wurde, kann das Listitem-Objekt ebenfalls geloescht werden.
+		this.listitemMapper.delete(listitem);
 		
 	}	
 	
@@ -569,15 +572,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		ArrayList<Listitem> listitems = this.getAllListitemsOf(shoppinglist);
+		ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
 		
-		// Beim Löschen einer Shoppinglist, müssen auch alle enthaltenen Listitems geloescht werden
+		// Beim Loeschen einer Shoppinglist, muessen auch alle enthaltenen Listitems geloescht werden
 		if(listitems != null) {
 			for(Listitem l : listitems) {
 				this.delete(l);
 			}
 		}
-		// Sobald alle enthaltenen Listitems gelöscht wurden, kann die Shoppinglist gelöscht werden
+		// Sobald alle enthaltenen Listitems geloescht wurden, kann die Shoppinglist geloescht werden
 		this.shoppinglistMapper.delete(shoppinglist);
 		
 	}
@@ -654,21 +657,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(User user) throws IllegalArgumentException {
-		ArrayList<Group> groups = this.groupMapper.getGroupsOf(user);
-		for (int i=0; groups.size()>i; i++) {
-			Group g = groups.get(i);
-			ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
-			for (int u=0; shoppinglists.size()>i; i++) {
-				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(shoppinglists.get(u));
-				
-			}
-			//Die Eintraege, welche dem User zugeteilt wurden muessen hier noch geloescht werden.
-			//Die Zuweisung von Haendlern zu Usern wurde jedoch noch nicht realisiert.
-			//Ausserdem koennte hier noch abgefragt werden, ob die Gruppen nach loeschen eines Users
-			//noch Mitglieder haben oder nicht. Sollen Gruppen ohne Mitglieder gelöscht werden?
-			
-		}
+		
+		this.userMapper.deleteResponsibilities(user.getId());
+		this.userMapper.deleteMembership(user.getId());
 		this.userMapper.delete(user);
+		
 	}
 	
 	/**
