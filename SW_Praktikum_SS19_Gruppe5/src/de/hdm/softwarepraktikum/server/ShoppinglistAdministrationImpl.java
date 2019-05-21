@@ -668,7 +668,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		// Alle Responsibilities in Verbindung mit dem User loeschen
 		this.userMapper.deleteResponsibilities(user.getId());
 		// User aus der Gruppe loeschen
-		this.userMapper.deleteMembership(user.getId());
+		this.userMapper.deleteMemberships(user.getId());
 		// Als letztes wird der User an sich geloescht
 		this.userMapper.delete(user);
 	}
@@ -719,7 +719,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 	/**
 	 * User-Objekt mit einer bestimmten E-Mail-Adresse wird ausgegeben
-	 * @param mail ist die EMail des gesuchten Users
+	 * @param mail ist die E-Mail des gesuchten Users
 	 * @return User, welcher uebergebene EMail-Adresse besitzt
 	 * @throws IllegalArgumentException
 	 */
@@ -729,14 +729,14 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Ein Nutzer wird einem Eintrag als Verantwortlicher zugeordnet
+	 * Ein Nutzer wird einem Einzelhaendler als Verantwortlicher zugeordnet.
 	 * @param user ist der Nutzer, welcher einem Eintrag als Verantwortlicher zugeordnet wird
 	 * @param listitem ist er Eintrag, welcher einen Nutzer als Verantwortlichen erhaelt
 	 * @throws IllegalArgumentException
 	 */
 	@Override
 	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
-		this.userMapper.insertRelationship(user, retailer, shoppinglist);
+		this.userMapper.insertResponsibility(user, retailer, shoppinglist);
 		}
 	
 	/**
