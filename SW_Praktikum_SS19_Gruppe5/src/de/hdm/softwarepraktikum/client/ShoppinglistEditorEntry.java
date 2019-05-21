@@ -41,9 +41,9 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 
 	private Header header = null;
-	private GroupShoppinglistTreeViewModel shoppinglistNavigator = null;
+//	private GroupShoppinglistTreeViewModel shoppinglistNavigator = null;
 	
-	private ShoppinglistShowForm shoppinglistShowForm = null;
+//	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private GroupShowForm groupShowForm = null;
 	
 	private Trailer trailer = null;
@@ -56,15 +56,15 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		
 
 		// Create a model for the tree.
-				GroupShoppinglistTreeViewModel model = new GroupShoppinglistTreeViewModel();
+//				GroupShoppinglistTreeViewModel model = new GroupShoppinglistTreeViewModel();
 
 				/*
 				 * Create the tree using the model. We use <code>null</code> as the default
 				 * value of the root node. The default value will be passed to
 				 * CustomTreeModel#getNodeInfo();
 				 */
-				CellTree tree = new CellTree(model, null);
-				tree.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+//				CellTree tree = new CellTree(model, null);
+//				tree.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 				// Open the first playlist by default.
 				//TreeNode rootNode = tree.getRootTreeNode();
@@ -77,13 +77,13 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		
 		
 		header = new Header();
-		shoppinglistShowForm = new ShoppinglistShowForm();
+//		shoppinglistShowForm = new ShoppinglistShowForm();
 		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
 
 		RootPanel.get("header").add(header);	
-		RootPanel.get("aside").add(tree);
-		RootPanel.get("main").add(shoppinglistShowForm);
+//		RootPanel.get("aside").add(tree);
+		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("trailer").add(trailer);
 
 	}
