@@ -6,7 +6,7 @@ import de.hdm.softwarepraktikum.shared.CommonSettings;
 
 /**
  * <p>
- * Klasse mit Eigenschaften und Diensten, die für alle Server-seitigen Klassen
+ * Klasse mit Eigenschaften und Diensten, die für alle serverseitigen Klassen
  * relevant sind.
  * </p>
  * <p>
@@ -27,7 +27,7 @@ public class ServersideSettings extends CommonSettings {
 	
 	/**
      * Auslesen des applikationsweiten zentralen Loggers.
-     * @return Server-Seitige Logger-Instanz 
+     * @return serverseitige Logger-Instanz 
      */
 	
 	public static Logger getLogger() {

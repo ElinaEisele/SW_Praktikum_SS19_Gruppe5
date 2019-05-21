@@ -14,7 +14,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Die Klasse <code>ShoppinglistAdministrationImpl</code> implementiert das Interface
- * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl sämtliche
+ * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl saemtliche
  * Applikationslogik vorhanden.
  * 
  * @author TimBeutelspacher, FelixRapp, CarlaHofmann
@@ -89,8 +89,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void init() throws IllegalArgumentException {
 
 		/**
-		 * Um mit der Datenbank kommunizieren zu können benäftigt die Klasse
-		 * ContactadministrationImpl einen vollständigen Satz von Mappern.
+		 * Um mit der Datenbank kommunizieren zu koennen benfoetigt die Klasse
+		 * ShoppinglistAdministrationImpl einen vollstaendigen Satz von Mappern.
 		 */
 
 		this.groupMapper = GroupMapper.groupMapper();
@@ -104,7 +104,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Group-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Group-Objekte
  * 
  * **********************************************************************************
  **/
@@ -203,12 +203,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  **/
 	
 	/**
-	 * Ein Listitem anlegen mit Retailer
+	 * Ein Listitem anlegen ohne Retailer
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
 	 * @param listitemUnit Mengeneinheit 
-	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
@@ -220,14 +219,14 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setRetailerID(0);
 		
 		/**
-		 * Nach dem createProduct()-Aufruf erhält das Produkt die ID welche mit der Datenbank konsistent ist.
+		 * Nach dem createProduct()-Aufruf erhÃ¤lt das Produkt die ID welche mit der Datenbank konsistent ist.
 		 * Somit kann die Fremdschluesselbeziehung vom Listitem zum Product gesetzt werden.
 		 */
 		Product p = this.createProduct(productname);
 		
 		this.setProduct(p, li);
 
-		//In der Insert-Methode erhält das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
+		//In der Insert-Methode erhÃ¤lt das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
 		return this.listitemMapper.insert(li);
 	}
 	
@@ -245,12 +244,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit,
 			Retailer retailer) throws IllegalArgumentException {
 		
-		//Listitem mit den übergebenen Parametern wird erstellt.
+		//Listitem mit den Ã¼bergebenen Parametern wird erstellt.
 		Listitem li = new Listitem(amount, listitemUnit, retailer);
 		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
 		this.assignRetailer(retailer, li);
 		
-		//Enthaltenes Product-Objekt wird erstellt und erhält ID, welche mit der Datenbank konsistent ist.
+		//Enthaltenes Product-Objekt wird erstellt und erhÃ¤lt ID, welche mit der Datenbank konsistent ist.
 		Product p = this.createProduct(productname);
 		
 		//Fremdschluessel vom Listitem zum Product wird gesetzt.
@@ -277,12 +276,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
-		
-		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt geloescht.
-		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
-		
-		// Sobald das enthaltene Product-Objekt geloescht wurde, kann das Listitem-Objekt ebenfalls geloescht werden.
 		this.listitemMapper.delete(listitem);
+		//Beim LÃ¶schen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt gelÃ¶scht.
+		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
 		
 	}	
 	
@@ -469,7 +465,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException {
 		return this.retailerMapper.findAll();
-		
 	}
 
 	/**
@@ -486,7 +481,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 	/**
 	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
-	 * @param retailerId ist die ID des gesuchten Einzelhï¿½ndlers
+	 * @param retailerId ist die ID des gesuchten EinzelhÃ¯Â¿Â½ndlers
 	 * @return Das erste Retailer-Objekt, welches den Suchkriterien entspricht wird ausgegeben
 	 * @throws IllegalArgumentException
 	 */
@@ -574,7 +569,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
+		ArrayList<Listitem> listitems = this.getAllListitemsOf(shoppinglist);
 		
 		// Beim Loeschen einer Shoppinglist, muessen auch alle enthaltenen Listitems geloescht werden
 		if(listitems != null) {
@@ -582,7 +577,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				this.delete(l);
 			}
 		}
-		// Sobald alle enthaltenen Listitems geloescht wurden, kann die Shoppinglist geloescht werden
+		//Alle Zuständigkeiten für die Einkaufsliste werden gelöscht.
+		this.shoppinglistMapper.deleteResposibility(shoppinglist.getId());
+		// Sobald alle enthaltenen Listitems geloescht wurden, kann die Shoppinglist geloescht werden.
 		this.shoppinglistMapper.delete(shoppinglist);
 		
 	}
@@ -666,7 +663,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		this.userMapper.deleteMembership(user.getId());
 		// Als letztes wird der User an sich geloescht
 		this.userMapper.delete(user);
-		
 	}
 	
 	/**
@@ -688,7 +684,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
-		//Fehler, da Methode in Mapper noch nicht realisiert.
 		return this.getUsersOf(this.groupMapper.findById(groupId));
 	}
 
@@ -732,9 +727,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public void assignUser(User user, Listitem listitem) throws IllegalArgumentException {
-		//Methode nicht implementiert
-	}
+	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
+		this.userMapper.insertRelationship(user, retailer, shoppinglist);
+		}
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
@@ -756,16 +751,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
 		this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
-		
-		//Einfacher direkt im Mapper?
-		/*
-		 * Methode im GroupMapper: removeUserFromGroup(int userId, int goupId)
-		 * passendes STATEMENT:
-		 * DELETE * FROM Membership WHERE user_id = userId AND group_id = groupId
-		 * 
-		 * DANN Code in dieser Methode:
-		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
-		 */
 	}
   
 
@@ -787,7 +772,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Ausgabe einer bestimmten Mengeneinheit anhand der übergebenen ID.
+	 * Ausgabe einer bestimmten Mengeneinheit anhand der Ã¼bergebenen ID.
 	 * @param id ist die ID der gesuchten Mengeneinheit.
 	 * @return ListitemUnit, welches eine bestimmte ID enthaelt
 	 * @throws IllegalArgumentException
@@ -829,7 +814,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Suche eines Listite-Objekts anhand eines Suchbegriffs.
+	 * Suche eines Listitem-Objekts anhand eines Suchbegriffs.
 	 * @param searchString ist der String, nach welchem gestucht wird.
 	 * @param shoppinglist ist die Einkaufsliste, in welcher gesucht wird.
 	 * @return Map, in welcher sich die Shoppinglist sowie die darin enthaltenen Listitems befinden.
@@ -841,7 +826,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 		if(searchString != null && shoppinglist != null) {
 			
-			// Alle Listitems der �bergebenen Shoppinglist werden abgerufen.
+			// Alle Listitems der übergebenen Shoppinglist werden abgerufen.
 			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
 			
 			HashMap<Shoppinglist, ArrayList<Listitem>> result = new HashMap<Shoppinglist, ArrayList<Listitem>>();
@@ -851,7 +836,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				//Zwischenspeichern der Listitems, welche den Suchkriterien entsprechen
 				ArrayList<Listitem> resultListitems = new ArrayList<Listitem>();
 				
-				// Pr�fen, ob der Name des aktuellen Listitems dem SearchString entspricht.
+				// Prüfen, ob der Name des aktuellen Listitems dem SearchString entspricht.
 				if(this.productMapper.findById(l.getProductID()).getName().equals(searchString)) {
 					
 					//Listitem in der ArrayList zwischenspeichern
@@ -867,9 +852,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 
 	/**
-	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verkn�pft.
+	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verknüpft.
 	 * @param shoppinglist ist die aktuell selektierte Shoppingliste.
-	 * @return Map, welche Listitems mit dem dazugeh�rigen Produktname ausgibt.
+	 * @return Map, welche Listitems mit dem dazugehörigen Produktname ausgibt.
 	 * @throws IllegalArgumentException
 	 */
 	@Override
@@ -878,7 +863,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		if(shoppinglist != null) {
 			HashMap<Listitem, String> listitemNameMap = new LinkedHashMap<Listitem, String>();
 			
-			// Alle Listitems aus der �bergebenen Shoppinglist werden zwischengespeichert.
+			// Alle Listitems aus der übergebenen Shoppinglist werden zwischengespeichert.
 			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
 			
 			for(Listitem l : listitems) {
@@ -892,7 +877,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 	/**
 	 * Ausgabe des zugewiesenen Retailers eines Listitems.
-	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zur�ckgegeben werden soll.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
 	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
 	 * @throws IllegalArgumentException
 	 */

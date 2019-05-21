@@ -145,7 +145,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		TextColumn<Listitem> productNameColumn = new TextColumn<Listitem>() {
 			public String getValue(Listitem object) {
 				return shoppinglistAdministration.getProductnameOf(object);
-//				return object.getProduct().getName();
+				return object.getProduct().getName();
 			}
 		};
 		table.addColumn(productNameColumn, "Produkt");
