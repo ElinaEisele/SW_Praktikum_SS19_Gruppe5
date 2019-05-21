@@ -125,13 +125,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
-	 * Speichern eines Retailer-Objekts in der Datenbank
-	 * @param retailer Retailer-Objekt, welches in der Datenbank gepseichert werden soll
-	 * @throws IllegalArgumentException
-	 */
-	public void save(Retailer retailer) throws IllegalArgumentException;
-	
-	/**
 	 * Loeschen des uebergebenen User-Objekts
 	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
@@ -318,15 +311,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param listitem ist er Eintrag, welcher einen Nutzer als Verantwortlichen erhaelt
 	 * @throws IllegalArgumentException
 	 */
-	public void assignUser (User user, Listitem listitem) throws IllegalArgumentException;
-	
-	/**
-	 * Einem Eintrag wird Produkt zugeordnet
-	 * @param product ist das Produkt, welches einem Eintrag zugeordnet wird
-	 * @param listitem ist der Eintrag, welchem ein Produkt zugeordnet wird
-	 * @throws IllegalArgumentException
-	 */
-	public void setProduct (Product product, Listitem listitem) throws IllegalArgumentException;
+	public void assignUser (User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
@@ -359,7 +344,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungbereichc eines Nutzers liegen
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByUsername(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
+	public ArrayList<Listitem> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
 	
 	/**
 	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind

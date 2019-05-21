@@ -22,8 +22,7 @@ public class ListitemMapper {
 	private static ListitemMapper listitemMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von
-	 * ListitemMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von ListitemMapper.
 	 */
 	protected ListitemMapper() {
 	}
@@ -44,7 +43,7 @@ public class ListitemMapper {
 	/**
 	 * Ausgabe einer Liste aller Listitems.
 	 *
-	 * @return Listitemliste
+	 * @return ArrayList<Listitem>
 	 */
 	public ArrayList<Listitem> findAll() {
 
@@ -54,36 +53,30 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, "
-					+ "unit_id, group_id, retailer_id FROM listitems");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems");
 
 			while (rs.next()) {
-
-				Listitem listitem = new Listitem();
-				listitem.setId(rs.getInt("id"));
-				listitem.setCreationDate(rs.getDate("creationDate"));
-				listitem.setAmount(rs.getFloat("amount"));
-
-				listitems.add(listitem);
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
+				li.isStandard(rs.getBoolean("isStandard"));
+				listitems.add(li);
 			}
-
 			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 			return null;
 		}
 
 	}
 
 	/**
-	 * Listitem mittels id finden.
+	 * Listitem mithilfe der Id finden.
 	 *
-	 * @param id: Die id wird uebergeben,um daran das entsprechende Listitem zu
-	 *        finden.
-	 * @return Das Listitem, welches anhand der id gefunden wurde, wird
-	 *         zurueckgegeben.
+	 * @param id
+	 * @return Listitem-Objekt
 	 */
 	public Listitem findById(int id) {
 
@@ -92,17 +85,14 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems WHERE id= "
-							+ id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems WHERE id = " + id);
 
 			if (rs.next()) {
-
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
-
+				li.setIsStandard(rs.getBoolean("isStandard"));
 				return li;
 			}
 
@@ -118,7 +108,7 @@ public class ListitemMapper {
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
 	 * @param listitem
-	 * @return Listitem
+	 * @return Listitem-Objekt
 	 */
 	public Listitem insert(Listitem listitem) {
 
@@ -130,12 +120,10 @@ public class ListitemMapper {
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers ");
 
 			if (rs.next()) {
-
 				listitem.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO Listitem (id, creationDate, amount) VALUES (?, ?, ?)",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO Listitem (id, creationDate, amount) VALUES (?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, listitem.getId());
@@ -145,8 +133,8 @@ public class ListitemMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
+		
 		return listitem;
 
 	}
@@ -155,7 +143,7 @@ public class ListitemMapper {
 	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
 	 *
 	 * @param listitem
-	 * @return Listitem
+	 * @return Listitem-Objekt
 	 */
 	public Listitem update(Listitem listitem) {
 
@@ -197,6 +185,64 @@ public class ListitemMapper {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * Ausgeben des Amounts eines Listitems
+	 * 
+	 * @param listitem
+	 * @return float amount
+	 */
+	public float getAmountOf (Listitem listitem) {
+		
+		Connection con = DBConnection.connection();
+		float amount;
+
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT amount FROM listitems WHERE id=" + listitem.getId());
+			
+			amount = rs.getFloat("amount");
+			
+			return amount;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+			return (Float) null;
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * Produktname eines Eintrags finden.
+	 * 
+	 * @param listitem
+	 * @return String productname
+	 */
+	public String getProductnameOf(Listitem listitem) {
+		
+		Connection con = DBConnection.connection();
+		String productname;
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT name FROM products INNER JOIN listitems "
+					+ "ON products.id = listitems.product_id"
+					+ "WHERE id=" + listitem.getId());
+			
+			productname = rs.getString("productname");
+			
+			return productname;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return (String) null;
+		}
+	}
 
 	/**
 	 * Methode, um alle Listitems einer Shoppingliste auszugeben.
@@ -212,8 +258,8 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM shoppinglists INNER JOIN listitems " + "ON shoppinglists.listitem_id=listitems.id "
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN listitems " 
+							+ "ON shoppinglists.listitem_id=listitems.id"
 							+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {
@@ -250,7 +296,8 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
-					+ "ON listitems.retailer_id = retailer.id" + "WHERE retailers.id = " + retailer.getId());
+					+ "ON listitems.retailer_id = retailer.id" 
+					+ "WHERE retailers.id = " + retailer.getId());
 
 			while (rs.next()) {
 				Listitem li = new Listitem();
@@ -287,8 +334,8 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN products "
-					+ "ON listitems.product_id = products.id " + "WHERE listitems.shoppinglist_id= "
-					+ shoppinglist.getId() + "and products.name= " + productname);
+					+ "ON listitems.product_id = products.id " 
+					+ "WHERE listitems.shoppinglist_id= " + shoppinglist.getId() + "and products.name= " + productname);
 
 			while (rs.next()) {
 				Listitem li = new Listitem();
@@ -313,6 +360,7 @@ public class ListitemMapper {
 	 */
 
 	public ArrayList<Listitem> getStandardListitemsOf(Group group) {
+		
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
 
@@ -341,12 +389,25 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * set StandardListitemOf (Group group Listitem listitem)
+	 * 
+	 * Ein Listitem einer Gruppe als Standard setzen
+	 * 
+	 * @param group
+	 * @param listitem
 	 */
 	public void setStandardListitemOf (Group group, Listitem listitem) {
+		
 		Connection con = DBConnection.connection();
 	
-		try { //vervollständigen
+		try { 
+			
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET isStandard =" + true
+					+ "WHERE usergroup_id = ? and id = ?");
+
+			pstmt.setFloat(1, group.getId());
+			pstmt.setInt(2, listitem.getId());
+			pstmt.executeUpdate();
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -354,11 +415,17 @@ public class ListitemMapper {
 		}
 
 	}
+	
 	/**
-	 * ArrayList<Listitem> filterShoppinglistByUsername(Shoppinglist shoppinglist,  String username)
+	 * 
+	 * Eine Shoppingliste nach Username filtern
+	 * 
+	 * @param shoppinglist
+	 * @param username
+	 * @return ArrayList<Listitem>
 	 */
 	
-	public ArrayList<Listitem> filterShoppinglistByUsername(Shoppinglist shoppinglist,  String username){
+	public ArrayList<Listitem> filterShoppinglistByUser(int shoppinglistId,  int userId){
 		
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
@@ -399,10 +466,16 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * ArrayList<Listitem> filterShoppinglistByRetailer(Shoppinglist shoppinglist, String retailername)
+	 * 
+	 * Eine Shoppingliste nach Retailern filtern
+	 * 
+	 * @param shoppinglist
+	 * @param retailername
+	 * @return ArrayList<Listitem>
 	 */
 
 	public ArrayList<Listitem> filterShoppinglistByRetailer(Shoppinglist shoppinglist, String retailername){
+		
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
 
@@ -430,23 +503,7 @@ public class ListitemMapper {
 			return null;
 		}
 	}
-	
-	/**
-	 * float getAmountOf(Listitem listitem)
-	 */
-	public float getAmountOf (Listitem listitem) {
-		Connection con = DBConnection.connection();
 
-		try {
-
-		//vervollständigen 
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-			return null;
-		}
-	}
 }
 
 

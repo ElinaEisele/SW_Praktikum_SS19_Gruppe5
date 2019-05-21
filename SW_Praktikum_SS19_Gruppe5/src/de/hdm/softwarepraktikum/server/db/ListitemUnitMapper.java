@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>ListitemUnit</code> Objekte. Diese umfasst Methoden um ListitemUnit
+ * Mapper Klasse fuer </code>ListitemUnit</code> Objekte. Diese umfasst Methoden um ListitemUnit
  * Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das Mapping
  * funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen und
  * DB-Stukturen in Objekte umgewandelt werden.
@@ -17,19 +17,19 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 public class ListitemUnitMapper {
 
 	/**
-	 * Speicherung der Instanz dieser Mapperklasse.
+	 * Speicherung der Instanz dieser Mapperklasse
 	 */
 
 	private static ListitemUnitMapper listitemUnitMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UnitMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UnitMapper
 	 */
 	protected ListitemUnitMapper() {
 	}
 
 	/**
-	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
+	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse
 	 *
 	 * @return Listitemunitmapper
 	 */
@@ -42,10 +42,9 @@ public class ListitemUnitMapper {
 	}
 	
 	/**
-	 * Ausgabe einer Liste aller Unit-Objekte.
+	 * Ausgabe einer Liste aller Unit-Objekte
 	 * 
-	 * @return Unitliste
-	 * 
+	 * @return ArrayList<ListitemUnit>
 	 */
 
 	public ArrayList<ListitemUnit> findAll() {
@@ -56,16 +55,15 @@ public class ListitemUnitMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM units ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM units ORDER BY id");
 
 			while (rs.next()) {
-				ListitemUnit u = new ListitemUnit();
-				u.setId(rs.getInt("id"));
-				u.setCreationDate(rs.getDate("creationDate"));
-				u.setName(rs.getString("name"));
-				units.add(u);
+				ListitemUnit liu = new ListitemUnit();
+				liu.setId(rs.getInt("id"));
+				liu.setCreationDate(rs.getDate("creationDate"));
+				liu.setName(rs.getString("name"));
+				units.add(liu);
 			}
-
 			return units;
 
 		} catch (SQLException e) {
@@ -75,10 +73,10 @@ public class ListitemUnitMapper {
 	}
 
 	/**
-	 * Methode um ein Unit mittels seiner Id zu finden.
+	 * Unit mithilfe der id finden
 	 * 
 	 * @param id
-	 * @return Unit
+	 * @return Listitemunit-Objekt
 	 */
 	public ListitemUnit findById(int id) {
 		Connection con = DBConnection.connection();
@@ -86,14 +84,14 @@ public class ListitemUnitMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM units WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM units WHERE id = " + id);
 
 			if (rs.next()) {
-				ListitemUnit u = new ListitemUnit();
-				u.setId(rs.getInt("id"));
-				u.setCreationDate(rs.getDate("creationDate"));
-				u.setName(rs.getString("name"));
-				return u;
+				ListitemUnit liu = new ListitemUnit();
+				liu.setId(rs.getInt("id"));
+				liu.setCreationDate(rs.getDate("creationDate"));
+				liu.setName(rs.getString("name"));
+				return liu;
 			}
 
 		} catch (SQLException e) {
@@ -105,10 +103,10 @@ public class ListitemUnitMapper {
 	}
 	
 	/**
-	 * Unit durch den Namen finden.
+	 * Unit mithilfe des Namens finden
 	 * 
 	 * @param name
-	 * @return Unitliste 
+	 * @return ArrayList<ListitemUnit>
 	 */
 	public ArrayList<ListitemUnit> findByName(String name) {
 
@@ -118,14 +116,14 @@ public class ListitemUnitMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM units WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM units WHERE name = '" + name + "'");
 
 			while (rs.next()) {
-				ListitemUnit u = new ListitemUnit();
-				u.setId(rs.getInt("id"));
-				u.setCreationDate(rs.getDate("creationDate"));
-				u.setName(rs.getString("name"));
-				units.add(u);
+				ListitemUnit liu = new ListitemUnit();
+				liu.setId(rs.getInt("id"));
+				liu.setCreationDate(rs.getDate("creationDate"));
+				liu.setName(rs.getString("name"));
+				units.add(liu);
 			}
 
 			return units;
@@ -138,10 +136,10 @@ public class ListitemUnitMapper {
 	}
 
 	/**
-	 *Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen.
+	 *Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen
 	 * 
 	 * @param unit
-	 * @return Unit
+	 * @return Listitemunit-Objekt
 	 */
 	public ListitemUnit insert(ListitemUnit unit) {
 
@@ -156,28 +154,26 @@ public class ListitemUnitMapper {
 				unit.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO units (id, creationDate, name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO units (id, creationDate, name) VALUES (?, ?, ?)", 
+					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, unit.getId());
 			pstmt.setDate(2, (Date) unit.getCreationDate());
 			pstmt.setString(3, unit.getName());
 			pstmt.executeUpdate();
-
 			return unit;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-
 		}
 
 	}
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank
 	 * 
 	 * @param unit
-	 * @return Unit 
+	 * @return Listitemunit -Objekt
 	 */
 	public ListitemUnit update(ListitemUnit unit) {
 
@@ -201,7 +197,7 @@ public class ListitemUnitMapper {
 	}
 
 	/**
-	 * Loeschen eines Units aus der Datenbank.
+	 * Loeschen eines Units aus der Datenbank
 	 * 
 	 * @param unit
 	 */
@@ -212,11 +208,46 @@ public class ListitemUnitMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM units WHERE id =" + unit.getId());
+			stmt.executeUpdate("DELETE FROM units WHERE id = " + unit.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * 
+	 * Unit eines Eintrags finden
+	 * 
+	 * @param listitem
+	 * @return Listitemunit-Objekt
+	 */
+	
+	public ListitemUnit getUnitOf(Listitem listitem) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT listitem.id, listitem.unit_id, unit.creationDate, unit.name "
+					+ "FROM listitems INNER JOIN units "
+					+ "ON listitems.unit_id = units.id "
+					+ "WHERE listitem.id = " + listitem.getId());
+			
+			while(rs.next()) {
+				ListitemUnit liu = new ListitemUnit();
+				liu.setId(rs.getInt("unit_id"));
+				liu.setCreationDate(rs.getDate("creationDate"));
+				liu.setName(rs.getString("name"));
+				return liu;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

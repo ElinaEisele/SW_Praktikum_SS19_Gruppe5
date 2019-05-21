@@ -36,9 +36,14 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	private int shoppinglistID;
 	
 	/**
-	 * Fremdschluesselbeziehung zum Hï¿½ndler des Eintrags.
+	 * Fremdschluesselbeziehung zum Haendler des Eintrags.
 	 */
 	private int retailerID;
+	
+	/**
+	 * Attribut, welches wiedergibt, ob ein Listitem ein Standard-Listitem innerhalb einer Gruppe ist.
+	 */
+	private boolean isStandard;
 	
 	/*
 	 * Default-Konstruktor
@@ -53,17 +58,6 @@ public class Listitem extends BusinessObject implements IsSerializable{
 		this.setAmount(amount);
 		this.setListitemUnitID(listitemUnit.getId());
 	}
-	
-	/**
-	 * Konstruktor zum Setzen der Menge, der Einheit und des Einzelhändlers.
-	 */
-	public Listitem (float amount, ListitemUnit listitemUnit, Retailer retailer) {
-		this.setAmount(amount);
-		this.setListitemUnitID(listitemUnit.getId());
-		this.setRetailerID(retailer.getId());
-		
-	}
-
 
 	/**
 	 * Ausgeben der zu einkaufenden Menge.
@@ -122,16 +116,30 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	}
 
 	/*
-	 * Ausgeben der ListitemUnit ID
+	 * Ausgeben der ListitemUnit ID.
 	 */
 	public int getListitemUnitID() {
 		return ListitemUnitID;
 	}
 
 	/*
-	 * Setzen der ListitemUnit ID
+	 * Setzen der ListitemUnit ID.
 	 */
 	public void setListitemUnitID(int listitemUnitID) {
 		ListitemUnitID = listitemUnitID;
+	}
+
+	/*
+	 * Ausgeben des boolean-Werts isStandard.
+	 */
+	public boolean isStandard() {
+		return isStandard;
+	}
+
+	/*
+	 * Setzen des isStandard Attributs.
+	 */
+	public void setStandard(boolean isStandard) {
+		this.isStandard = isStandard;
 	}
 }

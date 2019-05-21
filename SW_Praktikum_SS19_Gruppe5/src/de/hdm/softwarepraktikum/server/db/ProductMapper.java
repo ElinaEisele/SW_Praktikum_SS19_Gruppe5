@@ -17,19 +17,19 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 public class ProductMapper {
 
 	/**
-	 * Speicherung der Instanz dieser Mapperklasse.
+	 * Speicherung der Instanz dieser Mapperklasse
 	 */
 	private static ProductMapper productMapper = null;
 
 	/**
 	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von
-	 * ProductMapper.
+	 * ProductMapper
 	 */
 	protected ProductMapper() {
 	}
 
 	/**
-	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
+	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse
 	 *
 	 * @return Productmapper
 	 */
@@ -37,14 +37,13 @@ public class ProductMapper {
 		if (productMapper == null) {
 			productMapper = new ProductMapper();
 		}
-
 		return productMapper;
 	}
 
 	/**
-	 * Ausgabe einer Liste aller Produkte.
+	 * Ausgabe einer Liste aller Produkte
 	 *
-	 * @return Productlist
+	 * @return ArrayList<Product>
 	 */
 	public ArrayList<Product> findAll() {
 
@@ -54,8 +53,7 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM products");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM products");
 
 			while (rs.next()) {
 				Product p = new Product();
@@ -75,10 +73,10 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Produkt mittels seiner id finden.
+	 * Produkt mithilfe seiner id finden
 	 *
 	 * @param id
-	 * @return Product
+	 * @return Product-Objekt
 	 */
 	public Product findById(int id) {
 
@@ -87,8 +85,7 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM products WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE id = " + id);
 
 			if (rs.next()) {
 				Product p = new Product();
@@ -106,10 +103,10 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Produkt mithilfe des Produktnamens finden.
+	 * Produkt mithilfe des Produktnamens finden
 	 * 
 	 * @param name
-	 * @return Productlist
+	 * @return ArrayList<Product>
 	 */
 	public ArrayList<Product> findByName(String name) {
 
@@ -119,7 +116,7 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM products WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 
@@ -129,21 +126,19 @@ public class ProductMapper {
 				product.setName(rs.getString("name"));
 				products.add(product);
 			}
-			
 			return products;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
+	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen
 	 *
 	 * @param product
-	 * @return Product
+	 * @return Product-Objekt
 	 */
 	public Product insert(Product product) {
 
@@ -152,7 +147,7 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM products ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM products");
 
 			if (rs.next()) {
 				product.setId(rs.getInt("maxid") + 1);
@@ -165,34 +160,32 @@ public class ProductMapper {
 			pstmt.setDate(2, (Date) product.getCreationDate());
 			pstmt.setString(3, product.getName());
 			pstmt.executeUpdate();
-			
 			return product;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-
 		}
 
 	}
 
 	/**
-	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
+	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank
 	 *
 	 * @param product
-	 * @return Product
+	 * @return Product-Objekt
 	 */
 	public Product update(Product product) {
 
 		Connection con = DBConnection.connection();
 
 		try {
+			
 			PreparedStatement pstmt = con.prepareStatement("UPDATE products SET name = ? WHERE id = ? ");
 			
 			pstmt.setString(1, product.getName());
 			pstmt.setInt(2, product.getId());
-			pstmt.executeUpdate();
-			
+			pstmt.executeUpdate();		
 			return product;
 			
 		} catch (SQLException e) {
@@ -203,10 +196,11 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Delete Methode, um ein Produkt-Objekt aus der Datenbank zu entfernen.
+	 * Delete Methode, um ein Produkt-Objekt aus der Datenbank zu entfernen
 	 *
 	 * @param product
 	 */
+	
 	public void delete(Product product) {
 
 		Connection con = DBConnection.connection();
@@ -222,10 +216,10 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Methode, um das Produkt eines Listitems zu finden.
+	 * Methode, um das Produkt eines Listitems zu finden
 	 * 
 	 * @param listitem
-	 * @return Produkt des Listitems
+	 * @return Product-Objekt
 	 */
 	public Product getProductOf(Listitem listitem) {
 
@@ -234,27 +228,24 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT product_id FROM listitems WHERE id = " + listitem.getId());
+			ResultSet rs = stmt.executeQuery("SELECT listitems.product_id, products.id, products.creationDate, "
+					+ "products.name FROM listitems INNER JOIN products"
+					+ "ON listitems.product_id = products.id"
+					+ "WHERE listitems.id = " + listitem.getId());
 
 			if (rs.next()) {
-
-				Product p = ProductMapper.productMapper().findById(rs.getInt("id"));
-				p.getId();
-				p.getCreationDate();
-				p.getName();
+				Product p = new Product();
+				p.setId(rs.getInt("id"));
+				p.setCreationDate(rs.getDate("creationDate"));
+				p.setName(rs.getString("name"));
 				return p;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return null;
-
 	}
 	
-	public Product getProductnameOf(Listitem listitem) {
-		
-	}
 
 }
