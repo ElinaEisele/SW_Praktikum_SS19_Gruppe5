@@ -231,7 +231,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 */
 		Product p = this.createProduct(productname);
 		
-		this.setProduct(p, li);
+		li.setProductID(p.getId());;
 
 		//In der Insert-Methode erhaelt das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
 		return this.listitemMapper.insert(li);
@@ -521,6 +521,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
  * **********************************************************************************
  **/
 	
+	
 	/**
 	 * Eine Shoppinglist anlegen
 	 * @param group Gruppe, welcher eine Shoppinglist hinzugefuegt werden soll
@@ -530,14 +531,32 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public Shoppinglist createShoppinglistFor(Group group, String name) throws IllegalArgumentException {
+		//Erst wird ein neues Shoppinglist-Objekt erstellt.
 		Shoppinglist sl = new Shoppinglist(name);
 		sl.setGroupId(group.getId());
 		
-		//Standardeintraege hinzufuegen
-		sl.getListitems().addAll(getStandardListitemsOf(group));
+		//Um die korrekte (mit der Datenbank konsistente) Id zu erhalten, muss erst die insert-Methode aufgerufen werden.
+		Shoppinglist shoppl =  this.shoppinglistMapper.insert(sl);
 		
-		// Objekt in der Datenbank speichern.
-		return this.shoppinglistMapper.insert(sl);
+		//Alle Standardeintraege der Gruppe werden zwischengespeichert.
+		ArrayList<Listitem> standard = this.listitemMapper.getStandardListitemsOf(group);
+		
+		//Neue Listitem-Objekte mit der Fremdschluesselbeziehung zur neuen Shoppinglist werden erstellt.
+		for(Listitem l : standard) {
+			/*
+			 * Überpruefen, ob das Listitem einem Retailer zugewiesen wurde. Damit wird entschieden, welche createListitem() aufgerufen wird.
+			 * Hierbei muss beachtet werden, dass die ReatilerId "1" der Default-Wert ist.
+			 */
+			if(this.getRetailerOf(l).getId() != 1) {
+				//Erstellen eines Listitems MIT Retailer.
+				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l));
+			}
+			else {
+				//Erstellen eines Listitems OHNE Retailer.
+				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l));
+			}
+		}
+		return shoppl;
 	}
 	
 	/**
@@ -547,7 +566,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		shoppinglistMapper.update(shoppinglist);
+		this.shoppinglistMapper.update(shoppinglist);
 		
 	}
 	
@@ -567,7 +586,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 			}
 		}
 		//Alle Zustaendigkeiten fuer die Einkaufsliste werden geloescht.
-		this.shoppinglistMapper.deleteResposibility(shoppinglist.getId());
+		this.shoppinglistMapper.deleteResposibilities(shoppinglist.getId());
 		// Sobald alle enthaltenen Listitems geloescht wurden, kann die Shoppinglist geloescht werden.
 		this.shoppinglistMapper.delete(shoppinglist);
 		
