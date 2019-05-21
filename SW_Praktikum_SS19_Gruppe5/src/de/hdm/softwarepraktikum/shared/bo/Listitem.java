@@ -58,17 +58,6 @@ public class Listitem extends BusinessObject implements IsSerializable{
 		this.setAmount(amount);
 		this.setListitemUnitID(listitemUnit.getId());
 	}
-	
-	/**
-	 * Konstruktor zum Setzen der Menge, der Einheit und des Einzelhaendlers.
-	 */
-	public Listitem (float amount, ListitemUnit listitemUnit, Retailer retailer) {
-		this.setAmount(amount);
-		this.setListitemUnitID(listitemUnit.getId());
-		this.setRetailerID(retailer.getId());
-		
-	}
-
 
 	/**
 	 * Ausgeben der zu einkaufenden Menge.

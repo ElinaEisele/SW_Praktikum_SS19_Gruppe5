@@ -117,7 +117,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM usergroups WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM usergroups WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 
