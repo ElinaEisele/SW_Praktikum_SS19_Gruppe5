@@ -116,7 +116,7 @@ public class ListitemUnitMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM units WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM units WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 				ListitemUnit liu = new ListitemUnit();

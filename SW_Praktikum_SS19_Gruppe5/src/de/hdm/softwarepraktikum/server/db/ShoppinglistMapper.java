@@ -120,7 +120,7 @@ public class ShoppinglistMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id FROM retailers WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id FROM retailers WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 				Shoppinglist sl = new Shoppinglist();
