@@ -128,9 +128,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public Group createGroupFor(User user, String name) throws IllegalArgumentException {
 		Group group = new Group(name);
-		this.groupMapper.insert(group);
-		this.groupMapper.addUserToGroup(user, group);
-		return group;
+		//Durch den insert-Aufruf wird die ID gesetzt, welche mit der Datenbank konsistent ist.
+		Group g = this.groupMapper.insert(group);
+		//Nachdem die korrekte ID vorhanden ist, wird das Membership gesetzt.
+		this.groupMapper.addUserToGroup(user, g);
+		
+		return g;
 	}
 	
 	/**
@@ -151,6 +154,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Group group) throws IllegalArgumentException {
+		// ArrayList mit allen Shoppinglists innerhalb der Gruppe.
 		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistsOf(group);
 		
 		//Bevor eine Gruppe geloescht wird, werden alle Einkauslisten der Gruppe
@@ -160,6 +164,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				this.delete(s);
 			}
 		}
+		//Alle Memberships im Zusammenhang mit dieser Gruppe werden gelöscht.
+		this.groupMapper.deleteMemberships(group.getId());
+		//Als letztes wird die Gruppe an sich gelöscht.
 		this.groupMapper.delete(group);
 	}
 	
