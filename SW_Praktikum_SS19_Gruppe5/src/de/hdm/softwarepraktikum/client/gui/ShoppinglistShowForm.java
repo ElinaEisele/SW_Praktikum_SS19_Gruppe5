@@ -19,7 +19,6 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	private Shoppinglist selectedShoppinglist;
 
 	public void onLoad() {
-		super.onLoad();
 
 		shoppinglistHeader = new ShoppinglistHeader();
 		shoppinglistContent = new ShoppinglistContent();
