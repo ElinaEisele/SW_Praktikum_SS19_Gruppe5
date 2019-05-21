@@ -219,4 +219,39 @@ public class ListitemUnitMapper {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * Unit eines Eintrags finden.
+	 * 
+	 * @param listitem
+	 * @return Unit-Objekt
+	 */
+	
+	public ListitemUnit getUnitOf(Listitem listitem) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT listitem.id, listitem.unit_id, unit.creationDate, unit.name"
+					+ " FROM listitems INNER JOIN units"
+					+ "ON listitems.unit_id = units.id"
+					+ "WHERE listitem.id =" + listitem.getId());
+			
+			while(rs.next()) {
+				ListitemUnit liu = new ListitemUnit();
+				liu.setId(rs.getInt("unit_id"));
+				liu.setCreationDate(rs.getDate("creationDate"));
+				liu.setName(rs.getString("name"));
+				return liu;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 }

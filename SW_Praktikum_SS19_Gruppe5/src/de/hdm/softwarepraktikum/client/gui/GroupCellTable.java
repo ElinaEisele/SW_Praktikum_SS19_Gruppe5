@@ -1,6 +1,6 @@
 package de.hdm.softwarepraktikum.client.gui;
 
-import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 /**
  * Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
@@ -8,8 +8,8 @@ import com.google.gwt.user.cellview.client.CellTable;
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class GroupCellTable extends CellTable{
-	
+public class GroupCellTable extends HorizontalPanel {
+
 	public void onLoad() {
 		super.onLoad();
 	}

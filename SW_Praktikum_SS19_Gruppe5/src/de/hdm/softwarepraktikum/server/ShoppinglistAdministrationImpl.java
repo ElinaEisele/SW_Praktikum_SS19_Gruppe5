@@ -2,6 +2,9 @@ package de.hdm.softwarepraktikum.server;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -11,7 +14,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Die Klasse <code>ShoppinglistAdministrationImpl</code> implementiert das Interface
- * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl sämtliche
+ * ShoppinglistAdministation. In der Klasse ist neben der ReportGeneratorImpl saemtliche
  * Applikationslogik vorhanden.
  * 
  * @author TimBeutelspacher, FelixRapp, CarlaHofmann
@@ -86,8 +89,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void init() throws IllegalArgumentException {
 
 		/**
-		 * Um mit der Datenbank kommunizieren zu können benäftigt die Klasse
-		 * ContactadministrationImpl einen vollständigen Satz von Mappern.
+		 * Um mit der Datenbank kommunizieren zu koennen benfoetigt die Klasse
+		 * ShoppinglistAdministrationImpl einen vollstaendigen Satz von Mappern.
 		 */
 
 		this.groupMapper = GroupMapper.groupMapper();
@@ -101,7 +104,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Group-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Group-Objekte
  * 
  * **********************************************************************************
  **/
@@ -194,18 +197,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Listitem-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Listitem-Objekte
  * 
  * **********************************************************************************
  **/
 	
 	/**
-	 * Ein Listitem anlegen mit Retailer
+	 * Ein Listitem anlegen ohne Retailer
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
 	 * @param listitemUnit Mengeneinheit 
-	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
@@ -221,14 +223,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		 * Somit kann die Fremdschluesselbeziehung vom Listitem zum Product gesetzt werden.
 		 */
 		Product p = this.createProduct(productname);
-		li.setProductID(p.getId());
 		
-		/*
-		 * Problem: Product hat ein Attribut "listitemId", welches jedoch erst gesetzt werden kann nach dem 
-		 * Aufruf der insert(Listiitem)-Methode.
-		 * Lösung: In der Insert-Methode des Listitem-Objekts muss die Fremdschluesselbeziehung vom enthaltenen Produkt mit der
-		 * korrekten und konsistenten ID des Listitems überschrieben werden.
-		 */
+		this.setProduct(p, li);
 
 		//In der Insert-Methode erhält das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
 		return this.listitemMapper.insert(li);
@@ -305,7 +301,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
@@ -384,12 +380,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException {
-		return this.listitemMapper.getProductnameOf(listitem);
+		return this.productMapper.findById(listitem.getProductID()).getName();
 	}
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Product-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
  * 
  * **********************************************************************************
  **/
@@ -433,7 +429,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Retailer-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Retailer-Objekte
  * 
  * **********************************************************************************
  **/
@@ -469,7 +465,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException {
 		return this.retailerMapper.findAll();
-		
 	}
 
 	/**
@@ -532,7 +527,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Shoppinglist-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Shoppinglist-Objekte
  * 
  * **********************************************************************************
  **/
@@ -549,7 +544,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		Shoppinglist sl = new Shoppinglist(name);
 		sl.setGroupId(group.getId());
 		
-		//Standardeinträge hinzufuegen
+		//Standardeintraege hinzufuegen
 		sl.getListitems().addAll(getStandardListitemsOf(group));
 		
 		// Objekt in der Datenbank speichern.
@@ -624,7 +619,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für User-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer User-Objekte
  * 
  * **********************************************************************************
  **/
@@ -667,9 +662,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				ArrayList<Listitem> listitems = this.listitemMapper.getListitemsOf(shoppinglists.get(u));
 				
 			}
-			//Die Einträge, welche dem User zugeteilt wurden müssen hier noch gelöscht werden.
-			//Die Zuweisung von Händlern zu Usern wurde jedoch noch nicht realisiert.
-			//Außerdem könnte hier noch abgefragt werden, ob die Gruppen nach löschen eines Users
+			//Die Eintraege, welche dem User zugeteilt wurden muessen hier noch geloescht werden.
+			//Die Zuweisung von Haendlern zu Usern wurde jedoch noch nicht realisiert.
+			//Ausserdem koennte hier noch abgefragt werden, ob die Gruppen nach loeschen eines Users
 			//noch Mitglieder haben oder nicht. Sollen Gruppen ohne Mitglieder gelöscht werden?
 			
 		}
@@ -695,7 +690,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<User> getUsersOf(int groupId) throws IllegalArgumentException {
-		//Fehler, da Methode in Mapper noch nicht realisiert.
 		return this.getUsersOf(this.groupMapper.findById(groupId));
 	}
 
@@ -739,9 +733,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public void assignUser(User user, Listitem listitem) throws IllegalArgumentException {
-		//Methode nicht implementiert
-	}
+	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
+		this.userMapper.insertRelationship(user, retailer, shoppinglist);
+		}
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
@@ -763,22 +757,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
 		this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
-		
-		//Einfacher direkt im Mapper?
-		/*
-		 * Methode im GroupMapper: removeUserFromGroup(int userId, int goupId)
-		 * passendes STATEMENT:
-		 * DELETE * FROM Membership WHERE user_id = userId AND group_id = groupId
-		 * 
-		 * DANN Code in dieser Methode:
-		 * return this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
-		 */
 	}
   
 
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für ListitemUnit-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer ListitemUnit-Objekte
  * 
  * **********************************************************************************
  **/	
@@ -814,7 +798,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 	
 	/**
-	 * Gibt einen Boolean Wert zurück ob sich in den Gruppen des Nutzers etwas veraendert hat
+	 * Gibt einen Boolean Wert zurueck ob sich in den Gruppen des Nutzers etwas veraendert hat
 	 * @param groups Gruppen des Nutzers
 	 * @param u Objekt des Nutzers 
 	 * @return Boolean
@@ -834,4 +818,82 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return false;
 	}
+	
+	/**
+	 * Suche eines Listitem-Objekts anhand eines Suchbegriffs.
+	 * @param searchString ist der String, nach welchem gestucht wird.
+	 * @param shoppinglist ist die Einkaufsliste, in welcher gesucht wird.
+	 * @return Map, in welcher sich die Shoppinglist sowie die darin enthaltenen Listitems befinden.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist)
+			throws IllegalArgumentException {
+		
+		if(searchString != null && shoppinglist != null) {
+			
+			// Alle Listitems der �bergebenen Shoppinglist werden abgerufen.
+			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
+			
+			HashMap<Shoppinglist, ArrayList<Listitem>> result = new HashMap<Shoppinglist, ArrayList<Listitem>>();
+			
+			for(Listitem l : listitems) {
+				
+				//Zwischenspeichern der Listitems, welche den Suchkriterien entsprechen
+				ArrayList<Listitem> resultListitems = new ArrayList<Listitem>();
+				
+				// Pr�fen, ob der Name des aktuellen Listitems dem SearchString entspricht.
+				if(this.productMapper.findById(l.getProductID()).getName().equals(searchString)) {
+					
+					//Listitem in der ArrayList zwischenspeichern
+					resultListitems.add(l);
+					
+					//aktualisieren der Map
+					result.put(shoppinglist, resultListitems);
+				}
+			}
+			return result;
+		}
+		return null;
+	}
+
+	/**
+	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verkn�pft.
+	 * @param shoppinglist ist die aktuell selektierte Shoppingliste.
+	 * @return Map, welche Listitems mit dem dazugeh�rigen Produktname ausgibt.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Map<Listitem, String> getListitemsNameMapBy(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		
+		if(shoppinglist != null) {
+			HashMap<Listitem, String> listitemNameMap = new LinkedHashMap<Listitem, String>();
+			
+			// Alle Listitems aus der �bergebenen Shoppinglist werden zwischengespeichert.
+			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
+			
+			String nameToDisplay;
+			
+			for(Listitem l : listitems) {
+				
+				listitemNameMap.put(l, this.getProductnameOf(l));
+			}
+			return listitemNameMap;
+		}
+		return null;
+	}
+
+	/**
+	 * Ausgabe des zugewiesenen Retailers eines Listitems.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zur�ckgegeben werden soll.
+	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException {
+		return this.retailerMapper.findById(listitem.getRetailerID());
+	}
+	
+	
+	
 }

@@ -223,6 +223,54 @@ public class GroupMapper {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * Eine neue Membershipbeziehung erstellen.
+	 * 
+	 * @param user_id
+	 * @param usergroup_id
+	 */
+	public void insertMemberships(int user_id, int usergroup_id) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
+			pstmt.setInt(1, user_id);
+			pstmt.setInt(2, usergroup_id);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * Eine Membershipbeziehung löschen.
+	 * 
+	 * @param usergroup_id
+	 */
+	public void deleteMemberships(int groupId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM memberships WHERE usergroup_id = " + groupId);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 	/**
 	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen
@@ -238,7 +286,7 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN usergroups "
-					+ "ON shoppinglists.usergroup_id=usergroups.id");
+					+ "ON shoppinglists.usergroup_id = usergroups.id");
 
 			if (rs.next()) {
 				Group g = new Group();
@@ -370,12 +418,8 @@ public class GroupMapper {
 		
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("DELETE FROM memberships (user_id, usergroups_id) VALUES (?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
-
-			pstmt.setInt(1, user_id);
-			pstmt.setInt(2, group_id);
-			pstmt.executeUpdate();
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM memberships WHERE usergroup_id =" + group_id + "and user_id =" + user_id);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

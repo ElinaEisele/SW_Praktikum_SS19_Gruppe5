@@ -211,27 +211,7 @@ public class UserMapper {
 		return user;
 
 	}
-
-	/**
-	 * Delete Methode um User-Datensatz aus der DB zu entfernen.
-	 * 
-	 * @param user
-	 */
-
-	public void delete(User user) {
-		
-		Connection con = DBConnection.connection();
-
-		try {
-
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM users WHERE id =" + user.getId());
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 *
@@ -259,6 +239,69 @@ public class UserMapper {
 		
 		return user;
 	}
+
+	/**
+	 * Delete Methode um User-Datensatz aus der DB zu entfernen.
+	 * 
+	 * @param user
+	 */
+
+	public void delete(User user) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM users WHERE id =" + user.getId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * Zuweisung löschen.
+	 * 
+	 * @param userId
+	 */
+	public void deleteResponsibilities(int userId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM responsibilities WHERE shoppinglist_id =" + userId);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
+	 * 
+	 * Eine Membershipbeziehung löschen.
+	 * 
+	 * @param usergroup_id
+	 */
+	public void deleteMemberships(int userId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM memberships WHERE user_id = " + userId);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 	/**
 	 * 

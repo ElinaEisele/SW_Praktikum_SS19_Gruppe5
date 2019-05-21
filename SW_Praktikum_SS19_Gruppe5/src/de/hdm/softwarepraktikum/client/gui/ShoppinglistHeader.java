@@ -1,5 +1,7 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -13,25 +15,39 @@ import com.google.gwt.user.client.ui.Label;
 
 public class ShoppinglistHeader extends HorizontalPanel {
 
-	Button ausgewaehlteGruppe;	
+	Label listLabel;
 	Button addListitem;
 	Button deleteShoppinglist;
 	Button assignUserToRetailer;
 	Button editShoppinglist;
+	
+	NewListitemForm newListitemForm;
+	ShoppinglistShowForm shoppinglistShowForm; 
+	// Methode in ShoppinglistShowForm aufrufen und dieses Attribut hier setzen
 
 	public void onLoad() {
 		super.onLoad();
 		
-		ausgewaehlteGruppe = new Button();
-		addListitem = new Button("Add Item");
-		deleteShoppinglist = new Button("Delete Shoppinglist");
+		listLabel = new Label("getListName");
+		addListitem = new Button("Eintrag hinzufügen");
+		deleteShoppinglist = new Button("Einkaufsliste löschen");
 		assignUserToRetailer = new Button("Nutzer zuordnen");
 		editShoppinglist = new Button("Editieren");
-	
-		ausgewaehlteGruppe.setText("getGroupname |");
-		ausgewaehlteGruppe.setStyleName("ausgewaehlteGruppeShoppinglistHeaderButton ");
-		ausgewaehlteGruppe.getElement().setAttribute("disabled", "disabled");
 		
+		newListitemForm = new NewListitemForm();
+	
+		listLabel.setStyleName("ListLabel");
+		
+		addListitem.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				shoppinglistShowForm.clear();
+				shoppinglistShowForm.add(newListitemForm);
+			}
+			
+		});
+				
 		Image addListitemImg = new Image();
 		addListitemImg.setUrl("images/shopping-cart.png");
 		addListitemImg.setSize("16px", "16px");
@@ -56,14 +72,23 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		editShoppinglist.getElement().appendChild(editShoppinglistImg.getElement());
 		editShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		
-		this.add(ausgewaehlteGruppe);
+		this.add(listLabel);
 		this.add(addListitem);
 		this.add(assignUserToRetailer);
 		this.add(editShoppinglist);
 		this.add(deleteShoppinglist);
 
-		
 
+	}
+
+
+	public ShoppinglistShowForm getShoppinglistShowForm() {
+		return shoppinglistShowForm;
+	}
+
+
+	public void setShoppinglistShowForm(ShoppinglistShowForm shoppinglistShowForm) {
+		this.shoppinglistShowForm = shoppinglistShowForm;
 	}
 
 }

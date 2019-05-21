@@ -12,6 +12,7 @@ import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 public class NavigatorPanel extends VerticalPanel{
@@ -20,6 +21,7 @@ public class NavigatorPanel extends VerticalPanel{
 	
 	private User user = CurrentUser.getUser();
 	private Group selectedGroup = null;
+	private Shoppinglist selectedShoppinglist = null;
 	private GroupShowForm gsf = new GroupShowForm();
 	private ShoppinglistShowForm slsf = new ShoppinglistShowForm();
 	
@@ -28,7 +30,7 @@ public class NavigatorPanel extends VerticalPanel{
 	
 	private CellTree cellTree = new CellTree(gstvm, "Root");
 	private Label refreshInfoLabel = new Label();
-	
+		
 	public void onLoad() {
 		
 		final Timer timer = new Timer() {
@@ -40,14 +42,35 @@ public class NavigatorPanel extends VerticalPanel{
 			}
 			
 		};
+		
+	}
+	
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
 	}
 	
 	public GroupShoppinglistTreeViewModel getGstvm() {
 		return gstvm;
 	}
 	
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
+	}
+
+	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
+		this.selectedShoppinglist = selectedShoppinglist;
+	}
+
 	public void refreshInfo() {
-		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroup(), user, new RefreshDataCallback());
+		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroups(), user, new RefreshDataCallback());
 	}
 	
 	private class RefreshDataCallback implements AsyncCallback<Boolean>{
