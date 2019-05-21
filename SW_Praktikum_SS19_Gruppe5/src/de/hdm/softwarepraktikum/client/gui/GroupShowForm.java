@@ -30,6 +30,8 @@ public class GroupShowForm extends VerticalPanel{
 		groupHeader = new GroupHeader();
 		groupContent = new GroupContent();
 		
+		groupHeader.setGroupShowForm(GroupShowForm.this);
+		
 		groupHeader.setSelected(selectedGroup);
 		
 		groupHeader.setStylePrimaryName("groupHeader");

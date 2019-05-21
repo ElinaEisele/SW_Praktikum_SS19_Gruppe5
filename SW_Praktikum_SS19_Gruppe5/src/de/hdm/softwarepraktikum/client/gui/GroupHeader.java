@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
@@ -25,6 +26,7 @@ public class GroupHeader extends HorizontalPanel {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	private Group groupToDisplay = null;
 //	private GroupShoppinglistTreeViewModel gstvm = null;
+	private GroupShowForm groupShowForm = null;
 		
 	private Label groupHeaderLabel = new Label("Gruppe");
 
@@ -97,6 +99,16 @@ public class GroupHeader extends HorizontalPanel {
 
 	}
 	
+	
+	
+	public GroupShowForm getGroupShowForm() {
+		return groupShowForm;
+	}
+
+	public void setGroupShowForm(GroupShowForm groupShowForm) {
+		this.groupShowForm = groupShowForm;
+	}
+
 	/**
 	 * Sobald eine <code>Group</code> ausgewählt wird, wird das Label mit dem
 	 * Gruppenname befüllt.
@@ -127,8 +139,11 @@ public class GroupHeader extends HorizontalPanel {
 			if (groupToDisplay != null) {
 				NewShoppinglistForm nsf = new NewShoppinglistForm(groupToDisplay);
 //				nsf.setGstvm(GroupHeader.this.gstvm);
-				// lieber Dialogbox zum Name erstellen? 
-				// dann dahin leiten? bzw Shoppinglisten Übersicht zeigen
+				nsf.setGroupHeader(GroupHeader.this);
+				RootPanel.get("main").clear();
+//				RootPanel.get("main").add(w);
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
 		}
 		
