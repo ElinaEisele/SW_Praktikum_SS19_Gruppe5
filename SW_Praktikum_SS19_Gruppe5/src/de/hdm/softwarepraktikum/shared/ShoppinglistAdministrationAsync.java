@@ -56,9 +56,7 @@ public interface ShoppinglistAdministrationAsync {
 	void save(Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void save(Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
-	void save(Retailer retailer, AsyncCallback<Void> callback) throws IllegalArgumentException;
-	
+
 	void delete(User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void delete(Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;

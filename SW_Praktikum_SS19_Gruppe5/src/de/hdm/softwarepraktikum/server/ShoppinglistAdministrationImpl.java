@@ -424,9 +424,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public Product getProductOf(Listitem listitem) throws IllegalArgumentException {
 		return this.productMapper.findById(listitem.getProductID());
-		
 	}
-	
 	
 	
 /**
@@ -446,17 +444,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Retailer createRetailer(String name) throws IllegalArgumentException {
 		Retailer retailer = new Retailer(name);
 		return this.retailerMapper.insert(retailer);
-	}
-	
-	/**
-	 * Speichern eines Retailer-Objekts in der Datenbank
-	 * @param retailer Retailer-Objekt, welches in der Datenbank gepseichert werden soll
-	 * @throws IllegalArgumentException
-	 */
-	@Override
-	public void save(Retailer retailer) throws IllegalArgumentException {
-		this.retailerMapper.update(retailer);
-		
 	}
 	
 	/**
@@ -483,7 +470,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 
 	/**
 	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
-	 * @param retailerId ist die ID des gesuchten EinzelhÃ¯Â¿Â½ndlers
+	 * @param retailerId ist die ID des gesuchten Einzelhaendlers
 	 * @return Das erste Retailer-Objekt, welches den Suchkriterien entspricht wird ausgegeben
 	 * @throws IllegalArgumentException
 	 */
