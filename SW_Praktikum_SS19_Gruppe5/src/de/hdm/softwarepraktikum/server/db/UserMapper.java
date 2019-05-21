@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse f�r </code>User</code> Objekte. Diese umfasst Methoden um User
- * Objekte zu erstellen, zu suchen, zu modifizieren und zu l�schen. Das Mapping
- * funktioniert dabei bidirektional. Es k�nnen Objekte in DB-Strukturen und
+ * Mapper Klasse fuer </code>User</code> Objekte. Diese umfasst Methoden um User
+ * Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das Mapping
+ * funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen und
  * DB-Stukturen in Objekte umgewandelt werden.
  * 
  * @author LeoniFriedrich & CarlaHofmann
@@ -31,7 +31,6 @@ public class UserMapper {
 	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
 	 *
 	 * @return Usermapper
-	 * @return Gibt den User Mapper zur�ck.
 	 */
 	public static UserMapper userMapper() {
 		if (userMapper == null) {
@@ -44,7 +43,7 @@ public class UserMapper {
 	/**
 	 * Ausgabe einer Liste aller User.
 	 * 
-	 * @return Userliste
+	 * @return ArrayList<User>
 	 */
 	public ArrayList<User> findAll() {
 
@@ -54,7 +53,7 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, gMail FROM users ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users ORDER BY id");
 
 			while (rs.next()) {
 				User u = new User();
@@ -64,7 +63,6 @@ public class UserMapper {
 				u.setGmailAddress(rs.getString("gMail"));
 				users.add(u);
 			}
-			
 			return users;
 
 		} catch (SQLException e) {
@@ -75,12 +73,10 @@ public class UserMapper {
 	}
 
 	/**
-	 * User mittels Id finden.
+	 * User mithilfe Id finden.
 	 * 
 	 * @param id
-	 * @return User
-	 * @param id: Die id wird uebergeben, um daran den User zu finden.
-	 * @return Der User der mittels der Id gefunden wurde, wird zur�ckgegeben.
+	 * @return User-Objekte
 	 */
 	public User findById(int id) {
 
@@ -89,7 +85,7 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, gMail FROM Users WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Users WHERE id = " + id);
 
 			if (rs.next()) {
 				User u = new User();
@@ -103,15 +99,14 @@ public class UserMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 
 	/**
-	 * User mittels des Namens finden.
+	 * User mithilfe des Namens finden.
 	 * 
 	 * @param name
-	 * @return Userliste
+	 * @return ArrayList<User>
 	 * 
 	 */
 	public ArrayList<User> findByName(String name) {
@@ -122,10 +117,9 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, gMail FROM users WHERE Name ='" + name + "'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE Name = '" + name + "'");
 
 			if (rs.next()) {
-
 				User u = new User();
 				u.setId(rs.getInt("id"));
 				u.setCreationDate(rs.getDate("creationDate"));
@@ -144,10 +138,10 @@ public class UserMapper {
 	}
 
 	/**
-	 * User mittels der Gmail Adresse finden.
+	 * User mithilfe der Gmail Adresse finden.
 	 * 
 	 * @param gmail
-	 * @return User
+	 * @return User-Objekt
 	 * 
 	 */
 	public User findByGMail(String gmail) {
@@ -157,7 +151,7 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, gMail FROM users WHERE gMail = '" + gmail + "'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE gMail = '" + gmail + "'");
 
 			if (rs.next()) {
 				User u = new User();
@@ -171,16 +165,15 @@ public class UserMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return null;
 
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzuf�gen.
+	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
 	 * @param user
-	 * @return User
+	 * @return User-Objekt
 	 */
 	public User insert(User user) {
 
@@ -195,8 +188,8 @@ public class UserMapper {
 				user.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO Users (id, creationDate, name, gMail)" + "VALUES (?, ?, ?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO Users (id, creationDate, name, gMail)"
+					+ "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, user.getId());
 			pstmt.setDate(2, (Date) user.getCreationDate());
@@ -207,7 +200,6 @@ public class UserMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return user;
 
 	}
@@ -225,19 +217,18 @@ public class UserMapper {
 
 		try {
 			
-			PreparedStatement pstmt = con.prepareStatement("UPDATE users SET GMail= ?, Name= ? WHERE User_ID = ?");
-			pstmt.setString(1, user.getGmailAddress());
-			pstmt.setString(2, user.getName());
-			pstmt.setInt(2, user.getId());
+			PreparedStatement pstmt = con.prepareStatement("UPDATE users SET Name = ?, gMail = ? WHERE User_ID = ?");
+			pstmt.setString(1, user.getName());
+			pstmt.setString(2, user.getGmailAddress());
+			pstmt.setInt(3, user.getId());
 			pstmt.executeUpdate();
+			return user;
 			
-			PreparedStatement stmt = con.prepareStatement("UPDATE User SET GMail= ?, Name= ? WHERE User_ID = ?");
-			// vervollst�ndigen
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
-		
-		return user;
+
 	}
 
 	/**
@@ -253,7 +244,7 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM users WHERE id =" + user.getId());
+			stmt.executeUpdate("DELETE FROM users WHERE id = " + user.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -273,7 +264,7 @@ public class UserMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM responsibilities WHERE shoppinglist_id =" + userId);
+			stmt.executeUpdate("DELETE FROM responsibilities WHERE user_id = " + userId);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
