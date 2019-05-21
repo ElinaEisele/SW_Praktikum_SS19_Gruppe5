@@ -318,7 +318,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param listitem ist er Eintrag, welcher einen Nutzer als Verantwortlichen erhaelt
 	 * @throws IllegalArgumentException
 	 */
-	public void assignUser (User user, Listitem listitem) throws IllegalArgumentException;
+	public void assignUser (User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Einem Eintrag wird Produkt zugeordnet
