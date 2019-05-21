@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
@@ -28,8 +29,8 @@ public class DeleteGroupDialogBox extends DialogBox{
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmationLabel = new Label("Sind Sie sicher, dass Sie die ausgewählte Gruppe löschen möchten?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Gruppe Löschen");
-	private Button cancelButton = new Button("Löschvorgang abbrechen");
+	private Button confirmButton = new Button("Löschen");
+	private Button cancelButton = new Button("Abbrechen");
 	
 	
 	public DeleteGroupDialogBox() {
@@ -101,6 +102,7 @@ public class DeleteGroupDialogBox extends DialogBox{
 			if (group != null) {
 				setSelectedGroup(null);
 //				gstvm.removeGroup(group);
+				RootPanel.get("main").clear();
 				
 			}
 		}
