@@ -569,7 +569,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		ArrayList<Listitem> listitems = this.getAllListitemsOf(shoppinglist);
+		ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
 		
 		// Beim Loeschen einer Shoppinglist, muessen auch alle enthaltenen Listitems geloescht werden
 		if(listitems != null) {
@@ -577,7 +577,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				this.delete(l);
 			}
 		}
-		//Alle Zuständigkeiten für die Einkaufsliste werden gelöscht.
+		//Alle Zustaendigkeiten fuer die Einkaufsliste werden geloescht.
 		this.shoppinglistMapper.deleteResposibility(shoppinglist.getId());
 		// Sobald alle enthaltenen Listitems geloescht wurden, kann die Shoppinglist geloescht werden.
 		this.shoppinglistMapper.delete(shoppinglist);
