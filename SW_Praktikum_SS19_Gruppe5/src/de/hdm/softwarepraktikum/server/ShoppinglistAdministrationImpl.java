@@ -423,7 +423,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public Product getProductOf(Listitem listitem) throws IllegalArgumentException {
-		return this.productMapper.getProductOf(listitem);
+		return this.productMapper.findById(listitem.getProductID());
 		
 	}
 	
