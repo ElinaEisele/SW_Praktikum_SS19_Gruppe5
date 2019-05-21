@@ -19,16 +19,13 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	
 	
 	public void onLoad() {
-		super.onLoad();
 		
 		shoppinglistHeader = new ShoppinglistHeader();
 		shoppinglistContent = new ShoppinglistContent();
 		
 		shoppinglistHeader.setStylePrimaryName("shoppinglistHeader");
 		shoppinglistContent.setStylePrimaryName("shoppinglistContent");
-		
-		shoppinglistHeader.setSho
-		
+				
 		this.add(shoppinglistHeader);
 		this.add(shoppinglistContent);
 
