@@ -73,7 +73,7 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Gruppe mittels id finden
+	 * Gruppe mithilfe id finden
 	 *
 	 * @param id
 	 * @return Group-Objekt
@@ -153,24 +153,20 @@ public class GroupMapper {
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM usergroups");
 
 			if (rs.next()) {
-
 				group.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO usergroups (id, creationDate, name) VALUES (?, ?, ?)",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO usergroups (id, creationDate, name) VALUES (?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, group.getId());
 			pstmt.setDate(2, (Date) group.getCreationDate());
 			pstmt.setString(3, group.getName());
 			pstmt.executeUpdate();
-
 			return group;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 			return null;
 
 		}
@@ -194,12 +190,10 @@ public class GroupMapper {
 			pstmt.setString(1, group.getName());
 			pstmt.setInt(2, group.getId());
 			pstmt.executeUpdate();
-			
 			return group;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 			return null;
 		}
 
@@ -217,7 +211,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM usergroups WHERE id =" + group.getId());
+			stmt.executeUpdate("DELETE FROM usergroups WHERE id = " + group.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -231,18 +225,40 @@ public class GroupMapper {
 	 * @param user_id
 	 * @param usergroup_id
 	 */
-	public void insertMemberships(int user_id, int usergroup_id) {
+	public void insertMemberships(int userId, int usergroupId) {
 		
 		Connection con = DBConnection.connection();
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?, ?)",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			pstmt.setInt(1, user_id);
-			pstmt.setInt(2, usergroup_id);
+			pstmt.setInt(1, userId);
+			pstmt.setInt(2, usergroupId);
 			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * User aus einer Gruppe löschen
+	 * 
+	 * @param userId
+	 * @param groupId
+	 */
+	public void deleteMemberships(int userId, int groupId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM memberships WHERE user_id = " + userId + " and usergroup_id = " + groupId);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -285,7 +301,9 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN usergroups "
+			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.usergroup_id, usergroups.id, usergroups.creationDate, "
+					+ "usergroups.name"
+					+ "FROM shoppinglists INNER JOIN usergroups "
 					+ "ON shoppinglists.usergroup_id = usergroups.id");
 
 			if (rs.next()) {
@@ -305,7 +323,7 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Methode, um alle Gruppen eines Users zu finden.
+	 * Methode, um alle Gruppen eines Users zu finden
 	 * 
 	 * @param user
 	 * @return Group-Objekt
@@ -319,7 +337,7 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN usergroups "
-					+ "ON memberships.usergroup_id=usergroups.id "
+					+ "ON memberships.usergroup_id = usergroups.id "
 					+ "WHERE user_id = " + user.getId());
 
 			while (rs.next()) {
@@ -334,13 +352,13 @@ public class GroupMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 			return null;
 		}
 
 	}
 	
 	/**
+	 * User einer Gruppe ausgeben
 	 * 
 	 * @param group
 	 * @return ArrayList<User>
@@ -355,7 +373,7 @@ public class GroupMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN users"
-					+ "ON memberships.user_id=users.id "
+					+ "ON memberships.user_id = users.id "
 					+ "WHERE usergroup_id = " + group.getId());
 
 			while (rs.next()) {
@@ -371,60 +389,10 @@ public class GroupMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 			return null;
 		}
 		
 	}
 	
-	/**
-	 * 
-	 * User zu einer Gruppe hinzufügen.
-	 * 
-	 * @param user
-	 * @param group
-	 */
-	
-	public void addUserToGroup(User user, Group group) {
-		
-		Connection con = DBConnection.connection();
-		
-		try {
-
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroups_id) VALUES (?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
-
-			pstmt.setInt(1, user.getId());
-			pstmt.setInt(2, group.getId());
-			pstmt.executeUpdate();
-			
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 
-	 * User aus einer Gruppe entfernen.
-	 * 
-	 * @param user
-	 * @param group
-	 */
-	
-	public void removeUserFromGroup(int user_id, int group_id) {
-		
-		Connection con = DBConnection.connection();
-		
-		try {
-
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM memberships WHERE usergroup_id =" + group_id + "and user_id =" + user_id);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
 
 }
