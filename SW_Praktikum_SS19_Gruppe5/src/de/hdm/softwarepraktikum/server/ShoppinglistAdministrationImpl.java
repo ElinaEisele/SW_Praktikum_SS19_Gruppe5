@@ -197,7 +197,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 /**
  * **********************************************************************************
- * ABSCHNITT, Beginn: Methoden für Listitem-Objekte
+ * ABSCHNITT, Beginn: Methoden fuer Listitem-Objekte
  * 
  * **********************************************************************************
  **/
@@ -660,8 +660,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public void delete(User user) throws IllegalArgumentException {
 		
+		// Alle Responsibilities in Verbindung mit dem User loeschen
 		this.userMapper.deleteResponsibilities(user.getId());
+		// User aus der Gruppe loeschen
 		this.userMapper.deleteMembership(user.getId());
+		// Als letztes wird der User an sich geloescht
 		this.userMapper.delete(user);
 		
 	}
