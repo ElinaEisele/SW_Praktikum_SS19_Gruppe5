@@ -115,7 +115,7 @@ public class RetailerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM retailers WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM retailers WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
