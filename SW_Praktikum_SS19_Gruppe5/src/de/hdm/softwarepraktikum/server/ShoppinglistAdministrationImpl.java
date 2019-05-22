@@ -132,7 +132,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Durch den insert-Aufruf wird die ID gesetzt, welche mit der Datenbank konsistent ist.
 		Group g = this.groupMapper.insert(group);
 		//Nachdem die korrekte ID vorhanden ist, wird das Membership gesetzt.
-		this.groupMapper.insertMemberships(user.getId(), g.getId());
+		this.groupMapper.insertMembership(user.getId(), g.getId());
 		
 		return g;
 	}
