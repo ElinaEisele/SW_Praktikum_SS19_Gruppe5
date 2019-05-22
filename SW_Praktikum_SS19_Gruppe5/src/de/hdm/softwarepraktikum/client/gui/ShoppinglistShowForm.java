@@ -8,7 +8,7 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
  * Klasse zur Uebersicht einer Shoppingliste mit einem Header und mit der
  * Anzeige des Inhalt der Shoppingliste.
  * 
- * @author ElinaEisele, JonasWagenkencht
+ * @author ElinaEisele, JonasWagenknecht
  */
 
 public class ShoppinglistShowForm extends VerticalPanel {
