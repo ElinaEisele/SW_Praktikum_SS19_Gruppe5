@@ -12,6 +12,7 @@ import de.hdm.softwarepraktikum.shared.report.Row;
  * im richtigen Format in der Variable reportText abgelegt und kann nachdem der Report 
  * erzeugt wurde mit der Methode getReportText() ausgelesen werden.
  * 
+ * 
  * @author FelixRapp
  */
 public class PlainTextReportWriter extends ReportWriter {
