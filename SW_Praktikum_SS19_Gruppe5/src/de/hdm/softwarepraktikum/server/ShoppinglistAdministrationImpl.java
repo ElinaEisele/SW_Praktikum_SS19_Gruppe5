@@ -99,6 +99,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		this.retailerMapper = RetailerMapper.retailerMapper();
 		this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
 		this.userMapper = UserMapper.userMapper();
+		this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
 	}
 	
 
@@ -131,7 +132,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Durch den insert-Aufruf wird die ID gesetzt, welche mit der Datenbank konsistent ist.
 		Group g = this.groupMapper.insert(group);
 		//Nachdem die korrekte ID vorhanden ist, wird das Membership gesetzt.
-		this.groupMapper.addUserToGroup(user, g);
+		this.groupMapper.insertMemberships(user.getId(), g.getId());
 		
 		return g;
 	}
@@ -188,6 +189,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	public ArrayList<Group> getGroupsOf(int userId) throws IllegalArgumentException {
 		return this.getGroupsOf(this.getUserById(userId));
+	}
+	
+	/**
+	 * Ausgabe der zugewiesenen Gruppe einer Shoppinglist.
+	 * @param shoppinglist ist die Shoppinglist, deren zugewiesene Gruppe gesucht wird.
+	 * @return Group-Objekt, welches der Shoppinglist zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		return this.groupMapper.findById(shoppinglist.getGroupId());
 	}
 	
 	/**
@@ -372,7 +384,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ListitemUnit getListitemUnitOf(Listitem listitem) throws IllegalArgumentException {
-		return this.listitemMapper.getListitemUnitOf(listitem);
+		return this.listitemUnitMapper.getUnitOf(listitem);
 	}
 
 	/**
@@ -681,7 +693,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<User> getUsersOf(Group group) throws IllegalArgumentException {
-		return this.groupMapper.getUsersOf(group);
+		return this.userMapper.getUsersOf(group);
 	}
 	
 	/**
@@ -736,7 +748,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
-		this.userMapper.insertResponsibility(user, retailer, shoppinglist);
+		this.retailerMapper.insertResponsibility(user.getId(), retailer.getId(), shoppinglist.getId());
 		}
 	
 	/**
@@ -747,7 +759,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void addUserToGroup(User user, Group group) throws IllegalArgumentException {
-		this.groupMapper.addUserToGroup(user, group);
+		this.groupMapper.insertMembership(user.getId(), group.getId());
 	}
 	
 	/**
@@ -758,7 +770,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void removeUserFromGroup(User user, Group group) throws IllegalArgumentException {
-		this.groupMapper.removeUserFromGroup(user.getId(), group.getId());
+		this.groupMapper.deleteMembership(user.getId(), group.getId());
 	}
   
 
@@ -893,6 +905,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException {
 		return this.retailerMapper.findById(listitem.getRetailerID());
 	}
+
+
+	
+	
 	
 	
 	
