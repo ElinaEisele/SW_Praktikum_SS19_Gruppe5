@@ -87,6 +87,7 @@ public class NewListitemForm extends HorizontalPanel {
 		shoppinglistGrid.setWidget(3, 1, retailerNameListBox);
 		shoppinglistGrid.setWidget(3, 2, newRetailerButton);
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
+		newRetailerButton.addClickHandler(new NewRetailerButtonClickHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
 		shoppinglistGrid.setWidget(4, 1, actionButtonsPanel);
@@ -190,6 +191,25 @@ public class NewListitemForm extends HorizontalPanel {
 
 			// tbd: Ansicht schließen und zurück zu Shoppinglist CellTable
 			// selectedShoppinglist
+		}
+
+	}
+
+	/**
+	 * Aufruf zum erstellen eines neuen <code>Retailer</code> Objekts
+	 * 
+	 */
+	private class NewRetailerButtonClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (shoppinglistToDisplay != null) {
+				NewRetailerDialogBox nrdb = new NewRetailerDialogBox();
+//				nrdb.setGstvm(ShoppinglistHeader.this.gstvm);
+				nrdb.show();
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewÃ¤hlt.");
+			}
 		}
 
 	}
