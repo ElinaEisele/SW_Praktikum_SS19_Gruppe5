@@ -120,7 +120,7 @@ public class ShoppinglistMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id FROM retailers WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id FROM retailers WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 				Shoppinglist sl = new Shoppinglist();
@@ -226,6 +226,32 @@ public class ShoppinglistMapper {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param retailerId
+	 * @param userId
+	 * @param shoppinglistId
+	 */
+	public void insertResponsibility(int retailerId, int userId, int shoppinglistId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+		
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO responsibilities (retailer_id, user_id, shoppinglist_id)" 
+					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+		
+			pstmt.setInt(1, retailerId);
+			pstmt.setInt(2 , userId);
+			pstmt.setInt(3 , shoppinglistId);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/**
 	 * 
@@ -353,4 +379,6 @@ public class ShoppinglistMapper {
 		}
 		
 	}
+	
+	
 }

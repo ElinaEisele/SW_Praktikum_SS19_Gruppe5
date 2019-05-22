@@ -116,7 +116,7 @@ public class ProductMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM products WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 

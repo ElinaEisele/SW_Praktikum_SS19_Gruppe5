@@ -60,7 +60,7 @@ public class ListitemMapper {
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
-				li.isStandard(rs.getBoolean("isStandard"));
+				li.setStandard(rs.getBoolean("isStandard"));
 				listitems.add(li);
 			}
 			return listitems;
@@ -92,7 +92,7 @@ public class ListitemMapper {
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
-				li.setIsStandard(rs.getBoolean("isStandard"));
+				li.setStandard(rs.getBoolean("isStandard"));
 				return li;
 			}
 
@@ -193,6 +193,7 @@ public class ListitemMapper {
 	 * @param listitem
 	 * @return float amount
 	 */
+	@SuppressWarnings("null")
 	public float getAmountOf (Listitem listitem) {
 		
 		Connection con = DBConnection.connection();
@@ -222,6 +223,7 @@ public class ListitemMapper {
 	 * @param listitem
 	 * @return String productname
 	 */
+	@SuppressWarnings("null")
 	public String getProductnameOf(Listitem listitem) {
 		
 		Connection con = DBConnection.connection();
@@ -420,8 +422,8 @@ public class ListitemMapper {
 	 * 
 	 * Eine Shoppingliste nach Username filtern
 	 * 
-	 * @param shoppinglist
-	 * @param username
+	 * @param shoppinglistId
+	 * @param usernameId
 	 * @return ArrayList<Listitem>
 	 */
 	
@@ -432,28 +434,17 @@ public class ListitemMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT responsibilities.retailer_id, responsibilities.user_id, "
-					+ "responsibilities.shoppinglist_id, users.name FROM responsibilities INNER JOIN users"
-					+ "ON responsibilities.user_id = users.id"
-					+ "WHERE shoppinglist_id = " + shoppinglist.getId() + "and username=" + username);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN listitems"
+					+ "ON responsibilities.retailer_id = listitems.retailer_id"
+					+ "WHERE shoppinglist_id = " + shoppinglistId + "and user_id = " + userId);
 
 			while (rs.next()){
-
-				int r_id = rs.getInt("retailer_id");
-					    
-				Statement stmt2 = con.createStatement();
-			    ResultSet rs1 = stmt2.executeQuery("SELECT * FROM listitems WHERE retailer_id =" + r_id 
-			    		+ "and shoppinglist_id = " + shoppinglist.getId());
-
-			    while (rs1.next()){
 			        Listitem li = new Listitem();
-			        li.setId(rs1.getInt("id"));
-			        li.setCreationDate(rs1.getDate("creationDate"));
+			        li.setId(rs.getInt("id"));
+			        li.setCreationDate(rs.getDate("creationDate"));
 			        li.setAmount(rs.getFloat("amount"));
-			        //
-			        listitems.add(li);
-			    }
-				   
+			        li.setStandard(rs.getBoolean("isStandard"));
+			        listitems.add(li);		   
 			}
 			
 			return listitems;
@@ -474,7 +465,7 @@ public class ListitemMapper {
 	 * @return ArrayList<Listitem>
 	 */
 
-	public ArrayList<Listitem> filterShoppinglistByRetailer(Shoppinglist shoppinglist, String retailername){
+	public ArrayList<Listitem> filterShoppinglistByRetailer(int shoppinglistId, int retailerId){
 		
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
@@ -483,7 +474,7 @@ public class ListitemMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
 					+ "ON listitems.retailer_id = retailers_id "
-					+ "WHERE shoppinglist_id = " +shoppinglist.getId() + "and retailername = " + retailername);
+					+ "WHERE shoppinglist_id = " +shoppinglistId + "and retailername = " + retailerId);
 
 			while (rs.next()) {
 			 
@@ -491,7 +482,7 @@ public class ListitemMapper {
 			        li.setId(rs.getInt("id"));
 			        li.setCreationDate (rs.getDate("creationDate"));
 			        li.setAmount(rs.getFloat("amount"));
-			        //
+			        li.setStandard(rs.getBoolean("isStandard"));
 			        listitems.add(li);
 			}
 
