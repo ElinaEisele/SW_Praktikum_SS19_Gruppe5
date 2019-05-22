@@ -26,7 +26,7 @@ public class SimpleParagraph extends Paragraph implements Serializable {
   /**
    * Konstruktur, der die Möglichkeit bietet bei Instanziierung, einen Wert festzulegen.
    * 
-   * @param value Inhalt des Absatzes
+   * @param value Der Inhalt des Absatzes
    */
   public SimpleParagraph(String value) {
     this.text = value;
