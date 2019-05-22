@@ -187,7 +187,6 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * 
 	 * Ausgeben des Amounts eines Listitems
 	 * 
 	 * @param listitem
@@ -223,27 +222,33 @@ public class ListitemMapper {
 	 * @param listitem
 	 * @return String productname
 	 */
-	@SuppressWarnings("null")
-	public String getProductnameOf(Listitem listitem) {
+	
+	public String getProductnameOf(int listitemId) {
 		
 		Connection con = DBConnection.connection();
 		String productname;
+		ResultSet rs;
 		
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT name FROM products INNER JOIN listitems "
-					+ "ON products.id = listitems.product_id"
-					+ "WHERE id=" + listitem.getId());
+			rs = stmt.executeQuery("SELECT listitems.id as listitem_id, "
+					+ "products.name as product_name "
+					+ "FROM products INNER JOIN listitems "
+					+ "ON products.id = listitems.product_id "
+					+ "WHERE listitems.id = " + listitemId);
 			
-			productname = rs.getString("productname");
-			
-			return productname;
-
+			while(rs.next()) {
+				productname = rs.getString("product_name");
+				return productname;
+			}
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return (String) null;
+		
 		}
+		
+		return (String) null;
 	}
 
 	/**
