@@ -598,7 +598,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 			}
 		}
 		//Alle Zustaendigkeiten fuer die Einkaufsliste werden geloescht.
-		this.shoppinglistMapper.deleteResposibilities(shoppinglist.getId());
+		this.shoppinglistMapper.deleteResponsibilities(shoppinglist.getId());
 		// Sobald alle enthaltenen Listitems geloescht wurden, kann die Shoppinglist geloescht werden.
 		this.shoppinglistMapper.delete(shoppinglist);
 		
