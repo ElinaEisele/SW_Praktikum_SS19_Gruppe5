@@ -23,6 +23,7 @@ public class GroupShowForm extends VerticalPanel{
 	private GroupContent groupContent = null;
 	
 	private Group selectedGroup;
+	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 	
 	public void onLoad() {
 		
@@ -43,6 +44,16 @@ public class GroupShowForm extends VerticalPanel{
 	public void setSelected(Group g) {
 		selectedGroup = g;
 	}
+
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
+	
+	
 	
 //	private GroupHeader groupHeader = null;
 //	private GroupContent groupContent = null;
