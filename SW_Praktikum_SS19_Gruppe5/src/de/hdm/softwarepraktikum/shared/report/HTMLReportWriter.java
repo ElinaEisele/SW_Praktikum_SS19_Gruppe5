@@ -85,7 +85,7 @@ public class HTMLReportWriter extends ReportWriter {
   }
 
   /**
-   * Erstellen des übergebenen Reports und speichern im richtigen Format.
+   * Erstellen des uebergebenen Reports und speichern im richtigen Format.
    * 
    * @param r der zu erstellende Report
    */
@@ -138,7 +138,7 @@ public void process(AllListitemsOfGroupReport r) {
 
     /*
      * Der String Buffer wird in einen String umgewandelt, damit es anschließend
-     * möglich ist das Ergebnis mit der Methode getReportText() aufzurufen.
+     * moeglich ist das Ergebnis mit der Methode getReportText() aufzurufen.
      */
     this.reportText = result.toString();
   }
