@@ -41,6 +41,10 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	private int retailerID;
 	
 	/**
+	 * Fremdschluesselbeziehung zur Gruppe des Eintrags.
+	 */
+	private int groupID;
+	/**
 	 * Attribut, welches wiedergibt, ob ein Listitem ein Standard-Listitem innerhalb einer Gruppe ist.
 	 */
 	private boolean isStandard;
@@ -141,5 +145,19 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 */
 	public void setStandard(boolean isStandard) {
 		this.isStandard = isStandard;
+	}
+
+	/*
+	 * Ausgeben GruppenID
+	 */
+	public int getGroupID() {
+		return groupID;
+	}
+
+	/*
+	 * Setzen der GruppenID
+	 */
+	public void setGroupID(int groupID) {
+		this.groupID = groupID;
 	}
 }

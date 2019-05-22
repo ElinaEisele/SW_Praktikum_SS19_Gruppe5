@@ -1,6 +1,5 @@
 package de.hdm.softwarepraktikum.server;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -234,8 +233,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException {
 		
 		Listitem li = new Listitem(amount, listitemUnit);
-		// Fremdschluessel zum Retailer wird auf default-Wert 0 gesetzt.
+		// Fremdschluessel zum Retailer wird auf default-Wert 1 gesetzt.
 		li.setRetailerID(1);
+		
+		// Fremdschluessel zur Shoppinglist wird gesetzt.
+		li.setShoppinglistID(shoppinglist.getId());
+		
+		// Fremdschluessel zur Gruppe wird gesetzt.
+		li.setGroupID(shoppinglist.getGroupId());
+		
+		// Fremdschluessel zur ListitemUnit wird gesetzt
+		li.setListitemUnitID(listitemUnit.getId());
 		
 		/**
 		 * Nach dem createProduct()-Aufruf erhaelt das Produkt die ID welche mit der Datenbank konsistent ist.
@@ -265,6 +273,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 		//Listitem mit den uebergebenen Parametern wird erstellt.
 		Listitem li = new Listitem(amount, listitemUnit);
+		
+		// Fremdschluessel zur Shoppinglist wird gesetzt.
+		li.setShoppinglistID(shoppinglist.getId());
+				
+		// Fremdschluessel zur Gruppe wird gesetzt.
+		li.setGroupID(shoppinglist.getGroupId());
+		
+		// Fremdschluessel zur ListitemUnit wird gesetzt
+		li.setListitemUnitID(listitemUnit.getId());	
 		
 		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
 		this.assignRetailer(retailer, li);
