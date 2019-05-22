@@ -43,7 +43,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				shoppinglistShowForm.clear();
-				shoppinglistShowForm.add(newListitemForm);
+//				shoppinglistShowForm.add(newListitemForm);
 			}
 			
 		});
