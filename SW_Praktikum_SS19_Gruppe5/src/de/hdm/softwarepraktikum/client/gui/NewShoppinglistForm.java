@@ -50,7 +50,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 		grid.setWidget(0, 1, nameTextBox);
 		
 		saveButton.addClickHandler(new SaveClickHandler());
-		cancelButton.addClickHandler(new CancelClickHancler());
+		cancelButton.addClickHandler(new CancelClickHandler());
 		
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
@@ -91,7 +91,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 //			if (selectedGroup != null) {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(), new NewShoppinglistAsyncCallback());
 				RootPanel.get("main").clear();
-				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+//				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 				// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe Callback)
 				RootPanel.get("main").add(shoppinglistShowForm);
 
@@ -100,7 +100,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 		
 	}
 	
-	private class CancelClickHancler implements ClickHandler{
+	private class CancelClickHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -122,7 +122,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Shoppinglist result) {
-			gstvm.addShoppinglistOfGroup(result, selectedGroup);
+			gstvm.addShoppinglistToGroup(result, selectedGroup);
 			// die neu erstellte Shoppinglist wird in der ShoppinglistShowForm gesetzt
 			shoppinglistShowForm.setSelected(result);
 		}
