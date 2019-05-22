@@ -293,6 +293,42 @@ public class UserMapper {
 		
 	}
 	
+	/**
+	 * User einer Gruppe ausgeben
+	 * 
+	 * @param group
+	 * @return ArrayList<User>
+	 */
+	
+	public ArrayList<User> getUsersOf(Group group){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<User> groups = new ArrayList<User>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN users"
+					+ "ON memberships.user_id = users.id "
+					+ "WHERE usergroup_id = " + group.getId());
+
+			while (rs.next()) {
+				User u = new User();
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setName(rs.getString("name"));
+				u.setGmailAddress(rs.getString("gMail"));
+				groups.add(u);
+			}
+			
+			return groups;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 
 	/**
 	 * 
@@ -309,13 +345,25 @@ public class UserMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT ...");
-
-			if (rs.next()) {
-				
-				User u = new User();
-				//
-				return u;
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN responsibilities"
+					+ "ON listitems.retailer_id = responsibilities.retailer_id"
+					+ "WHERE listitems.id = " + listitem.getId());
+			
+			while(rs.next()) {
+				int r_id = rs.getInt("retailer_id");
+			
+				ResultSet rs2 = stmt.executeQuery("SELECT * FROM respinsibilities INNER JOIN users"
+						+ "ON responsibilities.user_id = users.id"
+						+ "WHERE responsibilities.retailer_id = " + r_id);
+	
+				while (rs2.next()) {
+					User u = new User();
+					u.setId(rs2.getInt("id"));
+					u.setCreationDate(rs2.getDate("creationDate"));
+					u.setName(rs2.getString("name"));
+					u.setGmailAddress(rs2.getString("gMail"));
+					return u;
+				}
 			}
 
 		} catch (SQLException e) {
