@@ -1,4 +1,4 @@
-
+	
 package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
@@ -18,6 +18,8 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * Das asynchrone Gegenstueck zu <code>GreetingService</code>.Es wird
  * semiautomatisch durch das Google Plugin erstellt und gepflegt. Daher erfolgt
  * hier keine weitere Dokumentation.
+ * 
+ * @author TimBeutelspacher, FelixRapp
  */
 public interface ShoppinglistAdministrationAsync {
 	
@@ -126,4 +128,6 @@ public interface ShoppinglistAdministrationAsync {
 	void getListitemsNameMapBy(Shoppinglist shoppinglist, AsyncCallback<Map<Listitem, String>> callback) throws IllegalArgumentException;
 	
 	void getRetailerOf(Listitem listitem, AsyncCallback<Retailer> callback) throws IllegalArgumentException;
+
+	void getGroupOf(Shoppinglist shoppinglist, AsyncCallback<Group> callback) throws IllegalArgumentException;
 }

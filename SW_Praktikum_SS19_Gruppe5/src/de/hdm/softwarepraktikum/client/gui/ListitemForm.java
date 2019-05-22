@@ -21,6 +21,8 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
  * Formular zur Darstellung des zu ändernden Listitem
+ * 
+ * @author ElinaEisele, JonasWagenknecht
  */
 
 public class ListitemForm extends VerticalPanel {

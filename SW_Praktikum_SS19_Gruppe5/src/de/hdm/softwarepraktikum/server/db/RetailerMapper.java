@@ -224,7 +224,7 @@ public class RetailerMapper {
 	 * @param user_id
 	 * @param shoppinglist_id
 	 */
-	public void insertResponsibilities(int retailerId, int userId, int shoppinglistId) {
+	public void insertResponsibility(int retailerId, int userId, int shoppinglistId) {
 		
 		Connection con = DBConnection.connection();
 

@@ -31,8 +31,8 @@ import de.hdm.softwarepraktikum.*;
 
 public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	
-	private GroupShowForm groupForm;
-	private ShoppinglistShowForm shoppinglistForm;
+	private GroupShowForm groupShowForm;
+	private ShoppinglistShowForm shoppinglistShowForm;
 	
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
@@ -97,23 +97,23 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		shoppinglistDataProviders = new HashMap<Group, ListDataProvider<Shoppinglist>>();		
 	}
 	
-	void setGroupForm(GroupShowForm gf) {
-		groupForm = gf;
+	void setGroupForm(GroupShowForm gsf) {
+		groupShowForm = gsf;
 	}
 	
-	void setShoppinglistForm(ShoppinglistShowForm sf) {
-		shoppinglistForm = sf;
+	void setShoppinglistForm(ShoppinglistShowForm ssf) {
+		shoppinglistShowForm = ssf;
 	}
 	
 	Group getSelectedGroup() {
 		return selectedGroup;
 	}
 	
-	void setSelectedGroup(Group selection) {
-		selectedGroup = selection;
-		groupForm.setSelected(selection);
+	void setSelectedGroup(Group g) {
+		selectedGroup = g;
+		groupShowForm.setSelected(g);
 //		selectedShoppinglist = null;
-//		shoppinglistForm.setSelected(null);
+//		shoppinglistShowForm.setSelected(null);
 	}
 	
 	Shoppinglist getSelectedShoppinglist() {
@@ -123,12 +123,12 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 
 	void setSelectedShoppinglsit(Shoppinglist s) {
 		selectedShoppinglist = s;
-		shoppinglistForm.setSelected(s);
+		shoppinglistShowForm.setSelected(s);
 	}
 	
-	void addGroup(Group group) {
-		groupDataProvider.getList().add(group);
-		selectionModel.setSelected(group,  true);
+	void addGroup(Group g) {
+		groupDataProvider.getList().add(g);
+		selectionModel.setSelected(g,  true);
 	}
 	
 	/**

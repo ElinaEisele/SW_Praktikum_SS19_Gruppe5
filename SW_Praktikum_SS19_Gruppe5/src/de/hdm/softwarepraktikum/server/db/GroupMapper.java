@@ -225,7 +225,7 @@ public class GroupMapper {
 	 * @param user_id
 	 * @param usergroup_id
 	 */
-	public void insertMemberships(int userId, int usergroupId) {
+	public void insertMembership(int userId, int usergroupId) {
 		
 		Connection con = DBConnection.connection();
 
@@ -251,7 +251,7 @@ public class GroupMapper {
 	 * @param userId
 	 * @param groupId
 	 */
-	public void deleteMemberships(int userId, int groupId) {
+	public void deleteMembership(int userId, int groupId) {
 		
 		Connection con = DBConnection.connection();
 
@@ -355,43 +355,6 @@ public class GroupMapper {
 			return null;
 		}
 
-	}
-	
-	/**
-	 * User einer Gruppe ausgeben
-	 * 
-	 * @param group
-	 * @return ArrayList<User>
-	 */
-	
-	public ArrayList<User> getUsersOf(Group group){
-		
-		Connection con = DBConnection.connection();
-		ArrayList<User> groups = new ArrayList<User>();
-
-		try {
-
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN users"
-					+ "ON memberships.user_id = users.id "
-					+ "WHERE usergroup_id = " + group.getId());
-
-			while (rs.next()) {
-				User u = new User();
-				u.setId(rs.getInt("id"));
-				u.setCreationDate(rs.getDate("creationDate"));
-				u.setName(rs.getString("name"));
-				u.setGmailAddress(rs.getString("gMail"));
-				groups.add(u);
-			}
-			
-			return groups;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		
 	}
 	
 
