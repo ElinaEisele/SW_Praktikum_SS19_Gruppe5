@@ -1,8 +1,11 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -23,10 +26,11 @@ public class NavigatorPanel extends VerticalPanel{
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
 	private GroupShowForm gsf = new GroupShowForm();
-	private ShoppinglistShowForm slsf = new ShoppinglistShowForm();
+	private ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 	
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
-	private HorizontalPanel cellTreePanel = new HorizontalPanel();
+	private VerticalPanel mainPanel = new VerticalPanel();
+	private Button newGroupButton = new Button("Neue Gruppe erstellen");
 	
 	private CellTree cellTree = new CellTree(gstvm, "Root");
 	private Label refreshInfoLabel = new Label();
@@ -38,10 +42,22 @@ public class NavigatorPanel extends VerticalPanel{
 			@Override
 			public void run() {
 				NavigatorPanel.this.refreshInfo();
-				
+				schedule(10000);
 			}
 			
 		};
+		timer.schedule(10000);
+		gstvm.setGroupForm(gsf);
+		gsf.setGstvm(gstvm);
+		
+		cellTree.setAnimationEnabled(true);
+		
+		newGroupButton.addClickHandler(new NewGroupClickHandler());
+		
+		mainPanel.add(newGroupButton);
+		mainPanel.add(cellTree);
+		
+		this.add(mainPanel);
 		
 	}
 	
@@ -91,6 +107,19 @@ public class NavigatorPanel extends VerticalPanel{
 			refreshInfoLabel.setText("");
 			}
 		}
-}
+	}
+	
+	private class NewGroupClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (user != null) {
+				NewGroupForm ngf = new NewGroupForm();
+				RootPanel.get("main").clear();
+				RootPanel.get("main").add(ngf);
+			}
+		}
+		
+	}
 	
 }
