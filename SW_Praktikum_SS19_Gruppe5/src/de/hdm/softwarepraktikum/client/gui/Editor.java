@@ -14,9 +14,8 @@ import com.google.gwt.view.client.TreeViewModel;
 public class Editor {
 
 	private Header header = null;
-
+	private NavigatorPanel navigatorPanel = null;
 	private GroupShowForm groupShowForm = null;
-
 	private Trailer trailer = null;
 
 	public void loadForms() {
@@ -25,6 +24,7 @@ public class Editor {
 //		CellTree tree = new CellTree(model, null);
 
 		header = new Header();
+		navigatorPanel = new NavigatorPanel();
 		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
 
@@ -36,9 +36,9 @@ public class Editor {
 
 
 		RootPanel.get("trailer").add(trailer);
-//		RootPanel.get("aside").add(tree);
+		RootPanel.get("aside").add(navigatorPanel);
 
-		RootPanel.get("main").add(groupShowForm);
+//		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("header").add(header);
 
 	}
