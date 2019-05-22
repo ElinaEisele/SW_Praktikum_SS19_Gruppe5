@@ -196,7 +196,8 @@ public class NewListitemForm extends HorizontalPanel {
 	}
 
 	/**
-	 * Aufruf zum erstellen eines neuen <code>Retailer</code> Objekts
+	 * Clickhanlder zum öffnen einer DialogBox welche das Erstellen eines neuen
+	 * <code>Retailer</code> Objekts erlaubt.
 	 * 
 	 */
 	private class NewRetailerButtonClickHandler implements ClickHandler {

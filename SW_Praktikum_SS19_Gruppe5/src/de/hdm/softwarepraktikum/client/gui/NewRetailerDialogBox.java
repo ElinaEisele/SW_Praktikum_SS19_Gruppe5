@@ -38,8 +38,7 @@ public class NewRetailerDialogBox extends DialogBox {
 	private Button cancelButton = new Button("Abbrechen");
 
 	public NewRetailerDialogBox() {
-		this.setGlassEnabled(true);
-
+		
 		cancelButton.setStylePrimaryName("cancelButton");
 		confirmButton.setStylePrimaryName("confirmButton");
 
@@ -52,6 +51,11 @@ public class NewRetailerDialogBox extends DialogBox {
 		mainPanel.add(newRetailerLabel);
 		mainPanel.add(buttonPanel);
 
+		
+	}
+	
+	public void onLoad() {
+		this.setGlassEnabled(true);
 		this.add(mainPanel);
 		this.center();
 	}
@@ -106,6 +110,8 @@ public class NewRetailerDialogBox extends DialogBox {
 
 			retailerName.setText("");
 			RootPanel.get("main").clear();
+			audb.setGstvm(GroupHeader.this.gstvm);
+			audb.show();
 			RootPanel.get("main").add(w);
 			RootPanel.get("main").add(w);
 		}
