@@ -1,6 +1,5 @@
 package de.hdm.softwarepraktikum.server;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -132,7 +131,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Durch den insert-Aufruf wird die ID gesetzt, welche mit der Datenbank konsistent ist.
 		Group g = this.groupMapper.insert(group);
 		//Nachdem die korrekte ID vorhanden ist, wird das Membership gesetzt.
-		this.groupMapper.insertMemberships(user.getId(), g.getId());
+		this.groupMapper.insertMembership(user.getId(), g.getId());
 		
 		return g;
 	}
@@ -234,8 +233,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException {
 		
 		Listitem li = new Listitem(amount, listitemUnit);
-		// Fremdschluessel zum Retailer wird auf default-Wert 0 gesetzt.
+		// Fremdschluessel zum Retailer wird auf default-Wert 1 gesetzt.
 		li.setRetailerID(1);
+		
+		// Fremdschluessel zur Shoppinglist wird gesetzt.
+		li.setShoppinglistID(shoppinglist.getId());
+		
+		// Fremdschluessel zur Gruppe wird gesetzt.
+		li.setGroupID(shoppinglist.getGroupId());
+		
+		// Fremdschluessel zur ListitemUnit wird gesetzt
+		li.setListitemUnitID(listitemUnit.getId());
 		
 		/**
 		 * Nach dem createProduct()-Aufruf erhaelt das Produkt die ID welche mit der Datenbank konsistent ist.
@@ -265,6 +273,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 		//Listitem mit den uebergebenen Parametern wird erstellt.
 		Listitem li = new Listitem(amount, listitemUnit);
+		
+		// Fremdschluessel zur Shoppinglist wird gesetzt.
+		li.setShoppinglistID(shoppinglist.getId());
+				
+		// Fremdschluessel zur Gruppe wird gesetzt.
+		li.setGroupID(shoppinglist.getGroupId());
+		
+		// Fremdschluessel zur ListitemUnit wird gesetzt
+		li.setListitemUnitID(listitemUnit.getId());	
 		
 		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
 		this.assignRetailer(retailer, li);
@@ -514,6 +531,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.retailerMapper.getAssignedRetailersOf(shoppinglist, user);
 	}
 
+	/**
+	 * Ausgabe des zugewiesenen Retailers eines Listitems.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
+	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException {
+		return this.retailerMapper.findById(listitem.getRetailerID());
+	}
+	
 	/**
 	 * Ein Retailer-Objekt wird einem Listitem als Beschaffungsort zugewiesen
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
@@ -894,22 +922,5 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return null;
 	}
-
-	/**
-	 * Ausgabe des zugewiesenen Retailers eines Listitems.
-	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
-	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
-	 * @throws IllegalArgumentException
-	 */
-	@Override
-	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException {
-		return this.retailerMapper.findById(listitem.getRetailerID());
-	}
-
-
-	
-	
-	
-	
 	
 }
