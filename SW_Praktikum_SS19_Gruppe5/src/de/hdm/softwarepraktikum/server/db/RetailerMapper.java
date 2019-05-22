@@ -115,7 +115,7 @@ public class RetailerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM retailers WHERE name = " + name);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM retailers WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
@@ -224,7 +224,7 @@ public class RetailerMapper {
 	 * @param user_id
 	 * @param shoppinglist_id
 	 */
-	public void insertResponsibilities(int retailerId, int userId, int shoppinglistId) {
+	public void insertResponsibility(int retailerId, int userId, int shoppinglistId) {
 		
 		Connection con = DBConnection.connection();
 
