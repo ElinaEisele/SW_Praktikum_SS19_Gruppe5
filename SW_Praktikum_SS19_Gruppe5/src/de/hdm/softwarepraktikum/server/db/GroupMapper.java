@@ -53,7 +53,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM usergroups");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups");
 
 			while (rs.next()) {
 				Group g = new Group();
@@ -85,7 +85,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM usergroups WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups WHERE id = " + id);
 
 			if (rs.next()) {
 
@@ -117,7 +117,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name FROM usergroups WHERE name = '" + name + "'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups WHERE name = '" + name + "'");
 
 			while (rs.next()) {
 
@@ -156,8 +156,8 @@ public class GroupMapper {
 				group.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO usergroups (id, creationDate, name) VALUES (?, ?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO usergroups (id, creationDate, name) "
+					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, group.getId());
 			pstmt.setDate(2, (Date) group.getCreationDate());
@@ -225,7 +225,7 @@ public class GroupMapper {
 	 * @param user_id
 	 * @param usergroup_id
 	 */
-	public void insertMemberships(int userId, int usergroupId) {
+	public void insertMembership(int userId, int usergroupId) {
 		
 		Connection con = DBConnection.connection();
 
@@ -251,7 +251,7 @@ public class GroupMapper {
 	 * @param userId
 	 * @param groupId
 	 */
-	public void deleteMemberships(int userId, int groupId) {
+	public void deleteMembership(int userId, int groupId) {
 		
 		Connection con = DBConnection.connection();
 
@@ -301,16 +301,19 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.usergroup_id, usergroups.id, usergroups.creationDate, "
-					+ "usergroups.name"
+			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id"
+					+ "usergroups.id as usergroup_id, "
+					+ "usergroups.creationDate as usergroup_creationDate, "
+					+ "usergroups.name as usergroup_name "
 					+ "FROM shoppinglists INNER JOIN usergroups "
-					+ "ON shoppinglists.usergroup_id = usergroups.id");
+					+ "ON shoppinglists.usergroup_id = usergroups.id"
+					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {
 				Group g = new Group();
-				g.setId(rs.getInt("id"));
-				g.setCreationDate(rs.getDate("creationDate"));
-				g.setName(rs.getString("name"));
+				g.setId(rs.getInt("usergroup_id"));
+				g.setCreationDate(rs.getDate("usergroup_creationDate"));
+				g.setName(rs.getString("usergroup_name"));
 				return g;
 			}
 
@@ -336,15 +339,19 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN usergroups "
+			ResultSet rs = stmt.executeQuery("SELECT memberships.user_id as user_id, "
+					+ "memberships.usergroup_id as usergroup_id, "
+					+ "usergroups.creationDate as usergroup_creationDate, "
+					+ "usergroups.name as usergroup_name "
+					+ "FROM memberships INNER JOIN usergroups "
 					+ "ON memberships.usergroup_id = usergroups.id "
-					+ "WHERE user_id = " + user.getId());
+					+ "WHERE memberships.user_id = " + user.getId());
 
 			while (rs.next()) {
 				Group g = new Group();
-				g.setId(rs.getInt("id"));
-				g.setCreationDate(rs.getDate("creationDate"));
-				g.setName(rs.getString("name"));
+				g.setId(rs.getInt("usergroup_id"));
+				g.setCreationDate(rs.getDate("usergroup_creationDate"));
+				g.setName(rs.getString("usergroup_name"));
 				groups.add(g);
 			}
 			
