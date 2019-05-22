@@ -192,6 +192,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
+	 * Ausgabe der zugewiesenen Gruppe einer Shoppinglist.
+	 * @param shoppinglist ist die Shoppinglist, deren zugewiesene Gruppe gesucht wird.
+	 * @return Group-Objekt, welches der Shoppinglist zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		return this.groupMapper.findById(shoppinglist.getGroupId());
+	}
+	
+	/**
 	 * Rueckgabe eines bestimmten Group-Objekts
 	 * @param id ID der gesuchten Gruppe
 	 * @return Das erste Group-Objekt, welches den Suchkriterien entspricht
@@ -894,6 +905,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException {
 		return this.retailerMapper.findById(listitem.getRetailerID());
 	}
+
+
+	
+	
 	
 	
 	
