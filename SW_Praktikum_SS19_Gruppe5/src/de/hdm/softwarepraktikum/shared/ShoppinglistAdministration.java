@@ -465,4 +465,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe der zugewiesenen Gruppe einer Shoppinglist.
+	 * @param shoppinglist ist die Shoppinglist, deren zugewiesene Gruppe gesucht wird.
+	 * @return Group-Objekt, welches der Shoppinglist zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 }

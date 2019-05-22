@@ -40,26 +40,39 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 		shoppinglistHeaderLabel = new Label("getListName");
 
-		newRetailer = new Button("Neuer Einzelhändler");
+		newRetailer = new Button("Neuer Einzelhï¿½ndler");
 		newListitem = new Button("Eintrag hinzufuegen");
 		deleteShoppinglist = new Button("Einkaufsliste loeschen");
 		assignUserToRetailer = new Button("Nutzer zuordnen");
-		editShoppinglistName = new Button("Editieren");
 
-		Image newRetailerImg = new Image();
-		newRetailerImg.setUrl("images/newRetailerImg.png");
-		newRetailerImg.setSize("16px", "16px");
-		newRetailer.getElement().appendChild(newRetailerImg.getElement());
-		newRetailer.setStyleName("ShoppinglistHeaderButton");
-		newRetailer.addClickHandler(new NewRetailerClickHandler());
+		editShoppinglist = new Button("Editieren");
+		
+		newListitemForm = new NewListitemForm();
+	
+		listLabel.setStyleName("ListLabel");
+		
+		addListitem.addClickHandler(new ClickHandler() {
 
-		Image newListitemImg = new Image();
-		newListitemImg.setUrl("images/shopping-cart.png");
-		newListitemImg.setSize("16px", "16px");
-		newListitem.getElement().appendChild(newListitemImg.getElement());
-		newListitem.setStyleName("ShoppinglistHeaderButton");
-		newListitem.addClickHandler(new NewListitemClickHandler());
-
+			@Override
+			public void onClick(ClickEvent event) {
+				shoppinglistShowForm.clear();
+//				shoppinglistShowForm.add(newListitemForm);
+			}
+			
+		});
+				
+		Image addListitemImg = new Image();
+		addListitemImg.setUrl("images/shopping-cart.png");
+		addListitemImg.setSize("16px", "16px");
+		addListitem.getElement().appendChild(addListitemImg.getElement());
+		addListitem.setStyleName("ShoppinglistHeaderButton");
+		
+		Image deleteShoppinglistImg = new Image();
+		deleteShoppinglistImg.setUrl("images/delete.png");
+		deleteShoppinglistImg.setSize("16px", "16px");
+		deleteShoppinglist.getElement().appendChild(deleteShoppinglistImg.getElement());
+		deleteShoppinglist.setStyleName("ShoppinglistHeaderButton");
+		
 		Image assignUserToRetailerImg = new Image();
 		assignUserToRetailerImg.setUrl("images/man-pushing-a-shopping-cart.png");
 		assignUserToRetailerImg.setSize("16px", "16px");
@@ -97,7 +110,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 	/**
 	 * Sobald eine <code>Shoppinglist</code> ausgewaehlt wird das Label mit den
-	 * entsprechenden Informationen befüllt.
+	 * entsprechenden Informationen befï¿½llt.
 	 * 
 	 * @param s, das zu setzende <code>Shoppinglist</code> Objekt.
 	 */

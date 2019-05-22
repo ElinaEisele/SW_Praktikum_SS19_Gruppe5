@@ -231,10 +231,10 @@ public class ListitemUnitMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT listitem.id, listitem.unit_id, unit.creationDate, unit.name "
+			ResultSet rs = stmt.executeQuery("SELECT listitems.id, listitems.unit_id, units.creationDate, units.name "
 					+ "FROM listitems INNER JOIN units "
 					+ "ON listitems.unit_id = units.id "
-					+ "WHERE listitem.id = " + listitem.getId());
+					+ "WHERE listitems.id = " + listitem.getId());
 			
 			while(rs.next()) {
 				ListitemUnit liu = new ListitemUnit();

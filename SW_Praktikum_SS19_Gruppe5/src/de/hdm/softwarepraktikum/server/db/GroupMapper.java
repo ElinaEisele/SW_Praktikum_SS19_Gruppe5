@@ -225,7 +225,7 @@ public class GroupMapper {
 	 * @param user_id
 	 * @param usergroup_id
 	 */
-	public void insertMemberships(int userId, int usergroupId) {
+	public void insertMembership(int userId, int usergroupId) {
 		
 		Connection con = DBConnection.connection();
 
@@ -251,7 +251,7 @@ public class GroupMapper {
 	 * @param userId
 	 * @param groupId
 	 */
-	public void deleteMemberships(int userId, int groupId) {
+	public void deleteMembership(int userId, int groupId) {
 		
 		Connection con = DBConnection.connection();
 
