@@ -45,7 +45,7 @@ public class Notification {
 			
 		};
 		
-		timer.schedule(50000);
+		timer.schedule(5000);
 	}
 
 }

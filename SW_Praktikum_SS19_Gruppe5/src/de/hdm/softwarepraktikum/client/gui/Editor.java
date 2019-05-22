@@ -21,8 +21,8 @@ public class Editor {
 
 	public void loadForms() {
 		
-		TreeViewModel model = new GroupShoppinglistTreeViewModel();
-		CellTree tree = new CellTree(model, null);
+//		TreeViewModel model = new GroupShoppinglistTreeViewModel();
+//		CellTree tree = new CellTree(model, null);
 
 		header = new Header();
 		groupShowForm = new GroupShowForm();
@@ -36,7 +36,7 @@ public class Editor {
 
 
 		RootPanel.get("trailer").add(trailer);
-		RootPanel.get("aside").add(tree);
+//		RootPanel.get("aside").add(tree);
 
 		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("header").add(header);
