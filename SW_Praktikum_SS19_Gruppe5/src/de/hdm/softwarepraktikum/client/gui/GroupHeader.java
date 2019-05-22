@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -39,6 +40,8 @@ public class GroupHeader extends HorizontalPanel {
 	private Button showRetailers = new Button();
 	
 	public GroupHeader() {
+		
+//		groupHeaderLabel.setText(shoppinglistAdministration.getGroupName(groupToDisplay, new GroupNameCallback()));
 		
 		Image newShoppinglistImg = new Image();
 		newShoppinglistImg.setUrl("images/clipboard.png");
@@ -136,15 +139,17 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
+//			if (groupToDisplay != null) {
 				NewShoppinglistForm nsf = new NewShoppinglistForm(groupToDisplay);
 //				nsf.setGstvm(GroupHeader.this.gstvm);
 				nsf.setGroupHeader(GroupHeader.this);
+//				GroupShowForm gsf = new GroupShowForm(nsf.getGroupHeader(), nsf);
 				RootPanel.get("main").clear();
-//				RootPanel.get("main").add(w);
-			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
-			}
+				RootPanel.get("main").add(nsf);
+//				RootPanel.get("main").add(gsf);
+//			} else {
+//				Notification.show("Es wurde keine Gruppe ausgewählt.");
+//			}
 		}
 		
 	}
@@ -227,6 +232,28 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Callbacks
+	 * ***************************************************************************
+	 */
+	
+	private class GroupNameCallback implements AsyncCallback<String>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(String result) {
 			// TODO Auto-generated method stub
 			
 		}

@@ -25,13 +25,11 @@ public class GroupShowForm extends VerticalPanel{
 	private Group selectedGroup;
 	
 	public void onLoad() {
-		super.onLoad();
 		
 		groupHeader = new GroupHeader();
 		groupContent = new GroupContent();
 		
 		groupHeader.setGroupShowForm(GroupShowForm.this);
-		
 		groupHeader.setSelected(selectedGroup);
 		
 		groupHeader.setStylePrimaryName("groupHeader");
@@ -39,10 +37,59 @@ public class GroupShowForm extends VerticalPanel{
 		
 		this.add(groupHeader);
 		this.add(groupContent);
+
 	}
 
 	public void setSelected(Group g) {
 		selectedGroup = g;
 	}
+	
+//	private GroupHeader groupHeader = null;
+//	private GroupContent groupContent = null;
+//	private NewShoppinglistForm newShoppinglistForm = null;
+//	private VerticalPanel vp = new VerticalPanel();
+//	
+//	private Group selectedGroup;
+//	
+//	public GroupShowForm(GroupHeader gh, NewShoppinglistForm nsf) {
+//		groupHeader = gh;
+//		newShoppinglistForm = nsf;
+//		
+//		groupHeader.setGroupShowForm(GroupShowForm.this);
+//		groupHeader.setSelected(selectedGroup);
+//		
+//		groupHeader.setStylePrimaryName("groupHeader");
+//		newShoppinglistForm.setStylePrimaryName("newShoppinglistForm");
+//		
+//		vp.add(newShoppinglistForm);
+//
+//		
+//	}
+//	
+//	public GroupShowForm() {
+//		groupHeader = new GroupHeader();
+//		groupContent = new GroupContent();
+//		
+//		groupHeader.setGroupShowForm(GroupShowForm.this);
+//		groupHeader.setSelected(selectedGroup);
+//		
+//		groupHeader.setStylePrimaryName("groupHeader");
+//		groupContent.setStylePrimaryName("groupContent");
+//		
+//		vp.add(groupContent);
+//		
+//	}
+//	
+//	public void onLoad() {
+//		
+//		this.add(groupHeader);
+//		this.add(vp);
+//
+//	}
+//
+//	public void setSelected(Group g) {
+//		selectedGroup = g;
+//	}
+
 
 }
