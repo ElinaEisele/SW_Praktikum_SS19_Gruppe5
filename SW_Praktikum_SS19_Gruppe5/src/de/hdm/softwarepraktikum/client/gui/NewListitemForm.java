@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -34,7 +35,9 @@ public class NewListitemForm extends HorizontalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-
+	
+	private GroupShoppinglistTreeViewModel gstvm = null;
+private ShoppinglistHeader shoppinglistHeader;
 	private Shoppinglist shoppinglistToDisplay = null;
 	private ListitemUnit selectedlistitemUnit = null;
 	private Retailer selectedRetailer = null;
@@ -44,6 +47,7 @@ public class NewListitemForm extends HorizontalPanel {
 
 	private NumberFormat decimalFormatter = NumberFormat.getDecimalFormat();
 
+	private VerticalPanel mainPanel = new VerticalPanel();
 	private Grid shoppinglistGrid;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -100,6 +104,7 @@ public class NewListitemForm extends HorizontalPanel {
 		discardButton.setEnabled(true);
 		actionButtonsPanel.add(discardButton);
 
+		mainPanel.add(shoppinglistGrid);
 		/**
 		 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
 		 */
@@ -113,9 +118,26 @@ public class NewListitemForm extends HorizontalPanel {
 	}
 
 	public void onLoad() {
-		this.add(shoppinglistGrid);
+		RootPanel.get("main").add(mainPanel);
 	}
 
+	public ShoppinglistHeader getShoppinglistHeader() {
+		return shoppinglistHeader;
+	}
+
+	public void setShoppinglistHeader(ShoppinglistHeader shoppinglistHeader) {
+		this.shoppinglistHeader = shoppinglistHeader;
+	}
+
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
+	
+	
 	/**
 	 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
 	 */
