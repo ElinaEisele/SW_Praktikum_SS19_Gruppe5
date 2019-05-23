@@ -210,9 +210,9 @@ private ShoppinglistHeader shoppinglistHeader;
 
 		@Override
 		public void onClick(ClickEvent event) {
-
-			// tbd: Ansicht schließen und zurück zu Shoppinglist CellTable
-			// selectedShoppinglist
+			RootPanel.get("main").clear();
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			RootPanel.get("main").add(ssf);
 		}
 
 	}
@@ -282,8 +282,7 @@ private ShoppinglistHeader shoppinglistHeader;
 			if (result != null) {
 
 				RootPanel.get("main").clear();
-				// RootPanel.get().add(w);
-				// RootPanel.get().add(w);
+				
 			}
 		}
 	}

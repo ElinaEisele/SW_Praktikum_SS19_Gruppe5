@@ -155,7 +155,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				AssignUserToRetailerDialogBox autrdb = new AssignUserToRetailerDialogBox();
+				AssignUserToRetailerForm autrdb = new AssignUserToRetailerForm();
 				// autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
 				// autrdb.show();
 			} else {
