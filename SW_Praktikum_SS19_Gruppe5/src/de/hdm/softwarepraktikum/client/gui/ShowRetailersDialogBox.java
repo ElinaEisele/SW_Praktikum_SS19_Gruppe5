@@ -27,7 +27,6 @@ public class ShowRetailersDialogBox extends DialogBox {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 
-	private Group selectedGroup;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label();
@@ -55,13 +54,6 @@ public class ShowRetailersDialogBox extends DialogBox {
 		this.center();
 	}
 
-	public Group getSelectedGroup() {
-		return selectedGroup;
-	}
-
-	public void setSelectedGroup(Group selectedGroup) {
-		this.selectedGroup = selectedGroup;
-	}
 
 	private class CancelClickHandler implements ClickHandler {
 
