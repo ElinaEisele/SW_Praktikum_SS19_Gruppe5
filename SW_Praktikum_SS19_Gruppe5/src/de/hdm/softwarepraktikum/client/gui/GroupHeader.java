@@ -233,7 +233,9 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			
+			ShowRetailersDialogBox srdb = new ShowRetailersDialogBox();
+
 			
 		}
 		
