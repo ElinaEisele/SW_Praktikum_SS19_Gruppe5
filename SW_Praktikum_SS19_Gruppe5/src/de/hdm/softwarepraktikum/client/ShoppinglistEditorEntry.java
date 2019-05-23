@@ -44,8 +44,8 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	private Header header = null;
 	private GroupShoppinglistTreeViewModel shoppinglistNavigator = null;
 	
-//	private ShoppinglistShowForm shoppinglistShowForm = null;
-//	private GroupShowForm groupShowForm = null;
+	private ShoppinglistShowForm shoppinglistShowForm = null;
+	private GroupShowForm groupShowForm = null;
 	
 	private NavigatorPanel navigatorPanel = new NavigatorPanel();
 	
@@ -77,13 +77,13 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		
 		
 		header = new Header();
-//		shoppinglistShowForm = new ShoppinglistShowForm();
-//		groupShowForm = new GroupShowForm();
+		shoppinglistShowForm = new ShoppinglistShowForm();
+		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
 
 		RootPanel.get("header").add(header);	
 		RootPanel.get("aside").add(navigatorPanel);
-//		RootPanel.get("main").add(groupShowForm);
+		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("trailer").add(trailer);
 
 	}

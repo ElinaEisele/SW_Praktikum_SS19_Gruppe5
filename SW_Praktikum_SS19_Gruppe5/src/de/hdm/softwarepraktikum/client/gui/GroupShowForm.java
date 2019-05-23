@@ -1,5 +1,6 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
@@ -21,24 +22,35 @@ public class GroupShowForm extends VerticalPanel{
 	
 	private GroupHeader groupHeader = null;
 	private GroupContent groupContent = null;
+	private NewShoppinglistForm newShoppinglistForm = null;
+	private VerticalPanel mainPanel = new VerticalPanel();
 	
 	private Group selectedGroup;
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 	
-	public void onLoad() {
-		
+	public GroupShowForm(GroupHeader gh, NewShoppinglistForm nsf) {
+		groupHeader = gh;
+		mainPanel.add(nsf);
+	
+	}
+	
+	public GroupShowForm() {
 		groupHeader = new GroupHeader();
 		groupContent = new GroupContent();
 		
-		groupHeader.setGroupShowForm(GroupShowForm.this);
-		groupHeader.setSelected(selectedGroup);
-		
 		groupHeader.setStylePrimaryName("groupHeader");
-		groupContent.setStylePrimaryName("groupContent");
+		mainPanel.setStylePrimaryName("groupShowFormMainPanel");
+		
+		mainPanel.add(groupContent);
+	}
+	
+	public void onLoad() {
+		
+		groupHeader.setGroupShowForm(GroupShowForm.this);
 		
 		this.add(groupHeader);
-		this.add(groupContent);
-
+		this.add(mainPanel);
+		
 	}
 
 	public void setSelected(Group g) {
@@ -52,55 +64,6 @@ public class GroupShowForm extends VerticalPanel{
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
-	
-	
-	
-//	private GroupHeader groupHeader = null;
-//	private GroupContent groupContent = null;
-//	private NewShoppinglistForm newShoppinglistForm = null;
-//	private VerticalPanel vp = new VerticalPanel();
-//	
-//	private Group selectedGroup;
-//	
-//	public GroupShowForm(GroupHeader gh, NewShoppinglistForm nsf) {
-//		groupHeader = gh;
-//		newShoppinglistForm = nsf;
-//		
-//		groupHeader.setGroupShowForm(GroupShowForm.this);
-//		groupHeader.setSelected(selectedGroup);
-//		
-//		groupHeader.setStylePrimaryName("groupHeader");
-//		newShoppinglistForm.setStylePrimaryName("newShoppinglistForm");
-//		
-//		vp.add(newShoppinglistForm);
-//
-//		
-//	}
-//	
-//	public GroupShowForm() {
-//		groupHeader = new GroupHeader();
-//		groupContent = new GroupContent();
-//		
-//		groupHeader.setGroupShowForm(GroupShowForm.this);
-//		groupHeader.setSelected(selectedGroup);
-//		
-//		groupHeader.setStylePrimaryName("groupHeader");
-//		groupContent.setStylePrimaryName("groupContent");
-//		
-//		vp.add(groupContent);
-//		
-//	}
-//	
-//	public void onLoad() {
-//		
-//		this.add(groupHeader);
-//		this.add(vp);
-//
-//	}
-//
-//	public void setSelected(Group g) {
-//		selectedGroup = g;
-//	}
 
 
 }
