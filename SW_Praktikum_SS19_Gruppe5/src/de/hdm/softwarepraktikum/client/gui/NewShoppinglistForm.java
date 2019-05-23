@@ -30,7 +30,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private Group selectedGroup = null;
 	private GroupHeader groupHeader = null;
-	private ShoppinglistShowForm shoppinglistShowForm = null;
+	private ShoppinglistShowForm shoppinglistShowForm = new ShoppinglistShowForm();
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Einkaufsliste erstellen");
@@ -42,9 +42,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 	private Button saveButton = new Button("Speichern");
 	private Button cancelButton = new Button("Abbrechen");
 	
-	public NewShoppinglistForm(Group g) {
-		
-		this.selectedGroup = g;
+	public NewShoppinglistForm() {
 		
 		grid.setWidget(0, 0, nameLabel);
 		grid.setWidget(0, 1, nameTextBox);
@@ -91,7 +89,6 @@ public class NewShoppinglistForm extends VerticalPanel{
 //			if (selectedGroup != null) {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(), new NewShoppinglistAsyncCallback());
 				RootPanel.get("main").clear();
-//				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 				// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe Callback)
 				RootPanel.get("main").add(shoppinglistShowForm);
 

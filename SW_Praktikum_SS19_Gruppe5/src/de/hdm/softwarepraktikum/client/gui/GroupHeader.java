@@ -26,7 +26,7 @@ public class GroupHeader extends HorizontalPanel {
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	private Group groupToDisplay = null;
-//	private GroupShoppinglistTreeViewModel gstvm = null;
+	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
 		
 	private Label groupHeaderLabel = new Label("Gruppe");
@@ -41,7 +41,7 @@ public class GroupHeader extends HorizontalPanel {
 	
 	public GroupHeader() {
 		
-//		groupHeaderLabel.setText(shoppinglistAdministration.getGroupName(groupToDisplay, new GroupNameCallback()));
+//		groupHeaderLabel.setText(groupToDisplay.getName());
 		
 		Image newShoppinglistImg = new Image();
 		newShoppinglistImg.setUrl("images/clipboard.png");
@@ -140,13 +140,14 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 //			if (groupToDisplay != null) {
-				NewShoppinglistForm nsf = new NewShoppinglistForm(groupToDisplay);
-//				nsf.setGstvm(GroupHeader.this.gstvm);
+				NewShoppinglistForm nsf = new NewShoppinglistForm();
+				nsf.setGstvm(GroupHeader.this.gstvm);
 				nsf.setGroupHeader(GroupHeader.this);
-//				GroupShowForm gsf = new GroupShowForm(nsf.getGroupHeader(), nsf);
+				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
+				gsf.setSelected(groupToDisplay);
+				
 				RootPanel.get("main").clear();
-				RootPanel.get("main").add(nsf);
-//				RootPanel.get("main").add(gsf);
+				RootPanel.get("main").add(gsf);
 //			} else {
 //				Notification.show("Es wurde keine Gruppe ausgewählt.");
 //			}
