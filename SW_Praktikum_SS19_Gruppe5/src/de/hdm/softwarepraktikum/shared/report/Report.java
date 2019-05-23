@@ -33,6 +33,11 @@ public class Report  implements Serializable {
 	private Paragraph headerData = null;
 	
 	/**
+	 * Jeder Bericht kann einen individuellen Titel besitzen.
+	 */
+	private String title = "Report";
+
+	/**
 	 * Erstellungdatum des Berichts.
 	 */
 	private Date creationDate = new Date();
@@ -68,6 +73,22 @@ public class Report  implements Serializable {
 	public void setHeaderData(Paragraph headerData) {
 		this.headerData = headerData;
 	}
+	
+	  /**
+	   * Ausgeben des Titels.
+	   * @return Titeltext
+	   */
+	  public String getTitle() {
+	    return this.title;
+	  }
+
+	  /**
+	   * Setzen des Titels.
+	   * @param title Titeltext
+	   */
+	  public void setTitle(String title) {
+	    this.title = title;
+	  }
 
 	/**
 	 * Ausgeben des Erstellungsdatums.
