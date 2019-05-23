@@ -113,11 +113,11 @@ public class NavigatorPanel extends VerticalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (user != null) {
+//			if (user != null) {
 				NewGroupForm ngf = new NewGroupForm();
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(ngf);
-			}
+//			}
 		}
 		
 	}

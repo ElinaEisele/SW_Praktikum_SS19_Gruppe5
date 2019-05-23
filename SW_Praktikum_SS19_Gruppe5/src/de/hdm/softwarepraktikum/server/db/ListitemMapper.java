@@ -234,7 +234,7 @@ public class ListitemMapper {
 			e.printStackTrace();
 		}
 		
-		return (Float) null;
+		return (Float) null; //return 0.0f;
 		
 	}
 	
