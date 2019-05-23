@@ -20,7 +20,7 @@ import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Formular zur Darstellung des zu ändernden Listitem
+ * Formular zur Darstellung des zu ï¿½ndernden Listitem
  * 
  * @author ElinaEisele, JonasWagenknecht
  */
@@ -42,13 +42,13 @@ public class ListitemForm extends VerticalPanel {
 	TextBox unitNameTextBox = new TextBox();
 	TextBox retailerNameTextBox = new TextBox();
 
-	Button newButton = new Button("Neuen Eintrag hinzufügen");
+	Button newButton = new Button("Neuen Eintrag hinzufï¿½gen");
 	Button saveButton = new Button("Speichern");
 	Button discardButton = new Button("verwerfen und zurueck");
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
+	 * angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
 
@@ -64,7 +64,7 @@ public class ListitemForm extends VerticalPanel {
 		shoppinglistGrid.setWidget(0, 1, newButton);
 		newButton.addClickHandler(new NewListitemClickHandler());
 		newButton.setEnabled(true);
-		
+
 		Label amountLabel = new Label("Menge");
 		shoppinglistGrid.setWidget(1, 0, amountLabel);
 		shoppinglistGrid.setWidget(1, 1, amountTextBox);
@@ -73,7 +73,7 @@ public class ListitemForm extends VerticalPanel {
 		shoppinglistGrid.setWidget(2, 0, unitNameLabel);
 		shoppinglistGrid.setWidget(2, 1, unitNameTextBox);
 
-		Label retailerNameLabel = new Label("Händler");
+		Label retailerNameLabel = new Label("Hï¿½ndler");
 		shoppinglistGrid.setWidget(3, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(3, 1, retailerNameTextBox);
 
@@ -91,37 +91,36 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zum Shoppinglist CellTable
+	 * Clickhandler zum verwerfen der Eingaben und zur Rï¿½ckkehr zum Shoppinglist
+	 * CellTable
 	 * 
 	 */
-	private class DiscardClickhandler implements ClickHandler{
+	private class DiscardClickhandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-		listitemToDisplay = null;
-			//tbd: Ansicht schließen und zurück zu Shoppinglist CellTable
+			listitemToDisplay = null;
+			// tbd: Ansicht schlieï¿½en und zurï¿½ck zu Shoppinglist CellTable
 		}
-		
+
 	}
-	
-	
-	
+
 	/**
-	 * Clickhandler zum ändern der Listitem Eigenschaften. Es erfolgt der Aufruf der
-	 * Service-Methode "save".
+	 * Clickhandler zum ï¿½ndern der Listitem Eigenschaften. Es erfolgt der Aufruf
+	 * der Service-Methode "save".
 	 * 
 	 */
 	private class SaveClickHandler implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (listitemToDisplay != null) {
-				listitemToDisplay.setAmount(amountTextBox.getText());
-				listitemToDisplay.setListitemUnit(unitNameTextBox.getText());
-				listitemToDisplay.setRetailer(retailerNameTextBox.getText());
+//				listitemToDisplay.setAmount(amountTextBox.getText());
+//				listitemToDisplay.setListitemUnit(unitNameTextBox.getText());
+//				listitemToDisplay.setRetailer(retailerNameTextBox.getText());
 
 				shoppinglistAdministration.save(listitemToDisplay, new SaveCallback());
 			} else {
-				Window.alert("kein Kunde ausgewählt");
+				Window.alert("kein Kunde ausgewï¿½hlt");
 			}
 		}
 	}
@@ -134,13 +133,11 @@ public class ListitemForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			// Die Änderung wird dem Listitem weitergegeben
-			gstvm.updateListitem(listitemToDisplay);
+			// Die ï¿½nderung wird dem Listitem weitergegeben
+			//gstvm.updateListitem(listitemToDisplay);
 		}
 	}
 
-	
-	
 	/**
 	 * Clickhandler zum ertsellen eines Listitem Objekts
 	 * 
@@ -149,10 +146,11 @@ public class ListitemForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Float amount = amountTextBox.getText();			
+			// Float amount = amountTextBox.getText();
 			String unitName = unitNameTextBox.getText();
 			String retailerName = retailerNameTextBox.getText();
-			shoppinglistAdministration.createListitem(amount, unitName, retailerName ,new CreateListitemCallback());
+			// shoppinglistAdministration.createListitem(amount, unitName, retailerName ,new
+			// CreateListitemCallback());
 		}
 	}
 
@@ -166,8 +164,8 @@ public class ListitemForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Listitem result) {
 			if (result != null) {
-				// Das erfolgreiche Hinzufügen eines Eintrags wird an den DOM-Tree propagiert.
-				gstvm.addListitem(result);
+				// Das erfolgreiche Hinzufï¿½gen eines Eintrags wird an den DOM-Tree propagiert.
+				// gstvm.addListitem(result);
 			}
 		}
 	}
@@ -185,12 +183,12 @@ public class ListitemForm extends VerticalPanel {
 //				amount = (float) decimalFormatter
 //						.parse(amountTextBox.getText());
 //			} catch (NumberFormatException nfe) {
-//				Window.alert("ungültiger Wert!");
+//				Window.alert("ungï¿½ltiger Wert!");
 //				return;
 //			}
 //
 //			if (listitemToDisplay == null) {
-//				Window.alert("kein Konto ausgewählt!");
+//				Window.alert("kein Konto ausgewï¿½hlt!");
 //				return;
 //			}
 //			shoppinglistAdministration
@@ -244,9 +242,9 @@ public class ListitemForm extends VerticalPanel {
 //	
 
 	/*
-	 * Wenn das anzuzeigende Listitem gesetzt bzw. gelöscht wird, werden die
-	 * zugehörenden Textfelder mit den Informationen aus dem Listitem Objekt
-	 * gefüllt bzw. gelöscht.
+	 * Wenn das anzuzeigende Listitem gesetzt bzw. gelï¿½scht wird, werden die
+	 * zugehï¿½renden Textfelder mit den Informationen aus dem Listitem Objekt
+	 * gefï¿½llt bzw. gelï¿½scht.
 	 */
 
 	void setSelected(Listitem l) {

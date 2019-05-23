@@ -27,6 +27,7 @@ import de.hdm.softwarepraktikum.client.gui.Editor;
 import de.hdm.softwarepraktikum.client.gui.GroupShoppinglistTreeViewModel;
 import de.hdm.softwarepraktikum.client.gui.GroupShowForm;
 import de.hdm.softwarepraktikum.client.gui.Header;
+import de.hdm.softwarepraktikum.client.gui.NavigatorPanel;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable;
 
 /**
@@ -41,16 +42,15 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 
 	private Header header = null;
-//	private GroupShoppinglistTreeViewModel shoppinglistNavigator = null;
+	private GroupShoppinglistTreeViewModel shoppinglistNavigator = null;
 	
 //	private ShoppinglistShowForm shoppinglistShowForm = null;
-	private GroupShowForm groupShowForm = null;
+//	private GroupShowForm groupShowForm = null;
+	
+	private NavigatorPanel navigatorPanel = new NavigatorPanel();
 	
 	private Trailer trailer = null;
 	
-
-	
-
 	@Override
 	public void onModuleLoad() {
 		
@@ -78,12 +78,12 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		
 		header = new Header();
 //		shoppinglistShowForm = new ShoppinglistShowForm();
-		groupShowForm = new GroupShowForm();
+//		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
 
 		RootPanel.get("header").add(header);	
-//		RootPanel.get("aside").add(tree);
-		RootPanel.get("main").add(groupShowForm);
+		RootPanel.get("aside").add(navigatorPanel);
+//		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("trailer").add(trailer);
 
 	}

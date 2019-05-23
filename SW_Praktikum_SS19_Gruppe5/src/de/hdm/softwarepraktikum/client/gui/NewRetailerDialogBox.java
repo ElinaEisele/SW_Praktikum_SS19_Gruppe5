@@ -24,13 +24,14 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
  */
 public class NewRetailerDialogBox extends DialogBox {
 
+
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
 	private Shoppinglist selectedShoppinglist = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label newRetailerLabel = new Label("Name des Einzehändlers: ");
+	private Label newRetailerLabel = new Label("Name des Einzehï¿½ndlers: ");
 	private TextBox retailerName = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
@@ -38,7 +39,8 @@ public class NewRetailerDialogBox extends DialogBox {
 	private Button cancelButton = new Button("Abbrechen");
 
 	public NewRetailerDialogBox() {
-		
+		this.setGlassEnabled(true);
+
 		cancelButton.setStylePrimaryName("cancelButton");
 		confirmButton.setStylePrimaryName("confirmButton");
 
@@ -51,11 +53,6 @@ public class NewRetailerDialogBox extends DialogBox {
 		mainPanel.add(newRetailerLabel);
 		mainPanel.add(buttonPanel);
 
-		
-	}
-	
-	public void onLoad() {
-		this.setGlassEnabled(true);
 		this.add(mainPanel);
 		this.center();
 	}
@@ -69,7 +66,7 @@ public class NewRetailerDialogBox extends DialogBox {
 	}
 
 	/**
-	 * ClickHandler zum schließen der DialogBox.
+	 * ClickHandler zum schlieï¿½en der DialogBox.
 	 */
 	private class CancelClickHandler implements ClickHandler {
 
@@ -96,7 +93,7 @@ public class NewRetailerDialogBox extends DialogBox {
 	}
 
 	/**
-	 * Textbox inhalt zurücksetzen und ShoppinglistShowForm aktualisieren
+	 * Textbox inhalt zurï¿½cksetzen und ShoppinglistShowForm aktualisieren
 	 */
 	private class CreateRetailerCallback implements AsyncCallback<Retailer> {
 
@@ -110,10 +107,8 @@ public class NewRetailerDialogBox extends DialogBox {
 
 			retailerName.setText("");
 			RootPanel.get("main").clear();
-			audb.setGstvm(GroupHeader.this.gstvm);
-			audb.show();
-			RootPanel.get("main").add(w);
-			RootPanel.get("main").add(w);
+			//RootPanel.get("main").add(w);
+			//RootPanel.get("main").add(w);
 		}
 
 	}

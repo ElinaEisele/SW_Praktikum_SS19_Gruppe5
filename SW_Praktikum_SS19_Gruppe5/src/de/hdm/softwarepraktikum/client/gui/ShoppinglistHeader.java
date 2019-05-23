@@ -29,8 +29,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 	private Shoppinglist shoppinglistToDisplay = null;
 
 	private Label shoppinglistHeaderLabel;
-
-	private Button newRetailer;
 	private Button newListitem;
 	private Button deleteShoppinglist;
 	private Button assignUserToRetailer;
@@ -39,40 +37,26 @@ public class ShoppinglistHeader extends HorizontalPanel {
 	public ShoppinglistHeader() {
 
 		shoppinglistHeaderLabel = new Label("getListName");
-
-		newRetailer = new Button("Neuer Einzelh�ndler");
+		shoppinglistHeaderLabel.setStyleName("ListLabel");
 		newListitem = new Button("Eintrag hinzufuegen");
 		deleteShoppinglist = new Button("Einkaufsliste loeschen");
 		assignUserToRetailer = new Button("Nutzer zuordnen");
+		editShoppinglistName = new Button("Editieren");
 
-		editShoppinglist = new Button("Editieren");
-		
-		newListitemForm = new NewListitemForm();
-	
-		listLabel.setStyleName("ListLabel");
-		
-		addListitem.addClickHandler(new ClickHandler() {
+		Image newListitemImg = new Image();
+		newListitemImg.setUrl("images/shopping-cart.png");
+		newListitemImg.setSize("16px", "16px");
+		newListitem.getElement().appendChild(newListitemImg.getElement());
+		newListitem.setStyleName("ShoppinglistHeaderButton");
+		newListitem.addClickHandler(new NewListitemClickHandler());
 
-			@Override
-			public void onClick(ClickEvent event) {
-				shoppinglistShowForm.clear();
-//				shoppinglistShowForm.add(newListitemForm);
-			}
-			
-		});
-				
-		Image addListitemImg = new Image();
-		addListitemImg.setUrl("images/shopping-cart.png");
-		addListitemImg.setSize("16px", "16px");
-		addListitem.getElement().appendChild(addListitemImg.getElement());
-		addListitem.setStyleName("ShoppinglistHeaderButton");
-		
 		Image deleteShoppinglistImg = new Image();
 		deleteShoppinglistImg.setUrl("images/delete.png");
 		deleteShoppinglistImg.setSize("16px", "16px");
 		deleteShoppinglist.getElement().appendChild(deleteShoppinglistImg.getElement());
 		deleteShoppinglist.setStyleName("ShoppinglistHeaderButton");
-		
+		deleteShoppinglist.addClickHandler(new DeleteShoppinglistClickHandler());
+
 		Image assignUserToRetailerImg = new Image();
 		assignUserToRetailerImg.setUrl("images/man-pushing-a-shopping-cart.png");
 		assignUserToRetailerImg.setSize("16px", "16px");
@@ -87,20 +71,11 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		editShoppinglistName.setStyleName("ShoppinglistHeaderButton");
 		editShoppinglistName.addClickHandler(new EditShoppinglistNameClickHandler());
 
-		Image deleteShoppinglistImg = new Image();
-		deleteShoppinglistImg.setUrl("images/delete.png");
-		deleteShoppinglistImg.setSize("16px", "16px");
-		deleteShoppinglist.getElement().appendChild(deleteShoppinglistImg.getElement());
-		deleteShoppinglist.setStyleName("ShoppinglistHeaderButton");
-		deleteShoppinglist.addClickHandler(new DeleteShoppinglistClickHandler());
-
 	}
 
 	public void onLoad() {
 
 		this.add(shoppinglistHeaderLabel);
-
-		this.add(newRetailer);
 		this.add(newListitem);
 		this.add(assignUserToRetailer);
 		this.add(editShoppinglistName);
@@ -131,25 +106,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 	 */
 
 	/**
-	 * ClickHandler dient dem Erzeugen einer <code>NewRetailerDialogBox</code>
-	 * Instanz.
-	 */
-	private class NewRetailerClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			if (shoppinglistToDisplay != null) {
-				NewRetailerDialogBox nrdb = new NewRetailerDialogBox();
-				nrdb.setGstvm(ShoppinglistHeader.this.gstvm);
-				nrdb.show();
-			} else {
-				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
-			}
-		}
-
-	}
-
-	/**
 	 * ClickHandler dient dem Erzeugen einer <code>NewListitemForm</code> Instanz.
 	 */
 	private class NewListitemClickHandler implements ClickHandler {
@@ -157,13 +113,14 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				NewListitemForm nlf = new NewListitemForm(shoppinglistToDisplay);
-				nlsf.setGstvm(ShoppinglistHeader.this.gstvm);
+				// NewListitemForm nlf = new NewListitemForm(shoppinglistToDisplay);
+				// nlsf.setGstvm(ShoppinglistHeader.this.gstvm);
 				RootPanel.get("main").clear();
 //				RootPanel.get("main").add(nlfheader);
-				RootPanel.get("main").add(nlf);
+				// RootPanel.get("main").add(nlf);
 			} else {
-				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");			}
+				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
+			}
 		}
 
 	}
@@ -178,10 +135,11 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 				AssignUserToRetailerDialogBox autrdb = new AssignUserToRetailerDialogBox();
-			autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
-			autrdb.show();
+				// autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
+				// autrdb.show();
 			} else {
-				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");			}
+				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
+			}
 		}
 
 	}
@@ -196,10 +154,11 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 				EditShoppinglistNameDialogBox esndb = new EditShoppinglistNameDialogBox();
-				esndb.setGstvm(ShoppinglistHeader.this.gstvm);
-				esndb.show();
+				//esndb.setGstvm(ShoppinglistHeader.this.gstvm);
+				//esndb.show();
 			} else {
-				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");			}
+				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
+			}
 		}
 
 	}
@@ -214,10 +173,11 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 				DeleteShoppinglistDialogBox dsdb = new DeleteShoppinglistDialogBox();
-				dsdb.setGstvm(ShoppinglistHeader.this.gstvm);
-				dsdb.show();
+				//dsdb.setGstvm(ShoppinglistHeader.this.gstvm);
+				//dsdb.show();
 			} else {
-				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");			}
+				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
+			}
 		}
 
 	}
