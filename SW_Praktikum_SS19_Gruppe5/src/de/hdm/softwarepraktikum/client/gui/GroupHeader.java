@@ -234,8 +234,7 @@ public class GroupHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			
 			ShowRetailersDialogBox srdb = new ShowRetailersDialogBox();
-
-			
+			srdb.show();
 		}
 		
 	}
