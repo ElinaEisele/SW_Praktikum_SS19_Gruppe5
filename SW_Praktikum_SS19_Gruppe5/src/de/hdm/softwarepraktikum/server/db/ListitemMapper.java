@@ -61,6 +61,11 @@ public class ListitemMapper {
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
 				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				listitems.add(li);
 			}
 			return listitems;
@@ -93,6 +98,11 @@ public class ListitemMapper {
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
 				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				return li;
 			}
 
@@ -123,12 +133,21 @@ public class ListitemMapper {
 				listitem.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO Listitem (id, creationDate, amount) VALUES (?, ?, ?)",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO Listitem "
+					+ "(id, creationDate, amount, isStandard, product_id, shoppinglist_id, unit_id, usergroup_id, "
+					+ "retailer_id) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, listitem.getId());
 			pstmt.setDate(2, (Date) listitem.getCreationDate());
 			pstmt.setFloat(3, listitem.getAmount());
+			pstmt.setBoolean(4, listitem.isStandard());
+			pstmt.setInt(5, listitem.getProductID());
+			pstmt.setInt(6, listitem.getShoppinglistID());
+			pstmt.setInt(7, listitem.getListitemUnitID());
+			pstmt.setInt(8, listitem.getGroupID());
+			pstmt.setInt(9, listitem.getRetailerID());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -151,10 +170,12 @@ public class ListitemMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? WHERE id = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? and isStandard ? "
+					+ "WHERE id = ?");
 
 			pstmt.setFloat(1, listitem.getAmount());
-			pstmt.setInt(2, listitem.getId());
+			pstmt.setBoolean(2, listitem.isStandard());
+			pstmt.setInt(3, listitem.getId());
 			pstmt.executeUpdate();
 
 			return listitem;
@@ -179,7 +200,7 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM listitems WHERE id =" + listitem.getId());
+			stmt.executeUpdate("DELETE FROM listitems WHERE id = " + listitem.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -201,17 +222,19 @@ public class ListitemMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT amount FROM listitems WHERE id=" + listitem.getId());
+			ResultSet rs = stmt.executeQuery("SELECT amount FROM listitems WHERE id = " + listitem.getId());
 			
-			amount = rs.getFloat("amount");
+			while(rs.next()) {
 			
-			return amount;
+				amount = rs.getFloat("amount");
+				return amount;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
-			return (Float) null;
 		}
+		
+		return (Float) null;
 		
 	}
 	
@@ -265,16 +288,23 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN listitems " 
-							+ "ON shoppinglists.listitem_id=listitems.id"
-							+ "WHERE shoppinglists.id = " + shoppinglist.getId());
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					+ "FROM shoppinglists INNER JOIN listitems " 
+					+ "ON shoppinglists.listitem_id = listitems.id "
+					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {
 
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
-				li.setCreationDate(rs.getDate("CreationDate"));
+				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				listitems.add(li);
 			}
 
@@ -303,7 +333,7 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
-					+ "ON listitems.retailer_id = retailer.id" 
+					+ "ON listitems.retailer_id = retailer.id " 
 					+ "WHERE retailers.id = " + retailer.getId());
 
 			while (rs.next()) {
@@ -311,6 +341,12 @@ public class ListitemMapper {
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				listitems.add(li);
 
 			}
@@ -342,13 +378,19 @@ public class ListitemMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN products "
 					+ "ON listitems.product_id = products.id " 
-					+ "WHERE listitems.shoppinglist_id= " + shoppinglist.getId() + "and products.name= " + productname);
+					+ "WHERE listitems.shoppinglist_id = " + shoppinglist.getId() + "and products.name = " + productname);
 
 			while (rs.next()) {
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				listitems.add(li);
 			}
 
@@ -374,15 +416,21 @@ public class ListitemMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM lisitems INNER JOIN usergroups " 
-							+ "ON listitems.usergroup_id= usergroups.id "
+							+ "ON listitems.usergroup_id = usergroups.id "
 							+ "WHERE usergroups.id = " + group.getId() 
-							+ "and listitems.isStandard =" + 1);
+							+ "and listitems.isStandard = " + true);
 
 			while (rs.next()) {
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				listitems.add(li);
 			}
 
@@ -408,7 +456,7 @@ public class ListitemMapper {
 	
 		try { 
 			
-			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET isStandard =" + true
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET isStandard = " + true
 					+ "WHERE usergroup_id = ? and id = ?");
 
 			pstmt.setFloat(1, group.getId());
@@ -439,8 +487,8 @@ public class ListitemMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN listitems"
-					+ "ON responsibilities.retailer_id = listitems.retailer_id"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN listitems "
+					+ "ON responsibilities.retailer_id = listitems.retailer_id "
 					+ "WHERE shoppinglist_id = " + shoppinglistId + "and user_id = " + userId);
 
 			while (rs.next()){
@@ -449,6 +497,11 @@ public class ListitemMapper {
 			        li.setCreationDate(rs.getDate("creationDate"));
 			        li.setAmount(rs.getFloat("amount"));
 			        li.setStandard(rs.getBoolean("isStandard"));
+			       	li.setProductID(rs.getInt("product_id"));
+					li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+					li.setListitemUnitID(rs.getInt("unit_id"));
+					li.setGroupID(rs.getInt("usergroup_id"));
+					li.setRetailerID(rs.getInt("retailer_id"));
 			        listitems.add(li);		   
 			}
 			
@@ -488,6 +541,11 @@ public class ListitemMapper {
 			        li.setCreationDate (rs.getDate("creationDate"));
 			        li.setAmount(rs.getFloat("amount"));
 			        li.setStandard(rs.getBoolean("isStandard"));
+					li.setProductID(rs.getInt("product_id"));
+					li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+					li.setListitemUnitID(rs.getInt("unit_id"));
+					li.setGroupID(rs.getInt("usergroup_id"));
+					li.setRetailerID(rs.getInt("retailer_id"));
 			        listitems.add(li);
 			}
 
