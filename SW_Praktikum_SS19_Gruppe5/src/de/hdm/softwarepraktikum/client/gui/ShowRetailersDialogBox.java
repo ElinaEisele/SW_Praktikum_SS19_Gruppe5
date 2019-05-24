@@ -20,7 +20,7 @@ import de.hdm.softwarepraktikum.shared.bo.Retailer;
  * Klasse zur Darstellung einer Dialogbox, wenn alle Retailer angezeigt werden
  * sollen
  * 
- * @author ElinaEisele, JonasWagenknecht, Leoni Friedrich
+ * @author ElinaEisele, JonasWagenknecht, LeoniFriedrich
  *
  */
 public class ShowRetailersDialogBox extends DialogBox {
@@ -35,9 +35,6 @@ public class ShowRetailersDialogBox extends DialogBox {
 
 	public ShowRetailersDialogBox() {
 
-		// shoppinglistAdministration.getUsersOf(selectedGroup, new
-		// ShowUsersCallback());
-
 		this.setGlassEnabled(true);
 
 		cancelButton.setStylePrimaryName("cancelButton");
@@ -45,7 +42,6 @@ public class ShowRetailersDialogBox extends DialogBox {
 
 		infoLabel.setText("Platzhalter Gruppenname");
 
-		// infoLabel.setText("Retailer der Gruppe " + selectedGroup.getName() + ":");
 
 		mainPanel.add(infoLabel);
 		mainPanel.add(cancelButton);
