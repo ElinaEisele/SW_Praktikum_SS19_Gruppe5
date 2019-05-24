@@ -29,8 +29,8 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	private ShoppinglistHeader shoppinglistHeader;
 	private Shoppinglist selectedShoppinglist = null;
 	private GroupShoppinglistTreeViewModel gstvm = null;
-private Shoppinglist shoppinglistToDisplay = null;
-	
+	private Shoppinglist shoppinglistToDisplay = null;
+
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private TextBox newShoppinglistNameTextBox = new TextBox();
 
@@ -99,7 +99,7 @@ private Shoppinglist shoppinglistToDisplay = null;
 		}
 
 	}
-	
+
 	/**
 	 * Clickhandler zum aendern des Name.
 	 * 
@@ -110,7 +110,6 @@ private Shoppinglist shoppinglistToDisplay = null;
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 				shoppinglistToDisplay.setName(newShoppinglistNameTextBox.getText());
-				
 
 				shoppinglistAdministration.save(shoppinglistToDisplay, new EditNameCallback());
 
@@ -121,8 +120,8 @@ private Shoppinglist shoppinglistToDisplay = null;
 	}
 
 	/**
-	 * Nach dem erfolgreichen aendern des Namen wird das Formular geschlossen
-	 * und die aktuell ausgewählte Shoppinglist erneut geöffnet.
+	 * Nach dem erfolgreichen aendern des Namen wird das Formular geschlossen und
+	 * die aktuell ausgewählte Shoppinglist erneut geöffnet.
 	 * 
 	 */
 	private class EditNameCallback implements AsyncCallback<Void> {

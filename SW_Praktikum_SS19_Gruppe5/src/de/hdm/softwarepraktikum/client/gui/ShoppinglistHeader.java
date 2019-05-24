@@ -37,7 +37,8 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 	public ShoppinglistHeader() {
 
-		shoppinglistHeaderLabel = new Label("getListName");
+		shoppinglistHeaderLabel = new Label("Keine Shoppinglist ausgewaehlt");
+		shoppinglistHeaderLabel.setText(shoppinglistToDisplay.getName());
 		shoppinglistHeaderLabel.setStyleName("ListLabel");
 		newListitem = new Button("Eintrag hinzufuegen");
 		deleteShoppinglist = new Button("Einkaufsliste loeschen");
@@ -174,7 +175,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				EditShoppinglistNameDialogBox esndb = new EditShoppinglistNameDialogBox();
+				EditShoppinglistNameForm esndb = new EditShoppinglistNameForm();
 				// esndb.setGstvm(ShoppinglistHeader.this.gstvm);
 				// esndb.show();
 			} else {
@@ -202,12 +203,13 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		}
 
 	}
+
 	private class ShowUserRetailerAllocationClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				
+
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
