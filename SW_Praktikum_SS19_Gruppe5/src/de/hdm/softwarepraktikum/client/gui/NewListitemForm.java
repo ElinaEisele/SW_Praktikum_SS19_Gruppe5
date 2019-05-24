@@ -227,9 +227,9 @@ private ShoppinglistHeader shoppinglistHeader;
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				NewRetailerDialogBox nrdb = new NewRetailerDialogBox();
+				NewRetailerForm nrdb = new NewRetailerForm();
 //				nrdb.setGstvm(ShoppinglistHeader.this.gstvm);
-				nrdb.show();
+	
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
