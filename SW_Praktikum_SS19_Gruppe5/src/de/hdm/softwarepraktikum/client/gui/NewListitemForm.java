@@ -282,6 +282,8 @@ private ShoppinglistHeader shoppinglistHeader;
 			if (result != null) {
 
 				RootPanel.get("main").clear();
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				RootPanel.get("main").add(ssf);
 				
 			}
 		}

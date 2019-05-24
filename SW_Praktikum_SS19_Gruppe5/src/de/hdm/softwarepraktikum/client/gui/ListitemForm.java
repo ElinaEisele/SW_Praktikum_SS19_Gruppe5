@@ -384,8 +384,9 @@ public class ListitemForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Listitem result) {
 			if (result != null) {
-
 				RootPanel.get("main").clear();
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				RootPanel.get("main").add(ssf);
 
 			}
 		}

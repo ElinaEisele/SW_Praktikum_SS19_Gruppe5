@@ -237,8 +237,8 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		public void onSuccess(Void result) {
 
 			RootPanel.get("main").clear();
-			GroupShowForm gsf = new GroupShowForm();
-			RootPanel.get("main").add(gsf);
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			RootPanel.get("main").add(ssf);
 		}
 	}
 
