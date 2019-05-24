@@ -1,6 +1,6 @@
 package de.hdm.softwarepraktikum.shared.report;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 import de.hdm.softwarepraktikum.shared.report.AllShoppinglistsOfGroupReport;
@@ -13,13 +13,13 @@ import de.hdm.softwarepraktikum.shared.report.Row;
  * erzeugt wurde mit der Methode getReportText() ausgelesen werden.
  * 
  * 
- * @author FelixRapp
+ * @author FelixRapp, TimBeutelspacher
  */
 public class PlainTextReportWriter extends ReportWriter {
 
-	  /**
-	   * Textfeld zum speichern des Ergebnisses
-	   */
+  /**
+   * Textfeld zum speichern des Ergebnisses
+   */
   private String reportText = "";
 
   /**
@@ -68,11 +68,11 @@ public void process(AllListitemsOfGroupReport r) {
      */
     result.append("*** " + r.getTitle() + " ***\n\n");
     result.append(r.getHeaderData() + "\n");
-    result.append("Erstellt am: " + r.getCreated().toString() + "\n\n");
-    Vector<Row> rows = r.getRows();
+    result.append("Erstellt am: " + r.getCreationDate().toString() + "\n\n");
+    ArrayList<Row> rows = r.getRows();
 
     for (Row row : rows) {
-      for (int k = 0; k < row.getNumColumns(); k++) {
+      for (int k = 0; k < row.getSizeOfColumns(); k++) {
         result.append(row.getColumnAt(k) + "\t ; \t");
       }
 
