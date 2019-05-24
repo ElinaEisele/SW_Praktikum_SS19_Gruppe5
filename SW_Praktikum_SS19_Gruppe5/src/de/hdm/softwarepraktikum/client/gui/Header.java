@@ -1,5 +1,6 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -37,6 +38,7 @@ public class Header extends HorizontalPanel {
 		reportLink = new Anchor("Report");
 
 		editorButton.addClickHandler(new EditorClickHandler());
+		reportButton.addClickHandler(new ReportClickHandler());
 		abmeldenButton.addClickHandler(new LogoutClickHandler());
 
 		editorButton.setStyleName("HeaderButton");
@@ -51,7 +53,11 @@ public class Header extends HorizontalPanel {
 		this.add(abmeldenButton);
 
 	}
-
+	
+	/**
+	 * Durch ein Klick auf den Logout-Button wird der User auf die
+	 * Begrüßungsseite weitergeleitet
+	 */
 	private class LogoutClickHandler implements ClickHandler {
 
 		@Override
@@ -62,11 +68,29 @@ public class Header extends HorizontalPanel {
 
 	}
 	
+	/**
+	 * Durch ein Klick auf den Editor-Button wird die Editorseite
+	 * aktualisiert.
+	 */
 	private class EditorClickHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.Location.reload();
+		}
+		
+	}
+	
+	/**
+	 * Durch ein Klick auf den Report-Button wird man 
+	 * auf die Report-Seite weitergeleitet.
+	 */
+	private class ReportClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			reportLink.setHref(GWT.getHostPageBaseURL()+"ReportGenerator.html");
+			Window.open(reportLink.getHref(), "_self", "");
 		}
 		
 	}
