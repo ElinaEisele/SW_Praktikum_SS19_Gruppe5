@@ -88,9 +88,7 @@ public class NewGroupForm extends VerticalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (u != null) {
 				RootPanel.get("main").clear();
-			}
 		}
 		
 	}
