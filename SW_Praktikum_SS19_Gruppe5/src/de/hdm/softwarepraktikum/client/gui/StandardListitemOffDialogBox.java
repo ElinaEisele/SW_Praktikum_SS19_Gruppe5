@@ -78,9 +78,7 @@ public class StandardListitemOffDialogBox extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedListitem != null) {
-				//shoppinglistAdministration.RemoveStandardListitem(selectedListitem, selectedGroup,
-				//		new RemoveStandardCallback());
-
+				shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, false, new RemoveStandardCallback());
 				StandardListitemOffDialogBox.this.hide();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
