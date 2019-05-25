@@ -345,15 +345,18 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * Setzen bzw. entfernen eines Standard-Eintrags innerhalb einer Gruppe
 	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
 	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
-		this.listitemMapper.setStandardListitemOf(group, listitem);
-		
+	public void setStandardListitem(Listitem listitem, Group group, boolean value) throws IllegalArgumentException {
+		//der zustand muss nur aktualisiert werden, wenn der Wert ein anderer als der vorherige ist.
+		if(listitem.isStandard() == value) {
+			listitem.setStandard(value);
+			this.listitemMapper.update(listitem);
+		}
 	}
 	
 	/**
