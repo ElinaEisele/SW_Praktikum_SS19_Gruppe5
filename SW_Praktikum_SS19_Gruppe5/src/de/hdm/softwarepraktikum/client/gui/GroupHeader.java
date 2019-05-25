@@ -16,10 +16,10 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Klasse für die Anordnung der Buttons im <code>GroupHeader</code>, der in der
+ * Klasse fuer die Anordnung der Buttons im <code>GroupHeader</code>, der in der
  * <code>GroupShowForm</code> angezeigt wird.
  * 
- * @author ElinaEisele, JonasWagenknecht
+ * @author ElinaEisele, JonasWagenknecht, LeoniFriedrich
  */
 
 public class GroupHeader extends HorizontalPanel {
@@ -113,8 +113,8 @@ public class GroupHeader extends HorizontalPanel {
 	}
 
 	/**
-	 * Sobald eine <code>Group</code> ausgewählt wird, wird das Label mit dem
-	 * Gruppenname befüllt.
+	 * Sobald eine <code>Group</code> ausgewaehlt wird, wird das Label mit dem
+	 * Gruppenname befuellt.
 	 * 
 	 * @param g das zu setzende <code>Group</code> Objekt.
 	 */
