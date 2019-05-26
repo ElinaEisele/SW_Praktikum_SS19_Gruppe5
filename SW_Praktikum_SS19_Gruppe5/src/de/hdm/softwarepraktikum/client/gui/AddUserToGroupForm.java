@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -12,40 +13,41 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
-import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Klasse zur Darstellung eines Formulars, um eine neue <code>Soppinglist</code> anzulegen.
+ * Klasse zur Darstellung einer Dialogbox, um einer Gruppe einen
+ * neune User hinzuzufuegen.
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class NewShoppinglistForm extends VerticalPanel{
+public class AddUserToGroupForm extends VerticalPanel{
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
-	
-	private GroupShoppinglistTreeViewModel gstvm = null;
-	private Group selectedGroup = null;
+	private User u = CurrentUser.getUser();
+	private User newGroupMember = null;
 	private GroupHeader groupHeader = null;
-	private ShoppinglistShowForm shoppinglistShowForm = new ShoppinglistShowForm();
-
+	private Group selectedGroup = null;
+	private GroupShoppinglistTreeViewModel gstvm = null;
+	
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label infoLabel = new Label("Neue Einkaufsliste erstellen");
+	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufügen.");
 	private Grid grid = new Grid(1, 2);
-	private Label nameLabel = new Label("Name");
-	private TextBox nameTextBox = new TextBox();
+	private Label emailLabel = new Label("Gmail-Adresse: ");
+	private TextBox emailTextBox = new TextBox();
 	
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button saveButton = new Button("Speichern");
 	private Button cancelButton = new Button("Abbrechen");
 	
-	public NewShoppinglistForm() {
+	public AddUserToGroupForm() {
 		
-		grid.setWidget(0, 0, nameLabel);
-		grid.setWidget(0, 1, nameTextBox);
+		grid.setWidget(0, 0, emailLabel);
+		grid.setWidget(0, 1, emailTextBox);
 		
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
@@ -56,22 +58,10 @@ public class NewShoppinglistForm extends VerticalPanel{
 		mainPanel.add(infoLabel);
 		mainPanel.add(grid);
 		mainPanel.add(buttonPanel);
-		
 	}
 	
 	public void onLoad() {
-		
 		RootPanel.get("main").add(mainPanel);
-		
-	}
-	
-	
-	public GroupHeader getGroupHeader() {
-		return groupHeader;
-	}
-
-	public void setGroupHeader(GroupHeader groupHeader) {
-		this.groupHeader = groupHeader;
 	}
 
 	public GroupShoppinglistTreeViewModel getGstvm() {
@@ -81,7 +71,14 @@ public class NewShoppinglistForm extends VerticalPanel{
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
-	
+
+	public GroupHeader getGroupHeader() {
+		return groupHeader;
+	}
+
+	public void setGroupHeader(GroupHeader groupHeader) {
+		this.groupHeader = groupHeader;
+	}
 	
 	
 	public Group getSelectedGroup() {
@@ -94,16 +91,29 @@ public class NewShoppinglistForm extends VerticalPanel{
 
 
 
-	private class SaveClickHandler implements ClickHandler{
+	private class CancelClickHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			if (selectedGroup != null) {
-				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(), new NewShoppinglistAsyncCallback());
-				RootPanel.get("main").clear();
-				// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe Callback)
-				RootPanel.get("main").add(shoppinglistShowForm);
+			RootPanel.get("main").clear();
+			GroupShowForm gsf = new GroupShowForm();
+			gsf.setSelected(selectedGroup);
+			RootPanel.get("main").add(gsf);
+		}
+		
+	}
+	
+	private class SaveClickHandler implements ClickHandler{
 
+		public void onClick(ClickEvent event) {
+//			if (selectedGroup != null) {
+				String email = emailTextBox.getValue();
+				shoppinglistAdministration.getUserByMail(email, new GetUserCallback());
+				shoppinglistAdministration.addUserToGroup(newGroupMember, selectedGroup, new AddUserCallback());
+				GroupShowForm gsf = new GroupShowForm();
+				gsf.setSelected(selectedGroup);
+				RootPanel.get("main").clear();
+				RootPanel.get("main").add(gsf);
 //			} else {
 //				Notification.show("Es wurde keine Gruppe ausgewählt.");
 //			}
@@ -111,32 +121,30 @@ public class NewShoppinglistForm extends VerticalPanel{
 		
 	}
 	
-	private class CancelClickHandler implements ClickHandler{
+	private class GetUserCallback implements AsyncCallback<User>{
 
 		@Override
-		public void onClick(ClickEvent event) {
-//			if (selectedGroup != null) {
-				RootPanel.get("main").clear();
-				GroupShowForm gsf = new GroupShowForm();
-				gsf.setSelected(selectedGroup);
-				RootPanel.get("main").add(gsf);
-//			}
+		public void onFailure(Throwable caught) {
+			Notification.show("Folgender Fehler ist aufgetreten: " + caught.toString());
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			newGroupMember = result;
 		}
 		
 	}
 	
-	private class NewShoppinglistAsyncCallback implements AsyncCallback<Shoppinglist>{
+	private class AddUserCallback implements AsyncCallback<Void>{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Die Einkaufslistenerstellung ist fehlgeschlagen.");
+			Notification.show("Es ist folgender Fehler aufgetreten: " + caught.toString());
 		}
 
 		@Override
-		public void onSuccess(Shoppinglist result) {
-			gstvm.addShoppinglistToGroup(result, selectedGroup);
-			// die neu erstellte Shoppinglist wird in der ShoppinglistShowForm gesetzt
-			shoppinglistShowForm.setSelected(result);
+		public void onSuccess(Void result) {
+			Notification.show("Gruppenmitglied wurde hinzugefügt.");
 		}
 		
 	}

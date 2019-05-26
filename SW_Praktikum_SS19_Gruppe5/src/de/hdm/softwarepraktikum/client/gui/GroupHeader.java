@@ -143,6 +143,7 @@ public class GroupHeader extends HorizontalPanel {
 				NewShoppinglistForm nsf = new NewShoppinglistForm();
 				nsf.setGstvm(GroupHeader.this.gstvm);
 				nsf.setGroupHeader(GroupHeader.this);
+				nsf.setSelectedGroup(groupToDisplay);
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
 				gsf.setSelected(groupToDisplay);
 				
@@ -159,28 +160,34 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
-				AddUserToGroupDialogBox audb = new AddUserToGroupDialogBox();
-//				audb.setGstvm(GroupHeader.this.gstvm);
-				audb.show();
-			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
-			}
+//			if (groupToDisplay != null) {
+				AddUserToGroupForm autgf = new AddUserToGroupForm();
+				autgf.setGstvm(GroupHeader.this.gstvm);
+				autgf.setGroupHeader(GroupHeader.this);
+				autgf.setSelectedGroup(groupToDisplay);
+				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, autgf);
+				gsf.setSelected(groupToDisplay);
+				
+				RootPanel.get("main").clear();
+				RootPanel.get("main").add(gsf);
+			
+//			} else {
+//				Notification.show("Es wurde keine Gruppe ausgewählt.");
+//			}
 		}
-		
 	}
 	
 	private class LeaveGroupClickHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
+//			if (groupToDisplay !s= null) {
 				LeaveGroupDialogBox ldb = new LeaveGroupDialogBox();
 //				ldb.setGstvm(GroupHeader.this.gstvm);
 				ldb.show();
-			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
-			}
+//			} else {
+//				Notification.show("Es wurde keine Gruppe ausgewählt.");
+//			}
 		}
 		
 	}
