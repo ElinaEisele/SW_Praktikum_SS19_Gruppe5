@@ -43,7 +43,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 	public void onModuleLoad() {
 		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
+		loginService.login(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html", new LoginServiceCallback());
 	
 	}
 	
@@ -51,7 +51,8 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		
 		@Override
 		public void onFailure(Throwable caught) {
-//			Window.alert(caught.toString()); // hat Server Error verursacht
+// auskommentiert lassen, sonst taucht Fehlermeldung auf, da noch Fake Google User Objket
+//			Window.alert(caught.toString());
 		}
 
 		@Override
@@ -91,25 +92,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 
 
 	}
-	
-
-//	public void loadEditor() {
-//		
-//		header = new Header();
-//		navigator = new VerticalPanel();
-//		groupShowForm = new GroupShowForm();
-//		hp = new HorizontalPanel();
-//		trailer = new Trailer();
-//		vp = new VerticalPanel();
-//		
-//		hp.add(navigator);
-//		hp.add(groupShowForm);
-//		vp.add(header);
-//		vp.add(hp);
-//		vp.add(trailer);
-//		
-//		RootPanel.get("main").add(vp);
-//	}
 
 	
 	public void loadLogin() {
@@ -140,7 +122,11 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 //		}
 //		
 //	}
-	
+
+	/**
+	 * Die Klasse <code>CurrentUser</code> repräsentiert den aktuell am System angemeldeten User.
+	 * Da weitere GUI-Klassen das angemeldetet User-Objekt verwenden, muss diese jederzeit aufrufbar sein.
+	 */
 	public static class CurrentUser {
 		
 		private static User u = null;

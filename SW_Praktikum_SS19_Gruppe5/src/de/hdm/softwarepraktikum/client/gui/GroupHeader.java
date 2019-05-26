@@ -174,13 +174,13 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
+//			if (groupToDisplay != null) {
 				LeaveGroupDialogBox ldb = new LeaveGroupDialogBox();
 //				ldb.setGstvm(GroupHeader.this.gstvm);
 				ldb.show();
-			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
-			}
+//			} else {
+//				Notification.show("Es wurde keine Gruppe ausgewählt.");
+//			}
 		}
 		
 	}
