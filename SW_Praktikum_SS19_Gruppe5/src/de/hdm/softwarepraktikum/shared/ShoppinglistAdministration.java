@@ -314,12 +314,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void assignUser (User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * Setzen bzw. entfernen eines Standard-Eintrags innerhalb einer Gruppe
 	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
 	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
 	 * @throws IllegalArgumentException
 	 */
-	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException; 
+	public void setStandardListitem(Listitem listitem, Group group, boolean value) throws IllegalArgumentException; 
 	
 	/**
 	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
