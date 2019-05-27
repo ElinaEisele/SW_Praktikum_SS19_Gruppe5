@@ -38,7 +38,7 @@ public class Editor {
 		RootPanel.get("trailer").add(trailer);
 		RootPanel.get("aside").add(navigatorPanel);
 
-//		RootPanel.get("main").add(groupShowForm);
+		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("header").add(header);
 
 	}
