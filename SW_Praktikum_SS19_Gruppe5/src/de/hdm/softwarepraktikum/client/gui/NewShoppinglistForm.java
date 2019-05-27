@@ -30,7 +30,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private Group selectedGroup = null;
 	private GroupHeader groupHeader = null;
-	private ShoppinglistShowForm shoppinglistShowForm = null;
+	private ShoppinglistShowForm shoppinglistShowForm = new ShoppinglistShowForm();
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Einkaufsliste erstellen");
@@ -42,9 +42,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 	private Button saveButton = new Button("Speichern");
 	private Button cancelButton = new Button("Abbrechen");
 	
-	public NewShoppinglistForm(Group g) {
-		
-		this.selectedGroup = g;
+	public NewShoppinglistForm() {
 		
 		grid.setWidget(0, 0, nameLabel);
 		grid.setWidget(0, 1, nameTextBox);
@@ -84,6 +82,18 @@ public class NewShoppinglistForm extends VerticalPanel{
 		this.gstvm = gstvm;
 	}
 	
+	
+	
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+
+
+
 	private class SaveClickHandler implements ClickHandler{
 
 		@Override
@@ -91,10 +101,11 @@ public class NewShoppinglistForm extends VerticalPanel{
 //			if (selectedGroup != null) {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(), new NewShoppinglistAsyncCallback());
 				RootPanel.get("main").clear();
-//				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 				// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe Callback)
 				RootPanel.get("main").add(shoppinglistShowForm);
 
+//			} else {
+//				Notification.show("Es wurde keine Gruppe ausgewählt.");
 //			}
 		}
 		
@@ -107,6 +118,7 @@ public class NewShoppinglistForm extends VerticalPanel{
 //			if (selectedGroup != null) {
 				RootPanel.get("main").clear();
 				GroupShowForm gsf = new GroupShowForm();
+				gsf.setSelected(selectedGroup);
 				RootPanel.get("main").add(gsf);
 //			}
 		}
