@@ -98,6 +98,7 @@ public class UserMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 		return null;
 	}
@@ -253,7 +254,7 @@ public class UserMapper {
 	
 	/**
 	 * 
-	 * Zuweisung löschen.
+	 * Zuweisung lï¿½schen.
 	 * 
 	 * @param userId
 	 */
@@ -274,7 +275,7 @@ public class UserMapper {
 
 	/**
 	 * 
-	 * Eine Membershipbeziehung löschen.
+	 * Eine Membershipbeziehung lï¿½schen.
 	 * 
 	 * @param usergroup_id
 	 */

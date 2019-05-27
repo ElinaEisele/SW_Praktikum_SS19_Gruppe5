@@ -1,12 +1,17 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>Group</code> Objekte. Diese umfasst Methoden um
+ * Mapper Klasse fï¿½r </code>Group</code> Objekte. Diese umfasst Methoden um
  * Group Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das
  * Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen
  * und DB-Stukturen in Objekte umgewandelt werden.
@@ -160,7 +165,7 @@ public class GroupMapper {
 					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, group.getId());
-			pstmt.setDate(2, (Date) group.getCreationDate());
+			pstmt.setDate(2, group.getCreationDate());
 			pstmt.setString(3, group.getName());
 			pstmt.executeUpdate();
 			return group;
@@ -246,7 +251,7 @@ public class GroupMapper {
 	
 	/**
 	 * 
-	 * User aus einer Gruppe löschen
+	 * User aus einer Gruppe lï¿½schen
 	 * 
 	 * @param userId
 	 * @param groupId
@@ -268,7 +273,7 @@ public class GroupMapper {
 	
 	/**
 	 * 
-	 * Eine Membershipbeziehung löschen.
+	 * Eine Membershipbeziehung lï¿½schen.
 	 * 
 	 * @param usergroup_id
 	 */
@@ -289,7 +294,7 @@ public class GroupMapper {
 	
 
 	/**
-	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen
+	 * Methode, um die Gruppenzugehï¿½rigkeit einer Shoppingliste festzustellen
 	 * 
 	 * @param shoppinglist
 	 * @return Group-Objekt

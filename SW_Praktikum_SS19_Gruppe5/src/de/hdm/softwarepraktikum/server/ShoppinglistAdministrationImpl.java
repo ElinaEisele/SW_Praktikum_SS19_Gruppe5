@@ -20,9 +20,10 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * 
  */
 
-@SuppressWarnings("serial")
+
 public class ShoppinglistAdministrationImpl extends RemoteServiceServlet implements ShoppinglistAdministration {
 	
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Referenz auf den UserMapper, welcher User-Objekte mit der Datenbank
 	 * abgleicht.
@@ -177,7 +178,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Group> getGroupsOf(User user) throws IllegalArgumentException {
-		return this.groupMapper.getGroupsOf(user);
+//		return this.groupMapper.getGroupsOf(user);
+		return null;
 	}
 	
 	/**
@@ -759,7 +761,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public User getUserById(int userId) throws IllegalArgumentException {
-		return this.userMapper.findById(userId);
+//		return this.userMapper.findById(userId);
+		User u = userMapper.findById(userId);
+		if (u != null) {
+			return u;
+		}
+		return null;
 	}
 	
 	/**

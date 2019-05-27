@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>Listitem</code> Objekte. Diese umfasst Methoden um
+ * Mapper Klasse fï¿½r </code>Listitem</code> Objekte. Diese umfasst Methoden um
  * Listitem Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen.
  * Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
@@ -214,7 +214,7 @@ public class ListitemMapper {
 	 * @return float amount
 	 */
 	@SuppressWarnings("null")
-	public float getAmountOf (Listitem listitem) {
+	public float getAmountOf (int listitemId) {
 		
 		Connection con = DBConnection.connection();
 		float amount;
@@ -222,7 +222,7 @@ public class ListitemMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT amount FROM listitems WHERE id = " + listitem.getId());
+			ResultSet rs = stmt.executeQuery("SELECT amount FROM listitems WHERE id = " + listitemId);
 			
 			while(rs.next()) {
 			

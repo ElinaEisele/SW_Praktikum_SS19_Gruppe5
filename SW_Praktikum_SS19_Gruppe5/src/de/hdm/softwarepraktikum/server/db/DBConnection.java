@@ -25,7 +25,7 @@ public class DBConnection {
     private static Connection con = null;
     
     private static String googleUrl = "jdbc:google:mysql://swpraktikumss19g5:europe-west3:sw-praktikum-ss19-g5?user=CarlaHofmann&password=CarlaHofmann";
-    private static String localUrl = "jdbc:mysql://localhost:3306/swpraktikum?user=root&password=&serverTimezone=UTC";
+    private static String localUrl = "jdbc:mysql://127.0.0.1:3306/swpraktikum?user=root&password=&serverTimezone=UTC";
     
     /**
      * Diese statische Methode kann aufgrufen werden durch
@@ -40,27 +40,29 @@ public class DBConnection {
     
     public static Connection connection() {
         
-        String url = null;
+    
      
         // Wenn es bisher keine Conncetion zur DB gab, ...
 		if (con == null) {
+			
+			String url = null;
 			try {
                 
-				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
+//				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                 	
-                    //Klasse laden, welche das neue Präfix "jdbc: google: mysql: //" bereitstellt.
+                    //Klasse laden, welche das neue Prï¿½fix "jdbc: google: mysql: //" bereitstellt.
                 	
-                    Class.forName("com.mysql.jdbc.GoogleDriver");
-                    url = googleUrl;
+//                    Class.forName("com.mysql.jdbc.GoogleDriver");
+//                    url = googleUrl;
                
-                } else {
+//                } else {
                    
-                    // Lokale MySQL Instanz zur Nutzung während der Entwicklung.
+                    // Lokale MySQL Instanz zur Nutzung wï¿½hrend der Entwicklung.
                 	
                 	Class.forName("com.mysql.jdbc.Driver");
                     url  = localUrl;
 
-                }
+//                }
                 
                 /*
                  * Dann erst kann uns der DriverManager eine Verbindung mit den

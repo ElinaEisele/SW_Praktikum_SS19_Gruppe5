@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,7 +23,7 @@ public class NavigatorPanel extends VerticalPanel{
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
-	private User user = CurrentUser.getUser();
+	private User u = CurrentUser.getUser();
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
 	private GroupShowForm gsf = new GroupShowForm();
@@ -37,16 +38,16 @@ public class NavigatorPanel extends VerticalPanel{
 		
 	public void onLoad() {
 		
-		final Timer timer = new Timer() {
-
-			@Override
-			public void run() {
-				NavigatorPanel.this.refreshInfo();
-				schedule(10000);
-			}
-			
-		};
-		timer.schedule(10000);
+//		final Timer timer = new Timer() {
+//
+//			@Override
+//			public void run() {
+//				NavigatorPanel.this.refreshInfo();
+//				schedule(10000);
+//			}
+//			
+//		};
+//		timer.schedule(10000);
 		gstvm.setGroupForm(gsf);
 		gsf.setGstvm(gstvm);
 		
@@ -86,7 +87,7 @@ public class NavigatorPanel extends VerticalPanel{
 	}
 
 	public void refreshInfo() {
-		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroups(), user, new RefreshDataCallback());
+		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroups(), u, new RefreshDataCallback());
 	}
 	
 	private class RefreshDataCallback implements AsyncCallback<Boolean>{
@@ -113,11 +114,11 @@ public class NavigatorPanel extends VerticalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			if (user != null) {
+			Window.alert(u.getName());
+			if (u != null) {
 				NewGroupForm ngf = new NewGroupForm();
 				RootPanel.get("main").clear();
-				RootPanel.get("main").add(ngf);
-//			}
+				RootPanel.get("main").add(ngf);//			}
 		}
 		
 	}
