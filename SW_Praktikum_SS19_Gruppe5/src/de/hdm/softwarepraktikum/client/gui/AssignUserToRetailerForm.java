@@ -6,8 +6,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -15,23 +13,16 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
-/**
- * Klasse zum Anzeigen eines Formulars, um ein neues Listitem anzulegen .
- * 
- * @author ElinaEisele, JonasWagenknecht
- *
- */
-public class NewListitemForm extends HorizontalPanel {
+public class AssignUserToRetailerForm extends HorizontalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
@@ -40,23 +31,20 @@ public class NewListitemForm extends HorizontalPanel {
 	private ShoppinglistHeader shoppinglistHeader;
 
 	private Shoppinglist shoppinglistToDisplay = null;
-	private ListitemUnit selectedlistitemUnit = null;
+	private Group groupToDisplay = null;
+	private User selectedUser = null;
 	private Retailer selectedRetailer = null;
 
+	private ArrayList<User> userArrayList;
 	private ArrayList<Retailer> retailerArrayList;
-	private ArrayList<ListitemUnit> listitemUnitArrayList;
-
-	private NumberFormat decimalFormatter = NumberFormat.getDecimalFormat();
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Grid shoppinglistGrid;
+	private Grid assignUserToRetailerGrid;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
-	private TextBox productNameTextBox = new TextBox();
-	private TextBox amountTextBox = new TextBox();
-	private ListBox unitNameListBox = new ListBox();
-	private ListBox retailerNameListBox = new ListBox();
+	private ListBox userListBox = new ListBox();
+	private ListBox retailerListBox = new ListBox();
 
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("verwerfen und zurueck");
@@ -66,38 +54,30 @@ public class NewListitemForm extends HorizontalPanel {
 	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
-	public NewListitemForm() {
+	public AssignUserToRetailerForm() {
 
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
-		shoppinglistGrid = new Grid(6, 2);
+		assignUserToRetailerGrid = new Grid(4, 2);
 
-		Label newListitemLabel = new Label("Neuen Eintrag erstellen");
-		shoppinglistGrid.setWidget(0, 0, newListitemLabel);
-		
-		Label productNameLabel = new Label("Produkt Name: ");
-		shoppinglistGrid.setWidget(1, 0, productNameLabel);
-		shoppinglistGrid.setWidget(1, 1, productNameTextBox);
+		Label assignUserToRetailerLabel = new Label("Nutzer einem Einzelhaendler zuweisen");
+		assignUserToRetailerGrid.setWidget(0, 0, assignUserToRetailerLabel);
 
-		Label amountLabel = new Label("Menge: ");
-		shoppinglistGrid.setWidget(2, 0, amountLabel);
-		shoppinglistGrid.setWidget(2, 1, amountTextBox);
+		Label userLabel = new Label("Nutzer: ");
+		assignUserToRetailerGrid.setWidget(1, 0, userLabel);
+		assignUserToRetailerGrid.setWidget(1, 1, userListBox);
+		userListBox.addChangeHandler(new UserListBoxChangeHandler());
 
-		Label unitNameLabel = new Label("Einheit: ");
-		shoppinglistGrid.setWidget(3, 0, unitNameLabel);
-		shoppinglistGrid.setWidget(3, 1, unitNameListBox);
-		unitNameListBox.addChangeHandler(new UnitNameListBoxChangeHandler());
-
-		Label retailerNameLabel = new Label("Haendler: ");
-		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
-		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
-		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
+		Label retailerLabel = new Label("Haendler: ");
+		assignUserToRetailerGrid.setWidget(2, 0, retailerLabel);
+		assignUserToRetailerGrid.setWidget(2, 1, retailerListBox);
+		retailerListBox.addChangeHandler(new RetailerListBoxChangeHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
-		shoppinglistGrid.setWidget(5, 1, actionButtonsPanel);
+		assignUserToRetailerGrid.setWidget(3, 1, actionButtonsPanel);
 
-		saveButton.addClickHandler(new NewListitemClickHandler());
+		saveButton.addClickHandler(new NewAllocationClickHandler());
 		saveButton.setEnabled(true);
 		actionButtonsPanel.add(saveButton);
 
@@ -105,17 +85,17 @@ public class NewListitemForm extends HorizontalPanel {
 		discardButton.setEnabled(true);
 		actionButtonsPanel.add(discardButton);
 
-		mainPanel.add(shoppinglistGrid);
+		mainPanel.add(assignUserToRetailerGrid);
 		/**
-		 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
+		 * Zum Befüllen der Dropdown-Liste mit <code>User</code> Namen.
 		 */
-		shoppinglistAdministration.getAllListitemUnits(new GetAllListitemUnitsCallback());
+		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
 
 		/**
-		 * Befüllen der Dropdown-Liste mit <code>Retailer</code>.
+		 * Befüllen der Dropdown-Liste mit <code>Retailer</code> Namen.
 		 */
 		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
-
+		// shoppinglistAdministration.getRetailersOf(shoppinglist, callback);
 	}
 
 	public void onLoad() {
@@ -139,9 +119,9 @@ public class NewListitemForm extends HorizontalPanel {
 	}
 
 	/**
-	 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
+	 * Zum Befüllen der Dropdown-Liste mit <code>User</code> Namen.
 	 */
-	private class GetAllListitemUnitsCallback implements AsyncCallback<ArrayList<ListitemUnit>> {
+	private class GetAllUsersOfGroupCallback implements AsyncCallback<ArrayList<User>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -150,17 +130,17 @@ public class NewListitemForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<ListitemUnit> listitemUnitArrayList) {
-			for (int i = 0; i < listitemUnitArrayList.size(); i++) {
-				unitNameListBox.addItem(listitemUnitArrayList.get(i).getName());
-				selectedlistitemUnit = listitemUnitArrayList.get(0);
+		public void onSuccess(ArrayList<User> userArrayList) {
+			for (int i = 0; i < userArrayList.size(); i++) {
+				userListBox.addItem(userArrayList.get(i).getName());
+				selectedUser = userArrayList.get(0);
 			}
 		}
 
 	}
 
 	/**
-	 * Befüllen der Dropdown-Liste mit <code>Retailer</code>.
+	 * Befüllen der Dropdown-Liste mit <code>Retailer</code> Namen.
 	 */
 	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
 
@@ -173,20 +153,20 @@ public class NewListitemForm extends HorizontalPanel {
 		@Override
 		public void onSuccess(ArrayList<Retailer> retailerArrayList) {
 			for (int i = 0; i < retailerArrayList.size(); i++) {
-				retailerNameListBox.addItem(retailerArrayList.get(i).getName());
+				retailerListBox.addItem(retailerArrayList.get(i).getName());
 				selectedRetailer = retailerArrayList.get(0);
 			}
 		}
 	}
 
 	/**
-	 * ChangeHandler zum erkennen welches <code>Unit</code> Objekt der
-	 * Dropdown-Liste ausgewählt wurde und dieses selectedListitemUnit zuordnen .
+	 * ChangeHandler zum erkennen welches <code>User</code> Objekt der
+	 * Dropdown-Liste ausgewählt wurde und dieses selectedUser zuordnen.
 	 */
-	private class UnitNameListBoxChangeHandler implements ChangeHandler {
+	private class UserListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
-			int item = unitNameListBox.getSelectedIndex();
-			selectedlistitemUnit = listitemUnitArrayList.get(item);
+			int item = userListBox.getSelectedIndex();
+			selectedUser = userArrayList.get(item);
 		}
 	}
 
@@ -194,16 +174,16 @@ public class NewListitemForm extends HorizontalPanel {
 	 * ChangeHandler zum erkennen welches <code>Retailer</code> Objekt der
 	 * Dropdown-Liste ausgewählt wurde und dieses selectedRetailer zuordnen .
 	 */
-	private class RetailerNameListBoxChangeHandler implements ChangeHandler {
+	private class RetailerListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
-			int item = retailerNameListBox.getSelectedIndex();
+			int item = retailerListBox.getSelectedIndex();
 			selectedRetailer = retailerArrayList.get(item);
 		}
 	}
 
 	/**
-	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zum Shoppinglist
-	 * CellTable
+	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zur
+	 * ShoppinglistShowForm.
 	 * 
 	 */
 	private class DiscardClickhandler implements ClickHandler {
@@ -218,27 +198,21 @@ public class NewListitemForm extends HorizontalPanel {
 	}
 
 	/**
-	 * Clickhandler zum erstellen des Listitem Objekts
+	 * Clickhandler zum erstellen der Zuweisung.
 	 * 
 	 */
-	private class NewListitemClickHandler implements ClickHandler {
+	private class NewAllocationClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				String productName = productNameTextBox.getText();
-				float amount = 0.0F;
-				try {
-					amount = (float) decimalFormatter.parse(amountTextBox.getText());
-				} catch (NumberFormatException nfe) {
-					Window.alert("ungültiger Wert!");
-					return;
-				}
-				ListitemUnit listitemUnit = selectedlistitemUnit;
+
+				User user = selectedUser;
 				Retailer retailer = selectedRetailer;
 
-				shoppinglistAdministration.createListitem(shoppinglistToDisplay, productName, amount, listitemUnit,
-						retailer, new CreateListitemCallback());
+				shoppinglistAdministration.assignUser(user, retailer, shoppinglistToDisplay,
+						new CreateAllocationCallback());
+
 			} else {
 				Notification.show("Keine Shoppinglist ausgewaehlt");
 			}
@@ -246,11 +220,11 @@ public class NewListitemForm extends HorizontalPanel {
 	}
 
 	/**
-	 * Nach dem erfolgreichen Erstellen wird das Formular geschlossen und die
-	 * aktuell ausgewählte Shoppinglist erneut geöffnet.
+	 * Nach dem erfolgreichen Erstellen der Zuweisung wird das Formular geschlossen
+	 * und die aktuell ausgewählte Shoppinglist erneut geöffnet.
 	 * 
 	 */
-	private class CreateListitemCallback implements AsyncCallback<Listitem> {
+	private class CreateAllocationCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -258,14 +232,11 @@ public class NewListitemForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(Listitem result) {
-			if (result != null) {
+		public void onSuccess(Void result) {
 
-				RootPanel.get("main").clear();
-				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-				RootPanel.get("main").add(ssf);
-
-			}
+			RootPanel.get("main").clear();
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			RootPanel.get("main").add(ssf);
 		}
 	}
 

@@ -4,7 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -17,13 +17,12 @@ import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Klasse zur Darstellung einer Dialogbox, um einen neuen Haendler anzulegen.
+ * Klasse zur Darstellung eines Formulars, um einen neuen Haendler anzulegen.
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class NewRetailerDialogBox extends DialogBox {
-
+public class NewRetailerForm extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
@@ -31,30 +30,41 @@ public class NewRetailerDialogBox extends DialogBox {
 	private Shoppinglist selectedShoppinglist = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label newRetailerLabel = new Label("Name des Einzeh�ndlers: ");
-	private TextBox retailerName = new TextBox();
+
+	private TextBox retailerNameTextBox = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button confirmButton = new Button("Anlegen");
 	private Button cancelButton = new Button("Abbrechen");
 
-	public NewRetailerDialogBox() {
-		this.setGlassEnabled(true);
+	private Grid newRetailerGrid;
 
-		cancelButton.setStylePrimaryName("cancelButton");
-		confirmButton.setStylePrimaryName("confirmButton");
+	public NewRetailerForm() {
+
+		/**
+		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
+		 */
+		newRetailerGrid = new Grid(4, 2);
+		mainPanel.add(newRetailerGrid);
+
+		Label newRetailerLabel = new Label("Name des Einzelhaendlers: ");
+		newRetailerGrid.setWidget(1, 0, newRetailerLabel);
+		newRetailerGrid.setWidget(1, 1, retailerNameTextBox);
 
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
-
+		cancelButton.setStylePrimaryName("cancelButton");
+		confirmButton.setStylePrimaryName("confirmButton");
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
 
 		mainPanel.add(newRetailerLabel);
 		mainPanel.add(buttonPanel);
 
+	}
+
+	public void onLoad() {
 		this.add(mainPanel);
-		this.center();
 	}
 
 	public Shoppinglist getSelectedShoppinglist() {
@@ -66,13 +76,15 @@ public class NewRetailerDialogBox extends DialogBox {
 	}
 
 	/**
-	 * ClickHandler zum schlie�en der DialogBox.
+	 * ClickHandler zum schliessen der DialogBox.
 	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			NewRetailerDialogBox.this.hide();
+			RootPanel.get("main").clear();
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			RootPanel.get("main").add(ssf);
 		}
 	}
 
@@ -84,8 +96,8 @@ public class NewRetailerDialogBox extends DialogBox {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedShoppinglist != null) {
-				shoppinglistAdministration.createRetailer(retailerName.getText(), new CreateRetailerCallback());
-				NewRetailerDialogBox.this.hide();
+				shoppinglistAdministration.createRetailer(retailerNameTextBox.getText(), new CreateRetailerCallback());
+
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
@@ -93,7 +105,7 @@ public class NewRetailerDialogBox extends DialogBox {
 	}
 
 	/**
-	 * Textbox inhalt zur�cksetzen und ShoppinglistShowForm aktualisieren
+	 * Textbox inhalt zuruecksetzen und ShoppinglistShowForm aktualisieren
 	 */
 	private class CreateRetailerCallback implements AsyncCallback<Retailer> {
 
@@ -105,10 +117,10 @@ public class NewRetailerDialogBox extends DialogBox {
 		@Override
 		public void onSuccess(Retailer result) {
 
-			retailerName.setText("");
+			retailerNameTextBox.setText("");
 			RootPanel.get("main").clear();
-			//RootPanel.get("main").add(w);
-			//RootPanel.get("main").add(w);
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			RootPanel.get("main").add(ssf);
 		}
 
 	}
