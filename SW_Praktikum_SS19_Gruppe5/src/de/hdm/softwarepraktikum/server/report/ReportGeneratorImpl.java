@@ -3,6 +3,7 @@ package de.hdm.softwarepraktikum.server.report;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.softwarepraktikum.server.ShoppinglistAdministrationImpl;
+import de.hdm.softwarepraktikum.shared.ReportGenerator;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
@@ -50,7 +51,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * Ausgeben der Einkauslisten Verwaltung
      * @return ShoppinglistAdministrationImpl 
      */
-    protected ShoppinglistAdministration getShoppinglistAdministration() {
+    protected ShoppinglistAdministration getShoppinglistAdministration() throws IllegalArgumentException {
     	return this.administration;
     }
     
@@ -61,7 +62,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * @return AllListitemsOfGroupReport der vollständige Report
      * @throws IllegalArgumentException
      */
-    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g) throws IllegalArgumentException {
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) throws IllegalArgumentException {
     	
     	if (this.getShoppinglistAdministration() == null) {
     		return null;
