@@ -13,7 +13,6 @@ import de.hdm.softwarepraktikum.shared.bo.Listitem;
 public class ListitemShowForm extends VerticalPanel {
 	private ListitemHeader listitemHeader = null;
 	private ListitemContent listitemContent = null;
-	private NewListitemForm newListitemForm = null;
 	private VerticalPanel mainPanel = new VerticalPanel();
 
 	private Listitem selectedListitem;

@@ -25,8 +25,6 @@ public class ListitemHeader extends HorizontalPanel {
 
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 	private ListitemShowForm listitemShowForm;
-	private ListitemHeader listitemHeader;
-
 	private Listitem listitemToDisplay = null;
 
 	private Label listitemHeaderLabel;
@@ -37,26 +35,38 @@ public class ListitemHeader extends HorizontalPanel {
 
 	public ListitemHeader() {
 
+		Listitem l = new Listitem();
+		listitemToDisplay = l;
+
 		listitemHeaderLabel = new Label("Listitem Header");
-		// listitemHeaderLabel.setText(ListitemToDisplay.getName());
+		// listitemHeaderLabel.setText(listitemToDisplay.getName());
+		listitemHeaderLabel.setText("Listitem  Tets");
 		listitemHeaderLabel.setStyleName("ListLabel");
 		deleteListitem = new Button("Eintrag loeschen");
+
 		setStandard = new Button("Standardartikel");
 		removeStandard = new Button("Nicht mehr Standardartikel");
-		removeStandard.setEnabled(false);
+
+		if (listitemToDisplay.isStandard() == true) {
+			removeStandard.setEnabled(false);
+			removeStandard.setEnabled(true);
+		} else {
+			removeStandard.setEnabled(true);
+			removeStandard.setEnabled(false);
+		}
 
 		Image deleteListitemImg = new Image();
 		deleteListitemImg.setUrl("images/deleteListitemImg.png");
 		deleteListitemImg.setSize("16px", "16px");
 		deleteListitem.getElement().appendChild(deleteListitemImg.getElement());
-		deleteListitem.setStyleName("ListitemHeaderButton");
+		deleteListitem.setStyleName("ShoppinglistHeaderButton");
 		deleteListitem.addClickHandler(new DeleteListitemClickHandler());
 
 		Image setStandardImg = new Image();
 		setStandardImg.setUrl("images/setStandardImg.png");
 		setStandardImg.setSize("16px", "16px");
 		setStandard.getElement().appendChild(setStandardImg.getElement());
-		setStandard.setStyleName("ListitemHeaderButton");
+		setStandard.setStyleName("ShoppinglistHeaderButton");
 		setStandard.addClickHandler(new SetStandardClickHandler());
 
 		Image removeStandardImg = new Image();
@@ -73,7 +83,7 @@ public class ListitemHeader extends HorizontalPanel {
 		this.add(listitemHeaderLabel);
 		this.add(deleteListitem);
 		this.add(setStandard);
-		this.add(setStandard);
+		this.add(removeStandard);
 
 	}
 
@@ -83,14 +93,6 @@ public class ListitemHeader extends HorizontalPanel {
 
 	public void setListitemShowForm(ListitemShowForm listitemShowForm) {
 		this.listitemShowForm = listitemShowForm;
-	}
-
-	public ListitemHeader getListitemHeader() {
-		return listitemHeader;
-	}
-
-	public void setListitemHeader(ListitemHeader listitemHeader) {
-		this.listitemHeader = listitemHeader;
 	}
 
 	/**
@@ -124,8 +126,8 @@ public class ListitemHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (listitemToDisplay != null) {
-				StandardListitemOnDialogBox slodb = new StandardListitemOnDialogBox();
-				slodb.show();
+				StandardListitemOnDialogBox slondb = new StandardListitemOnDialogBox();
+				slondb.show();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
 			}
@@ -141,8 +143,8 @@ public class ListitemHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (listitemToDisplay != null) {
-				StandardListitemOffDialogBox slodb = new StandardListitemOffDialogBox();
-				slodb.show();
+				StandardListitemOffDialogBox sloffdb = new StandardListitemOffDialogBox();
+				sloffdb.show();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
 			}

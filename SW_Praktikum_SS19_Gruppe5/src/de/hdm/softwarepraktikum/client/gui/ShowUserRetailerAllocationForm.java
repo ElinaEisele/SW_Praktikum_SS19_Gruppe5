@@ -37,6 +37,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private ShoppinglistHeader shoppinglistHeader;
+	
 	private Shoppinglist shoppinglistToDisplay = null;
 	private Group groupToDisplay = null;
 	private User selectedUser = null;
@@ -66,7 +67,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
 		shoppinglistGrid = new Grid(4, 2);
-		mainPanel.add(mainPanel);
+		mainPanel.add(shoppinglistGrid);
 		mainPanel.add(userRetailerAllocationFlexTable);
 
 		Label showUserRetailerAllocationLabel = new Label("Zuweisung anzeigen:");

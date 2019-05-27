@@ -2,7 +2,6 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -37,14 +36,21 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 	public ShoppinglistHeader() {
 
-		shoppinglistHeaderLabel = new Label("Keine Shoppinglist ausgewaehlt");
-		shoppinglistHeaderLabel.setText(shoppinglistToDisplay.getName());
+		// Shoppinglist s1 = new Shoppinglist();
+		// shoppinglistToDisplay = s1;
+
+		if (shoppinglistToDisplay == null) {
+			shoppinglistHeaderLabel = new Label("Keine Shoppinglist ausgewaehlt");
+		} else {
+			shoppinglistHeaderLabel.setText(shoppinglistToDisplay.getName());
+		}
+
 		shoppinglistHeaderLabel.setStyleName("ListLabel");
 		newListitem = new Button("Eintrag hinzufuegen");
 		deleteShoppinglist = new Button("Einkaufsliste loeschen");
 		assignUserToRetailer = new Button("Nutzer zuordnen");
 		editShoppinglistName = new Button("Editieren");
-		showUserRetailerAllocation = new Button("Nutzer Einzelhändler zuweisen");
+		showUserRetailerAllocation = new Button("Nutzer Einzelhaendler zuweisen");
 
 		Image newListitemImg = new Image();
 		newListitemImg.setUrl("images/shopping-cart.png");
@@ -90,7 +96,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		this.add(assignUserToRetailer);
 		this.add(editShoppinglistName);
 		this.add(deleteShoppinglist);
-
+		this.add(showUserRetailerAllocation);
 	}
 
 	public ShoppinglistShowForm getShoppinglistShowForm() {
@@ -107,15 +113,15 @@ public class ShoppinglistHeader extends HorizontalPanel {
 	 * 
 	 * @param s, das zu setzende <code>Shoppinglist</code> Objekt.
 	 */
-	public void setShoppinglistToDisplay(Shoppinglist s) {
-		if (s != null) {
-			shoppinglistToDisplay = s;
-			shoppinglistHeaderLabel.setText(shoppinglistToDisplay.getName());
-
-		} else {
-			this.clear();
-		}
-	}
+//	public void setShoppinglistToDisplay(Shoppinglist s) {
+//		if (s != null) {
+//			shoppinglistToDisplay = s;
+//			shoppinglistHeaderLabel.setText(shoppinglistToDisplay.getName());
+//
+//		} else {
+//			this.clear();
+//		}
+//	}
 
 	/**
 	 * ***************************************************************************
@@ -157,8 +163,15 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 				AssignUserToRetailerForm autrdb = new AssignUserToRetailerForm();
-				// autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
-				// autrdb.show();
+
+				autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
+				autrdb.setShoppinglistHeader(ShoppinglistHeader.this);
+
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, autrdb);
+				ssf.setSelected(shoppinglistToDisplay);
+
+				RootPanel.get("main").clear();
+				RootPanel.get("main").add(ssf);
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
@@ -176,8 +189,15 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 				EditShoppinglistNameForm esndb = new EditShoppinglistNameForm();
-				// esndb.setGstvm(ShoppinglistHeader.this.gstvm);
-				// esndb.show();
+
+				esndb.setGstvm(ShoppinglistHeader.this.gstvm);
+				esndb.setShoppinglistHeader(ShoppinglistHeader.this);
+
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, esndb);
+				ssf.setSelected(shoppinglistToDisplay);
+
+				RootPanel.get("main").clear();
+				RootPanel.get("main").add(ssf);
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
@@ -196,7 +216,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 			if (shoppinglistToDisplay != null) {
 				DeleteShoppinglistDialogBox dsdb = new DeleteShoppinglistDialogBox();
 				// dsdb.setGstvm(ShoppinglistHeader.this.gstvm);
-				// dsdb.show();
+				dsdb.show();
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
@@ -209,7 +229,16 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
+				ShowUserRetailerAllocationForm suraf = new ShowUserRetailerAllocationForm();
 
+				suraf.setGstvm(ShoppinglistHeader.this.gstvm);
+				suraf.setShoppinglistHeader(ShoppinglistHeader.this);
+
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, suraf);
+				ssf.setSelected(shoppinglistToDisplay);
+
+				RootPanel.get("main").clear();
+				RootPanel.get("main").add(ssf);
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}

@@ -27,8 +27,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
-	private Shoppinglist selectedShoppinglist = null;
-
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private ShoppinglistHeader shoppinglistHeader;
 
@@ -71,7 +69,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		assignUserToRetailerGrid.setWidget(1, 1, userListBox);
 		userListBox.addChangeHandler(new UserListBoxChangeHandler());
 
-		Label retailerLabel = new Label("Händler: ");
+		Label retailerLabel = new Label("Haendler: ");
 		assignUserToRetailerGrid.setWidget(2, 0, retailerLabel);
 		assignUserToRetailerGrid.setWidget(2, 1, retailerListBox);
 		retailerListBox.addChangeHandler(new RetailerListBoxChangeHandler());
@@ -212,7 +210,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 				User user = selectedUser;
 				Retailer retailer = selectedRetailer;
 
-				shoppinglistAdministration.assignUser(user, retailer, selectedShoppinglist,
+				shoppinglistAdministration.assignUser(user, retailer, shoppinglistToDisplay,
 						new CreateAllocationCallback());
 
 			} else {

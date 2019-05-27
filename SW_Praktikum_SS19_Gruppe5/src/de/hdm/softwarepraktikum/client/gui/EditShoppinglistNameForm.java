@@ -35,7 +35,7 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	private TextBox newShoppinglistNameTextBox = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Loeschen");
+	private Button confirmButton = new Button("Aendern");
 	private Button cancelButton = new Button("Abbrechen");
 
 	private Grid editShoppinglistNameGrid;
