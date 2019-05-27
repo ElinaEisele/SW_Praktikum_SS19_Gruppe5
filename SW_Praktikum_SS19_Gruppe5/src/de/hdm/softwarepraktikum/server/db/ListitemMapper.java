@@ -213,11 +213,12 @@ public class ListitemMapper {
 	 * @param listitem
 	 * @return float amount
 	 */
-	@SuppressWarnings("null")
-	public float getAmountOf (Listitem listitem) {
+	
+	@SuppressWarnings("finally")
+	public Float getAmountOf (Listitem listitem) {
 		
 		Connection con = DBConnection.connection();
-		float amount;
+		Float f = null;
 
 		try {
 			
@@ -226,15 +227,19 @@ public class ListitemMapper {
 			
 			while(rs.next()) {
 			
-				amount = rs.getFloat("amount");
-				return amount;
+				f = rs.getFloat("amount");
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
 		
-		return (Float) null; //return 0.0f;
+		} finally {
+			if (f != null) {
+				return f;
+			}else {
+				return null;
+			}
+		}
 		
 	}
 	
@@ -246,10 +251,11 @@ public class ListitemMapper {
 	 * @return String productname
 	 */
 	
+	@SuppressWarnings("finally")
 	public String getProductnameOf(int listitemId) {
 		
 		Connection con = DBConnection.connection();
-		String productname;
+		String productname = null;
 		ResultSet rs;
 		
 		try {
@@ -268,10 +274,15 @@ public class ListitemMapper {
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		
+		} finally {
+			if (productname != null) {
+				return productname;
+			}else {
+				return null;
+			}
 		}
-		
-		return (String) null;
 	}
 
 	/**
