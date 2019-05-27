@@ -130,4 +130,6 @@ public interface ShoppinglistAdministrationAsync {
 	void getRetailerOf(Listitem listitem, AsyncCallback<Retailer> callback) throws IllegalArgumentException;
 
 	void getGroupOf(Shoppinglist shoppinglist, AsyncCallback<Group> callback) throws IllegalArgumentException;
+	
+	void changeNameOf(Group group, String name, AsyncCallback<Group> callback) throws IllegalArgumentException;
 }

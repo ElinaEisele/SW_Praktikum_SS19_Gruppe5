@@ -212,6 +212,19 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.groupMapper.findById(groupId);
 	}
 	
+	/**
+	 * Aendern des Namens einer Gruppe.
+	 * @param group ist das Group-Objekt, dessen Name geaendert werden soll.
+	 * @param name ist der neue Name der Gruppe.
+	 * @return neues Group-Objekt mit neuem Name
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Group changeNameOf(Group group, String name) throws IllegalArgumentException {
+		group.setName(name);
+		this.save(group);
+		return group;
+	}
 	
 /**
  * **********************************************************************************
@@ -925,5 +938,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return null;
 	}
-	
+
+
+
 }

@@ -473,4 +473,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Aendern des Namens einer Gruppe.
+	 * @param group ist das Group-Objekt, dessen Name geaendert werden soll.
+	 * @param name ist der neue Name der Gruppe.
+	 * @return neues Group-Objekt mit neuem Name
+	 * @throws IllegalArgumentException
+	 */
+	public Group changeNameOf(Group group, String name) throws IllegalArgumentException;
 }
