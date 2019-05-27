@@ -213,6 +213,10 @@ public class GroupHeader extends HorizontalPanel {
 //			if (groupToDisplay != null) {
 				EditGroupNameForm egnf = new EditGroupNameForm();
 				egnf.setGstvm(GroupHeader.this.gstvm);
+				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
+				
+				RootPanel.get("main").clear();
+				RootPanel.get("main").add(gsf);
 //			} else {
 //				Notification.show("Es wurde keine Gruppe ausgewählt.");
 //			}
