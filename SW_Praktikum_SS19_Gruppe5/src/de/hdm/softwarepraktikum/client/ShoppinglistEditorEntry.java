@@ -30,7 +30,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 	private GroupShowForm groupShowForm = null;
 	private ListitemShowForm listitemShowForm = null;
 	
-	private NavigatorPanel navigatorPanel = new NavigatorPanel();
+	private NavigatorPanel navigatorPanel = null;
 	
 	private Trailer trailer = null;
 	
@@ -60,6 +60,7 @@ public class ShoppinglistEditorEntry implements EntryPoint {
 		
 		
 		header = new Header();
+		navigatorPanel = new NavigatorPanel();
 		shoppinglistShowForm = new ShoppinglistShowForm();
 		groupShowForm = new GroupShowForm();
 		listitemShowForm = new ListitemShowForm();
