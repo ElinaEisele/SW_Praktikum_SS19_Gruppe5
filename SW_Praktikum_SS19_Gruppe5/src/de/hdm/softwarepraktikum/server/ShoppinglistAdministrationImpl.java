@@ -212,6 +212,19 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.groupMapper.findById(groupId);
 	}
 	
+	/**
+	 * Aendern des Namens einer Gruppe.
+	 * @param group ist das Group-Objekt, dessen Name geaendert werden soll.
+	 * @param name ist der neue Name der Gruppe.
+	 * @return neues Group-Objekt mit neuem Name
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Group changeNameOf(Group group, String name) throws IllegalArgumentException {
+		group.setName(name);
+		this.save(group);
+		return group;
+	}
 	
 /**
  * **********************************************************************************
@@ -345,15 +358,18 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * Setzen bzw. entfernen eines Standard-Eintrags innerhalb einer Gruppe
 	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
 	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
-		this.listitemMapper.setStandardListitemOf(group, listitem);
-		
+	public void setStandardListitem(Listitem listitem, Group group, boolean value) throws IllegalArgumentException {
+		//der zustand muss nur aktualisiert werden, wenn der Wert ein anderer als der vorherige ist.
+		if(listitem.isStandard() == value) {
+			listitem.setStandard(value);
+			this.listitemMapper.update(listitem);
+		}
 	}
 	
 	/**
@@ -922,5 +938,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return null;
 	}
-	
+
+
+
 }

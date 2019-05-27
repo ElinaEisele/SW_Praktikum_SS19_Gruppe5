@@ -103,6 +103,7 @@ public class DeleteGroupDialogBox extends DialogBox{
 				setSelectedGroup(null);
 //				gstvm.removeGroup(group);
 				RootPanel.get("main").clear();
+		
 				
 			}
 		}

@@ -34,6 +34,16 @@ public class GroupShowForm extends VerticalPanel{
 	
 	}
 	
+	public GroupShowForm(GroupHeader gh, AddUserToGroupForm autgf) {
+		groupHeader = gh;
+		mainPanel.add(autgf);
+	}
+	
+	public GroupShowForm(GroupHeader gh, EditGroupNameForm egnf) {
+		groupHeader = gh;
+		mainPanel.add(egnf);
+	}
+	
 	public GroupShowForm() {
 		groupHeader = new GroupHeader();
 		groupContent = new GroupContent();
