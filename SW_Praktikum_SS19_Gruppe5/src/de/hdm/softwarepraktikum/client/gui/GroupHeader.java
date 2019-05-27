@@ -210,13 +210,12 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
-				EditGroupNameDialogBox edb = new EditGroupNameDialogBox();
-//				edb.setGstvm(GroupHeader.this.gstvm);
-				edb.show();
-			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
-			}
+//			if (groupToDisplay != null) {
+				EditGroupNameForm egnf = new EditGroupNameForm();
+				egnf.setGstvm(GroupHeader.this.gstvm);
+//			} else {
+//				Notification.show("Es wurde keine Gruppe ausgewählt.");
+//			}
 		}
 		
 	}
