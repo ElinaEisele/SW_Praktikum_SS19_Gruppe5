@@ -61,7 +61,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * @return AllListitemsOfGroupReport der vollständige Report
      * @throws IllegalArgumentException
      */
-    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g) throws IllegalArgumentException {
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) throws IllegalArgumentException {
     	
     	if (this.getShoppinglistAdministration() == null) {
     		return null;
