@@ -15,7 +15,7 @@ import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Das asynchrone Gegenstueck zu <code>GreetingService</code>.Es wird
+ * Das asynchrone Gegenstueck zu <code>ShoppinglistAdministration</code>.Es wird
  * semiautomatisch durch das Google Plugin erstellt und gepflegt. Daher erfolgt
  * hier keine weitere Dokumentation.
  * 
