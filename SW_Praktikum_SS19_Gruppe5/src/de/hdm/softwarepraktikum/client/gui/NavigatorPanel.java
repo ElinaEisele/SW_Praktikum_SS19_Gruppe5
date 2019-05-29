@@ -22,7 +22,7 @@ public class NavigatorPanel extends VerticalPanel{
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
-	private User user = CurrentUser.getUser();
+	private User user = null;
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
 	private GroupShowForm gsf = new GroupShowForm();
@@ -34,7 +34,8 @@ public class NavigatorPanel extends VerticalPanel{
 	
 	private CellTree cellTree = new CellTree(gstvm, "Root");
 	private Label refreshInfoLabel = new Label();
-		
+	
+				
 	public void onLoad() {
 		
 		final Timer timer = new Timer() {
@@ -58,6 +59,8 @@ public class NavigatorPanel extends VerticalPanel{
 		mainPanel.add(cellTree);
 		
 		this.add(mainPanel);
+		
+		
 		
 	}
 	
@@ -113,11 +116,18 @@ public class NavigatorPanel extends VerticalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			if (user != null) {
+			if (user != null) {
 				NewGroupForm ngf = new NewGroupForm();
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(ngf);
-//			}
+//				User test = CurrentUser.getUser();
+//				Notification.show(test.getName() + " ist als Google User angemeldet.");
+
+				
+				
+			} else {
+				Notification.show("Kein User ausgewählt.");
+			}
 		}
 		
 	}
