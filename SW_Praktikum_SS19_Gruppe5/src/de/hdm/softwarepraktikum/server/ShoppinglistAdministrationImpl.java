@@ -20,9 +20,14 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * 
  */
 
-@SuppressWarnings("serial")
+
 public class ShoppinglistAdministrationImpl extends RemoteServiceServlet implements ShoppinglistAdministration {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Referenz auf den UserMapper, welcher User-Objekte mit der Datenbank
 	 * abgleicht.
