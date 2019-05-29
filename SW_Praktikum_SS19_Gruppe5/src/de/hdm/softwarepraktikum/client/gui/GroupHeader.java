@@ -111,6 +111,16 @@ public class GroupHeader extends HorizontalPanel {
 	public void setGroupShowForm(GroupShowForm groupShowForm) {
 		this.groupShowForm = groupShowForm;
 	}
+	
+	
+
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
 
 	/**
 	 * Sobald eine <code>Group</code> ausgewaehlt wird, wird das Label mit dem
@@ -126,6 +136,10 @@ public class GroupHeader extends HorizontalPanel {
 		} else {
 			this.clear();
 		}
+	}
+	
+	public Group getSelected() {
+		return groupToDisplay;
 	}
 	
 
@@ -213,8 +227,9 @@ public class GroupHeader extends HorizontalPanel {
 			if (groupToDisplay != null) {
 				EditGroupNameForm egnf = new EditGroupNameForm();
 				egnf.setGstvm(GroupHeader.this.gstvm);
+				egnf.setSelectedGroup(groupToDisplay);
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
-				
+				gsf.setSelected(groupToDisplay);
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(gsf);
 			} else {

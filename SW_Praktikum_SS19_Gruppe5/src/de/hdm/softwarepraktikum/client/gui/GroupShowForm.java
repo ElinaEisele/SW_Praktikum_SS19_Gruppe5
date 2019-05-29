@@ -41,7 +41,15 @@ public class GroupShowForm extends VerticalPanel{
 	
 	public GroupShowForm(GroupHeader gh, EditGroupNameForm egnf) {
 		groupHeader = gh;
+		gh.setGstvm(gstvm);
+		egnf.setGstvm(gstvm);
 		mainPanel.add(egnf);
+	}
+	
+	public GroupShowForm(GroupHeader gh) {
+		groupHeader = gh;
+		mainPanel.add(new GroupContent());
+		// GroupContent noch eine Gruppe zuweisen!
 	}
 	
 	public GroupShowForm() {
@@ -56,6 +64,8 @@ public class GroupShowForm extends VerticalPanel{
 	}
 	
 	public void onLoad() {
+		
+		
 	
 		this.add(groupHeader);
 		this.add(mainPanel);
@@ -68,6 +78,10 @@ public class GroupShowForm extends VerticalPanel{
 	public void setSelected(Group g) {
 		selectedGroup = g;
 		
+	}
+	
+	public Group getSelected() {
+		return selectedGroup;
 	}
 
 	public GroupShoppinglistTreeViewModel getGstvm() {
