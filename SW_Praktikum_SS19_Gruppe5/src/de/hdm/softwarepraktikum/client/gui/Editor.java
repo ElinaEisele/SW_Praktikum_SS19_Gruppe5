@@ -25,7 +25,7 @@ public class Editor {
 
 		header = new Header();
 		navigatorPanel = new NavigatorPanel();
-		groupShowForm = new GroupShowForm();
+//		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
 
 		RootPanel.get("main").clear();
@@ -38,7 +38,7 @@ public class Editor {
 		RootPanel.get("trailer").add(trailer);
 		RootPanel.get("aside").add(navigatorPanel);
 
-		RootPanel.get("main").add(groupShowForm);
+//		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("header").add(header);
 
 	}
