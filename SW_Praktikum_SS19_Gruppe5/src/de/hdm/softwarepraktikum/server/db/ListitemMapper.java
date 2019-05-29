@@ -133,7 +133,7 @@ public class ListitemMapper {
 				listitem.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO Listitem "
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO listitems "
 					+ "(id, creationDate, amount, isStandard, product_id, shoppinglist_id, unit_id, usergroup_id, "
 					+ "retailer_id) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -333,7 +333,7 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
-					+ "ON listitems.retailer_id = retailer.id " 
+					+ "ON listitems.retailer_id = retailers.id " 
 					+ "WHERE retailers.id = " + retailer.getId());
 
 			while (rs.next()) {
@@ -531,7 +531,7 @@ public class ListitemMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
-					+ "ON listitems.retailer_id = retailers_id "
+					+ "ON listitems.retailer_id = retailers.id "
 					+ "WHERE shoppinglist_id = " +shoppinglistId + "and retailername = " + retailerId);
 
 			while (rs.next()) {
