@@ -22,7 +22,7 @@ public class ShoppinglistMapper {
 	private static ShoppinglistMapper shoppinglistMapper = null;
 
 	/**
-	 * Geschützter Konstruktor verhindert die Moeglichkeit, mit <code>new</code>
+	 * Geschuetzter Konstruktor verhindert die Moeglichkeit, mit <code>new</code>
 	 * neue Instanzen dieser Klasse zu erzeugen.
 	 */
 
@@ -325,7 +325,7 @@ public class ShoppinglistMapper {
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN usergroups "
-					+ "ON shoppinglists.usergroup_id = usergroup.id"
+					+ "ON shoppinglists.usergroup_id = usergroups.id"
 					+ "WHERE usergroups.id = " + group.getId());
 			
 			while (rs.next()) {

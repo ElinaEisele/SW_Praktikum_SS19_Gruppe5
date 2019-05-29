@@ -22,7 +22,7 @@ public class GroupMapper {
 	private static GroupMapper groupMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von GroupMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen von GroupMapper.
 	 */
 	protected GroupMapper() {
 	}
@@ -246,7 +246,7 @@ public class GroupMapper {
 	
 	/**
 	 * 
-	 * User aus einer Gruppe löschen
+	 * User aus einer Gruppe loeschen
 	 * 
 	 * @param userId
 	 * @param groupId
@@ -268,7 +268,7 @@ public class GroupMapper {
 	
 	/**
 	 * 
-	 * Eine Membershipbeziehung löschen.
+	 * Eine Membershipbeziehung loeschen.
 	 * 
 	 * @param usergroup_id
 	 */
@@ -289,7 +289,7 @@ public class GroupMapper {
 	
 
 	/**
-	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen
+	 * Methode, um die Gruppenzugehoerigkeit einer Shoppingliste festzustellen
 	 * 
 	 * @param shoppinglist
 	 * @return Group-Objekt
