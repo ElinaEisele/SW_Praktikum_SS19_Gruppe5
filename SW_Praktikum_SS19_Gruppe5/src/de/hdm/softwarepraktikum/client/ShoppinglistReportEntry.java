@@ -1,26 +1,36 @@
 package de.hdm.softwarepraktikum.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+
+import de.hdm.softwarepraktikum.client.gui.report.ReportHeader;
+import de.hdm.softwarepraktikum.client.gui.report.ReportShowForm;
+import de.hdm.softwarepraktikum.client.gui.report.ReportTrailer;
 
 /**
  * Entry-Point Klasse des Projekts <b>MaulTasche</b> fuer den Report Generator.
  * 
- * @author ElinaEisele
+ * @author LeoniFriedrich
  */
 
-public class ShoppinglistReportEntry implements EntryPoint{
+public class ShoppinglistReportEntry implements EntryPoint {
 	
-	Label reportLabel = new Label("Report Generator");
+	private ReportHeader reportHeader = null;
+	private ReportShowForm reportShowForm = null;
+	private ReportTrailer reportTrailer = null;
 
-
-
-	@Override
 	public void onModuleLoad() {
-		
-		RootPanel.get().add(reportLabel);
-	}
-	
 
+		reportHeader = new ReportHeader();
+		reportShowForm = new ReportShowForm();
+		reportTrailer = new ReportTrailer();
+
+		RootPanel.get("ReportMain").clear();
+		RootPanel.get("ReportMain").setVisible(true);
+
+		RootPanel.get("ReportTrailer").add(reportTrailer);
+		RootPanel.get("ReportMain").add(reportShowForm);
+		RootPanel.get("ReportHeader").add(reportHeader);
+
+	}
 }
