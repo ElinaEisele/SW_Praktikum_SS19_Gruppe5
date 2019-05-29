@@ -38,16 +38,16 @@ public class NavigatorPanel extends VerticalPanel{
 		
 	public void onLoad() {
 		
-//		final Timer timer = new Timer() {
-//
-//			@Override
-//			public void run() {
-//				NavigatorPanel.this.refreshInfo();
-//				schedule(10000);
-//			}
-//			
-//		};
-//		timer.schedule(10000);
+		final Timer timer = new Timer() {
+
+			@Override
+			public void run() {
+				NavigatorPanel.this.refreshInfo();
+				schedule(10000);
+			}
+			
+		};
+		timer.schedule(10000);
 		gstvm.setGroupForm(gsf);
 		gsf.setGstvm(gstvm);
 		
@@ -94,7 +94,7 @@ public class NavigatorPanel extends VerticalPanel{
 
 		@Override
 		public void onFailure(Throwable caught) {
-//			Notification.show(caught.toString());	
+			Notification.show(caught.toString());	
 		}
 
 		@Override
@@ -118,7 +118,8 @@ public class NavigatorPanel extends VerticalPanel{
 			if (u != null) {
 				NewGroupForm ngf = new NewGroupForm();
 				RootPanel.get("main").clear();
-				RootPanel.get("main").add(ngf);//			}
+				RootPanel.get("main").add(ngf);//			
+				}
 		}
 		
 	}

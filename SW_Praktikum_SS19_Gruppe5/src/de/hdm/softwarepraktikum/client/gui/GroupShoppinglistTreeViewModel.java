@@ -148,7 +148,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		allGroups.add(g);
 		this.getUserGroups().add(g);
 		groupDataProvider.refresh();
-		selectionModel.setSelected(g,  true);
+		selectionModel.setSelected(g, true);
 	}
 	
 	/**
