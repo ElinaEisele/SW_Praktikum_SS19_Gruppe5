@@ -85,7 +85,7 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Users WHERE id = " + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE id = " + id);
 
 			if (rs.next()) {
 				User u = new User();
@@ -188,7 +188,7 @@ public class UserMapper {
 				user.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO Users (id, creationDate, name, gMail)"
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id, creationDate, name, gMail)"
 					+ "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, user.getId());
@@ -253,7 +253,7 @@ public class UserMapper {
 	
 	/**
 	 * 
-	 * Zuweisung löschen.
+	 * Zuweisung loeschen.
 	 * 
 	 * @param userId
 	 */
@@ -274,7 +274,7 @@ public class UserMapper {
 
 	/**
 	 * 
-	 * Eine Membershipbeziehung löschen.
+	 * Eine Membershipbeziehung loeschen.
 	 * 
 	 * @param usergroup_id
 	 */

@@ -258,9 +258,9 @@ public class RetailerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT retailer.id, retailer.creationDate, retailer.name "
+			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name "
 							+ "FROM listitems INNER JOIN retailers"
-							+ "ON listitems.retailer_Id = retailer.id"
+							+ "ON listitems.retailer_Id = retailers.id"
 							+ "WHERE listitem_id = " + listitem.getId());
 
 			if (rs.next()) {
@@ -293,7 +293,7 @@ public class RetailerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT retailer.id, retailer.creationDate, retailer.name"
+			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name"
 					+ "FROM responsibilities INNER JOIN retailers"
 					+ "ON responsibilities.retailer_id = retailers.id"
 					+ "WHERE user_id =" + user.getId());
