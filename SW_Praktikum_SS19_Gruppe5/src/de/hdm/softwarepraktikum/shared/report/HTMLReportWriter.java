@@ -1,5 +1,6 @@
 package de.hdm.softwarepraktikum.shared.report;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -107,16 +108,16 @@ public void process(AllListitemsOfGroupReport r) {
         + "</b></td>");
     result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint())
         + "</td>");
-    result.append("</tr><tr><td></td><td>" + r.getCreated().toString()
+    result.append("</tr><tr><td></td><td>" + r.getCreationDate().toString()
         + "</td></tr></table>");
 
-    Vector<Row> rows = r.getRows();
+    ArrayList<Row> rows = r.getRows();
     result.append("<table style=\"width:400px\">");
 
     for (int i = 0; i < rows.size(); i++) {
-      Row row = rows.elementAt(i);
+      Row row = rows.get(i);
       result.append("<tr>");
-      for (int k = 0; k < row.getNumColumns(); k++) {
+      for (int k = 0; k < row.getSizeOfColumns(); k++) {
         if (i == 0) {
           result.append("<td style=\"background:silver;font-weight:bold\">" + row.getColumnAt(k)
               + "</td>");
@@ -149,7 +150,7 @@ public void process(AllListitemsOfGroupReport r) {
    * @param r der zu erstellende Report
    */
   @Override
-public void process(AllShoppinglistsOfGroupReport r) {
+  public void process(AllShoppinglistsOfGroupReport r) {
 
   }
 
