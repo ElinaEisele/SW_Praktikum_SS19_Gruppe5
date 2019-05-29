@@ -1,20 +1,20 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * <p>
  * Die Klasse <code>BusinessObject</code> stellt die Basisklasse aller in diesem
- * Projekt für die Umsetzung des Fachkonzepts relevanten Klassen dar. Hierbei hat 
+ * Projekt fï¿½r die Umsetzung des Fachkonzepts relevanten Klassen dar. Hierbei hat 
  * jede Sub-Klasse eine ID.
  * </p>
  * <p>
  * Zentrales Merkmal ist, dass jedes <code>BusinessObject</code> eine Nummer
- * besitzt, die man in einer relationalen Datenbank auch als Primärschlüssel
- * bezeichnen würde. Fernen ist jedes <code>BusinessObject</code> als
+ * besitzt, die man in einer relationalen Datenbank auch als Primï¿½rschlï¿½ssel
+ * bezeichnen wï¿½rde. Fernen ist jedes <code>BusinessObject</code> als
  * gekennzeichnet. Durch diese Eigenschaft kann jedes <code>BusinessObject</code> 
- * automatisch in eine textuelle Form überführt und z.B. zwischen Client und Server
+ * automatisch in eine textuelle Form ï¿½berfï¿½hrt und z.B. zwischen Client und Server
  * transportiert werden.
  * </p>
  * 
@@ -25,15 +25,18 @@ public abstract class BusinessObject implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Date creationDate = new Date();
+	private Date creationDate;
 	
 	public BusinessObject() {
+		java.util.Date java = new java.util.Date();
+		java.sql.Date sql = new java.sql.Date(java.getTime());
+	    this.setCreationDate(sql);
 		/*
-		 * Setzen einer vorläufigen ID. Im Insert-Aufruf wird die Id gesetzt, welche mit der Datenbank
+		 * Setzen einer vorlï¿½ufigen ID. Im Insert-Aufruf wird die Id gesetzt, welche mit der Datenbank
 		 * konsisent ist.
 		 */
 		this.setId(1);
-		this.setCreationDate(new Date());
+//		this.setCreationDate(new Date());
 	}
 	
 	/**
@@ -57,7 +60,7 @@ public abstract class BusinessObject implements Serializable{
 	
 	/**
 	 * Erzeugen einer einfachen textuellen Darstellung der jeweiligen
-	 * Instanz. Kann in Sub-Klassen überschrieben werden
+	 * Instanz. Kann in Sub-Klassen ï¿½berschrieben werden
 	 */ 
 	public String toString() {
 		/*
@@ -67,7 +70,7 @@ public abstract class BusinessObject implements Serializable{
 	}
 	
 	/**
-	 * Gleichheit zweier BusinessObjects überprüfen. Hierbei wird sich auf
+	 * Gleichheit zweier BusinessObjects ï¿½berprï¿½fen. Hierbei wird sich auf
 	 * die ID's bezogen.
 	 */
 	public boolean equals(Object o) {
@@ -83,21 +86,21 @@ public abstract class BusinessObject implements Serializable{
 	      }
 	      catch (IllegalArgumentException e) {
 	        /*
-	         * Falls etwas schief geht, wird false zurückgegeben.
+	         * Falls etwas schief geht, wird false zurï¿½ckgegeben.
 	         */
 	        return false;
 	      }
 	    }
 	    /*
 	     * Wenn bislang keine Gleichheit bestimmt werden konnte, dann wird
-	     * false zurückgeben.
+	     * false zurï¿½ckgeben.
 	     */
 	    return false;
 	  }
 	
 	/**
 	   * <p>
-	   * Erzeugen einer ganzen Zahl, die für das <code>BusinessObject</code> charakteristisch ist.
+	   * Erzeugen einer ganzen Zahl, die fï¿½r das <code>BusinessObject</code> charakteristisch ist.
 	   * </p>
 	   * <p>
 	   * Zusammen mit <code>equals</code> sollte diese Methode immer definiert werden.
