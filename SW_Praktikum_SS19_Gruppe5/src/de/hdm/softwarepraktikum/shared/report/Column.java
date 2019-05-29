@@ -31,6 +31,14 @@ public class Column implements Serializable{
 	}
 	
 	/**
+	 * Konstruktor zum erstellen eines Coulmn-Objekts mit dem setzen eines Wertes
+	 * @param value ist der Wert welcher in der Zelle stehen soll
+	 */
+	public Column(String value) {
+		this.setValue(value);
+	}
+	
+	/**
 	 * Ausgeben des Wertes einer Spalte.
 	 * @return String-Objekt mit dem Inhalt der Spalte.
 	 */
