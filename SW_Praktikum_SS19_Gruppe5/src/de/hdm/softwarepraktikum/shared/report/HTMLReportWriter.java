@@ -1,14 +1,13 @@
 package de.hdm.softwarepraktikum.shared.report;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Der HTMLReportWriter formatiert die Reports mittels HTML. Das im richtigen
  * Format vorliegende Ergebnis wird anschlieﬂend in der String Variable 
  * reportText abgespeichert.
  * 
- * @author FelixRapp
+ * @author FelixRapp, TimBeutelspacher
  */
 public class HTMLReportWriter extends ReportWriter {
 
