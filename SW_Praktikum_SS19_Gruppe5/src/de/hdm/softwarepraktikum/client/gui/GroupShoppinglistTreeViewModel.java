@@ -179,7 +179,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	 */
 	void updateGroup(Group group) {
 		List<Group> groupList = groupDataProvider.getList();
-		int i = 0;
+		int i = 1;
 		for (Group g : groupList) {
 			if (g.getId() == group.getId()) {
 				groupList.set(i, group);
