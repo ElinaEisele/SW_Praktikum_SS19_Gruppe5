@@ -104,37 +104,36 @@ public void process(AllListitemsOfGroupReport r) {
      */
     result.append("<H1>" + r.getTitle() + "</H1>");
     result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
-    result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData())
-        + "</b></td>");
-    result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint())
-        + "</td>");
-    result.append("</tr><tr><td></td><td>" + r.getCreationDate().toString()
-        + "</td></tr></table>");
+    result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData())+ "</b></td>");
+    result.append("<td valign=\"top\">" + paragraph2HTML(r.getImprint()) + "</td>");
+    result.append("</tr><tr><td></td><td>" + r.getCreationDate().toString() + "</td></tr></table>");
 
     ArrayList<Row> rows = r.getRows();
     result.append("<table style=\"width:400px\">");
 
+    //Reihe wird erstellt
     for (int i = 0; i < rows.size(); i++) {
       Row row = rows.get(i);
       result.append("<tr>");
+      
+      //Spalten werden erstellt
       for (int k = 0; k < row.getSizeOfColumns(); k++) {
+    	  
+    	//Erste Reihe soll fett geschreiben werden und der Hintergrund soll grau sein.
         if (i == 0) {
-          result.append("<td style=\"background:silver;font-weight:bold\">" + row.getColumnAt(k)
-              + "</td>");
+          result.append("<td style=\\\"background:silver;font-weight:bold\\>" +row.getColumnAt(k).toString() + "</td>");
         }
+        
+        //Andere Reihen sollen einfach dargestellt werden
         else {
-          if (i > 1) {
-            result.append("<td style=\"border-top:1px solid silver\">"
-                + row.getColumnAt(k) + "</td>");
-          }
-          else {
-            result.append("<td valign=\"top\">" + row.getColumnAt(k) + "</td>");
-          }
+          result.append("<td>" + row.getColumnAt(k) + "</td>");
         }
       }
+      //Reihenende wird gekennzeichnet.
       result.append("</tr>");
     }
 
+    //Tabellenende wird gekennzeichnet.
     result.append("</table>");
 
     /*
