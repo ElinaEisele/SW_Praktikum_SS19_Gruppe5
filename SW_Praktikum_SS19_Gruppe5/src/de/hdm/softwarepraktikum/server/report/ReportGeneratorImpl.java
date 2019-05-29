@@ -12,6 +12,8 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
+import de.hdm.softwarepraktikum.shared.report.Column;
+import de.hdm.softwarepraktikum.shared.report.Row;
 
 /**
  * Die Klasse stellt die vollständige Applikationslogik des ReportGenerators dar.
@@ -86,6 +88,26 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
         	//Anlegen eines leeren Reports
         	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
         	
+        	//Erstellen eines Tabellenkopfs
+        	Row tablehead = new Row();
+        	tablehead.addColumn(new Column("Erstellungsdatum"));
+        	tablehead.addColumn(new Column("Bezeichnung"));
+        	tablehead.addColumn(new Column("Menge"));
+        	tablehead.addColumn(new Column("Einheit"));
+        	result.addRow(tablehead);
+        	
+        	//Für jedes Listitem wird eine Reihe mit Spalten erstellt
+        	for(Listitem l : listitems) {
+        		Row r = new Row();
+        		r.addColumn(new Column(l.getCreationDateConvertToString()));
+        		r.addColumn(new Column(this.getShoppinglistAdministration().getProductnameOf(l)));
+        		r.addColumn(new Column(String.valueOf(l.getAmount())));
+        		r.addColumn(new Column(this.getShoppinglistAdministration().getListitemUnitOf(l).getName()));
+        		result.addRow(r);
+        	}
+        	
+        	
+        	
         	//Setzen des Titels
         	result.setTitle("Report der Gruppe:" + g.getName());
         	
@@ -93,6 +115,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
         	result.setCreationDate(new Date());
         	
         	return result;
+        	
     	} else {
     		return null;
     	}
