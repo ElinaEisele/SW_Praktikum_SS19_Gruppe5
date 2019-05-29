@@ -1,11 +1,16 @@
 package de.hdm.softwarepraktikum.server.report;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.softwarepraktikum.server.ShoppinglistAdministrationImpl;
 import de.hdm.softwarepraktikum.shared.ReportGenerator;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 
 /**
@@ -62,19 +67,35 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * @return AllListitemsOfGroupReport der vollständige Report
      * @throws IllegalArgumentException
      */
-    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) throws IllegalArgumentException {
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) 
+    		throws IllegalArgumentException {
     	
-    	if (this.getShoppinglistAdministration() == null) {
+    	if (this.getShoppinglistAdministration() != null) {
+    		
+    		//Ausgeben aller Einkauslisten der Gruppe
+    		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistAdministration().getShoppinglistsOf(g);
+    		
+    		//Liste mit allen Einträgen der Gruppe
+    		ArrayList<Listitem> listitems = null;
+    		
+    		//Erstellen einer Liste mit allen Einträgen aus allen Listen
+    		for (Shoppinglist s: shoppinglists)	{
+    			listitems.addAll(this.getShoppinglistAdministration().getListitemsOf(s));
+    		}
+    		
+        	//Anlegen eines leeren Reports
+        	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
+        	
+        	//Setzen des Titels
+        	result.setTitle("Report der Gruppe:" + g.getName());
+        	
+        	//Zeitpunkt der Erstellung speichern
+        	result.setCreationDate(new Date());
+        	
+        	return result;
+    	} else {
     		return null;
     	}
     	
-    	//Anlegen eines leeren Reports
-    	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
-    	
-    	//Setzen des Titels
-    	result.setTitle("Report der Gruppe:" + g.getName());
-    	
-    	//Zeitpunkt der Erstellung speichern
-    	result.setCreationDate(new Date());
     }
 }
