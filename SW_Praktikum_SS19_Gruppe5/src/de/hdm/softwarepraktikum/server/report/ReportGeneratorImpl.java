@@ -75,7 +75,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		//Ausgeben aller Einkauslisten der Gruppe
     		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistAdministration().getShoppinglistsOf(g);
     		
-    		//Liste mit allen Listitems der Gruppe
+    		//Liste mit allen Einträgen der Gruppe
     		ArrayList<Listitem> listitems = null;
     		
     		//Erstellen einer Liste mit allen Einträgen aus allen Listen
