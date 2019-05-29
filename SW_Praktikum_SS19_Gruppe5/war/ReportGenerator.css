@@ -1,0 +1,128 @@
+
+/* ReportGenerator.html: Header */
+div#ReportHeader {
+	list-style: none;
+	margin: 0;
+	background: deepskyblue;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	justify-content: flex-end;
+}
+
+.HeaderButton {
+	color: white;
+	border: 1px solid white;
+	margin: 10px 10px;
+	padding: 5px;
+}
+
+.HeaderPlatzhalterButton {
+	padding: 5px;
+	margin: 10px 10px;
+	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 0px solid white;
+	border-radius: 5px;
+}
+
+@media all and (max-width: 800px) {
+	div#ReportHeader {
+		justify-content: space-around;
+	}
+}
+
+@media all and (max-width: 600px) {
+	div#ReportHeader {
+		justify-content: space-around;
+		webkit-flex-flow: column wrap;
+		flex-flow: column wrap;
+		padding: 0;
+	}
+	.HeaderButton {
+		-webkit-flex-flow: column wrap;
+		flex-flow: column wrap;
+		padding: 0;
+		text-align: center;
+		padding: 10px;
+		border-top: 1px solid rgba(255, 255, 255, 0.3);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	}
+}
+
+
+/* ReportHeader.java: */
+.HeaderButton {
+	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+.HeaderButton:active {
+	border: 0px inset #ccc;
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+.HeaderButton:hover {
+	background: skyblue;
+	border-color: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+
+/* ReportGenerator.html: Trailer */
+div#ReportTrailer {
+	padding: 10px;
+	background: tomato;
+	background: deepskyblue;
+}
+
+
+/* ReportTrailer.java: */
+.TrailerButton {
+	color: white;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
+	padding: 5px 10px;
+}
+
+.TrailerButton:active {
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+.TrailerButton:hover {
+	background: skyblue;
+	border-color: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+
+/* ReportGenerator.html: Main */
+div#ReportMain {
+	padding: 10px;
+	text-align: left;
+	background: lightgreen;
+}
+
+
+/* platzhalter.java */
