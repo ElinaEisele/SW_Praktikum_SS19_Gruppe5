@@ -4,6 +4,10 @@ import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.TreeViewModel;
 
+import de.hdm.softwarepraktikum.client.gui.report.ReportHeader;
+import de.hdm.softwarepraktikum.client.gui.report.ReportShowForm;
+import de.hdm.softwarepraktikum.client.gui.report.ReportTrailer;
+
 /**
  * Diese Klasse stellt den Startpunkt des Editor-Clients dar. Alle dazu
  * relevanten HTML-Elemente werden in dieser Klasse zusammgefügt.
@@ -17,7 +21,7 @@ public class Editor {
 	private NavigatorPanel navigatorPanel = null;
 	private GroupShowForm groupShowForm = null;
 	private Trailer trailer = null;
-
+	
 	public void loadForms() {
 		
 //		TreeViewModel model = new GroupShoppinglistTreeViewModel();
@@ -27,7 +31,7 @@ public class Editor {
 		navigatorPanel = new NavigatorPanel();
 		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
-
+		
 		RootPanel.get("main").clear();
 		RootPanel.get("aside").clear();
 

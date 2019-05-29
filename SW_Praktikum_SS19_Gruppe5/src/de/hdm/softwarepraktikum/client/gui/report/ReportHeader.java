@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
+import de.hdm.softwarepraktikum.client.ShoppinglistReportEntry.CurrentReportUser;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
@@ -20,13 +21,13 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  *
  */
 public class ReportHeader extends HorizontalPanel{
-	private User user = CurrentUser.getUser();
+	private User user = CurrentReportUser.getUser();
 
 	private Button editorButton;
 	private Button reportButton;
 	private Button platzhalterButton;
 	private Button abmeldenButton;
-	private Anchor reportLink;
+	private Anchor editorLink;
 
 	public void onLoad() {
 
@@ -34,7 +35,7 @@ public class ReportHeader extends HorizontalPanel{
 		reportButton = new Button("Report");
 		platzhalterButton = new Button("|");
 		abmeldenButton = new Button("Abmelden");
-		reportLink = new Anchor("Report");
+		editorLink = new Anchor("Editor");
 
 		editorButton.addClickHandler(new EditorClickHandler());
 		reportButton.addClickHandler(new ReportClickHandler());
@@ -75,7 +76,8 @@ public class ReportHeader extends HorizontalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.Location.reload();
+			editorLink.setHref(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html");
+			Window.open(editorLink.getHref(), "_self", "");
 		}
 		
 	}
@@ -88,8 +90,7 @@ public class ReportHeader extends HorizontalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			reportLink.setHref(GWT.getHostPageBaseURL()+"ReportGenerator.html");
-			Window.open(reportLink.getHref(), "_self", "");
+			Window.Location.reload();
 		}
 		
 	}
