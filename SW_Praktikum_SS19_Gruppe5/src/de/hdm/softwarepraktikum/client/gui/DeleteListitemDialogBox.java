@@ -14,7 +14,6 @@ import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 
-
 /**
  * Klasse zum Anzeigen eines Dialogs, wenn ein Listitem geloescht werden soll.
  * 
@@ -23,36 +22,38 @@ import de.hdm.softwarepraktikum.shared.bo.Listitem;
  */
 public class DeleteListitemDialogBox extends DialogBox {
 
-	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
-	
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
+			.getShoppinglistAdministration();
+
 	private Listitem selectedListitem = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label confirmationLabel = new Label("Sind Sie sicher, dass Sie das ausgwaehlte Listitem loeschen moechten?");
+	private Label confirmationLabel = new Label(
+			"Sind Sie sicher, dass Sie das ausgwaehlte Listitem loeschen moechten?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button confirmButton = new Button("Loeschen");
 	private Button cancelButton = new Button("Abbrechen");
-	
-	
+
 	public DeleteListitemDialogBox() {
-		
+
 		this.setGlassEnabled(true);
-		
+
 		cancelButton.setStylePrimaryName("cancelButton");
 		confirmButton.setStylePrimaryName("confirmButton");
-		
+
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
-		
+
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
-		
+
 		mainPanel.add(confirmationLabel);
 		mainPanel.add(buttonPanel);
-		
+
 		this.add(mainPanel);
 		this.center();
 	}
+
 	public Listitem getSelectedListitem() {
 		return selectedListitem;
 	}
@@ -60,19 +61,18 @@ public class DeleteListitemDialogBox extends DialogBox {
 	public void setSelectedListitem(Listitem selectedListitem) {
 		this.selectedListitem = selectedListitem;
 	}
-	
-	
-	private class CancelClickHandler implements ClickHandler{
+
+	private class CancelClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			DeleteListitemDialogBox.this.hide();
-			
+
 		}
-		
+
 	}
-	
-	private class ConfirmClickHandler implements ClickHandler{
+
+	private class ConfirmClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -83,16 +83,17 @@ public class DeleteListitemDialogBox extends DialogBox {
 				Notification.show("Es wurde kein Listitem ausgewählt.");
 			}
 		}
-		
+
 	}
-	
-	private class DeleteListitemCallback implements AsyncCallback<Void>{
-		
+
+	private class DeleteListitemCallback implements AsyncCallback<Void> {
+
 		Listitem listitem = null;
-		
-		DeleteListitemCallback(Listitem l){
+
+		DeleteListitemCallback(Listitem l) {
 			this.listitem = l;
 		}
+
 		@Override
 		public void onFailure(Throwable caught) {
 			Notification.show("Folgender Fehler ist aufgetreten: /n" + caught.toString());
@@ -100,18 +101,15 @@ public class DeleteListitemDialogBox extends DialogBox {
 
 		@Override
 		public void onSuccess(Void result) {
-			
+
 			if (listitem != null) {
 				setSelectedListitem(null);
 //				gstvm.removeRetailer(retailer);
 
 				RootPanel.get("main").clear();
-				
+
 			}
 		}
 
 	}
 }
-
-
-
