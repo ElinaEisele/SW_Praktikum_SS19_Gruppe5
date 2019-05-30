@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
-import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.client.ShoppinglistReportEntry.CurrentReportUser;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
@@ -21,6 +20,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  *
  */
 public class ReportHeader extends HorizontalPanel{
+	
 	private User user = CurrentReportUser.getUser();
 
 	private Button editorButton;

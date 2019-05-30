@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
@@ -20,19 +21,19 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 
 public class ShoppinglistReportEntry implements EntryPoint {
-	
+
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
-	
+
 	public void onModuleLoad() {
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL()+"ReportGenerator.html", new LoginServiceCallback());
-	
+		loginService.login(GWT.getHostPageBaseURL() + "ReportGenerator.html", new LoginServiceCallback());
+		Window.alert("nach login");
 	}
-	
-private class LoginServiceCallback implements AsyncCallback<User>{
-		
+
+	private class LoginServiceCallback implements AsyncCallback<User> {
+
 		@Override
 		public void onFailure(Throwable caught) {
 // auskommentiert lassen, sonst taucht Fehlermeldung auf, da noch Fake Google User Objekt
@@ -41,9 +42,9 @@ private class LoginServiceCallback implements AsyncCallback<User>{
 
 		@Override
 		public void onSuccess(User user) {
-			
+
 			CurrentReportUser.setUser(user);
-			
+
 			if (user.isLoggedIn()) {
 				Report report = new Report();
 				report.loadForms();
@@ -51,7 +52,7 @@ private class LoginServiceCallback implements AsyncCallback<User>{
 				loadLogin();
 			}
 		}
-		
+
 //		@Override
 //		public void onSuccess(User u) {
 //			CurrentUser.setUser(u);
@@ -72,32 +73,28 @@ private class LoginServiceCallback implements AsyncCallback<User>{
 //				loadLogin();
 //			}
 //		}
-		
-
 
 	}
 
-	
 	public void loadLogin() {
-		
+
 		signInLink.setHref(CurrentReportUser.getUser().getLoginUrl());
-		
+
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
 
-		RootPanel.get("main").add(loginPanel);
-		
+		RootPanel.get("ReportMain").add(loginPanel);
+
 //		loginLabel.setStylePrimaryName("loginLabel");
 //		loginButton.setStylePrimaryName("loginButton");
 //		
 //		loginButton.addClickHandler(new LoginClickHandler());
-		
+
 //		RootPanel.get("header").setVisible(false);
 //		RootPanel.get("aside").setVisible(false);
 
-		
 	}
-	
+
 //	private class LoginClickHandler implements ClickHandler{
 //
 //		@Override
@@ -108,13 +105,14 @@ private class LoginServiceCallback implements AsyncCallback<User>{
 //	}
 
 	/**
-	 * Die Klasse <code>CurrentUser</code> repräsentiert den aktuell am System angemeldeten User.
-	 * Da weitere GUI-Klassen das angemeldetet User-Objekt verwenden, muss diese jederzeit aufrufbar sein.
+	 * Die Klasse <code>CurrentUser</code> repräsentiert den aktuell am System
+	 * angemeldeten User. Da weitere GUI-Klassen das angemeldetet User-Objekt
+	 * verwenden, muss diese jederzeit aufrufbar sein.
 	 */
 	public static class CurrentReportUser {
-		
+
 		private static User u = null;
-		
+
 		public static User getUser() {
 			return u;
 		}
@@ -122,6 +120,6 @@ private class LoginServiceCallback implements AsyncCallback<User>{
 		public static void setUser(User u) {
 			CurrentReportUser.u = u;
 		}
-	
+
 	}
 }

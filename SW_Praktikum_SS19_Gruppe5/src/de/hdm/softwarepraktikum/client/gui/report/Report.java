@@ -13,12 +13,16 @@ public class Report {
 		reportHeader = new ReportHeader();
 		reportShowForm = new ReportShowForm();
 		reportTrailer = new ReportTrailer();
+		
+		RootPanel.get("main").clear();
+		RootPanel.get("aside").clear();
 
-		RootPanel.get("ReportMain").clear();
-		RootPanel.get("ReportMain").setVisible(true);
+		RootPanel.get("main").setVisible(true);
+		RootPanel.get("aside").setVisible(false);
 
-		RootPanel.get("ReportTrailer").add(reportTrailer);
-		RootPanel.get("ReportMain").add(reportShowForm);
-		RootPanel.get("ReportHeader").add(reportHeader);
+
+		RootPanel.get("trailer").add(reportTrailer);
+		RootPanel.get("main").add(reportShowForm);
+		RootPanel.get("header").add(reportHeader);
 	}
 }
