@@ -2,26 +2,13 @@ package de.hdm.softwarepraktikum.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.gui.Editor;
-import de.hdm.softwarepraktikum.client.gui.GroupShowForm;
-import de.hdm.softwarepraktikum.client.gui.Header;
-import de.hdm.softwarepraktikum.client.gui.Notification;
-import de.hdm.softwarepraktikum.client.gui.GroupShoppinglistTreeViewModel;
-import de.hdm.softwarepraktikum.client.gui.RegistrationForm;
-import de.hdm.softwarepraktikum.client.gui.ShoppinglistShowForm;
-import de.hdm.softwarepraktikum.client.gui.Trailer;
-import de.hdm.softwarepraktikum.shared.LoginInfo;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -31,14 +18,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 public class ShoppinglistEditorEntryLogin implements EntryPoint{
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
-	
-	private Header header = null;
-	private VerticalPanel navigator = null;
-	private GroupShowForm groupShowForm = null;
-	private HorizontalPanel hp = null;
-	private Trailer trailer = null;
-	private VerticalPanel vp = null;
-	
+		
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
