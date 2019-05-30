@@ -4,43 +4,31 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.gui.Editor;
-import de.hdm.softwarepraktikum.client.gui.GroupShowForm;
-import de.hdm.softwarepraktikum.client.gui.Header;
-import de.hdm.softwarepraktikum.client.gui.Trailer;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
+public class ShoppinglistEditorEntryLogin implements EntryPoint {
 
-public class ShoppinglistEditorEntryLogin implements EntryPoint{
-		
-	private Header header = null;
-	private VerticalPanel navigator = null;
-	private GroupShowForm groupShowForm = null;
-	private HorizontalPanel hp = null;
-	private Trailer trailer = null;
-	private VerticalPanel vp = null;
-	
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
-	
+
 	@Override
 	public void onModuleLoad() {
-		
+
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html", new LoginServiceCallback());
-	
+		loginService.login(GWT.getHostPageBaseURL() + "SW_Praktikum_SS19_Gruppe5.html", new LoginServiceCallback());
+
 	}
-	
-	private class LoginServiceCallback implements AsyncCallback<User>{
-		
+
+	private class LoginServiceCallback implements AsyncCallback<User> {
+
 		@Override
 		public void onFailure(Throwable caught) {
 // auskommentiert lassen, sonst taucht Fehlermeldung auf, da noch Fake Google User Objket
@@ -49,9 +37,9 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 
 		@Override
 		public void onSuccess(User user) {
-			
+
 			CurrentUser.setUser(user);
-			
+
 			if (user.isLoggedIn()) {
 				Editor editor = new Editor();
 				editor.loadForms();
@@ -59,7 +47,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 				loadLogin();
 			}
 		}
-		
+
 //		@Override
 //		public void onSuccess(User u) {
 //			CurrentUser.setUser(u);
@@ -80,32 +68,28 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 //				loadLogin();
 //			}
 //		}
-		
-
 
 	}
 
-	
 	public void loadLogin() {
-		
+
 		signInLink.setHref(CurrentUser.getUser().getLoginUrl());
-		
+
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
 
 		RootPanel.get("main").add(loginPanel);
-		
+
 //		loginLabel.setStylePrimaryName("loginLabel");
 //		loginButton.setStylePrimaryName("loginButton");
 //		
 //		loginButton.addClickHandler(new LoginClickHandler());
-		
+
 //		RootPanel.get("header").setVisible(false);
 //		RootPanel.get("aside").setVisible(false);
 
-		
 	}
-	
+
 //	private class LoginClickHandler implements ClickHandler{
 //
 //		@Override
@@ -116,13 +100,14 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 //	}
 
 	/**
-	 * Die Klasse <code>CurrentUser</code> repräsentiert den aktuell am System angemeldeten User.
-	 * Da weitere GUI-Klassen das angemeldetet User-Objekt verwenden, muss diese jederzeit aufrufbar sein.
+	 * Die Klasse <code>CurrentUser</code> repräsentiert den aktuell am System
+	 * angemeldeten User. Da weitere GUI-Klassen das angemeldetet User-Objekt
+	 * verwenden, muss diese jederzeit aufrufbar sein.
 	 */
 	public static class CurrentUser {
-		
+
 		private static User u = null;
-		
+
 		public static User getUser() {
 			return u;
 		}
@@ -130,7 +115,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint{
 		public static void setUser(User u) {
 			CurrentUser.u = u;
 		}
-	
+
 	}
 
 }
