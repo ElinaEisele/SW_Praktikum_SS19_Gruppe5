@@ -25,7 +25,7 @@ public class GroupShowForm extends VerticalPanel{
 	private NewShoppinglistForm newShoppinglistForm = null;
 	private VerticalPanel mainPanel = new VerticalPanel();
 	
-	private Group selectedGroup;
+	private Group selectedGroup = null;
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 	
 	public GroupShowForm(GroupHeader gh, NewShoppinglistForm nsf) {
@@ -41,7 +41,15 @@ public class GroupShowForm extends VerticalPanel{
 	
 	public GroupShowForm(GroupHeader gh, EditGroupNameForm egnf) {
 		groupHeader = gh;
+		gh.setGstvm(gstvm);
+		egnf.setGstvm(gstvm);
 		mainPanel.add(egnf);
+	}
+	
+	public GroupShowForm(GroupHeader gh) {
+		groupHeader = gh;
+		mainPanel.add(new GroupContent());
+		// GroupContent noch eine Gruppe zuweisen!
 	}
 	
 	public GroupShowForm() {
@@ -52,19 +60,28 @@ public class GroupShowForm extends VerticalPanel{
 		mainPanel.setStylePrimaryName("groupShowFormMainPanel");
 		
 		mainPanel.add(groupContent);
+		
 	}
 	
 	public void onLoad() {
 		
-		groupHeader.setGroupShowForm(GroupShowForm.this);
 		
+	
 		this.add(groupHeader);
 		this.add(mainPanel);
+		
+		groupHeader.setGroupShowForm(GroupShowForm.this);
+		groupHeader.setSelected(selectedGroup);
 		
 	}
 
 	public void setSelected(Group g) {
 		selectedGroup = g;
+		
+	}
+	
+	public Group getSelected() {
+		return selectedGroup;
 	}
 
 	public GroupShoppinglistTreeViewModel getGstvm() {

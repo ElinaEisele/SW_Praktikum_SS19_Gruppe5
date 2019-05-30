@@ -182,7 +182,7 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM Users ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM users");
 
 			if (rs.next()) {
 				user.setId(rs.getInt("maxid") + 1);
@@ -196,11 +196,12 @@ public class UserMapper {
 			pstmt.setString(3, user.getName());
 			pstmt.setString(4, user.getGmailAddress());
 			pstmt.executeUpdate();
+			return user;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
-		return user;
 
 	}
 	
@@ -303,7 +304,7 @@ public class UserMapper {
 	public ArrayList<User> getUsersOf(Group group){
 		
 		Connection con = DBConnection.connection();
-		ArrayList<User> groups = new ArrayList<User>();
+		ArrayList<User> users = new ArrayList<User>();
 
 		try {
 
@@ -318,15 +319,16 @@ public class UserMapper {
 				u.setCreationDate(rs.getDate("creationDate"));
 				u.setName(rs.getString("name"));
 				u.setGmailAddress(rs.getString("gMail"));
-				groups.add(u);
+				users.add(u);
 			}
 			
-			return groups;
+			return users;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		
+		return null;
 		
 	}
 
