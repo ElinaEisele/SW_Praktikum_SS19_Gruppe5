@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -31,6 +32,7 @@ public class EditGroupNameForm extends VerticalPanel{
 	private User u = CurrentUser.getUser();
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupHeader groupHeader = new GroupHeader();
+	private GroupShowForm groupShowForm;
 	private Group selectedGroup = null;
 	private Group changedGroup = null;
 	
@@ -45,6 +47,8 @@ public class EditGroupNameForm extends VerticalPanel{
 	private Button cancelButton = new Button("Abbrechen");
 	
 	public EditGroupNameForm() {
+		
+		this.
 		
 		grid.setWidget(0, 0, newNameLabel);
 		grid.setWidget(0, 1, newNameTextBox);
@@ -62,9 +66,11 @@ public class EditGroupNameForm extends VerticalPanel{
 	}
 	
 	public void onLoad() {
+		
 		RootPanel.get("main").add(mainPanel);
 	}
 	
+
 	public GroupShoppinglistTreeViewModel getGstvm() {
 		return gstvm;
 	}
@@ -104,13 +110,14 @@ public class EditGroupNameForm extends VerticalPanel{
 	private class SaveClickHandler implements ClickHandler{
 
 		public void onClick(ClickEvent event) {
-//			if (selectedGroup != null) {
+			if (selectedGroup != null) {
 				shoppinglistAdministration.changeNameOf(selectedGroup, newNameTextBox.getValue(), new ChangeNameCallback());
 				GroupShowForm gsf = new GroupShowForm();
-				gsf.setSelected(changedGroup);
+				gsf.setSelected(selectedGroup);
+				
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(gsf);
-//			}
+			} 
 		}
 	}
 	
@@ -123,7 +130,7 @@ public class EditGroupNameForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Group result) {
-			changedGroup = result;
+			selectedGroup = result;
 			gstvm.updateGroup(result);
 		}
 		

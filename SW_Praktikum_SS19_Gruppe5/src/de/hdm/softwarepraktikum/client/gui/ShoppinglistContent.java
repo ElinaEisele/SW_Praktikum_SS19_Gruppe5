@@ -16,8 +16,7 @@ public class ShoppinglistContent extends VerticalPanel {
 	private ShoppinglistCellTable shoppinglistCellTable;
 
 	public void onLoad() {
-		super.onLoad();
-
+		
 		shoppinglistSearchBar = new ShoppinglistSearchBar();
 		shoppinglistSearchBar.setShoppinglistCellTable(shoppinglistCellTable);
 		shoppinglistCellTable = new ShoppinglistCellTable();

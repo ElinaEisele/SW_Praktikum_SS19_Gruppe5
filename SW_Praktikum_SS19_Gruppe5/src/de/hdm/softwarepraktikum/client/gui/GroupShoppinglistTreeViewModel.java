@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -65,6 +67,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 			if (bo == null) {
 				return null;
 			} else {
+				// prüfen ob Gruppe oder Shippingliste
 				return bo.getId();
 			}
 		}
@@ -90,6 +93,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 			} else if (selection instanceof Shoppinglist){
 				setSelectedShoppinglsit((Shoppinglist) selection);
 			}
+
 		}
 		
 	}
@@ -102,6 +106,20 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		shoppinglistDataProviders = new HashMap<Group, ListDataProvider<Shoppinglist>>();		
 	}
 	
+	
+	
+	public SingleSelectionModel<BusinessObject> getSelectionModel() {
+		return selectionModel;
+	}
+
+
+
+	public void setSelectionModel(SingleSelectionModel<BusinessObject> selectionModel) {
+		this.selectionModel = selectionModel;
+	}
+
+
+
 	public ArrayList<Group> getUserGroups() {
 		return userGroups;
 	}
@@ -110,11 +128,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		this.userGroups = userGroups;
 	}
 	
-	void setGroupForm(GroupShowForm gsf) {
+	void setGroupShowForm(GroupShowForm gsf) {
 		groupShowForm = gsf;
 	}
 	
-	void setShoppinglistForm(ShoppinglistShowForm ssf) {
+	void setShoppinglistShowForm(ShoppinglistShowForm ssf) {
 		shoppinglistShowForm = ssf;
 	}
 	
@@ -123,8 +141,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	}
 	
 	void setSelectedGroup(Group g) {
+		RootPanel.get("main").clear();
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
+		RootPanel.get("main").add(groupShowForm);
+		selectedShoppinglist = null;
 
 	}
 	
@@ -158,7 +179,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	 */
 	void updateGroup(Group group) {
 		List<Group> groupList = groupDataProvider.getList();
-		int i = 0;
+		int i = 1;
 		for (Group g : groupList) {
 			if (g.getId() == group.getId()) {
 				groupList.set(i, group);

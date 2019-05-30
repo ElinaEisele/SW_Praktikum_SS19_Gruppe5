@@ -106,17 +106,18 @@ public class AddUserToGroupForm extends VerticalPanel{
 	private class SaveClickHandler implements ClickHandler{
 
 		public void onClick(ClickEvent event) {
-//			if (selectedGroup != null) {
+			if (selectedGroup != null) {
 				String email = emailTextBox.getValue();
 				shoppinglistAdministration.getUserByMail(email, new GetUserCallback());
 				shoppinglistAdministration.addUserToGroup(newGroupMember, selectedGroup, new AddUserCallback());
+				// neues Gruppenobjekt zurück geben?
 				GroupShowForm gsf = new GroupShowForm();
 				gsf.setSelected(selectedGroup);
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(gsf);
-//			} else {
-//				Notification.show("Es wurde keine Gruppe ausgewählt.");
-//			}
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
 		}
 		
 	}

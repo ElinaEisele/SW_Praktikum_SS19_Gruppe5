@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
@@ -9,11 +10,16 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.gui.Editor;
+import de.hdm.softwarepraktikum.client.gui.RegistrationForm;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
+import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 public class ShoppinglistEditorEntryLogin implements EntryPoint {
+
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
+			.getShoppinglistAdministration();
 
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
@@ -31,43 +37,45 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 
 		@Override
 		public void onFailure(Throwable caught) {
-// auskommentiert lassen, sonst taucht Fehlermeldung auf, da noch Fake Google User Objket
-//			Window.alert(caught.toString());
+			Window.alert(caught.toString());
 		}
 
+//		@Override
+//		public void onSuccess(User user) {
+//			
+//			CurrentUser.setUser(user);
+//			
+//			if (user.isLoggedIn()) {
+//				Editor editor = new Editor();
+//				editor.loadForms();
+//			} else {
+//				loadLogin();
+//			}
+//		}
+
 		@Override
-		public void onSuccess(User user) {
+		public void onSuccess(User u) {
 
-			CurrentUser.setUser(user);
+			CurrentUser.setUser(u);
 
-			if (user.isLoggedIn()) {
-				Editor editor = new Editor();
-				editor.loadForms();
+			if (u.isLoggedIn()) {
+				if (u.getName() == null) {
+					Anchor shoppinglistEditorLink = new Anchor();
+					shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL());
+
+					RootPanel.get("header").setVisible(false);
+					RootPanel.get("aside").setVisible(false);
+					RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, u));
+				} else {
+
+					Editor editor = new Editor();
+					editor.loadForms();
+
+				}
 			} else {
 				loadLogin();
 			}
 		}
-
-//		@Override
-//		public void onSuccess(User u) {
-//			CurrentUser.setUser(u);
-//			
-//			if (u.isLoggedIn()) {
-//				if (u.getName() == null) {
-//					Anchor shoppinglistEditorLink = new Anchor();
-//					shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL());
-//					
-//					RootPanel.get("header").setVisible(false);
-//					RootPanel.get("aside").setVisible(false);
-//					RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, u));
-//				} else {
-//					Editor editor = new Editor();
-//					editor.loadForms();
-//				}
-//			}else {
-//				loadLogin();
-//			}
-//		}
 
 	}
 
