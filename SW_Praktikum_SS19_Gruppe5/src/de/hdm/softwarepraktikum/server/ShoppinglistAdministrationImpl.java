@@ -715,7 +715,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(User user) throws IllegalArgumentException {
-		this.userMapper.update(user);
+		this.userMapper.insert(user);
 	}
 	
 	/**

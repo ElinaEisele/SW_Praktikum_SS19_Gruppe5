@@ -90,6 +90,7 @@ public class GroupHeader extends HorizontalPanel {
 	}
 
 	public void onLoad() {
+		
 				
 		this.add(groupHeaderLabel);
 		this.add(newShoppinglist);
@@ -99,6 +100,7 @@ public class GroupHeader extends HorizontalPanel {
 		this.add(deleteGroup);
 		this.add(showUsers);
 		this.add(showRetailers);
+		
 
 	}
 	
