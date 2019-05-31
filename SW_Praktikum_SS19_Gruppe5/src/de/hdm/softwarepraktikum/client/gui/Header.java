@@ -78,9 +78,9 @@ public class Header extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			editorLink.setHref(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html");
-			Window.open(editorLink.getHref(), "_self", "");
-			//Window.Location.reload();
+//			editorLink.setHref(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html");
+//			Window.open(editorLink.getHref(), "_self", "");
+			Window.Location.reload();
 		}
 		
 	}

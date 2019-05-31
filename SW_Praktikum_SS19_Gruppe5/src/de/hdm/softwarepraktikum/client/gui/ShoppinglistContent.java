@@ -27,7 +27,7 @@ public class ShoppinglistContent extends VerticalPanel {
 // die SearchBar ist noch nicht fertig!		
 //		this.add(shoppinglistSearchBar);
 // cellTabel hat noch Fehler!		
-//		this.add(shoppinglistCellTable);
+		this.add(shoppinglistCellTable);
 	}
 
 }
