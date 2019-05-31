@@ -35,6 +35,7 @@ public class Editor {
 	private Header header = null;
 	private NavigatorPanel navigatorPanel = null;
 	private GroupShowForm groupShowForm = null;
+//	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private Trailer trailer = null;
 	
 	public void loadForms() {
@@ -71,6 +72,7 @@ public class Editor {
 		RootPanel.get("trailer").add(trailer);
 		RootPanel.get("aside").add(navigatorPanel);
 
+	//	RootPanel.get("main").add(shoppinglistShowForm);
 //		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("header").add(header);
 		
