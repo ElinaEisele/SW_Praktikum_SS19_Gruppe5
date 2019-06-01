@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>Group</code> Objekte. Diese umfasst Methoden um
+ * Mapper Klasse fï¿½r </code>Group</code> Objekte. Diese umfasst Methoden um
  * Group Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das
  * Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen
  * und DB-Stukturen in Objekte umgewandelt werden.
@@ -231,7 +231,7 @@ public class GroupMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?)",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?) ",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, userId);

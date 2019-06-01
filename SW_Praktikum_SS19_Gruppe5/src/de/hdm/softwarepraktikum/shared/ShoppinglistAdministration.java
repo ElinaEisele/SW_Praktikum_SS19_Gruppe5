@@ -451,16 +451,16 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verknüpft.
+	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verknï¿½pft.
 	 * @param shoppinglist ist die aktuell selektierte Shoppingliste.
-	 * @return Map, welche Listitems mit dem dazugehörigen Produktname ausgibt.
+	 * @return Map, welche Listitems mit dem dazugehï¿½rigen Produktname ausgibt.
 	 * @throws IllegalArgumentException
 	 */
 	public Map<Listitem, String> getListitemsNameMapBy(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgabe des zugewiesenen Retailers eines Listitems.
-	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurï¿½ckgegeben werden soll.
 	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
 	 * @throws IllegalArgumentException
 	 */
