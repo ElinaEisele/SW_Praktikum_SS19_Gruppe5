@@ -309,9 +309,9 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN users"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN users "
 					+ "ON memberships.user_id = users.id "
-					+ "WHERE usergroup_id = " + group.getId());
+					+ "WHERE memberships.usergroup_id = " + group.getId());
 
 			while (rs.next()) {
 				User u = new User();
@@ -328,7 +328,7 @@ public class UserMapper {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return users;
 		
 	}
 

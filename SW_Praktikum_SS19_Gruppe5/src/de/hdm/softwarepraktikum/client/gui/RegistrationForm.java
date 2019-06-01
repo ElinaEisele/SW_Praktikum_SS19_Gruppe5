@@ -68,7 +68,6 @@ public class RegistrationForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			String userName = lastNameTextBox.getText()+" "+firstNameTextBox.getText();
-			Window.alert(userName);
 			user.setName(userName);
 			shoppinglistAdministration.save(user, new SaveUserCallback());
 		}

@@ -87,13 +87,13 @@ public class LeaveGroupDialogBox extends DialogBox{
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			if (selectedGroup != null) {
+			if (selectedGroup != null) {
 				shoppinglistAdministration.removeUserFromGroup(u, selectedGroup, new RemoveUserCallback());
 				LeaveGroupDialogBox.this.hide();
 				
-//			} else {
-//				Notification.show("Es wurde keine Gruppe ausgewählt.");
-//			}
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
 		}
 		
 	}

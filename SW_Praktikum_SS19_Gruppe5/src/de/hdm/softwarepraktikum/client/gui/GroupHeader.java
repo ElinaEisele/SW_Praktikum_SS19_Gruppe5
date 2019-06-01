@@ -200,6 +200,7 @@ public class GroupHeader extends HorizontalPanel {
 			if (groupToDisplay != null) {
 				LeaveGroupDialogBox ldb = new LeaveGroupDialogBox();
 				ldb.setGstvm(GroupHeader.this.gstvm);
+				ldb.setSelectedGroup(groupToDisplay);
 				ldb.show();
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -260,9 +261,13 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if (groupToDisplay != null) {
+				ShowRetailersDialogBox srdb = new ShowRetailersDialogBox();
+				srdb.show();
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
 			
-			ShowRetailersDialogBox srdb = new ShowRetailersDialogBox();
-			srdb.show();
 		}
 		
 	}

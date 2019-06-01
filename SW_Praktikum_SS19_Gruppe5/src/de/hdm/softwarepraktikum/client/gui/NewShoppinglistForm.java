@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -98,15 +99,15 @@ public class NewShoppinglistForm extends VerticalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			if (selectedGroup != null) {
+			if (selectedGroup != null) {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(), new NewShoppinglistAsyncCallback());
 				RootPanel.get("main").clear();
 				// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe Callback)
 				RootPanel.get("main").add(shoppinglistShowForm);
 
-//			} else {
-//				Notification.show("Es wurde keine Gruppe ausgewählt.");
-//			}
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
 		}
 		
 	}
@@ -115,12 +116,12 @@ public class NewShoppinglistForm extends VerticalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			if (selectedGroup != null) {
+			if (selectedGroup != null) {
 				RootPanel.get("main").clear();
 				GroupShowForm gsf = new GroupShowForm();
 				gsf.setSelected(selectedGroup);
 				RootPanel.get("main").add(gsf);
-//			}
+			}
 		}
 		
 	}

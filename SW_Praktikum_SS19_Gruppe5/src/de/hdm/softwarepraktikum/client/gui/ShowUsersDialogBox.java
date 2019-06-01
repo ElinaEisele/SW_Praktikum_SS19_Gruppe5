@@ -26,7 +26,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  *
  */
 public class ShowUsersDialogBox extends DialogBox{
-	
+		
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 		
 	private Group selectedGroup;
@@ -36,10 +36,10 @@ public class ShowUsersDialogBox extends DialogBox{
 	private FlexTable usersFlexTable = new FlexTable();
 	private Button cancelButton = new Button("Schließen");
 	
-	public ShowUsersDialogBox() {
 	
-		shoppinglistAdministration.getUsersOf(selectedGroup, new ShowUsersCallback());
-		
+	
+	public ShowUsersDialogBox() {
+				
 		this.setGlassEnabled(true);
 				
 		cancelButton.setStylePrimaryName("cancelButton");
@@ -51,6 +51,7 @@ public class ShowUsersDialogBox extends DialogBox{
 		
 		this.add(mainPanel);
 		this.center();
+		
 	}
 
 
@@ -61,6 +62,7 @@ public class ShowUsersDialogBox extends DialogBox{
 	public void setSelectedGroup(Group selectedGroup) {
 		this.selectedGroup = selectedGroup;
 		this.infoLabel.setText("Mitglieder der Gruppe " + selectedGroup.getName());
+		shoppinglistAdministration.getUsersOf(selectedGroup, new ShowUsersCallback());
 	}
 	
 	private class CancelClickHandler implements ClickHandler{
@@ -79,23 +81,24 @@ public class ShowUsersDialogBox extends DialogBox{
 			Notification.show("Folgender Fehler ist aufgetreten: \n" + caught.toString());
 		}
 
-		@Override
-		public void onSuccess(ArrayList<User> result) {
-			Notification.show("Erfolgreiches ShowUserCallback");
-		}
-
 //		@Override
 //		public void onSuccess(ArrayList<User> result) {
-//			usersFlexTable.setText(0, 0, "Name");
-//			usersFlexTable.setText(0, 1, "Email");
-//			
-//			int i = 1;
-//			for (User u : result) {
-//				usersFlexTable.setText(i, 0, u.getName());
-//				usersFlexTable.setText(i, 1, u.getGmailAddress());
-//				i++;
-//			}
+//			Notification.show("Erfolgreiches ShowUserCallback");
 //		}
+
+		@Override
+		public void onSuccess(ArrayList<User> result) {
+			
+			usersFlexTable.setText(0, 0, "Name");
+			usersFlexTable.setText(0, 1, "Email");
+						
+			int i = 1;
+			for (User u : result) {
+				usersFlexTable.setText(i, 0, u.getName());
+				usersFlexTable.setText(i, 1, u.getGmailAddress());
+				i++;
+			}
+		}
 		
 	}
 
