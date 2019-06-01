@@ -5,6 +5,10 @@ import java.util.Date;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.Constants;
@@ -64,10 +68,30 @@ public class ShoppinglistAdministrationReport implements  EntryPoint {
 	private ListBox groupSelector = new ListBox();
 	
 	/**
+	 * Speicher für das Startdate als SQL-Date
+	 */
+	private java.sql.Date sqlStartDate = null;
+	
+	/**
+	 * Speicher für das Enddate als SQL-
+	 */
+	private java.sql.Date sqlEndDate = null;
+	
+	/**
+	 * Speicher für die ausgewaehlte Gruppe
+	 */
+	private Group selectedGroup = null;
+	
+	/**
+	 * Speicher für alle Gruppen eines Users
+	 */
+	private ArrayList<Group> groupsOfCurrentUser = null;
+	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
 	 */
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
+	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	
 	/**
 	 * Attribute für LogIn
@@ -84,12 +108,13 @@ public class ShoppinglistAdministrationReport implements  EntryPoint {
 	public void onModuleLoad() {
 		
 		// Alle Gruppen des aktuellen Users werden zwischenespeichert.
-//		ArrayList<Group> groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(CurrentUser.getUser(), new GetGroupsCallback());
-//		if(groupsOfCurrentUser != null) {
-//			for(Group g : groupsOfCurrentUser) {
-//				groupSelector.addItem(g.getName());
-//			}
-//		}
+		groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(CurrentUser.getUser(), new GetGroupsCallback());
+		if(groupsOfCurrentUser != null) {
+			for(Group g : groupsOfCurrentUser) {
+				//Hinzufuegen der einzelnen Gruppen zur DropList
+				groupSelector.addItem(g.getName());		
+			}
+		}
 		
 		
 		
@@ -106,6 +131,29 @@ public class ShoppinglistAdministrationReport implements  EntryPoint {
 		
 		
 		RootPanel.get("ReportMain").add(mainPanel);
+		
+		
+		groupSelector.addChangeHandler(new ChangeHandler() {
+			@Override
+			public void onChange(ChangeEvent event) {
+				selectedGroup = groupsOfCurrentUser.get(groupSelector.getSelectedIndex());
+			}
+			
+		});
+		
+		showReportButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				//Eingegebenes Startdate festhalten
+				sqlStartDate = new java.sql.Date(startDateBox.getValue().getTime());
+				
+				//Eingegebenes Enddate festhalten
+				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
+				
+				//Ausführen der Report-Erstellung
+				reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate);
+				
+			}
+		});
 	}
 	
 	
