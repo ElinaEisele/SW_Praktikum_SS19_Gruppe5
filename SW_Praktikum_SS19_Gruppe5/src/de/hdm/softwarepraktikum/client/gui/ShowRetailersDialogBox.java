@@ -31,19 +31,22 @@ public class ShowRetailersDialogBox extends DialogBox {
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label();
 	private FlexTable retailersFlexTable = new FlexTable();
-	private Button cancelButton = new Button("Schlieﬂen");
+	private Button cancelButton = new Button("Schlie√üen");
 
 	public ShowRetailersDialogBox() {
 
+		shoppinglistAdministration.getAllRetailers(new ShowRetailersCallback());
+		
 		this.setGlassEnabled(true);
 
 		cancelButton.setStylePrimaryName("cancelButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
 
-		infoLabel.setText("Platzhalter Gruppenname");
+		infoLabel.setText("Alle H√§ndler im System");
 
 
 		mainPanel.add(infoLabel);
+		mainPanel.add(retailersFlexTable);
 		mainPanel.add(cancelButton);
 
 		this.add(mainPanel);
@@ -69,7 +72,7 @@ public class ShowRetailersDialogBox extends DialogBox {
 		@Override
 		public void onSuccess(ArrayList<Retailer> result) {
 			
-			retailersFlexTable.setText(0, 0, "H‰ndler");
+			retailersFlexTable.setText(0, 0, "H√§ndler");
 			
 			int i = 1;
 			
