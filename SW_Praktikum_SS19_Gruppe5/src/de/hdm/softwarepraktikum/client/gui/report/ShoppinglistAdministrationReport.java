@@ -17,6 +17,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -32,6 +33,9 @@ import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.User;
+import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
+import de.hdm.softwarepraktikum.shared.report.HTMLReportWriter;
+
 
 /**
  * Diese Klasse stellt die Hauptform des ReportGenerator Clients dar. Hier werden alle relevanten HTML-Layout Elemente
@@ -108,13 +112,13 @@ public class ShoppinglistAdministrationReport implements  EntryPoint {
 	public void onModuleLoad() {
 		
 		// Alle Gruppen des aktuellen Users werden zwischenespeichert.
-		groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(CurrentUser.getUser(), new GetGroupsCallback());
-		if(groupsOfCurrentUser != null) {
-			for(Group g : groupsOfCurrentUser) {
-				//Hinzufuegen der einzelnen Gruppen zur DropList
-				groupSelector.addItem(g.getName());		
-			}
-		}
+//		groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(CurrentUser.getUser(), new GetGroupsCallback());
+//		if(groupsOfCurrentUser != null) {
+//			for(Group g : groupsOfCurrentUser) {
+//				//Hinzufuegen der einzelnen Gruppen zur DropList
+//				groupSelector.addItem(g.getName());		
+//			}
+//		}
 		
 		
 		
@@ -150,13 +154,32 @@ public class ShoppinglistAdministrationReport implements  EntryPoint {
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
 				
 				//Ausführen der Report-Erstellung
-				reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate);
+				reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
 				
 			}
 		});
 	}
 	
-	
+	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			//Ausgeben einer Log-Message, wenn ein Fehler auftritt
+			ClientsideSettings.getLogger().severe("Erzeugen des Reports fehlgeschlagen");
+		}
+
+		@Override
+		public void onSuccess(AllListitemsOfGroupReport report) {
+			if(report != null) {
+				HTMLReportWriter writer = new HTMLReportWriter();
+				writer.process(report);
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(new HTML(writer.getReportText()));
+			}
+			
+		}
+		
+	}
 	
 	
 	private class GetGroupsCallback implements AsyncCallback<ArrayList<Group>>{
