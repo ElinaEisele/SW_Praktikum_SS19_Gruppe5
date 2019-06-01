@@ -260,9 +260,13 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if (groupToDisplay != null) {
+				ShowRetailersDialogBox srdb = new ShowRetailersDialogBox();
+				srdb.show();
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
 			
-			ShowRetailersDialogBox srdb = new ShowRetailersDialogBox();
-			srdb.show();
 		}
 		
 	}
