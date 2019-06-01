@@ -599,24 +599,24 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Um die korrekte (mit der Datenbank konsistente) Id zu erhalten, muss erst die insert-Methode aufgerufen werden.
 		Shoppinglist shoppl =  this.shoppinglistMapper.insert(sl);
 		
-		//Alle Standardeintraege der Gruppe werden zwischengespeichert.
-		ArrayList<Listitem> standard = this.listitemMapper.getStandardListitemsOf(group);
-		
-		//Neue Listitem-Objekte mit der Fremdschluesselbeziehung zur neuen Shoppinglist werden erstellt.
-		for(Listitem l : standard) {
-			/*
-			 * ueberpruefen, ob das Listitem einem Retailer zugewiesen wurde. Damit wird entschieden, welche createListitem() aufgerufen wird.
-			 * Hierbei muss beachtet werden, dass die ReatilerId "1" der Default-Wert ist.
-			 */
-			if(this.getRetailerOf(l).getId() != 1) {
-				//Erstellen eines Listitems MIT Retailer.
-				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l));
-			}
-			else {
-				//Erstellen eines Listitems OHNE Retailer.
-				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l));
-			}
-		}
+//		//Alle Standardeintraege der Gruppe werden zwischengespeichert.
+//		ArrayList<Listitem> standard = this.listitemMapper.getStandardListitemsOf(group);
+//		
+//		//Neue Listitem-Objekte mit der Fremdschluesselbeziehung zur neuen Shoppinglist werden erstellt.
+//		for(Listitem l : standard) {
+//			/*
+//			 * ueberpruefen, ob das Listitem einem Retailer zugewiesen wurde. Damit wird entschieden, welche createListitem() aufgerufen wird.
+//			 * Hierbei muss beachtet werden, dass die ReatilerId "1" der Default-Wert ist.
+//			 */
+//			if(this.getRetailerOf(l).getId() != 1) {
+//				//Erstellen eines Listitems MIT Retailer.
+//				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l));
+//			}
+//			else {
+//				//Erstellen eines Listitems OHNE Retailer.
+//				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l));
+//			}
+//		}
 		return shoppl;
 	}
 	
