@@ -6,10 +6,16 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.TreeViewModel;
 
+
+import de.hdm.softwarepraktikum.client.gui.report.ReportHeader;
+import de.hdm.softwarepraktikum.client.gui.report.ReportShowForm;
+import de.hdm.softwarepraktikum.client.gui.report.ReportTrailer;
+
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
+
 
 /**
  * Diese Klasse stellt den Startpunkt des Editor-Clients dar. Alle dazu
@@ -29,8 +35,9 @@ public class Editor {
 	private Header header = null;
 	private NavigatorPanel navigatorPanel = null;
 	private GroupShowForm groupShowForm = null;
+//	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private Trailer trailer = null;
-
+	
 	public void loadForms() {
 				
 //		shoppinglistAdministration.save(u, new AsyncCallback<Void>() {
@@ -54,7 +61,7 @@ public class Editor {
 		navigatorPanel = new NavigatorPanel();
 //		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
-
+		
 		RootPanel.get("main").clear();
 		RootPanel.get("aside").clear();
 
@@ -65,6 +72,7 @@ public class Editor {
 		RootPanel.get("trailer").add(trailer);
 		RootPanel.get("aside").add(navigatorPanel);
 
+	//	RootPanel.get("main").add(shoppinglistShowForm);
 //		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("header").add(header);
 		

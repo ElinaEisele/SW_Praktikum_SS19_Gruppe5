@@ -28,6 +28,7 @@ public class Header extends HorizontalPanel {
 	private Button platzhalterButton;
 	private Button abmeldenButton;
 	private Anchor reportLink;
+	private Anchor editorLink;
 
 	public void onLoad() {
 
@@ -36,6 +37,7 @@ public class Header extends HorizontalPanel {
 		platzhalterButton = new Button("|");
 		abmeldenButton = new Button("Abmelden");
 		reportLink = new Anchor("Report");
+		editorLink = new Anchor("Editor");
 
 		editorButton.addClickHandler(new EditorClickHandler());
 		reportButton.addClickHandler(new ReportClickHandler());
@@ -76,6 +78,8 @@ public class Header extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+//			editorLink.setHref(GWT.getHostPageBaseURL()+"SW_Praktikum_SS19_Gruppe5.html");
+//			Window.open(editorLink.getHref(), "_self", "");
 			Window.Location.reload();
 		}
 		

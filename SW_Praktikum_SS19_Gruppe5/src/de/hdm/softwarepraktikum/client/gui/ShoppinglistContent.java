@@ -16,8 +16,7 @@ public class ShoppinglistContent extends VerticalPanel {
 	private ShoppinglistCellTable shoppinglistCellTable;
 
 	public void onLoad() {
-		super.onLoad();
-
+		
 		shoppinglistSearchBar = new ShoppinglistSearchBar();
 		shoppinglistSearchBar.setShoppinglistCellTable(shoppinglistCellTable);
 		shoppinglistCellTable = new ShoppinglistCellTable();
@@ -28,7 +27,7 @@ public class ShoppinglistContent extends VerticalPanel {
 // die SearchBar ist noch nicht fertig!		
 //		this.add(shoppinglistSearchBar);
 // cellTabel hat noch Fehler!		
-//		this.add(shoppinglistCellTable);
+		this.add(shoppinglistCellTable);
 	}
 
 }
