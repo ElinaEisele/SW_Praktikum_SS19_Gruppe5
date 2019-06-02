@@ -17,6 +17,8 @@ import de.hdm.softwarepraktikum.shared.report.Row;
 
 /**
  * Die Klasse stellt die vollständige Applikationslogik des ReportGenerators dar.
+ * 
+ * @author FelixRapp, TimBeutelspacher
  */
 
 @SuppressWarnings("serial")
