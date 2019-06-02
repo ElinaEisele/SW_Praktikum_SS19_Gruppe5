@@ -4,19 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.i18n.client.Constants;
-import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -26,7 +20,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
-import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.client.gui.Editor;
 import de.hdm.softwarepraktikum.client.gui.Notification;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
@@ -112,16 +105,13 @@ public class ShoppinglistAdministrationReport implements  EntryPoint {
 	public void onModuleLoad() {
 		
 		// Alle Gruppen des aktuellen Users werden zwischenespeichert.
-//		groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(CurrentUser.getUser(), new GetGroupsCallback());
-//		if(groupsOfCurrentUser != null) {
-//			for(Group g : groupsOfCurrentUser) {
-//				//Hinzufuegen der einzelnen Gruppen zur DropList
-//				groupSelector.addItem(g.getName());		
-//			}
-//		}
-		
-		
-		
+		groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(CurrentUser.getUser(), new GetGroupsCallback());
+		if(groupsOfCurrentUser != null) {
+			for(Group g : groupsOfCurrentUser) {
+				//Hinzufuegen der einzelnen Gruppen zur DropList
+				groupSelector.addItem(g.getName());		
+			}
+		}
 		
 		mainPanel.add(groupSelector);
 		
