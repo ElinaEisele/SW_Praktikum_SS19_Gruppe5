@@ -6,15 +6,15 @@ import java.sql.Date;
 /**
  * <p>
  * Die Klasse <code>BusinessObject</code> stellt die Basisklasse aller in diesem
- * Projekt f�r die Umsetzung des Fachkonzepts relevanten Klassen dar. Hierbei hat 
+ * Projekt fuer die Umsetzung des Fachkonzepts relevanten Klassen dar. Hierbei hat 
  * jede Sub-Klasse eine ID.
  * </p>
  * <p>
  * Zentrales Merkmal ist, dass jedes <code>BusinessObject</code> eine Nummer
- * besitzt, die man in einer relationalen Datenbank auch als Prim�rschl�ssel
- * bezeichnen w�rde. Fernen ist jedes <code>BusinessObject</code> als
+ * besitzt, die man in einer relationalen Datenbank auch als Primaerschluessel
+ * bezeichnen wuerde. Fernen ist jedes <code>BusinessObject</code> als
  * gekennzeichnet. Durch diese Eigenschaft kann jedes <code>BusinessObject</code> 
- * automatisch in eine textuelle Form �berf�hrt und z.B. zwischen Client und Server
+ * automatisch in eine textuelle Form ueberfuehrt und z.B. zwischen Client und Server
  * transportiert werden.
  * </p>
  * 
@@ -32,7 +32,7 @@ public abstract class BusinessObject implements Serializable{
 		java.sql.Date sql = new java.sql.Date(java.getTime());
 	    this.setCreationDate(sql);
 		/*
-		 * Setzen einer vorl�ufigen ID. Im Insert-Aufruf wird die Id gesetzt, welche mit der Datenbank
+		 * Setzen einer voraeufigen ID. Im Insert-Aufruf wird die Id gesetzt, welche mit der Datenbank
 		 * konsisent ist.
 		 */
 		this.setId(1);
@@ -60,7 +60,7 @@ public abstract class BusinessObject implements Serializable{
 	
 	/**
 	 * Erzeugen einer einfachen textuellen Darstellung der jeweiligen
-	 * Instanz. Kann in Sub-Klassen �berschrieben werden
+	 * Instanz. Kann in Sub-Klassen ueberschrieben werden
 	 */ 
 	public String toString() {
 		/*
@@ -70,7 +70,7 @@ public abstract class BusinessObject implements Serializable{
 	}
 	
 	/**
-	 * Gleichheit zweier BusinessObjects �berpr�fen. Hierbei wird sich auf
+	 * Gleichheit zweier BusinessObjects ueberpruefen. Hierbei wird sich auf
 	 * die ID's bezogen.
 	 */
 	public boolean equals(Object o) {
@@ -86,14 +86,14 @@ public abstract class BusinessObject implements Serializable{
 	      }
 	      catch (IllegalArgumentException e) {
 	        /*
-	         * Falls etwas schief geht, wird false zur�ckgegeben.
+	         * Falls etwas schief geht, wird false zurueckgegeben.
 	         */
 	        return false;
 	      }
 	    }
 	    /*
 	     * Wenn bislang keine Gleichheit bestimmt werden konnte, dann wird
-	     * false zur�ckgeben.
+	     * false zurueckgeben.
 	     */
 	    return false;
 	  }
