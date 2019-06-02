@@ -26,8 +26,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 public class RegistrationForm extends VerticalPanel{
 	
-//	private User user;
-	private LoginInfo loginInfo; // statt User
+	private User user;
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
@@ -52,17 +51,15 @@ public class RegistrationForm extends VerticalPanel{
 	
 
 // statt LoginInfo eigentlich User	
-	public RegistrationForm(Anchor destinationUrl, LoginInfo loginInfo) {
+	public RegistrationForm(Anchor destinationUrl, User u) {
 		this.destinationUrl = destinationUrl;
-//		this.user = u;
-		this.loginInfo = loginInfo;
+		this.user = u;
 		
 		registerButton.addClickHandler(new RegistrationClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
 
 		buttonsPanel.add(registerButton);
 		buttonsPanel.add(cancelButton);
-		cancelButton.addClickHandler(new CancelClickHandler());
 		
 	}
 	
@@ -71,8 +68,8 @@ public class RegistrationForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			String userName = lastNameTextBox.getText()+" "+firstNameTextBox.getText();
-			loginInfo.setNickname(userName);
-//			shoppinglistAdministration.save(user, new SaveUserCallback());
+			user.setName(userName);
+			shoppinglistAdministration.save(user, new SaveUserCallback());
 		}
 		
 	}
@@ -82,7 +79,7 @@ public class RegistrationForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			RootPanel.get("main").clear();
-			Window.open(loginInfo.getLogoutUrl(), "_self", "");
+			Window.open(user.getLogoutUrl(), "_self", "");
 		}
 		
 	}
@@ -103,8 +100,8 @@ public class RegistrationForm extends VerticalPanel{
 		firstNameTextBox.setMaxLength(30);
 		lastNameTextBox.setMaxLength(30);
 		
-		firstNameTextBox.setText("Vorname");
-		lastNameTextBox.setText("Nachname");
+		firstNameTextBox.setLabelText("Vorname");
+		lastNameTextBox.setLabelText("Nachname");
 		
 //		registrationGrid.setCellSpacing(10);
 		
@@ -122,23 +119,15 @@ public class RegistrationForm extends VerticalPanel{
 	
 	private class DynamicTextBox extends TextBox{
 		
-		boolean seavable = true;
-		String text;
+		String labelText;
 		
-		public boolean isSeavable() {
-			return seavable;
-		}
-		
-		public void setSeavable(boolean seavable) {
-			this.seavable = seavable;
+
+		public String getLabelText() {
+			return labelText;
 		}
 
-		public String getText() {
-			return text;
-		}
-
-		public void setText(String text) {
-			this.text = text;
+		public void setLabelText(String text) {
+			this.labelText = text;
 		}
 		
 	}
@@ -147,7 +136,7 @@ public class RegistrationForm extends VerticalPanel{
 		
 		@Override
 		public void onFailure(Throwable caught) {
-//			Notification.show(caught.toString());
+			Notification.show(caught.toString());
 		}
 
 		@Override

@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -38,7 +39,7 @@ public class NewGroupForm extends VerticalPanel{
 	private TextBox nameTextBox = new TextBox();
 	
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button saveButton = new Button("Speicher");
+	private Button saveButton = new Button("Speichern");
 	private Button cancelButten = new Button("Abbrechen");
 	
 	public NewGroupForm() {
