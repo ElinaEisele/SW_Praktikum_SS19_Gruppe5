@@ -11,13 +11,13 @@ import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
  * semiautomatisch durch das Google Plugin erstellt und gepflegt. Daher erfolgt
  * hier keine weitere Dokumentation.
  * 
- * @author FelixRapp
+ * @author FelixRapp, TimBeutelspacher
  */
 
 public interface ReportGeneratorAsync {
 	
     public void init(AsyncCallback<Void> callback) throws IllegalArgumentException;
     
-    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) throws IllegalArgumentException;
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, AsyncCallback<AllListitemsOfGroupReport> callback) throws IllegalArgumentException;
 
 }

@@ -23,7 +23,11 @@
 
   <!-- Specify the app entry point class.                         -->
 
-  <entry-point class='de.hdm.softwarepraktikum.client.ShoppinglistReportEntry'/>
+
+  <!-- <entry-point class='de.hdm.softwarepraktikum.client.ShoppinglistReportEntry'/> -->
+
+  <entry-point class='de.hdm.softwarepraktikum.client.gui.report.ShoppinglistAdministrationReport'/>
+
 
 
   <!-- Specify the paths for translatable code                    -->
