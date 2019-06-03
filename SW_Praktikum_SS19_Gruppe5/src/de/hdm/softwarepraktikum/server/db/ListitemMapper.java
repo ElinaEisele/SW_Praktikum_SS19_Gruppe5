@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
 
-
 /**
  * Mapper Klasse für </code>Listitem</code> Objekte. Diese umfasst Methoden um
  * Listitem Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen.
@@ -44,7 +43,7 @@ public class ListitemMapper {
 	/**
 	 * Ausgabe einer Liste aller Listitems.
 	 *
-	 * @return Listitemliste
+	 * @return ArrayList<Listitem>
 	 */
 	public ArrayList<Listitem> findAll() {
 
@@ -54,37 +53,35 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, "
-					+ "unit_id, group_id, retailer_id FROM listitems");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems");
 
 			while (rs.next()) {
-
-				Listitem listitem = new Listitem();
-				listitem.setId(rs.getInt("id"));
-				listitem.setCreationDate(rs.getDate("creationDate"));
-				listitem.setAmount(rs.getFloat("amount"));
-				
-				
-				listitems.add(listitem);
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
+				listitems.add(li);
 			}
-			
 			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 			return null;
 		}
 
 	}
 
 	/**
-	 * Listitem mittels id finden.
+	 * Listitem mithilfe der Id finden.
 	 *
-	 * @param id: Die id wird uebergeben,um daran das entsprechende Listitem zu
-	 *        finden.
-	 * @return Das Listitem, welches anhand der id gefunden wurde, wird
-	 *         zurueckgegeben.
+	 * @param id
+	 * @return Listitem-Objekt
 	 */
 	public Listitem findById(int id) {
 
@@ -93,23 +90,26 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, amount, product_id, shoppinglist_id, unit_id, group_id, retailer_id FROM listitems WHERE id= " + id);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems WHERE id = " + id);
 
 			if (rs.next()) {
-
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
-				
-				
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				return li;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 
 	}
@@ -118,7 +118,7 @@ public class ListitemMapper {
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
 	 *
 	 * @param listitem
-	 * @return Listitem
+	 * @return Listitem-Objekt
 	 */
 	public Listitem insert(Listitem listitem) {
 
@@ -130,22 +130,30 @@ public class ListitemMapper {
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers ");
 
 			if (rs.next()) {
-				
 				listitem.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement(
-					"INSERT INTO Listitem (id, creationDate, amount) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO listitems "
+					+ "(id, creationDate, amount, isStandard, product_id, shoppinglist_id, unit_id, usergroup_id, "
+					+ "retailer_id) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, listitem.getId());
 			pstmt.setDate(2, (Date) listitem.getCreationDate());
 			pstmt.setFloat(3, listitem.getAmount());
+			pstmt.setBoolean(4, listitem.isStandard());
+			pstmt.setInt(5, listitem.getProductID());
+			pstmt.setInt(6, listitem.getShoppinglistID());
+			pstmt.setInt(7, listitem.getListitemUnitID());
+			pstmt.setInt(8, listitem.getGroupID());
+			pstmt.setInt(9, listitem.getRetailerID());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
+		
 		return listitem;
 
 	}
@@ -154,25 +162,27 @@ public class ListitemMapper {
 	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
 	 *
 	 * @param listitem
-	 * @return Listitem
+	 * @return Listitem-Objekt
 	 */
 	public Listitem update(Listitem listitem) {
 
 		Connection con = DBConnection.connection();
 
 		try {
-			
-			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? WHERE id = ?");
+
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? and isStandard ? "
+					+ "WHERE id = ?");
 
 			pstmt.setFloat(1, listitem.getAmount());
-			pstmt.setInt(2, listitem.getId());
+			pstmt.setBoolean(2, listitem.isStandard());
+			pstmt.setInt(3, listitem.getId());
 			pstmt.executeUpdate();
-			
+
 			return listitem;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 			return null;
 		}
 
@@ -190,11 +200,78 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM listitems WHERE id =" + listitem.getId());
+			stmt.executeUpdate("DELETE FROM listitems WHERE id = " + listitem.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Ausgeben des Amounts eines Listitems
+	 * 
+	 * @param listitem
+	 * @return float amount
+	 */
+	@SuppressWarnings("null")
+	public float getAmountOf (Listitem listitem) {
+		
+		Connection con = DBConnection.connection();
+		float amount;
+
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT amount FROM listitems WHERE id = " + listitem.getId());
+			
+			while(rs.next()) {
+			
+				amount = rs.getFloat("amount");
+				return amount;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return (Float) null; //return 0.0f;
+		
+	}
+	
+	/**
+	 * 
+	 * Produktname eines Eintrags finden.
+	 * 
+	 * @param listitem
+	 * @return String productname
+	 */
+	
+	public String getProductnameOf(int listitemId) {
+		
+		Connection con = DBConnection.connection();
+		String productname;
+		ResultSet rs;
+		
+		try {
+			
+			Statement stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT listitems.id as listitem_id, "
+					+ "products.name as product_name "
+					+ "FROM products INNER JOIN listitems "
+					+ "ON products.id = listitems.product_id "
+					+ "WHERE listitems.id = " + listitemId);
+			
+			while(rs.next()) {
+				productname = rs.getString("product_name");
+				return productname;
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}
+		
+		return (String) null;
 	}
 
 	/**
@@ -211,24 +288,31 @@ public class ListitemMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN listitems "
-					+ "ON shoppinglists.listitem_id=listitems.id "
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					+ "FROM shoppinglists INNER JOIN listitems " 
+					+ "ON shoppinglists.listitem_id = listitems.id "
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {
 
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
-				li.setCreationDate(rs.getDate("CreationDate"));
+				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				listitems.add(li);
 			}
-			
+
 			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 			return null;
 		}
 
@@ -249,7 +333,7 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
-					+ "ON listitems.retailer_id = retailer.id"
+					+ "ON listitems.retailer_id = retailers.id " 
 					+ "WHERE retailers.id = " + retailer.getId());
 
 			while (rs.next()) {
@@ -257,30 +341,35 @@ public class ListitemMapper {
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				listitems.add(li);
 
-				
 			}
-			
+
 			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 			return null;
 		}
 
 	}
-	
+
 	/**
 	 * 
 	 * @param shoppinglist
 	 * @param productname
 	 * @return
 	 */
-	
-	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname){
-		
+
+	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname) {
+
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
 
@@ -288,25 +377,188 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN products "
-					+ "ON listitems.product_id = products.id "
-					+ "WHERE listitems.shoppinglist_id= " + shoppinglist.getId() + "and products.name= " + productname);
+					+ "ON listitems.product_id = products.id " 
+					+ "WHERE listitems.shoppinglist_id = " + shoppinglist.getId() + "and products.name = " + productname);
 
 			while (rs.next()) {
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
 				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
 				listitems.add(li);
+			}
+
+			return listitems;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			return null;
+		}
+
+	}
+
+	/**
+	 * ArrayList<Listitem> getStandardListitemsOf (Group group)
+	 */
+
+	public ArrayList<Listitem> getStandardListitemsOf(Group group) {
+		
+		Connection con = DBConnection.connection();
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM lisitems INNER JOIN usergroups " 
+							+ "ON listitems.usergroup_id = usergroups.id "
+							+ "WHERE usergroups.id = " + group.getId() 
+							+ "and listitems.isStandard = " + true);
+
+			while (rs.next()) {
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
+				listitems.add(li);
+			}
+
+			return listitems;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * Ein Listitem einer Gruppe als Standard setzen
+	 * 
+	 * @param group
+	 * @param listitem
+	 */
+	public void setStandardListitemOf (Group group, Listitem listitem) {
+		
+		Connection con = DBConnection.connection();
+	
+		try { 
+			
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET isStandard = " + true
+					+ "WHERE usergroup_id = ? and id = ?");
+
+			pstmt.setFloat(1, group.getId());
+			pstmt.setInt(2, listitem.getId());
+			pstmt.executeUpdate();
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+
+	}
+	
+	/**
+	 * 
+	 * Eine Shoppingliste nach Username filtern
+	 * 
+	 * @param shoppinglistId
+	 * @param usernameId
+	 * @return ArrayList<Listitem>
+	 */
+	
+	public ArrayList<Listitem> filterShoppinglistByUser(int shoppinglistId,  int userId){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN listitems "
+					+ "ON responsibilities.retailer_id = listitems.retailer_id "
+					+ "WHERE shoppinglist_id = " + shoppinglistId + "and user_id = " + userId);
+
+			while (rs.next()){
+			        Listitem li = new Listitem();
+			        li.setId(rs.getInt("id"));
+			        li.setCreationDate(rs.getDate("creationDate"));
+			        li.setAmount(rs.getFloat("amount"));
+			        li.setStandard(rs.getBoolean("isStandard"));
+			       	li.setProductID(rs.getInt("product_id"));
+					li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+					li.setListitemUnitID(rs.getInt("unit_id"));
+					li.setGroupID(rs.getInt("usergroup_id"));
+					li.setRetailerID(rs.getInt("retailer_id"));
+			        listitems.add(li);		   
 			}
 			
 			return listitems;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 			return null;
 		}
+	}
+	
+	/**
+	 * 
+	 * Eine Shoppingliste nach Retailern filtern
+	 * 
+	 * @param shoppinglist
+	 * @param retailername
+	 * @return ArrayList<Listitem>
+	 */
+
+	public ArrayList<Listitem> filterShoppinglistByRetailer(int shoppinglistId, int retailerId){
 		
+		Connection con = DBConnection.connection();
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
+					+ "ON listitems.retailer_id = retailers.id "
+					+ "WHERE shoppinglist_id = " +shoppinglistId + "and retailername = " + retailerId);
+
+			while (rs.next()) {
+			 
+			        Listitem li = new Listitem();
+			        li.setId(rs.getInt("id"));
+			        li.setCreationDate (rs.getDate("creationDate"));
+			        li.setAmount(rs.getFloat("amount"));
+			        li.setStandard(rs.getBoolean("isStandard"));
+					li.setProductID(rs.getInt("product_id"));
+					li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+					li.setListitemUnitID(rs.getInt("unit_id"));
+					li.setGroupID(rs.getInt("usergroup_id"));
+					li.setRetailerID(rs.getInt("retailer_id"));
+			        listitems.add(li);
+			}
+
+			return listitems;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			return null;
+		}
 	}
 
 }
+
+
+

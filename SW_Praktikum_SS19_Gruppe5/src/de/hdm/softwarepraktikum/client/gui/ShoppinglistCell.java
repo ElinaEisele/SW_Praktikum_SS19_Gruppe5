@@ -15,21 +15,27 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
  */
 public class ShoppinglistCell extends AbstractCell<Shoppinglist> {
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/heads/master
 	@Override
 	public void render(Context context, Shoppinglist value, SafeHtmlBuilder sb) {
 		if (value == null) {
 			return;
 		}
+<<<<<<< HEAD
 		
 		sb.appendHtmlConstant("<div>");
 		sb.appendEscaped(value.getName());
 		sb.appendHtmlConstant("</div>");
 	}
 	
+=======
+		sb.appendHtmlConstant("<div>");
+		sb.appendEscaped(value.getName());
+		sb.appendHtmlConstant("</div>");
+	}
+
+>>>>>>> refs/heads/master
 }
-			
-
-			
-			
-
-

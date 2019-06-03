@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.shared;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -21,7 +22,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * </p>
  * <p>
  * <code>@RemoteServiceRelativePath("shoppinglistadministration")</code> ist bei der
- * Adressierung des aus der zugeh�rigen Impl-Klasse entstehenden
+ * Adressierung des aus der zugehï¿½rigen Impl-Klasse entstehenden
  * Servlet-Kompilats behilflich. Es gibt im Wesentlichen einen Teil der URL des
  * Servlets an.
  * </p>
@@ -122,13 +123,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void save(Listitem listitem) throws IllegalArgumentException;
-	
-	/**
-	 * Speichern eines Retailer-Objekts in der Datenbank
-	 * @param retailer Retailer-Objekt, welches in der Datenbank gepseichert werden soll
-	 * @throws IllegalArgumentException
-	 */
-	public void save(Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Loeschen des uebergebenen User-Objekts
@@ -261,7 +255,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Saemtliche Retailer-Objetke werden ausgegeben
@@ -280,7 +274,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	
 	/**
 	 * Ein Retailer-Objekt mit einer bestimmten ID wird ausgegeben
-	 * @param retailerId ist die ID des gesuchten Einzelh�ndlers
+	 * @param retailerId ist die ID des gesuchten Einzelhï¿½ndlers
 	 * @return Das erste Retailer-Objekt, welches den Suchkriterien entspricht wird ausgegeben
 	 * @throws IllegalArgumentException
 	 */
@@ -317,23 +311,15 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param listitem ist er Eintrag, welcher einen Nutzer als Verantwortlichen erhaelt
 	 * @throws IllegalArgumentException
 	 */
-	public void assignUser (User user, Listitem listitem) throws IllegalArgumentException;
+	public void assignUser (User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * Einem Eintrag wird Produkt zugeordnet
-	 * @param product ist das Produkt, welches einem Eintrag zugeordnet wird
-	 * @param listitem ist der Eintrag, welchem ein Produkt zugeordnet wird
-	 * @throws IllegalArgumentException
-	 */
-	public void setProduct (Product product, Listitem listitem) throws IllegalArgumentException;
-	
-	/**
-	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * Setzen bzw. entfernen eines Standard-Eintrags innerhalb einer Gruppe
 	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
 	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
 	 * @throws IllegalArgumentException
 	 */
-	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException; 
+	public void setStandardListitem(Listitem listitem, Group group, boolean value) throws IllegalArgumentException; 
 	
 	/**
 	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
@@ -358,7 +344,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungbereichc eines Nutzers liegen
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByUsername(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
+	public ArrayList<Listitem> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
 	
 	/**
 	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
@@ -422,16 +408,78 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
 
-
-	public Boolean refreshData(ArrayList<Group> g, User u) throws IllegalArgumentException;
-
 	
 	/**
-	 * Methode, welche den Namen des zugeordneten Produktes zur�ckgibt.
+	 * Methode, welche den Namen des zugeordneten Produktes zurueckgibt.
 	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
 	 * @return String Name des Produktes
 	 * @throws IllegalArgumentException
 	 */
 	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe aller vorhandenen Mengeneinheiten.
+	 * @return ArrayList mit allen vorhandenen ListitemUnit-Objekten.
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<ListitemUnit> getAllListitemUnits() throws IllegalArgumentException;
 
+	/**
+	 * Ausgabe einer bestimmten Mengeneinheit anhand der übergebenen ID.
+	 * @param id ist die ID der gesuchten Mengeneinheit.
+	 * @return ListitemUnit, welches eine bestimmte ID enthaelt
+	 * @throws IllegalArgumentException
+	 */
+	public ListitemUnit getListitemUnitById(int id) throws IllegalArgumentException;
+
+	/**
+	 * Gibt einen Boolean Wert zurueck ob sich in den Gruppen des Nutzers etwas veraendert hat
+	 * @param groups Gruppen des Nutzers
+	 * @param u Objekt des Nutzers 
+	 * @return Boolean
+	 * @throws IllegalArgumentException
+	 */
+	public Boolean refreshData(ArrayList<Group> groups, User u) throws IllegalArgumentException;
+	
+	/**
+	 * Suche eines Listite-Objekts anhand eines Suchbegriffs.
+	 * @param searchString ist der String, nach welchem gestucht wird.
+	 * @param shoppinglist ist die Einkaufsliste, in welcher gesucht wird.
+	 * @return Map, in welcher sich die Shoppinglist sowie die darin enthaltenen Listitems befinden.
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verkn�pft.
+	 * @param shoppinglist ist die aktuell selektierte Shoppingliste.
+	 * @return Map, welche Listitems mit dem dazugeh�rigen Produktname ausgibt.
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Listitem, String> getListitemsNameMapBy(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe des zugewiesenen Retailers eines Listitems.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zur�ckgegeben werden soll.
+	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	public Retailer getRetailerOf(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe der zugewiesenen Gruppe einer Shoppinglist.
+	 * @param shoppinglist ist die Shoppinglist, deren zugewiesene Gruppe gesucht wird.
+	 * @return Group-Objekt, welches der Shoppinglist zugewiesen ist.
+	 * @throws IllegalArgumentException
+	 */
+	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Aendern des Namens einer Gruppe.
+	 * @param group ist das Group-Objekt, dessen Name geaendert werden soll.
+	 * @param name ist der neue Name der Gruppe.
+	 * @return neues Group-Objekt mit neuem Name
+	 * @throws IllegalArgumentException
+	 */
+	public Group changeNameOf(Group group, String name) throws IllegalArgumentException;
 }
