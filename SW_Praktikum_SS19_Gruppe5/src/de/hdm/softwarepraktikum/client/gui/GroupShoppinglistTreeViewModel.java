@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -21,6 +23,7 @@ import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.BusinessObject;
 import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.*;
@@ -41,9 +44,12 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	private GroupShowForm groupShowForm;
 	private ShoppinglistShowForm shoppinglistShowForm;
 	
+	private ShoppinglistContent shoppinglistContent;
+	private ShoppinglistCellTable shoppinglistCellTable;
+
+	
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
-	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 	private ListDataProvider<Group> groupDataProvider = new ListDataProvider<Group>();
 	
@@ -91,7 +97,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 			if (selection instanceof Group) {
 				setSelectedGroup((Group) selection);
 			} else if (selection instanceof Shoppinglist){
-				setSelectedShoppinglsit((Shoppinglist) selection);
+				setSelectedShoppinglist((Shoppinglist) selection);
 			}
 
 		}
@@ -145,7 +151,6 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
 		RootPanel.get("main").add(groupShowForm);
-		//RootPanel.get("main").add(shoppinglistShowForm); // Anmerkung Jonas: don't delete pls
 		selectedShoppinglist = null;
 
 	}
@@ -155,9 +160,13 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	}
 	
 
-	void setSelectedShoppinglsit(Shoppinglist s) {
+	void setSelectedShoppinglist(Shoppinglist s) {
+	
+		RootPanel.get("main").clear();		
 		selectedShoppinglist = s;
 		shoppinglistShowForm.setSelected(s);
+		RootPanel.get("main").add(shoppinglistShowForm);	
+
 	}
 	
 	/**
