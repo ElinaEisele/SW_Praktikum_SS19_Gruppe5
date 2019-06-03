@@ -18,6 +18,6 @@ public interface ReportGeneratorAsync {
 	
     public void init(AsyncCallback<Void> callback) throws IllegalArgumentException;
     
-    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, AsyncCallback<AllListitemsOfGroupReport> callback) throws IllegalArgumentException;
+    public void createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, AsyncCallback<AllListitemsOfGroupReport> callback) throws IllegalArgumentException;
 
 }

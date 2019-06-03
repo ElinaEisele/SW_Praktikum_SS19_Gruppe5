@@ -26,6 +26,15 @@
   	<url-pattern>/sw_praktikum_ss19_gruppe5/login</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>reportGeneratorService</servlet-name>
+    <servlet-class>de.hdm.softwarepraktikum.server.report.ReportGeneratorImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>reportGeneratorService</servlet-name>
+    <url-pattern>/sw_praktikum_ss19_gruppe5/reportgenerator</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
