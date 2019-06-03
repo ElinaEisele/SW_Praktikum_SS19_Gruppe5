@@ -10,19 +10,19 @@ public class Report {
 
 	public void loadForms() {
 		
-		reportHeader = new ReportHeader();
-		reportShowForm = new ReportShowForm();
-		reportTrailer = new ReportTrailer();
-		
-		RootPanel.get("main").clear();
-		RootPanel.get("aside").clear();
-
-		RootPanel.get("main").setVisible(true);
-		RootPanel.get("aside").setVisible(false);
-
-
-		RootPanel.get("trailer").add(reportTrailer);
-		RootPanel.get("main").add(reportShowForm);
-		RootPanel.get("header").add(reportHeader);
+//		reportHeader = new ReportHeader();
+//		reportShowForm = new ReportShowForm();
+//		reportTrailer = new ReportTrailer();
+//		
+//		RootPanel.get("main").clear();
+//		RootPanel.get("aside").clear();
+//
+//		RootPanel.get("main").setVisible(true);
+//		RootPanel.get("aside").setVisible(false);
+//
+//
+//		RootPanel.get("trailer").add(reportTrailer);
+//		RootPanel.get("main").add(reportShowForm);
+//		RootPanel.get("header").add(reportHeader);
 	}
 }

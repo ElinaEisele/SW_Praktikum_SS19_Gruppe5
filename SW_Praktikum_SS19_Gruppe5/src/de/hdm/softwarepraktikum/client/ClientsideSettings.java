@@ -80,11 +80,11 @@ public class ClientsideSettings extends CommonSettings{
 		return loginService;
 	}
 	
-	public static ReportGeneratorAsync getReportGenerator() {
-		if(reportGenerator == null) {
-			reportGenerator = GWT.create(ReportGenerator.class);
-		}
-		return reportGenerator;
-	}
+//	public static ReportGeneratorAsync getReportGenerator() {
+//		if(reportGenerator == null) {
+//			reportGenerator = GWT.create(ReportGenerator.class);
+//		}
+//		return reportGenerator;
+//	}
 
 }

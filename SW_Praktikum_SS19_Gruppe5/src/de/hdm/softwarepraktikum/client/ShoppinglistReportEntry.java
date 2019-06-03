@@ -83,7 +83,7 @@ public class ShoppinglistReportEntry implements EntryPoint {
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
 
-		RootPanel.get("ReportMain").add(loginPanel);
+		RootPanel.get("main").add(loginPanel);
 
 //		loginLabel.setStylePrimaryName("loginLabel");
 //		loginButton.setStylePrimaryName("loginButton");
