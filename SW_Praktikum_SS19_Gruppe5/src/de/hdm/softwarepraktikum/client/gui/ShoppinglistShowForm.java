@@ -14,7 +14,8 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 public class ShoppinglistShowForm extends VerticalPanel {
 
 	private ShoppinglistHeader shoppinglistHeader = null;
-	private ShoppinglistContent shoppinglistContent = null;
+	// private ShoppinglistContent shoppinglistContent = null;
+	private ShoppinglistCellTable shoppinglistCellTable;
 	private VerticalPanel mainPanel = new VerticalPanel();
 
 	private Shoppinglist selectedShoppinglist;
@@ -24,44 +25,54 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		shoppinglistHeader = sh;
 		mainPanel.add(nlf);
 	}
-	
+
 	public ShoppinglistShowForm(ShoppinglistHeader sh, AssignUserToRetailerForm autrf) {
 		shoppinglistHeader = sh;
 		mainPanel.add(autrf);
 	}
-	
+
 	public ShoppinglistShowForm(ShoppinglistHeader sh, EditShoppinglistNameForm esnf) {
 		shoppinglistHeader = sh;
 		mainPanel.add(esnf);
 	}
-	
+
 	public ShoppinglistShowForm(ShoppinglistHeader sh, ShowUserRetailerAllocationForm suraf) {
 		shoppinglistHeader = sh;
 		mainPanel.add(suraf);
 	}
-	
+
+	public ShoppinglistShowForm(ShoppinglistHeader sh, ShoppinglistCellTable slct) {
+		shoppinglistHeader = sh;
+		mainPanel.add(slct);
+	}
 
 	public ShoppinglistShowForm() {
 		shoppinglistHeader = new ShoppinglistHeader();
-		shoppinglistContent = new ShoppinglistContent();
+		shoppinglistCellTable = new ShoppinglistCellTable();
 
 		shoppinglistHeader.setStylePrimaryName("shoppinglistHeader");
-		shoppinglistContent.setStylePrimaryName("shoppinglistContent");
-
-		mainPanel.add(shoppinglistContent);
+		// shoppinglistContent.setStylePrimaryName("shoppinglistContent");
+		mainPanel.add(shoppinglistCellTable);
 	}
 
 	public void onLoad() {
-		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 
 		this.add(shoppinglistHeader);
 		this.add(mainPanel);
+		shoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
+		shoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
+		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
+		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 
 	}
 
 	public void setSelected(Shoppinglist s) {
 		selectedShoppinglist = s;
 
+	}
+
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
 	}
 
 	public GroupShoppinglistTreeViewModel getGstvm() {

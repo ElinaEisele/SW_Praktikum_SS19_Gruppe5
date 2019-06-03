@@ -113,15 +113,15 @@ public class ShoppinglistHeader extends HorizontalPanel {
 	 * 
 	 * @param s, das zu setzende <code>Shoppinglist</code> Objekt.
 	 */
-//	public void setShoppinglistToDisplay(Shoppinglist s) {
-//		if (s != null) {
-//			shoppinglistToDisplay = s;
-//			shoppinglistHeaderLabel.setText(shoppinglistToDisplay.getName());
-//
-//		} else {
-//			this.clear();
-//		}
-//	}
+	public void setShoppinglistToDisplay(Shoppinglist s) {
+		if (s != null) {
+			shoppinglistToDisplay = s;
+			shoppinglistHeaderLabel.setText(shoppinglistToDisplay.getName());
+
+		} else {
+			this.clear();
+		}
+	}
 
 	/**
 	 * ***************************************************************************
