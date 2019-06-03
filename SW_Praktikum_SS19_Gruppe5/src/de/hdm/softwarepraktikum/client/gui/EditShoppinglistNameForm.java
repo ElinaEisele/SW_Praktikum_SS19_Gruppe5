@@ -83,6 +83,16 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
+	
+
+	public Shoppinglist getShoppinglistToDisplay() {
+		return shoppinglistToDisplay;
+	}
+
+	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
+		this.shoppinglistToDisplay = shoppinglistToDisplay;
+	}
+
 
 	/**
 	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zur
@@ -93,9 +103,12 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RootPanel.get("main").clear();
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			RootPanel.get("main").add(ssf);
+			if (shoppinglistToDisplay != null) {
+				RootPanel.get("main").clear();
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setSelected(shoppinglistToDisplay);
+				RootPanel.get("main").add(ssf);
+			}
 		}
 
 	}

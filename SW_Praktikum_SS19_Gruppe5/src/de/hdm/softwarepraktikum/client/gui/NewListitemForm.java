@@ -40,6 +40,8 @@ public class NewListitemForm extends HorizontalPanel {
 	private ShoppinglistHeader shoppinglistHeader;
 
 	private Shoppinglist shoppinglistToDisplay = null;
+	private ListitemShowForm shoppinglistShowForm;
+	
 	private ListitemUnit selectedlistitemUnit = null;
 	private Retailer selectedRetailer = null;
 
@@ -138,6 +140,16 @@ public class NewListitemForm extends HorizontalPanel {
 		this.gstvm = gstvm;
 	}
 
+	
+	public Shoppinglist getShoppinglistToDisplay() {
+		return shoppinglistToDisplay;
+	}
+
+	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
+		this.shoppinglistToDisplay = shoppinglistToDisplay;
+	}
+
+
 	/**
 	 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
 	 */
@@ -210,9 +222,13 @@ public class NewListitemForm extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if (shoppinglistToDisplay !=null) {
 			RootPanel.get("main").clear();
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
 			RootPanel.get("main").add(ssf);
+				
+			}
 		}
 
 	}

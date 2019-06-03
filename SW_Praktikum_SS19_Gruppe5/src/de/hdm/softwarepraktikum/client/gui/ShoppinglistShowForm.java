@@ -33,6 +33,8 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, EditShoppinglistNameForm esnf) {
 		shoppinglistHeader = sh;
+		//sh.setGstvm(gstvm);
+		//esnf.setGstvm(gstvm);
 		mainPanel.add(esnf);
 	}
 
