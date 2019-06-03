@@ -12,22 +12,22 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ShoppinglistContent extends VerticalPanel {
 
-	private ShoppinglistSearchBar shoppinglistSearchBar;
-	private ShoppinglistCellTable shoppinglistCellTable;
-
-	public void onLoad() {
-		
-		shoppinglistSearchBar = new ShoppinglistSearchBar();
-		shoppinglistSearchBar.setShoppinglistCellTable(shoppinglistCellTable);
-		shoppinglistCellTable = new ShoppinglistCellTable();
-
-		shoppinglistSearchBar.setStylePrimaryName("shoppinglistSearchBar");
-		shoppinglistCellTable.setStylePrimaryName("shoppinglistCellTable");
-
-// die SearchBar ist noch nicht fertig!		
-//		this.add(shoppinglistSearchBar);
-// cellTabel hat noch Fehler!		
-		this.add(shoppinglistCellTable);
-	}
+//	private ShoppinglistSearchBar shoppinglistSearchBar;
+//	private ShoppinglistCellTable shoppinglistCellTable;
+//
+//	public void onLoad() {
+//		this.clear();
+//		shoppinglistSearchBar = new ShoppinglistSearchBar();
+//	//	shoppinglistSearchBar.setShoppinglistCellTable(shoppinglistCellTable);
+//		shoppinglistCellTable = new ShoppinglistCellTable();
+//
+//		shoppinglistSearchBar.setStylePrimaryName("shoppinglistSearchBar");
+//		shoppinglistCellTable.setStylePrimaryName("shoppinglistCellTable");
+//
+//// die SearchBar ist noch nicht fertig!		
+////		this.add(shoppinglistSearchBar);
+//// cellTabel hat noch Fehler!		
+//		this.add(shoppinglistCellTable);
+//	}
 
 }
