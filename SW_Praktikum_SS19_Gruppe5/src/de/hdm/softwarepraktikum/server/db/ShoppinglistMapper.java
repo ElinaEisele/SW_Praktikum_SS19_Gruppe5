@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse f�r </code>Shoppinglist</code> Objekte. Diese umfasst Methoden
+ * Mapper Klasse fuer </code>Shoppinglist</code> Objekte. Diese umfasst Methoden
  * um Shoppinglist Objekte zu erstellen zu suchen, zu modifizieren und zu
  * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
@@ -360,8 +360,8 @@ public class ShoppinglistMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN users"
-					+ "ON shoppinglists.user_id = users.id"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN users "
+					+ "ON shoppinglists.user_id = users.id "
 					+ "WHERE users.id = " + user.getId());
 			
 			while (rs.next()) {

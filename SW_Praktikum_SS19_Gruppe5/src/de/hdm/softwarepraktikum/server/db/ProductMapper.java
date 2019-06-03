@@ -229,8 +229,8 @@ public class ProductMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT listitems.product_id, products.id, products.creationDate, "
-					+ "products.name FROM listitems INNER JOIN products"
-					+ "ON listitems.product_id = products.id"
+					+ "products.name FROM listitems INNER JOIN products "
+					+ "ON listitems.product_id = products.id "
 					+ "WHERE listitems.id = " + listitem.getId());
 
 			if (rs.next()) {

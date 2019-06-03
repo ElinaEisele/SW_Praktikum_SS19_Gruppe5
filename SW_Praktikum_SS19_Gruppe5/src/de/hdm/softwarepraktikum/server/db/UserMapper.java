@@ -347,15 +347,15 @@ public class UserMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN responsibilities"
-					+ "ON listitems.retailer_id = responsibilities.retailer_id"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN responsibilities "
+					+ "ON listitems.retailer_id = responsibilities.retailer_id "
 					+ "WHERE listitems.id = " + listitem.getId());
 			
 			while(rs.next()) {
 				int r_id = rs.getInt("retailer_id");
 			
-				ResultSet rs2 = stmt.executeQuery("SELECT * FROM respinsibilities INNER JOIN users"
-						+ "ON responsibilities.user_id = users.id"
+				ResultSet rs2 = stmt.executeQuery("SELECT * FROM respinsibilities INNER JOIN users "
+						+ "ON responsibilities.user_id = users.id "
 						+ "WHERE responsibilities.retailer_id = " + r_id);
 	
 				while (rs2.next()) {

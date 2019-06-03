@@ -259,8 +259,8 @@ public class RetailerMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name "
-							+ "FROM listitems INNER JOIN retailers"
-							+ "ON listitems.retailer_Id = retailers.id"
+							+ "FROM listitems INNER JOIN retailers "
+							+ "ON listitems.retailer_Id = retailers.id "
 							+ "WHERE listitem_id = " + listitem.getId());
 
 			if (rs.next()) {
@@ -293,10 +293,10 @@ public class RetailerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name"
-					+ "FROM responsibilities INNER JOIN retailers"
-					+ "ON responsibilities.retailer_id = retailers.id"
-					+ "WHERE user_id =" + user.getId());
+			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name "
+					+ "FROM responsibilities INNER JOIN retailers "
+					+ "ON responsibilities.retailer_id = retailers.id "
+					+ "WHERE user_id = " + user.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
@@ -332,7 +332,7 @@ public class RetailerMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
 					+ "ON listitems.retailer_id = retailers.id "
-					+ "WHERE shoppinglist_id =" + shoppinglist.getId());
+					+ "WHERE shoppinglist_id = " + shoppinglist.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
@@ -368,9 +368,9 @@ public class RetailerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN retailers"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN retailers "
 					+ "ON responsibilities.retailer_id = retailers.id "
-					+ "WHERE shoppinglist_id = " + shoppinglist.getId() + " and user_id =" + user.getId());
+					+ "WHERE shoppinglist_id = " + shoppinglist.getId() + " and user_id = " + user.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
