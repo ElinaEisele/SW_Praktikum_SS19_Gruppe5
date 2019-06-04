@@ -61,13 +61,13 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
-
-		this.add(shoppinglistHeader);
-		this.add(mainPanel);
+		
 		shoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+		this.add(shoppinglistHeader);
+		this.add(mainPanel);
 
 	}
 
