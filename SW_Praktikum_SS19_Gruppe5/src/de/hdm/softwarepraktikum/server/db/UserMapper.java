@@ -182,14 +182,14 @@ public class UserMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM users");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM users ");
 
 			if (rs.next()) {
 				user.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id, creationDate, name, gMail)"
-					+ "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO users (id, creationDate, name, gMail) "
+					+ "VALUES (?, ?, ?, ?) ", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, user.getId());
 			pstmt.setDate(2, (Date) user.getCreationDate());
@@ -347,15 +347,15 @@ public class UserMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN responsibilities"
-					+ "ON listitems.retailer_id = responsibilities.retailer_id"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN responsibilities "
+					+ "ON listitems.retailer_id = responsibilities.retailer_id "
 					+ "WHERE listitems.id = " + listitem.getId());
 			
 			while(rs.next()) {
 				int r_id = rs.getInt("retailer_id");
 			
-				ResultSet rs2 = stmt.executeQuery("SELECT * FROM respinsibilities INNER JOIN users"
-						+ "ON responsibilities.user_id = users.id"
+				ResultSet rs2 = stmt.executeQuery("SELECT * FROM respinsibilities INNER JOIN users "
+						+ "ON responsibilities.user_id = users.id "
 						+ "WHERE responsibilities.retailer_id = " + r_id);
 	
 				while (rs2.next()) {

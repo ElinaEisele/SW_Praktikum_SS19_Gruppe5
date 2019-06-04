@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>Retailer</code> Objekte. Diese umfasst Methoden um
+ * Mapper Klasse fuer </code>Retailer</code> Objekte. Diese umfasst Methoden um
  * RetailerMapper Objekte zu erstellen, zu suchen, zu modifizieren und zu
  * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
@@ -148,13 +148,13 @@ public class RetailerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers ");
 
 			if (rs.next()) {
 				retailer.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO retailers (id, creationDate, name) VALUES (?, ?, ?)", 
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO retailers (id, creationDate, name) VALUES (?, ?, ?) ", 
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, retailer.getId());
@@ -208,7 +208,7 @@ public class RetailerMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM retailers WHERE id =" + retailer.getId());
+			stmt.executeUpdate("DELETE FROM retailers WHERE id = " + retailer.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -259,8 +259,8 @@ public class RetailerMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name "
-							+ "FROM listitems INNER JOIN retailers"
-							+ "ON listitems.retailer_Id = retailers.id"
+							+ "FROM listitems INNER JOIN retailers "
+							+ "ON listitems.retailer_Id = retailers.id "
 							+ "WHERE listitem_id = " + listitem.getId());
 
 			if (rs.next()) {
@@ -293,10 +293,10 @@ public class RetailerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name"
-					+ "FROM responsibilities INNER JOIN retailers"
-					+ "ON responsibilities.retailer_id = retailers.id"
-					+ "WHERE user_id =" + user.getId());
+			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name "
+					+ "FROM responsibilities INNER JOIN retailers "
+					+ "ON responsibilities.retailer_id = retailers.id "
+					+ "WHERE user_id = " + user.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
@@ -332,7 +332,7 @@ public class RetailerMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
 					+ "ON listitems.retailer_id = retailers.id "
-					+ "WHERE shoppinglist_id =" + shoppinglist.getId());
+					+ "WHERE shoppinglist_id = " + shoppinglist.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
@@ -368,9 +368,9 @@ public class RetailerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN retailers"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN retailers "
 					+ "ON responsibilities.retailer_id = retailers.id "
-					+ "WHERE shoppinglist_id = " + shoppinglist.getId() + " and user_id =" + user.getId());
+					+ "WHERE shoppinglist_id = " + shoppinglist.getId() + " and user_id = " + user.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
