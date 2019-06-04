@@ -1,1 +1,25 @@
-@charset "ISO-8859-1";
+
+div#reportMain{
+	background: midnightblue;
+	
+}
+
+div#reportWrapper{
+	background: lightgreen;
+	
+}
+
+div#reportAside{
+	background: mediumseagreen;
+	
+}
+
+div#reportHeader{
+	background: purple;
+	
+}
+
+div#reportTrailer{
+	background: darksalmon;
+	
+}
