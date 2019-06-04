@@ -140,7 +140,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				NewListitemForm nlf = new NewListitemForm();
 				nlf.setGstvm(ShoppinglistHeader.this.gstvm);
 				nlf.setShoppinglistHeader(ShoppinglistHeader.this);
-
+				nlf.setShoppinglistToDisplay(shoppinglistToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, nlf);
 				ssf.setSelected(shoppinglistToDisplay);
 
@@ -155,7 +155,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 	/**
 	 * ClickHandler dient dem Erzeugen einer
-	 * <code>AssignUserToRetailerDialogBox</code> Instanz.
+	 * <code>AssignUserToRetailerForm</code> Instanz.
 	 */
 	private class AssignUserToRetailerClickHandler implements ClickHandler {
 
@@ -166,7 +166,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 				autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
 				autrdb.setShoppinglistHeader(ShoppinglistHeader.this);
-
+				autrdb.setShoppinglistToDisplay(shoppinglistToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, autrdb);
 				ssf.setSelected(shoppinglistToDisplay);
 
@@ -181,7 +181,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 	/**
 	 * ClickHandler dient dem Erzeugen einer
-	 * <code>EditShoppinglistNameDialogBox</code> Instanz.
+	 * <code>EditShoppinglistNameForm</code> Instanz.
 	 */
 	private class EditShoppinglistNameClickHandler implements ClickHandler {
 
@@ -192,7 +192,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 				esndb.setGstvm(ShoppinglistHeader.this.gstvm);
 				esndb.setShoppinglistHeader(ShoppinglistHeader.this);
-
+				esndb.setShoppinglistToDisplay(shoppinglistToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, esndb);
 				ssf.setSelected(shoppinglistToDisplay);
 
@@ -215,7 +215,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 				DeleteShoppinglistDialogBox dsdb = new DeleteShoppinglistDialogBox();
-				// dsdb.setGstvm(ShoppinglistHeader.this.gstvm);
+				//dsdb.setGstvm(ShoppinglistHeader.this.gstvm);
 				dsdb.show();
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
@@ -233,7 +233,8 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 				suraf.setGstvm(ShoppinglistHeader.this.gstvm);
 				suraf.setShoppinglistHeader(ShoppinglistHeader.this);
-
+				suraf.setShoppinglistToDisplay(shoppinglistToDisplay);
+				
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, suraf);
 				ssf.setSelected(shoppinglistToDisplay);
 

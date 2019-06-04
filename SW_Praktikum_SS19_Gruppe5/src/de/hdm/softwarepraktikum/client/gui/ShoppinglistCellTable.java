@@ -135,7 +135,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Notification.show("Listitems konnten nicht geladen werden");
+				//Notification.show("Listitems konnten nicht geladen werden");
 			}
 
 			@Override
