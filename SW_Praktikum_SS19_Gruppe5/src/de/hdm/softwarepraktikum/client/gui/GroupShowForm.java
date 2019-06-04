@@ -81,6 +81,7 @@ public class GroupShowForm extends VerticalPanel{
 
 	public void setSelected(Group g) {
 		selectedGroup = g;
+
 		
 	}
 	

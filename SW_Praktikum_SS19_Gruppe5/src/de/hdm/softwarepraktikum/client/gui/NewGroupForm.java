@@ -77,9 +77,11 @@ public class NewGroupForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			if (u != null) {
+				groupShowForm = new GroupShowForm();
 				shoppinglistAdministration.createGroupFor(u, nameTextBox.getValue(), new NewGroupAsyncCallback());
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(groupShowForm);
+
 			}
 		}
 		
@@ -105,6 +107,7 @@ public class NewGroupForm extends VerticalPanel{
 		public void onSuccess(Group result) {
 			gstvm.addGroup(result);
 			groupShowForm.setSelected(result);
+
 		
 		}
 		
