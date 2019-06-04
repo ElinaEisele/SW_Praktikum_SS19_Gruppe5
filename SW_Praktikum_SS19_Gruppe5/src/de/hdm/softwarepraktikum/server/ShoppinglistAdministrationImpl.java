@@ -359,6 +359,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		ArrayList<Listitem> list = new ArrayList<Listitem>();
+		if(shoppinglist == null) {
+			return list;
+		}
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	

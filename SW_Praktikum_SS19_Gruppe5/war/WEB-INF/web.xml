@@ -38,7 +38,7 @@
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>SW_Praktikum_SS19_Gruppe5.html</welcome-file>
+    <welcome-file>ReportGenerator.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

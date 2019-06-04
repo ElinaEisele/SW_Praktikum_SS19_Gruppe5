@@ -60,22 +60,22 @@ public class ReportShowForm extends VerticalPanel{
 	private ListBox groupSelector = new ListBox();
 	
 	/**
-	 * Speicher für das Startdate als SQL-Date
+	 * Speicher fÃ¼r das Startdate als SQL-Date
 	 */
 	private java.sql.Date sqlStartDate = null;
 	
 	/**
-	 * Speicher für das Enddate als SQL-
+	 * Speicher fÃ¼r das Enddate als SQL-
 	 */
 	private java.sql.Date sqlEndDate = null;
 	
 	/**
-	 * Speicher für die ausgewaehlte Gruppe
+	 * Speicher fÃ¼r die ausgewaehlte Gruppe
 	 */
 	private Group selectedGroup = null;
 	
 	/**
-	 * Speicher für alle Gruppen eines Users
+	 * Speicher fÃ¼r alle Gruppen eines Users
 	 */
 	private ArrayList<Group> groupsOfCurrentUser = null;
 	
@@ -87,7 +87,7 @@ public class ReportShowForm extends VerticalPanel{
 	/**
 	 * Instanziierung des asynchronen Interfaces, um auf doe Methoden der ReportAdministrationImpl zuzugreifen.
 	 */
-	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
+	private ReportGeneratorAsync reportGenerator = null;
 	
 
 	public void onLoad() {
@@ -97,8 +97,12 @@ public class ReportShowForm extends VerticalPanel{
 		 */
 //		groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(user, new GetGroupsCallback());
 		
+		if(reportGenerator == null) {
+			ClientsideSettings.getReportGenerator();
+		}
+		
 		/**
-		 * Gruppennamen werden der Drop-Downliste hinzufügen.
+		 * Gruppennamen werden der Drop-Downliste hinzufÃ¼gen.
 		 */
 		if(groupsOfCurrentUser != null) {
 			for(Group g : groupsOfCurrentUser) {
@@ -117,6 +121,9 @@ public class ReportShowForm extends VerticalPanel{
 		
 		addPanel.add(showReportButton);
 		
+		this.add(mainPanel);
+		this.add(addPanel);
+		
 		
 		groupSelector.addChangeHandler(new ChangeHandler() {
 			@Override
@@ -134,7 +141,7 @@ public class ReportShowForm extends VerticalPanel{
 				//Eingegebenes Enddate festhalten
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
 				
-				//Ausführen der Report-Erstellung
+				//AusfÃ¼hren der Report-Erstellung
 				reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
 				
 			}
