@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -105,7 +106,9 @@ public class DeleteGroupDialogBox extends DialogBox{
 			if (group != null) {
 				setSelectedGroup(null);
 				gstvm.removeGroup(group);
+				Window.alert("1");
 				RootPanel.get("main").clear();
+				Window.alert("1");
 		
 				
 			}
