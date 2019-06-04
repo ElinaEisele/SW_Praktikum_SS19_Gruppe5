@@ -13,9 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
-import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Klasse um bei einer Shoppinglist den Namen zu aendern.
@@ -27,9 +25,9 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 	private ShoppinglistHeader shoppinglistHeader;
-	private Shoppinglist selectedShoppinglist = null;
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private Shoppinglist shoppinglistToDisplay = null;
+	private NavigatorPanel navigatorPanel;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private TextBox newShoppinglistNameTextBox = new TextBox();
@@ -83,7 +81,6 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
-	
 
 	public Shoppinglist getShoppinglistToDisplay() {
 		return shoppinglistToDisplay;
@@ -92,7 +89,6 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
 		this.shoppinglistToDisplay = shoppinglistToDisplay;
 	}
-
 
 	/**
 	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zur
@@ -148,8 +144,14 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		public void onSuccess(Void result) {
 
 			RootPanel.get("main").clear();
-			GroupShowForm gsf = new GroupShowForm();
-			RootPanel.get("main").add(gsf);
+			RootPanel.get("aside").clear();
+			navigatorPanel = new NavigatorPanel();
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
+			RootPanel.get("aside").add(navigatorPanel);
+
+			RootPanel.get("main").add(ssf);
+
 		}
 	}
 }
