@@ -1,10 +1,15 @@
 package de.hdm.softwarepraktikum.shared;
 
 import java.util.Date;
+
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 
-public interface ReportGenerator {
+@RemoteServiceRelativePath("report")
+public interface ReportGenerator extends RemoteService {
 	
     /**
      * Initialsierungsmethode.
