@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse f�r </code>Group</code> Objekte. Diese umfasst Methoden um
+ * Mapper Klasse fuer </code>Group</code> Objekte. Diese umfasst Methoden um
  * Group Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das
  * Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen
  * und DB-Stukturen in Objekte umgewandelt werden.
@@ -53,7 +53,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups ");
 
 			while (rs.next()) {
 				Group g = new Group();
@@ -301,12 +301,12 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id"
+			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id "
 					+ "usergroups.id as usergroup_id, "
 					+ "usergroups.creationDate as usergroup_creationDate, "
 					+ "usergroups.name as usergroup_name "
 					+ "FROM shoppinglists INNER JOIN usergroups "
-					+ "ON shoppinglists.usergroup_id = usergroups.id"
+					+ "ON shoppinglists.usergroup_id = usergroups.id "
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {

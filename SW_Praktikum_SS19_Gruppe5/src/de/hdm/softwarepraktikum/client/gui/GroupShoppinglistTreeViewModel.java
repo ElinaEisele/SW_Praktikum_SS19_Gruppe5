@@ -150,8 +150,8 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		RootPanel.get("main").clear();
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
-		RootPanel.get("main").add(groupShowForm);
 		selectedShoppinglist = null;
+		RootPanel.get("main").add(groupShowForm);	
 
 	}
 	
