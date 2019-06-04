@@ -22,6 +22,7 @@ public class GroupShowForm extends VerticalPanel{
 	
 	private GroupHeader groupHeader = null;
 	private GroupContent groupContent = null;
+//	private GroupCellTable groupCellTable;
 	private NewShoppinglistForm newShoppinglistForm = null;
 	private VerticalPanel mainPanel = new VerticalPanel();
 	
@@ -55,23 +56,26 @@ public class GroupShowForm extends VerticalPanel{
 	public GroupShowForm() {
 		groupHeader = new GroupHeader();
 		groupContent = new GroupContent();
+//		groupCellTable = new GroupCellTable();
+		
 		
 		groupHeader.setStylePrimaryName("groupHeader");
 		mainPanel.setStylePrimaryName("groupShowFormMainPanel");
 		
-		mainPanel.add(groupContent);
+//		mainPanel.add(groupCellTable);
 		
 	}
 	
 	public void onLoad() {
 		
-		
-	
-		this.add(groupHeader);
-		this.add(mainPanel);
-		
 		groupHeader.setGroupShowForm(GroupShowForm.this);
 		groupHeader.setSelected(selectedGroup);
+		
+//		groupCellTable.setGroupShowForm(GroupShowForm.this);
+//		groupCellTable.setGroupToDisplay(selectedGroup);
+		
+		this.add(groupHeader);
+		this.add(mainPanel);
 		
 	}
 
