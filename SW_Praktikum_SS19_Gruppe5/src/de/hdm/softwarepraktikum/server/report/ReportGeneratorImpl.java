@@ -16,7 +16,7 @@ import de.hdm.softwarepraktikum.shared.report.Column;
 import de.hdm.softwarepraktikum.shared.report.Row;
 
 /**
- * Die Klasse stellt die vollständige Applikationslogik des ReportGenerators dar.
+ * Die Klasse stellt die vollstaendige Applikationslogik des ReportGenerators dar.
  * 
  * @author FelixRapp, TimBeutelspacher
  */
@@ -26,15 +26,15 @@ import de.hdm.softwarepraktikum.shared.report.Row;
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
 	
 	/**
-	 * Der ReportGenerator benötigt Zugriff auf die ShoppinglistAdministration,
+	 * Der ReportGenerator benoetigt Zugriff auf die ShoppinglistAdministration,
 	 * da er diese ausgeben muss.
 	 */
 	private ShoppinglistAdministration administration = null;
 	
 	 /**
      * <p>
-     * GWT benötigt einen No-Argument Konstruktor und eine Intanziierung 
-     * ohne diesen ist auch nicht möglich. Deshalb bietet es sich an 
+     * GWT benoetigt einen No-Argument Konstruktor und eine Intanziierung 
+     * ohne diesen ist auch nicht moeglich. Deshalb bietet es sich an 
      * eine seperate Methode zur Instanziierung zu erstellen, welche
      * gleich nach der Initialisierung aufgerufen werden muss.
      * </p>
