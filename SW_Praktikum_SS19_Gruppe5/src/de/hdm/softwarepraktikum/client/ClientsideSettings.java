@@ -16,7 +16,7 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
  * Klasse mit Eigenschaften und Diensten, die fuer alle Client-seitigen
  * Klassen relevant sind.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, TimBeutelspacher
  *
  */
 
@@ -78,6 +78,13 @@ public class ClientsideSettings extends CommonSettings{
     		loginService = GWT.create(LoginService.class);
 		}
 		return loginService;
+	}
+	
+	public static ReportGeneratorAsync getReportGenerator() {
+		if(reportGenerator == null) {
+			reportGenerator = GWT.create(ReportGenerator.class);
+		}
+		return reportGenerator;
 	}
 	
 	
