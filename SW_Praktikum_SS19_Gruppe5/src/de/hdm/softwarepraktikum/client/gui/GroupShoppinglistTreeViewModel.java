@@ -150,8 +150,8 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		RootPanel.get("main").clear();
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
-		RootPanel.get("main").add(groupShowForm);
 		selectedShoppinglist = null;
+		RootPanel.get("main").add(groupShowForm);	
 
 	}
 	
@@ -165,7 +165,23 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		RootPanel.get("main").clear();		
 		selectedShoppinglist = s;
 		shoppinglistShowForm.setSelected(s);
-		RootPanel.get("main").add(shoppinglistShowForm);	
+		RootPanel.get("main").add(shoppinglistShowForm);
+		
+		
+		shoppinglistAdministration.getGroupOf(selectedShoppinglist, new AsyncCallback<Group>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Notification.show("Keine Gruppe gefunden.");
+			}
+
+			@Override
+			public void onSuccess(Group result) {
+				selectedGroup = result;
+				shoppinglistShowForm.setSelectedGroup(selectedGroup);
+			}
+			
+		});
 
 	}
 	
@@ -219,6 +235,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		 * Wurde noch kein Shoppinglist Provider für diese <code>Group</code> erstellt, so muss
 		 * diese auch nicht bearbeitet werden.
 		 */
+		
 		if (!shoppinglistDataProviders.containsKey(group)) {
 			return;
 		}

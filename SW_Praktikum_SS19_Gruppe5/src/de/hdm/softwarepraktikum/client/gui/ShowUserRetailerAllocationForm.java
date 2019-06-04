@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -32,6 +33,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 
 public class ShowUserRetailerAllocationForm extends VerticalPanel {
+	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
@@ -73,7 +75,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		Label showUserRetailerAllocationLabel = new Label("Zuweisung anzeigen:");
 		shoppinglistGrid.setWidget(0, 0, showUserRetailerAllocationLabel);
 
-		Label userLabel = new Label("Produkt Name: ");
+		Label userLabel = new Label("Benutzername: ");
 		shoppinglistGrid.setWidget(1, 0, userLabel);
 		shoppinglistGrid.setWidget(1, 1, userListBox);
 		userListBox.addChangeHandler(new UserListBoxChangeHandler());
@@ -97,6 +99,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
+		Window.alert(groupToDisplay.getName());
 		RootPanel.get("main").add(mainPanel);
 
 	}
@@ -135,14 +138,19 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
+			if (shoppinglistToDisplay !=null) {
+				Window.alert("nicht null");
+			}else {
+				Window.alert("null");
+			}
 
 		}
 
 		@Override
 		public void onSuccess(ArrayList<User> result) {
-			for (int i = 0; i < userArrayList.size(); i++) {
-				userListBox.addItem(userArrayList.get(i).getName());
-				selectedUser = userArrayList.get(0);
+			for (int i = 0; i < result.size(); i++) {
+				userListBox.addItem(result.get(i).getName());
+				selectedUser = result.get(0);
 			}
 
 		}
