@@ -48,7 +48,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     public void init() throws IllegalArgumentException{
         
         /*
-         * Für den Eigenbedarf erstellt ein ReportGeneratorImpl-Objekt 
+         * Fuer den Eigenbedarf erstellt ein ReportGeneratorImpl-Objekt 
          * ein ShoppinglistAdministrationImpl-Objekt. 
          */
     	 ShoppinglistAdministrationImpl a = new ShoppinglistAdministrationImpl();
@@ -67,8 +67,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     /**
      * Methode zum erstellen eines AllListitemsOfGroupReport
      * 
-     * @param g Gruppe, für welche der Report erstellt werden soll
-     * @return AllListitemsOfGroupReport der vollständige Report
+     * @param g Gruppe, fuer welche der Report erstellt werden soll
+     * @return AllListitemsOfGroupReport der vollstaendige Report
      * @throws IllegalArgumentException
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) 
@@ -79,10 +79,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		//Ausgeben aller Einkauslisten der Gruppe
     		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistAdministration().getShoppinglistsOf(g);
     		
-    		//Liste mit allen Einträgen der Gruppe
+    		//Liste mit allen Eintraegen der Gruppe
     		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
     		
-    		//Erstellen einer Liste mit allen Einträgen aus allen Listen
+    		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
     		for (Shoppinglist s: shoppinglists)	{
     			listitems.addAll(this.getShoppinglistAdministration().getListitemsOf(s));
     		}
@@ -98,7 +98,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
         	tablehead.addColumn(new Column("Einheit"));
         	result.addRow(tablehead);
         	
-        	//Für jedes Listitem wird eine Reihe mit Spalten erstellt
+        	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
         	for(Listitem l : listitems) {
         		Row r = new Row();
         		r.addColumn(new Column(l.getCreationDateConvertToString()));
