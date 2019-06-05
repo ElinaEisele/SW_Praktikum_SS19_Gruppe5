@@ -59,7 +59,7 @@ public class NavigatorPanel extends VerticalPanel{
 		
 		gstvm.setShoppinglistShowForm(ssf);
 		ssf.setGstvm(gstvm);
-		
+				
 		cellTree.setAnimationEnabled(true);
 		
 		newGroupButton.addClickHandler(new NewGroupClickHandler());

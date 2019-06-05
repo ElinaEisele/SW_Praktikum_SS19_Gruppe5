@@ -16,6 +16,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
@@ -23,13 +24,13 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
-/**
- * Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
- * 
- * @author ElinaEisele, JonasWagenknecht
- *
- */
-public class GroupCellTable extends HorizontalPanel {
+///**
+//* Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
+//* 
+//* @author ElinaEisele, JonasWagenknecht
+//*
+//*/
+public class GroupCellTable extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
@@ -149,3 +150,4 @@ public class GroupCellTable extends HorizontalPanel {
 		return groupToDisplay;
 	}
 }
+
