@@ -16,7 +16,7 @@ import de.hdm.softwarepraktikum.shared.report.Column;
 import de.hdm.softwarepraktikum.shared.report.Row;
 
 /**
- * Die Klasse stellt die vollständige Applikationslogik des ReportGenerators dar.
+ * Die Klasse stellt die vollstaendige Applikationslogik des ReportGenerators dar.
  * 
  * @author FelixRapp, TimBeutelspacher
  */
@@ -26,15 +26,15 @@ import de.hdm.softwarepraktikum.shared.report.Row;
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
 	
 	/**
-	 * Der ReportGenerator benötigt Zugriff auf die ShoppinglistAdministration,
+	 * Der ReportGenerator benoetigt Zugriff auf die ShoppinglistAdministration,
 	 * da er diese ausgeben muss.
 	 */
 	private ShoppinglistAdministration administration = null;
 	
 	 /**
      * <p>
-     * GWT benötigt einen No-Argument Konstruktor und eine Intanziierung 
-     * ohne diesen ist auch nicht möglich. Deshalb bietet es sich an 
+     * GWT benoetigt einen No-Argument Konstruktor und eine Intanziierung 
+     * ohne diesen ist auch nicht moeglich. Deshalb bietet es sich an 
      * eine seperate Methode zur Instanziierung zu erstellen, welche
      * gleich nach der Initialisierung aufgerufen werden muss.
      * </p>
@@ -48,7 +48,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     public void init() throws IllegalArgumentException{
         
         /*
-         * Für den Eigenbedarf erstellt ein ReportGeneratorImpl-Objekt 
+         * Fuer den Eigenbedarf erstellt ein ReportGeneratorImpl-Objekt 
          * ein ShoppinglistAdministrationImpl-Objekt. 
          */
     	 ShoppinglistAdministrationImpl a = new ShoppinglistAdministrationImpl();
@@ -67,8 +67,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     /**
      * Methode zum erstellen eines AllListitemsOfGroupReport
      * 
-     * @param g Gruppe, für welche der Report erstellt werden soll
-     * @return AllListitemsOfGroupReport der vollständige Report
+     * @param g Gruppe, fuer welche der Report erstellt werden soll
+     * @return AllListitemsOfGroupReport der vollstaendige Report
      * @throws IllegalArgumentException
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) 
@@ -79,13 +79,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		//Ausgeben aller Einkauslisten der Gruppe
     		ArrayList<Shoppinglist> shoppinglists = this.getShoppinglistAdministration().getShoppinglistsOf(g);
     		
-    		//Liste mit allen Einträgen der Gruppe
+    		//Liste mit allen Eintraegen der Gruppe
     		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
     		
-    		//Erstellen einer Liste mit allen Einträgen aus allen Listen
-    		for (Shoppinglist s: shoppinglists)	{
-    			listitems.addAll(this.getShoppinglistAdministration().getListitemsOf(s));
+    		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
+    		if(!shoppinglists.isEmpty()) {
+    			for (Shoppinglist s: shoppinglists)	{
+        			listitems.addAll(this.getShoppinglistAdministration().getListitemsOf(s));
+        		}
     		}
+    		
     		
         	//Anlegen eines leeren Reports
         	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
@@ -98,7 +101,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
         	tablehead.addColumn(new Column("Einheit"));
         	result.addRow(tablehead);
         	
-        	//Für jedes Listitem wird eine Reihe mit Spalten erstellt
+        	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
         	for(Listitem l : listitems) {
         		Row r = new Row();
         		r.addColumn(new Column(l.getCreationDateConvertToString()));

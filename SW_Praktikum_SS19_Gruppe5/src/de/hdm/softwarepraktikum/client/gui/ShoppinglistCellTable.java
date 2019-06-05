@@ -40,7 +40,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			.getShoppinglistAdministration();
 	private GroupShoppinglistTreeViewModel gstvm;
 	private ShoppinglistShowForm shoppinglistShowForm;
-	ListDataProvider<ShoppinglistListitem> listDataProvider;
+	private ListDataProvider<ShoppinglistListitem> listDataProvider;
 
 	private Shoppinglist shoppinglistToDisplay = null;
 
@@ -97,10 +97,10 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	}
 
-	ArrayList<ShoppinglistListitem> shoppinglistListitems = new ArrayList<ShoppinglistListitem>();
-	ArrayList<Listitem> listitems = new ArrayList<>();
+	private ArrayList<ShoppinglistListitem> shoppinglistListitems = new ArrayList<ShoppinglistListitem>();
+	private ArrayList<Listitem> listitems = new ArrayList<>();
 
-	CellTable<ShoppinglistListitem> table = new CellTable<ShoppinglistListitem>();
+	private CellTable<ShoppinglistListitem> table = new CellTable<ShoppinglistListitem>();
 	private ShoppinglistListitem shoppinglistListitem = new ShoppinglistListitem("", 0.0F, "", "");
 
 	public ShoppinglistCellTable() {

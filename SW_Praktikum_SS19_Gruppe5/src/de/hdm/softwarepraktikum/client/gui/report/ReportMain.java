@@ -1,0 +1,33 @@
+package de.hdm.softwarepraktikum.client.gui.report;
+
+import com.google.gwt.user.client.ui.RootPanel;
+
+public class ReportMain {
+
+	private ReportHeader reportHeader = null;
+	private ReportShowForm reportShowForm = null;
+	private ReportTrailer reportTrailer = null;
+
+	public void loadForms() {
+		
+		reportHeader = new ReportHeader();
+		reportShowForm = new ReportShowForm();
+		reportTrailer = new ReportTrailer();
+		
+		RootPanel.get("reportMain").clear();
+		RootPanel.get("reportAside").clear();
+
+		RootPanel.get("reportWrapper").setVisible(true);
+		RootPanel.get("reportMain").setVisible(true);
+		RootPanel.get("reportAside").setVisible(true);
+		
+		RootPanel.get("reportTrailer").setVisible(true);
+		RootPanel.get("reportHeader").setVisible(true);
+
+
+		RootPanel.get("reportTrailer").add(reportTrailer);
+		RootPanel.get("reportMain").add(reportShowForm);
+		RootPanel.get("reportHeader").add(reportHeader);
+	}
+	
+}
