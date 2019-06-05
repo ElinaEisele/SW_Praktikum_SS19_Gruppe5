@@ -29,7 +29,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 	public void onModuleLoad() {
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL() + "SW_Praktikum_SS19_Gruppe5.html", new LoginServiceCallback());
+		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 
 	}
 
