@@ -24,47 +24,30 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
-///**
-//* Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
-//* 
-//* @author ElinaEisele, JonasWagenknecht
-//*
-//*/
+/**
+ * Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
+ * 
+ * @author ElinaEisele, JonasWagenknecht
+ *
+ */
 public class GroupCellTable extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-	private GroupShoppinglistTreeViewModel gstvm;
+
 	private ShoppinglistShowForm shoppinglistShowForm;
 	private ListDataProvider<Shoppinglist> listDataProvider;
-	private GroupShowForm groupShowForm;
+	private GroupShowForm groupShowForm = null;
 	private Shoppinglist shoppinglistToDisplay = null;
 	private Group groupToDisplay = null;
 	private Label label = new Label("Huiuiui");
-	private ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
-	// private ArrayList<Listitem> listitems = new ArrayList<>();
 
+	VerticalPanel vPanel = new VerticalPanel();
+
+	private ArrayList<Shoppinglist> shoppinglists = new ArrayList<>();
 	private CellTable<Shoppinglist> table = new CellTable<Shoppinglist>();
 
 	public GroupCellTable() {
-
-		shoppinglistAdministration.getShoppinglistsOf(groupToDisplay, new AsyncCallback<ArrayList<Shoppinglist>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-
-			}
-
-			@Override
-			public void onSuccess(ArrayList<Shoppinglist> result) {
-				shoppinglists = result;
-				
-
-			}
-
-		});
 
 		table.setStyleName("shoppinglist-CellTable");
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
@@ -108,19 +91,44 @@ public class GroupCellTable extends VerticalPanel {
 				}
 			}
 		};
+
 		table.addColumn(shoppinglistNameToDisplay, "Einkaufsliste");
 		table.addColumn(imageColumn, "Edit");
 
-//		// Set the total row count
-		table.setRowCount(shoppinglists.size(), true);
-//		// Push the data into the widget.
-		table.setRowData(0, shoppinglists);
 	}
 
 	public void onLoad() {
-		label.setText("h" + groupToDisplay.getName()+ shoppinglists.get(0).getName());
-		this.add(label);
-		this.add(table);
+		this.clear();
+		vPanel.clear();
+		shoppinglistAdministration.getShoppinglistsOf(groupToDisplay, new AsyncCallback<ArrayList<Shoppinglist>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Notification.show("Das Laden der Einkaufslisten ist fehlgeschlagen");
+
+			}
+
+			@Override
+			public void onSuccess(ArrayList<Shoppinglist> result) {
+
+//				// Set the total row count
+				table.setRowCount(result.size(), true);
+//				// Push the data into the widget.
+				table.setRowData(0, result);
+//				Window.alert("uff"+ result.get(0).getName());
+//				
+//				Window.alert(groupToDisplay.getName());	
+
+				vPanel.add(label);
+				vPanel.add(table);
+
+			}
+
+		});
+		label.setText(groupToDisplay.getName());
+//		this.add(label);
+//		this.add(table);
+		this.add(vPanel);
 	}
 
 	public GroupShowForm getGroupShowForm() {
@@ -150,4 +158,3 @@ public class GroupCellTable extends VerticalPanel {
 		return groupToDisplay;
 	}
 }
-

@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
@@ -26,29 +27,44 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, NewListitemForm nlf) {
 		shoppinglistHeader = sh;
+		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(nlf);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
+		
 	}
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, AssignUserToRetailerForm autrf) {
 		shoppinglistHeader = sh;
+		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(autrf);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
 	}
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, EditShoppinglistNameForm esnf) {
 		shoppinglistHeader = sh;
 		sh.setGstvm(gstvm);
 		esnf.setGstvm(gstvm);
+		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(esnf);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
 	}
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, ShowUserRetailerAllocationForm suraf) {
 		shoppinglistHeader = sh;
+		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(suraf);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
 	}
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, ShoppinglistCellTable slct) {
 		shoppinglistHeader = sh;
 		mainPanel.add(slct);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
 	}
 
 	public ShoppinglistShowForm() {
@@ -57,6 +73,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 		shoppinglistHeader.setStylePrimaryName("shoppinglistHeader");
 		// shoppinglistContent.setStylePrimaryName("shoppinglistContent");
+		
 		mainPanel.add(shoppinglistCellTable);
 	}
 

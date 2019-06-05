@@ -173,8 +173,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, nlf);
 				ssf.setSelected(shoppinglistToDisplay);
 
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(ssf);
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
@@ -201,8 +199,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, autrdb);
 				ssf.setSelected(shoppinglistToDisplay);
 
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(ssf);
+			
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
@@ -227,8 +224,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, esndb);
 				ssf.setSelected(shoppinglistToDisplay);
 
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(ssf);
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
@@ -271,8 +266,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, suraf);
 				ssf.setSelected(shoppinglistToDisplay);
 
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(ssf);
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
