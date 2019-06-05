@@ -31,6 +31,7 @@ public class NewGroupForm extends VerticalPanel{
 	
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
+	private Group newGroup = null;
 	
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Gruppe erstellen");
@@ -77,9 +78,11 @@ public class NewGroupForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			if (u != null) {
+				groupShowForm = new GroupShowForm();
 				shoppinglistAdministration.createGroupFor(u, nameTextBox.getValue(), new NewGroupAsyncCallback());
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(groupShowForm);
+
 			}
 		}
 		
@@ -103,8 +106,12 @@ public class NewGroupForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Group result) {
-			gstvm.addGroup(result);
-			groupShowForm.setSelected(result);
+			newGroup = result;
+			groupShowForm.setSelected(newGroup);
+			groupShowForm.getGroupHeader().setSelected(newGroup);
+			gstvm.addGroup(newGroup);
+
+
 		
 		}
 		

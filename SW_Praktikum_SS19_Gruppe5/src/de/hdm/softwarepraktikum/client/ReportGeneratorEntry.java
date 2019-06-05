@@ -38,7 +38,7 @@ public class ReportGeneratorEntry implements EntryPoint{
 
 	public void onModuleLoad() {
 	/*
-	 * Ueber diese Methoden werden Instanzen der Asynchronen Interfaces gebildet
+	 * Über diese Methoden werden Instanzen der Asynchronen Interfaces gebildet
 	 */
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "ReportGenerator.html", new LoginServiceCallback());

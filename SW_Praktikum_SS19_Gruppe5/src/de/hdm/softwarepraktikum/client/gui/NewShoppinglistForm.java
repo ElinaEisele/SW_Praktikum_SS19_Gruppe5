@@ -101,9 +101,8 @@ public class NewShoppinglistForm extends VerticalPanel{
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(), new NewShoppinglistAsyncCallback());
-				RootPanel.get("main").clear();
-				// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe Callback)
-				RootPanel.get("main").add(shoppinglistShowForm);
+				
+				
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -135,9 +134,16 @@ public class NewShoppinglistForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Shoppinglist result) {
+			RootPanel.get("main").clear();
+			
 			gstvm.addShoppinglistToGroup(result, selectedGroup);
 			// die neu erstellte Shoppinglist wird in der ShoppinglistShowForm gesetzt
 			shoppinglistShowForm.setSelected(result);
+			shoppinglistShowForm.setSelectedGroup(selectedGroup);
+		
+			// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe Callback)
+			
+			RootPanel.get("main").add(shoppinglistShowForm);
 		}
 		
 	}
