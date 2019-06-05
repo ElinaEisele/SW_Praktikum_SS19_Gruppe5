@@ -22,6 +22,7 @@ public class GroupShowForm extends VerticalPanel{
 	
 	private GroupHeader groupHeader = null;
 	private GroupContent groupContent = null;
+	private GroupCellTable groupCellTable = null;
 	private NewShoppinglistForm newShoppinglistForm = null;
 	private VerticalPanel mainPanel = new VerticalPanel();
 	
@@ -52,31 +53,45 @@ public class GroupShowForm extends VerticalPanel{
 		// GroupContent noch eine Gruppe zuweisen!
 	}
 	
+	public GroupShowForm(GroupHeader gh, GroupCellTable gct) {
+		groupHeader = gh;
+		mainPanel.add(gct);
+	}
+	
+	
 	public GroupShowForm() {
 		groupHeader = new GroupHeader();
+
 		groupContent = new GroupContent();
+
+		groupCellTable = new GroupCellTable();
 		
 		groupHeader.setStylePrimaryName("groupHeader");
 		mainPanel.setStylePrimaryName("groupShowFormMainPanel");
+
 		
-		mainPanel.add(groupContent);
+		mainPanel.add(groupCellTable);
+
 		
 	}
 	
 	public void onLoad() {
+
 		
-		
-	
-		this.add(groupHeader);
-		this.add(mainPanel);
+		groupCellTable.setGroupShowForm(GroupShowForm.this);
+		groupCellTable.setSelected(selectedGroup);
 		
 		groupHeader.setGroupShowForm(GroupShowForm.this);
 		groupHeader.setSelected(selectedGroup);
-		
+
+		this.add(groupHeader);
+		this.add(mainPanel);
+
 	}
 
 	public void setSelected(Group g) {
 		selectedGroup = g;
+
 		
 	}
 	
@@ -91,6 +106,16 @@ public class GroupShowForm extends VerticalPanel{
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
+
+	public GroupHeader getGroupHeader() {
+		return groupHeader;
+	}
+
+	public void setGroupHeader(GroupHeader groupHeader) {
+		this.groupHeader = groupHeader;
+	}
+	
+	
 
 
 }

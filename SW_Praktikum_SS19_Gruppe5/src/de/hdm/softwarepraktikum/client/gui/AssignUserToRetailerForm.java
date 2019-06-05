@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -128,6 +129,15 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	}
 
 
+	public Group getGroupToDisplay() {
+		return groupToDisplay;
+	}
+
+	public void setGroupToDisplay(Group groupToDisplay) {
+		this.groupToDisplay = groupToDisplay;
+	}
+
+
 	/**
 	 * Zum Befüllen der Dropdown-Liste mit <code>User</code> Namen.
 	 */
@@ -140,10 +150,11 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<User> userArrayList) {
-			for (int i = 0; i < userArrayList.size(); i++) {
-				userListBox.addItem(userArrayList.get(i).getName());
-				selectedUser = userArrayList.get(0);
+		public void onSuccess(ArrayList<User> result) {
+			userArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				userListBox.addItem(result.get(i).getName());
+				selectedUser = result.get(0);
 			}
 		}
 
@@ -161,10 +172,11 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<Retailer> retailerArrayList) {
-			for (int i = 0; i < retailerArrayList.size(); i++) {
-				retailerListBox.addItem(retailerArrayList.get(i).getName());
-				selectedRetailer = retailerArrayList.get(0);
+		public void onSuccess(ArrayList<Retailer> result) {
+			retailerArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				retailerListBox.addItem(result.get(i).getName());
+				selectedRetailer = result.get(0);
 			}
 		}
 	}
@@ -175,8 +187,11 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	 */
 	private class UserListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
+			Window.alert("1");
 			int item = userListBox.getSelectedIndex();
+			Window.alert("2");
 			selectedUser = userArrayList.get(item);
+			Window.alert("3");
 		}
 	}
 

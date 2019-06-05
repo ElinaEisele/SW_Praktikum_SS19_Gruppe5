@@ -1,7 +1,9 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
@@ -19,6 +21,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	private VerticalPanel mainPanel = new VerticalPanel();
 
 	private Shoppinglist selectedShoppinglist;
+	private Group selectedGroup;
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, NewListitemForm nlf) {
@@ -33,8 +36,8 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, EditShoppinglistNameForm esnf) {
 		shoppinglistHeader = sh;
-		//sh.setGstvm(gstvm);
-		//esnf.setGstvm(gstvm);
+		sh.setGstvm(gstvm);
+		esnf.setGstvm(gstvm);
 		mainPanel.add(esnf);
 	}
 
@@ -58,13 +61,13 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
-
-		this.add(shoppinglistHeader);
-		this.add(mainPanel);
+		
 		shoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+		this.add(shoppinglistHeader);
+		this.add(mainPanel);
 
 	}
 
@@ -83,6 +86,14 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
+	}
+
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
 	}
 
 }

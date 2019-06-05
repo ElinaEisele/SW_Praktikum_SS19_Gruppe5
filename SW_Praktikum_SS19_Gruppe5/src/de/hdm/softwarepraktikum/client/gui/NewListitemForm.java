@@ -41,7 +41,7 @@ public class NewListitemForm extends HorizontalPanel {
 
 	private Shoppinglist shoppinglistToDisplay = null;
 	private ListitemShowForm shoppinglistShowForm;
-	
+
 	private ListitemUnit selectedlistitemUnit = null;
 	private Retailer selectedRetailer = null;
 
@@ -77,7 +77,7 @@ public class NewListitemForm extends HorizontalPanel {
 
 		Label newListitemLabel = new Label("Neuen Eintrag erstellen");
 		shoppinglistGrid.setWidget(0, 0, newListitemLabel);
-		
+
 		Label productNameLabel = new Label("Produkt Name: ");
 		shoppinglistGrid.setWidget(1, 0, productNameLabel);
 		shoppinglistGrid.setWidget(1, 1, productNameTextBox);
@@ -140,7 +140,6 @@ public class NewListitemForm extends HorizontalPanel {
 		this.gstvm = gstvm;
 	}
 
-	
 	public Shoppinglist getShoppinglistToDisplay() {
 		return shoppinglistToDisplay;
 	}
@@ -148,7 +147,6 @@ public class NewListitemForm extends HorizontalPanel {
 	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
 		this.shoppinglistToDisplay = shoppinglistToDisplay;
 	}
-
 
 	/**
 	 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
@@ -162,10 +160,11 @@ public class NewListitemForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<ListitemUnit> listitemUnitArrayList) {
-			for (int i = 0; i < listitemUnitArrayList.size(); i++) {
-				unitNameListBox.addItem(listitemUnitArrayList.get(i).getName());
-				selectedlistitemUnit = listitemUnitArrayList.get(0);
+		public void onSuccess(ArrayList<ListitemUnit> result) {
+			listitemUnitArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				unitNameListBox.addItem(result.get(i).getName());
+				selectedlistitemUnit = result.get(0);
 			}
 		}
 
@@ -183,10 +182,11 @@ public class NewListitemForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<Retailer> retailerArrayList) {
-			for (int i = 0; i < retailerArrayList.size(); i++) {
-				retailerNameListBox.addItem(retailerArrayList.get(i).getName());
-				selectedRetailer = retailerArrayList.get(0);
+		public void onSuccess(ArrayList<Retailer> result) {
+			retailerArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				retailerNameListBox.addItem(result.get(i).getName());
+				selectedRetailer = result.get(0);
 			}
 		}
 	}
@@ -197,8 +197,10 @@ public class NewListitemForm extends HorizontalPanel {
 	 */
 	private class UnitNameListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
+
 			int item = unitNameListBox.getSelectedIndex();
 			selectedlistitemUnit = listitemUnitArrayList.get(item);
+
 		}
 	}
 
@@ -208,8 +210,10 @@ public class NewListitemForm extends HorizontalPanel {
 	 */
 	private class RetailerNameListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
+
 			int item = retailerNameListBox.getSelectedIndex();
 			selectedRetailer = retailerArrayList.get(item);
+
 		}
 	}
 
@@ -222,12 +226,12 @@ public class NewListitemForm extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (shoppinglistToDisplay !=null) {
-			RootPanel.get("main").clear();
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			ssf.setSelected(shoppinglistToDisplay);
-			RootPanel.get("main").add(ssf);
-				
+			if (shoppinglistToDisplay != null) {
+				RootPanel.get("main").clear();
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setSelected(shoppinglistToDisplay);
+				RootPanel.get("main").add(ssf);
+
 			}
 		}
 
@@ -279,6 +283,7 @@ public class NewListitemForm extends HorizontalPanel {
 
 				RootPanel.get("main").clear();
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setSelected(shoppinglistToDisplay);
 				RootPanel.get("main").add(ssf);
 
 			}
