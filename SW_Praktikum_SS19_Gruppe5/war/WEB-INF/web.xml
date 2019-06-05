@@ -16,6 +16,21 @@
     <url-pattern>/sw_praktikum_ss19_gruppe5/administration</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>shoppinglistAdministrationService</servlet-name>
+    <url-pattern>/reportgenerator/administration</url-pattern>
+  </servlet-mapping>
+  
+  <servlet> 
+  	<servlet-name>reportGenerator</servlet-name>
+  	<servlet-class>de.hdm.softwarepraktikum.server.report.ReportGeneratorImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>reportGenerator</servlet-name>
+  	<url-pattern>/reportgenerator/report</url-pattern>
+  </servlet-mapping>
+  
   <servlet> 
   	<servlet-name>loginService</servlet-name>
   	<servlet-class>de.hdm.softwarepraktikum.server.LoginServiceImpl</servlet-class>
@@ -26,19 +41,16 @@
   	<url-pattern>/sw_praktikum_ss19_gruppe5/login</url-pattern>
   </servlet-mapping>
   
-  <servlet> 
-  	<servlet-name>reportGenerator</servlet-name>
-  	<servlet-class>de.hdm.softwarepraktikum.server.report.ReportGeneratorImpl</servlet-class>
-  </servlet>
-  
   <servlet-mapping>
-  	<servlet-name>reportGenerator</servlet-name>
-  	<url-pattern>/sw_praktikum_ss19_gruppe5/reportGenerator</url-pattern>
+  	<servlet-name>loginService</servlet-name>
+  	<url-pattern>/reportgenerator/login</url-pattern>
   </servlet-mapping>
+  
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>ReportGenerator.html</welcome-file>
+    <welcome-file>SW_Praktikum_SS19_Gruppe5.html</welcome-file>
   </welcome-file-list>
 
 </web-app>
