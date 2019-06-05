@@ -16,29 +16,53 @@ import de.hdm.softwarepraktikum.client.gui.report.ReportMain;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
-
+/**
+ * Entry-Point-Klasse des Projekts <b>SW_Praktikum_SS19_Gruppe5</b> fuer den
+ * Report.
+ * @author LeoniFriedrich
+ *
+ */
 public class ReportGeneratorEntry implements EntryPoint{
-
-	
-	
 	
 
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
 
+	/**
+	 * 
+	 * Da diese Klasse das Interface <code>EntryPoint</code> implementiert,
+	 * benoetigen wir die Methode <code>onModuleLoad()</code>. Diese
+	 * Methode wird zu Beginn des Seitenaufrufs abgerufen.
+	 */
+
 	public void onModuleLoad() {
+	/*
+	 * Ueber diese Methoden werden Instanzen der Asynchronen Interfaces gebildet
+	 */
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "ReportGenerator.html", new LoginServiceCallback());
 		Window.alert("nach login");
 	}
 
+	/**
+	 * 
+	 * Bei erfolgreichem RPC callback wird zu Beginn die 
+	 * <code>CurrentUser<code> gesetzt. Anschlieﬂend erfolgt eine Abfrage ob der User bereits im System eingeloggt ist. 
+	 * Falls dies zutrifft, wird die <code>report.loadForms<code> aufgerufen.
+	 * Falls die nicht zutrifft, wird die <code>loadLogin()<code> aufgerufen, indem sich der User am System
+	 * anmelden kann.
+	 */
+	
 	private class LoginServiceCallback implements AsyncCallback<User> {
-
+		
+		/**
+		 * bei fehlerhaftem RPC Callback wird eine Fehlermeldung geworfen 
+		 */
 		@Override
 		public void onFailure(Throwable caught) {
-// auskommentiert lassen, sonst taucht Fehlermeldung auf, da noch Fake Google User Objekt
-//				Window.alert(caught.toString());
+			// auskommentiert lassen, sonst taucht Fehlermeldung auf, da noch Fake Google User Objekt
+			//				Window.alert(caught.toString());
 		}
 
 		@Override
@@ -77,6 +101,9 @@ public class ReportGeneratorEntry implements EntryPoint{
 
 	}
 
+	/**
+	 * Diese Methode wird aufgerufen, falls der User nicht am System eingeloggt ist.
+	 */
 	public void loadLogin() {
 
 		signInLink.setHref(CurrentReportUser.getUser().getLoginUrl());
@@ -84,7 +111,7 @@ public class ReportGeneratorEntry implements EntryPoint{
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
 
-		RootPanel.get("main").add(loginPanel);
+		RootPanel.get("reportMain").add(loginPanel);
 
 //			loginLabel.setStylePrimaryName("loginLabel");
 //			loginButton.setStylePrimaryName("loginButton");
@@ -106,7 +133,7 @@ public class ReportGeneratorEntry implements EntryPoint{
 //		}
 
 	/**
-	 * Die Klasse <code>CurrentUser</code> repr‰sentiert den aktuell am System
+	 * Die Klasse <code>CurrentUser</code> repraesentiert den aktuell am System
 	 * angemeldeten User. Da weitere GUI-Klassen das angemeldetet User-Objekt
 	 * verwenden, muss diese jederzeit aufrufbar sein.
 	 */
