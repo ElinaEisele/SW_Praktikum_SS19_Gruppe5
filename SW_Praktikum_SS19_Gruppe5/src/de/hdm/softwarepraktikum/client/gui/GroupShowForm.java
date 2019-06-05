@@ -97,5 +97,15 @@ public class GroupShowForm extends VerticalPanel{
 		this.gstvm = gstvm;
 	}
 
+	public GroupHeader getGroupHeader() {
+		return groupHeader;
+	}
+
+	public void setGroupHeader(GroupHeader groupHeader) {
+		this.groupHeader = groupHeader;
+	}
+	
+	
+
 
 }
