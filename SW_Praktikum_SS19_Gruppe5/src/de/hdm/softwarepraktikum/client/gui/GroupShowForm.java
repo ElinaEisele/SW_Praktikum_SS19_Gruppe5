@@ -18,6 +18,7 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 public class GroupShowForm extends VerticalPanel {
 
 	private GroupHeader groupHeader = null;
+	private GroupContent groupContent = null;
 	private GroupCellTable groupCellTable = null;
 	private NewShoppinglistForm newShoppinglistForm = null;
 	private VerticalPanel mainPanel = new VerticalPanel();
@@ -67,10 +68,14 @@ public class GroupShowForm extends VerticalPanel {
 
 	public GroupShowForm() {
 		groupHeader = new GroupHeader();
+
+		groupContent = new GroupContent();
+
 		groupCellTable = new GroupCellTable();
 
 		groupHeader.setStylePrimaryName("groupHeader");
 		mainPanel.setStylePrimaryName("groupShowFormMainPanel");
+
 		mainPanel.add(groupCellTable);
 
 	}
@@ -88,7 +93,6 @@ public class GroupShowForm extends VerticalPanel {
 
 	public void setSelected(Group g) {
 		selectedGroup = g;
-
 	}
 
 	public Group getSelected() {
@@ -102,5 +106,14 @@ public class GroupShowForm extends VerticalPanel {
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
+
+	public GroupHeader getGroupHeader() {
+		return groupHeader;
+	}
+
+	public void setGroupHeader(GroupHeader groupHeader) {
+		this.groupHeader = groupHeader;
+	}
+	
 
 }

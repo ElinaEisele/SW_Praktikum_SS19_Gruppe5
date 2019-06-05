@@ -106,9 +106,7 @@ public class DeleteGroupDialogBox extends DialogBox{
 			if (group != null) {
 				setSelectedGroup(null);
 				gstvm.removeGroup(group);
-				Window.alert("1");
 				RootPanel.get("main").clear();
-				Window.alert("1");
 		
 				
 			}

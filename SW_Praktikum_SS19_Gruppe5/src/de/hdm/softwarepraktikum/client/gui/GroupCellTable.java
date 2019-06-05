@@ -25,12 +25,12 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
- * 
- * @author ElinaEisele, JonasWagenknecht
- *
- */
-public class GroupCellTable extends HorizontalPanel {
+* Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
+* 
+* @author ElinaEisele, JonasWagenknecht
+*
+*/
+public class GroupCellTable extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
@@ -133,6 +133,12 @@ private ArrayList <Shoppinglist>shoppinglists = new ArrayList<>();
 //		this.add(label);
 //		this.add(table);
 		this.add(vPanel);
+
+
+	public void onLoad() {
+		label.setText("h" + groupToDisplay.getName()+ shoppinglists.get(0).getName());
+		this.add(label);
+		this.add(table);
 	}
 
 	
@@ -165,3 +171,4 @@ private ArrayList <Shoppinglist>shoppinglists = new ArrayList<>();
 		return groupToDisplay;
 	}
 }
+
