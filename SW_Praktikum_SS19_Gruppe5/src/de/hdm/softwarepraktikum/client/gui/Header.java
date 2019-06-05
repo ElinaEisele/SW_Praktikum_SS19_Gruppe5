@@ -102,7 +102,7 @@ public class Header extends HorizontalPanel {
 				Window.alert(user.getGmailAddress());
 			}
 			Window.alert("User wird gleich gesetzt");
-			reportGenerator.setU(user);
+			//reportGenerator.setU(user);
 			
 			Window.alert("User ist gesetzt");
 		}
