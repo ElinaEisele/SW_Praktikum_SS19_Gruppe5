@@ -25,16 +25,16 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
-* Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
-* 
-* @author ElinaEisele, JonasWagenknecht
-*
-*/
+ * Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
+ * 
+ * @author ElinaEisele, JonasWagenknecht
+ *
+ */
 public class GroupCellTable extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-	
+
 	private ShoppinglistShowForm shoppinglistShowForm;
 	private ListDataProvider<Shoppinglist> listDataProvider;
 	private GroupShowForm groupShowForm = null;
@@ -43,16 +43,16 @@ public class GroupCellTable extends VerticalPanel {
 	private Label label = new Label("Huiuiui");
 
 	VerticalPanel vPanel = new VerticalPanel();
-	
-private ArrayList <Shoppinglist>shoppinglists = new ArrayList<>();
+
+	private ArrayList<Shoppinglist> shoppinglists = new ArrayList<>();
 	private CellTable<Shoppinglist> table = new CellTable<Shoppinglist>();
 
-	public GroupCellTable() {		
+	public GroupCellTable() {
 
 		table.setStyleName("shoppinglist-CellTable");
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		listDataProvider = (ListDataProvider<Shoppinglist>) table.getKeyProvider();
-		
+
 		/**
 		 * Column containing the product name of a listitem
 		 * 
@@ -66,8 +66,6 @@ private ArrayList <Shoppinglist>shoppinglists = new ArrayList<>();
 			}
 		};
 
-		
-		
 		/**
 		 * Clickable edit button containing an image
 		 * 
@@ -93,17 +91,17 @@ private ArrayList <Shoppinglist>shoppinglists = new ArrayList<>();
 				}
 			}
 		};
-		
+
 		table.addColumn(shoppinglistNameToDisplay, "Einkaufsliste");
 		table.addColumn(imageColumn, "Edit");
-		
+
 	}
 
-	public void onLoad() {	
+	public void onLoad() {
 		this.clear();
 		vPanel.clear();
 		shoppinglistAdministration.getShoppinglistsOf(groupToDisplay, new AsyncCallback<ArrayList<Shoppinglist>>() {
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				Notification.show("Das Laden der Einkaufslisten ist fehlgeschlagen");
@@ -111,8 +109,7 @@ private ArrayList <Shoppinglist>shoppinglists = new ArrayList<>();
 			}
 
 			@Override
-			public void onSuccess(ArrayList<Shoppinglist> result) {					
-							
+			public void onSuccess(ArrayList<Shoppinglist> result) {
 
 //				// Set the total row count
 				table.setRowCount(result.size(), true);
@@ -121,29 +118,19 @@ private ArrayList <Shoppinglist>shoppinglists = new ArrayList<>();
 //				Window.alert("uff"+ result.get(0).getName());
 //				
 //				Window.alert(groupToDisplay.getName());	
-				
+
 				vPanel.add(label);
 				vPanel.add(table);
-				
 
 			}
-			
+
 		});
 		label.setText(groupToDisplay.getName());
 //		this.add(label);
 //		this.add(table);
 		this.add(vPanel);
-
-
-	public void onLoad() {
-		label.setText("h" + groupToDisplay.getName()+ shoppinglists.get(0).getName());
-		this.add(label);
-		this.add(table);
 	}
 
-	
-	
-	
 	public GroupShowForm getGroupShowForm() {
 		return groupShowForm;
 	}
@@ -171,4 +158,3 @@ private ArrayList <Shoppinglist>shoppinglists = new ArrayList<>();
 		return groupToDisplay;
 	}
 }
-
