@@ -30,7 +30,7 @@ public class ReportGeneratorEntry implements EntryPoint{
 	private Anchor signInLink = new Anchor("Login");
 	private ReportMain report = new ReportMain();
 	private Button loginButton = new Button("Login");
-	private Button button =  new Button("TESTtest123");
+//	private Button button =  new Button("TESTtest123");
 	private User u = CurrentUser.getUser();
 
 	
@@ -40,8 +40,8 @@ public class ReportGeneratorEntry implements EntryPoint{
 		Window.alert("nach login");
 		
 		//Test-Button
-		RootPanel.get("reportMain").add(button);
-		report.loadForms();
+//		RootPanel.get("reportMain").add(button);
+//		report.loadForms();
 		
 		if(u == null) {
 			Window.alert("Hier fehlt der user!");

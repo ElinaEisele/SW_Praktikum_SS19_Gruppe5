@@ -16,11 +16,6 @@
     <url-pattern>/sw_praktikum_ss19_gruppe5/administration</url-pattern>
   </servlet-mapping>
   
-  <servlet-mapping>
-    <servlet-name>shoppinglistAdministrationService</servlet-name>
-    <url-pattern>/reportgenerator/administration</url-pattern>
-  </servlet-mapping>
-  
   <servlet> 
   	<servlet-name>reportGenerator</servlet-name>
   	<servlet-class>de.hdm.softwarepraktikum.server.report.ReportGeneratorImpl</servlet-class>
@@ -51,6 +46,9 @@
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>SW_Praktikum_SS19_Gruppe5.html</welcome-file>
+    <welcome-file>ReportGenerator.html</welcome-file>
   </welcome-file-list>
+  
+
 
 </web-app>
