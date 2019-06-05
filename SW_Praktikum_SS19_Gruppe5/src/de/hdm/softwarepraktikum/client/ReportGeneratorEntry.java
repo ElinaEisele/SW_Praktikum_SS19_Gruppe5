@@ -28,6 +28,11 @@ public class ReportGeneratorEntry implements EntryPoint{
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
+	private ReportMain report = new ReportMain();
+	private Button loginButton = new Button("Login");
+	private Button button =  new Button("TESTtest123");
+	private User u ;
+
 
 	/**
 	 * 
@@ -38,7 +43,7 @@ public class ReportGeneratorEntry implements EntryPoint{
 
 	public void onModuleLoad() {
 	/*
-	 * ‹ber diese Methoden werden Instanzen der Asynchronen Interfaces gebildet
+	 * √úber diese Methoden werden Instanzen der Asynchronen Interfaces gebildet
 	 */
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL() + "ReportGenerator.html", new LoginServiceCallback());
@@ -48,7 +53,7 @@ public class ReportGeneratorEntry implements EntryPoint{
 	/**
 	 * 
 	 * Bei erfolgreichem RPC callback wird zu Beginn die 
-	 * <code>CurrentUser<code> gesetzt. Anschlieﬂend erfolgt eine Abfrage ob der User bereits im System eingeloggt ist. 
+	 * <code>CurrentUser<code> gesetzt. Anschlie√üend erfolgt eine Abfrage ob der User bereits im System eingeloggt ist. 
 	 * Falls dies zutrifft, wird die <code>report.loadForms<code> aufgerufen.
 	 * Falls die nicht zutrifft, wird die <code>loadLogin()<code> aufgerufen, indem sich der User am System
 	 * anmelden kann.

@@ -33,12 +33,12 @@
   
   <servlet-mapping>
   	<servlet-name>reportGenerator</servlet-name>
-  	<url-pattern>/sw_praktikum_ss19_gruppe5/reportGenerator</url-pattern>
+  	<url-pattern>/sw_praktikum_ss19_gruppe5/report</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>ReportGenerator.html</welcome-file>
+    <welcome-file>sw_praktikum_ss19_gruppe5.html</welcome-file>
   </welcome-file-list>
 
 </web-app>
