@@ -90,8 +90,7 @@ public class GroupHeader extends HorizontalPanel {
 	}
 
 	public void onLoad() {
-		
-				
+						
 		this.add(groupHeaderLabel);
 		this.add(newShoppinglist);
 		this.add(addUser);
@@ -156,15 +155,15 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
+				
 				NewShoppinglistForm nsf = new NewShoppinglistForm();
 				nsf.setGstvm(GroupHeader.this.gstvm);
 				nsf.setGroupHeader(GroupHeader.this);
 				nsf.setSelectedGroup(groupToDisplay);
+				
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
 				gsf.setSelected(groupToDisplay);
-				
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(gsf);
+			
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
@@ -181,12 +180,10 @@ public class GroupHeader extends HorizontalPanel {
 				autgf.setGstvm(GroupHeader.this.gstvm);
 				autgf.setGroupHeader(GroupHeader.this);
 				autgf.setSelectedGroup(groupToDisplay);
+				
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, autgf);
 				gsf.setSelected(groupToDisplay);
-				
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(gsf);
-			
+						
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
@@ -233,8 +230,7 @@ public class GroupHeader extends HorizontalPanel {
 				egnf.setSelectedGroup(groupToDisplay);
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
 				gsf.setSelected(groupToDisplay);
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(gsf);
+				
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
