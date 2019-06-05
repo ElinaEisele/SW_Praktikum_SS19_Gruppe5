@@ -31,7 +31,7 @@ public class ReportGeneratorEntry implements EntryPoint{
 	private ReportMain report = new ReportMain();
 	private Button loginButton = new Button("Login");
 	private Button button =  new Button("TESTtest123");
-	private User u = CurrentUser.getUser();
+	private User u ;
 
 	
 	public void onModuleLoad() {
