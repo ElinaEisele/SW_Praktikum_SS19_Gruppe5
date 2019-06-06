@@ -160,28 +160,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	}
 	
 
-	void setSelectedShoppinglist(Shoppinglist s) {
-	
+	void setSelectedShoppinglist(Shoppinglist s) {	
 		RootPanel.get("main").clear();		
 		selectedShoppinglist = s;
 		shoppinglistShowForm.setSelected(s);
 		RootPanel.get("main").add(shoppinglistShowForm);
-		
-		
-		shoppinglistAdministration.getGroupOf(selectedShoppinglist, new AsyncCallback<Group>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Notification.show("Keine Gruppe gefunden.");
-			}
-
-			@Override
-			public void onSuccess(Group result) {
-				selectedGroup = result;
-				shoppinglistShowForm.setSelectedGroup(selectedGroup);
-			}
-			
-		});
 
 	}
 	

@@ -99,7 +99,6 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
-		Window.alert(groupToDisplay.getName());
 		RootPanel.get("main").add(mainPanel);
 
 	}

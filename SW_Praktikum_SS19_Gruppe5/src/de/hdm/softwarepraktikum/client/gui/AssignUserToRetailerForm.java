@@ -56,7 +56,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	 * bestimmt.
 	 */
 	public AssignUserToRetailerForm() {
-
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
@@ -99,9 +98,30 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		// shoppinglistAdministration.getRetailersOf(shoppinglist, callback);
 	}
 
-	public void onLoad() {
+	public void onLoad() {		
+	Window.alert("1 "+ shoppinglistToDisplay.getName());
+		shoppinglistAdministration.getGroupOf(shoppinglistToDisplay, new AsyncCallback<Group>() {
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Notification.show("Keine Gruppe gefunden.");
+			}
+
+			@Override
+			public void onSuccess(Group result) {
+				Window.alert("2 "+shoppinglistToDisplay.getName());
+				if (result==null) {
+					Window.alert("result ist null");
+				}
+			}
+		});
+		
+	
 		RootPanel.get("main").add(mainPanel);
 	}
+	
+	
+	
 
 	public ShoppinglistHeader getShoppinglistHeader() {
 		return shoppinglistHeader;
@@ -118,7 +138,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
-	
 
 	public Shoppinglist getShoppinglistToDisplay() {
 		return shoppinglistToDisplay;
@@ -128,7 +147,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		this.shoppinglistToDisplay = shoppinglistToDisplay;
 	}
 
-
 	public Group getGroupToDisplay() {
 		return groupToDisplay;
 	}
@@ -136,7 +154,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	public void setGroupToDisplay(Group groupToDisplay) {
 		this.groupToDisplay = groupToDisplay;
 	}
-
 
 	/**
 	 * Zum Bef�llen der Dropdown-Liste mit <code>User</code> Namen.
@@ -203,6 +220,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		public void onChange(ChangeEvent event) {
 			int item = retailerListBox.getSelectedIndex();
 			selectedRetailer = retailerArrayList.get(item);
+			Window.alert("1");
 		}
 	}
 
