@@ -30,33 +30,12 @@ public class ReportGeneratorEntry implements EntryPoint{
 	private Anchor signInLink = new Anchor("Login");
 	private ReportMain report = new ReportMain();
 	private Button loginButton = new Button("Login");
-//	private Button button =  new Button("TESTtest123");
-//	private User u = CurrentUser.getUser();
-
 	
 	public void onModuleLoad() {
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
-		Window.alert("nach login");
-		
-		//Test-Button
-//		RootPanel.get("reportMain").add(button);
-//		report.loadForms();
-		
-//		if(u == null) {
-//			Window.alert("Hier fehlt der user!");
-//		}
 
 	}
-	
-//	public User getU() {
-//		return u;
-//	}
-//
-//	public void setU(User u) {
-//		this.u = u;
-//	}
-
 
 
 	private class LoginServiceCallback implements AsyncCallback<User> {
@@ -83,8 +62,6 @@ public class ReportGeneratorEntry implements EntryPoint{
 		@Override
 		public void onSuccess(User u) {
 			CurrentUser.setUser(u);
-			Window.alert(u.getName() + " ist als User gesetzt.");
-
 			
 			if (u.isLoggedIn()) {
 				if (u.getName() == null) {
