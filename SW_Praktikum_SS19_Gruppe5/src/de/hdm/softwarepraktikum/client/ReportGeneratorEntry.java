@@ -31,7 +31,7 @@ public class ReportGeneratorEntry implements EntryPoint{
 	private ReportMain report = new ReportMain();
 	private Button loginButton = new Button("Login");
 //	private Button button =  new Button("TESTtest123");
-	private User u = CurrentUser.getUser();
+//	private User u = CurrentUser.getUser();
 
 	
 	public void onModuleLoad() {
@@ -43,19 +43,19 @@ public class ReportGeneratorEntry implements EntryPoint{
 //		RootPanel.get("reportMain").add(button);
 //		report.loadForms();
 		
-		if(u == null) {
-			Window.alert("Hier fehlt der user!");
-		}
+//		if(u == null) {
+//			Window.alert("Hier fehlt der user!");
+//		}
 
 	}
 	
-	public User getU() {
-		return u;
-	}
-
-	public void setU(User u) {
-		this.u = u;
-	}
+//	public User getU() {
+//		return u;
+//	}
+//
+//	public void setU(User u) {
+//		this.u = u;
+//	}
 
 
 
@@ -82,8 +82,9 @@ public class ReportGeneratorEntry implements EntryPoint{
 
 		@Override
 		public void onSuccess(User u) {
-			Window.alert("message");
 			CurrentUser.setUser(u);
+			Window.alert(u.getName() + " ist als User gesetzt.");
+
 			
 			if (u.isLoggedIn()) {
 				if (u.getName() == null) {
