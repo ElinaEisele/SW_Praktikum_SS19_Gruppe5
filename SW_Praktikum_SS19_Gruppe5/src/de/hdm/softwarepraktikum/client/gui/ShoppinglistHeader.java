@@ -195,7 +195,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				autrdb.setShoppinglistHeader(ShoppinglistHeader.this);
 				autrdb.setShoppinglistToDisplay(shoppinglistToDisplay);
 				Window.alert(shoppinglistToDisplay.getName());
-				autrdb.setGroupToDisplay(groupToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, autrdb);
 				ssf.setSelected(shoppinglistToDisplay);
 
