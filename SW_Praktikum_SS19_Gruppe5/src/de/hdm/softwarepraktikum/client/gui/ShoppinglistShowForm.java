@@ -1,6 +1,5 @@
 package de.hdm.softwarepraktikum.client.gui;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -17,7 +16,6 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 public class ShoppinglistShowForm extends VerticalPanel {
 
 	private ShoppinglistHeader shoppinglistHeader = null;
-	// private ShoppinglistContent shoppinglistContent = null;
 	private ShoppinglistCellTable shoppinglistCellTable;
 	private VerticalPanel mainPanel = new VerticalPanel();
 
@@ -72,17 +70,17 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		shoppinglistCellTable = new ShoppinglistCellTable();
 
 		shoppinglistHeader.setStylePrimaryName("shoppinglistHeader");
-		// shoppinglistContent.setStylePrimaryName("shoppinglistContent");
 		
 		mainPanel.add(shoppinglistCellTable);
 	}
 
 	public void onLoad() {
-		
+
 		shoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+		
 		this.add(shoppinglistHeader);
 		this.add(mainPanel);
 

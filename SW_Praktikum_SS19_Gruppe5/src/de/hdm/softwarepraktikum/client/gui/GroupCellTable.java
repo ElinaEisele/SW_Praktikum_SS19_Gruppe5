@@ -16,6 +16,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
@@ -34,6 +35,8 @@ public class GroupCellTable extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
+
+	private GroupShoppinglistTreeViewModel gstvm = null;
 
 	private ShoppinglistShowForm shoppinglistShowForm;
 	private ListDataProvider<Shoppinglist> listDataProvider;
@@ -86,8 +89,18 @@ public class GroupCellTable extends VerticalPanel {
 			public void onBrowserEvent(Context context, Element elem, Shoppinglist object, NativeEvent event) {
 				super.onBrowserEvent(context, elem, object, event);
 				if ("click".equals(event.getType())) {
-
-					Window.alert("clicked");
+					
+					RootPanel.get("main").clear();
+					
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+//					ssf.setGstvm(gstvm);
+//					gstvm.setSelectedGroup(null);
+//					gstvm.setSelectedShoppinglist(object);
+					
+					ssf.setSelected(object);
+					
+					RootPanel.get("main").add(ssf);
+											
 				}
 			}
 		};
@@ -98,8 +111,7 @@ public class GroupCellTable extends VerticalPanel {
 	}
 
 	public void onLoad() {
-		this.clear();
-		vPanel.clear();
+		
 		shoppinglistAdministration.getShoppinglistsOf(groupToDisplay, new AsyncCallback<ArrayList<Shoppinglist>>() {
 
 			@Override
@@ -126,8 +138,6 @@ public class GroupCellTable extends VerticalPanel {
 
 		});
 		label.setText(groupToDisplay.getName());
-//		this.add(label);
-//		this.add(table);
 		this.add(vPanel);
 	}
 
