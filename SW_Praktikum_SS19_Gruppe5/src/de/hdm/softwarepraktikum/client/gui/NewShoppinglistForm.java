@@ -34,6 +34,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 	private Group selectedGroup = null;
 	private GroupHeader groupHeader = null;
 	private ShoppinglistShowForm shoppinglistShowForm = new ShoppinglistShowForm();
+	private Shoppinglist selectedShoppinglist = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Einkaufsliste erstellen");
@@ -98,7 +99,8 @@ public class NewShoppinglistForm extends VerticalPanel {
 			if (selectedGroup != null) {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
 						new NewShoppinglistAsyncCallback());
-
+//				Window.alert("NSF: SlId im ClickHandler" + selectedShoppinglist.getId());
+								
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
@@ -129,6 +131,8 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Shoppinglist result) {
+			selectedShoppinglist = result;
+			Window.alert("NSF: GroupId: " + String.valueOf(selectedShoppinglist.getGroupId()));
 			RootPanel.get("main").clear();
 
 			gstvm.addShoppinglistToGroup(result, selectedGroup);
@@ -140,7 +144,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 			// Callback)
 
 			RootPanel.get("main").add(shoppinglistShowForm);
-		}
+					}
 
 	}
 

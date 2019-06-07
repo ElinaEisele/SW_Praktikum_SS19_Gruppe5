@@ -1,5 +1,6 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -83,6 +84,12 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		
 		this.add(shoppinglistHeader);
 		this.add(mainPanel);
+		
+		Window.alert("Hier");
+		
+//		Window.alert("SSF: direkt über Group: "+ selectedGroup.getId());
+		Window.alert("SSF: ShoppinglistId "+ selectedShoppinglist.getId());
+		Window.alert("SSF: GroupId einer Liste"+selectedShoppinglist.getGroupId());
 
 	}
 
