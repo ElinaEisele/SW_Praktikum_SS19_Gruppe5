@@ -22,7 +22,7 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	/*
 	 * Fremdschl�sselbeziehung zur Gruppe, in welcher sich die Einkaufsliste befindet
 	 */
-	private int groupId = 99;
+	private int groupId;
 	
 	/*
 	 * Default-Konstruktor

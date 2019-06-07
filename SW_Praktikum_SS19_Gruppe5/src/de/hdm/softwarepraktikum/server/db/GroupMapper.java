@@ -301,7 +301,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id "
+			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id, "
 					+ "usergroups.id as usergroup_id, "
 					+ "usergroups.creationDate as usergroup_creationDate, "
 					+ "usergroups.name as usergroup_name "

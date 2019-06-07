@@ -87,56 +87,24 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 		mainPanel.add(assignUserToRetailerGrid);
 
+	}
+
+	public void onLoad() {		
 		
-//		shoppinglistAdministration.getGroupOf(shoppinglistToDisplay, new );
-
-		/**
-		 * Zum Bef�llen der Dropdown-Liste mit <code>User</code> Namen.
-		 */
-
-//		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
-
+		groupToDisplay = shoppinglistHeader.getGroupToDisplay();
 		
 		/**
 		 * Bef�llen der Dropdown-Liste mit <code>Retailer</code> Namen.
 		 */
 		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
-		// shoppinglistAdministration.getRetailersOf(shoppinglist, callback);
-	}
-
-	public void onLoad() {		
-
-		Window.alert("1: Shoppinglistenname "+ shoppinglistToDisplay.getName());
-		Window.alert("1: Shoppinglistid " + shoppinglistToDisplay.getId());
-		Window.alert("2: Gruppenid:" + String.valueOf(shoppinglistToDisplay.getGroupId()));
-
-
-		shoppinglistAdministration.getGroupOf(shoppinglistToDisplay, new AsyncCallback<Group>() {
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Notification.show("Keine Gruppe gefunden.");
-			}
-
-			@Override
-			public void onSuccess(Group result) {
-
-				Window.alert("2 "+shoppinglistToDisplay.getName());
-				Window.alert("3 : " +String.valueOf(shoppinglistToDisplay.getId()));
-				if (result==null) {
-					Window.alert("result ist null");
-				}else {
-					Window.alert(result.getName());
-				}
-				/**
-				 * Zum Bef�llen der Dropdown-Liste mit <code>User</code> Namen.
-				 */
-				shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
-
-			}
-		});
+		
+		/**
+		 * Zum Bef�llen der Dropdown-Liste mit <code>User</code> Namen.
+		 */
+		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
 	
 		RootPanel.get("main").add(mainPanel);
+
 	}
 	
 	
@@ -223,11 +191,8 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	 */
 	private class UserListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
-			Window.alert("1");
 			int item = userListBox.getSelectedIndex();
-			Window.alert("2");
 			selectedUser = userArrayList.get(item);
-			Window.alert("3");
 		}
 	}
 
@@ -239,7 +204,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		public void onChange(ChangeEvent event) {
 			int item = retailerListBox.getSelectedIndex();
 			selectedRetailer = retailerArrayList.get(item);
-			Window.alert("1");
 		}
 	}
 
@@ -272,6 +236,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 				User user = selectedUser;
 				Retailer retailer = selectedRetailer;
+				
 
 				shoppinglistAdministration.assignUser(user, retailer, shoppinglistToDisplay,
 						new CreateAllocationCallback());
@@ -296,10 +261,12 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
+			Window.alert("Callback sucess");
 
-			RootPanel.get("main").clear();
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			RootPanel.get("main").add(ssf);
+//			RootPanel.get("main").clear();
+//			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+//			ssf.setSelected(shoppinglistToDisplay);
+//			RootPanel.get("main").add(ssf);
 		}
 	}
 
