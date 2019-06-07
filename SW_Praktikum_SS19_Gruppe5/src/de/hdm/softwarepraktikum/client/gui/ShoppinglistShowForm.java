@@ -35,6 +35,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, AssignUserToRetailerForm autrf) {
 		shoppinglistHeader = sh;
+		autrf.setGroupToDisplay(selectedGroup);
 		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(autrf);
 		RootPanel.get("main").clear();
@@ -81,15 +82,11 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		shoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+		shoppinglistHeader.setGroupToDisplay(selectedGroup);
 		
 		this.add(shoppinglistHeader);
 		this.add(mainPanel);
-		
-		Window.alert("Hier");
-		
-//		Window.alert("SSF: direkt über Group: "+ selectedGroup.getId());
-		Window.alert("SSF: ShoppinglistId "+ selectedShoppinglist.getId());
-		Window.alert("SSF: GroupId einer Liste"+selectedShoppinglist.getGroupId());
+
 
 	}
 

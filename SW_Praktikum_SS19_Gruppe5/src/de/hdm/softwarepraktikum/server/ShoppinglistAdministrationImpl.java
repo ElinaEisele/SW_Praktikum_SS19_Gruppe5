@@ -203,7 +203,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		return this.groupMapper.findById(shoppinglist.getGroupId());
+//		return this.groupMapper.findById(shoppinglist.getGroupId());
+		return this.groupMapper.getGroupOf(shoppinglist);
 	}
 	
 	/**

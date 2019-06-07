@@ -204,9 +204,12 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
 				autrdb.setShoppinglistHeader(ShoppinglistHeader.this);
 				autrdb.setShoppinglistToDisplay(shoppinglistToDisplay);
-
+				autrdb.setGroupToDisplay(groupToDisplay);
+			
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, autrdb);
 				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
+				
 
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
