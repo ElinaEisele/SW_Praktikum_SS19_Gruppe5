@@ -24,43 +24,45 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class NewGroupForm extends VerticalPanel{
-	
-	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
+public class NewGroupForm extends VerticalPanel {
+
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
+			.getShoppinglistAdministration();
 	private User u = CurrentUser.getUser();
-	
+
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
-	
+	private Group newGroup = null;
+
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Gruppe erstellen");
-	private Grid grid = new Grid(1,2);
+	private Grid grid = new Grid(1, 2);
 	private Label nameLabel = new Label("Name");
 	private TextBox nameTextBox = new TextBox();
-	
+
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button saveButton = new Button("Speichern");
 	private Button cancelButten = new Button("Abbrechen");
-	
+
 	public NewGroupForm() {
-		
+
 		grid.setWidget(0, 0, nameLabel);
 		grid.setWidget(0, 1, nameTextBox);
-		
+
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButten.addClickHandler(new CancelClickHandler());
-		
+
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButten);
-		
+
 		mainPanel.add(infoLabel);
 		mainPanel.add(grid);
 		mainPanel.add(buttonPanel);
-		
+
 	}
-	
+
 	public void onLoad() {
-		
+
 		RootPanel.get("main").add(mainPanel);
 	}
 
@@ -71,30 +73,30 @@ public class NewGroupForm extends VerticalPanel{
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
-	
-	private class SaveClickHandler implements ClickHandler{
+
+	private class SaveClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (u != null) {
+				groupShowForm = new GroupShowForm();
 				shoppinglistAdministration.createGroupFor(u, nameTextBox.getValue(), new NewGroupAsyncCallback());
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(groupShowForm);
+
 			}
 		}
-		
+
 	}
-	
-	private class CancelClickHandler implements ClickHandler{
+
+	private class CancelClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-				RootPanel.get("main").clear();
+			RootPanel.get("main").clear();
 		}
-		
+
 	}
-	
-	private class NewGroupAsyncCallback implements AsyncCallback<Group>{
+
+	private class NewGroupAsyncCallback implements AsyncCallback<Group> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -103,12 +105,19 @@ public class NewGroupForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Group result) {
-			gstvm.addGroup(result);
-			groupShowForm.setSelected(result);
-		
+			RootPanel.get("main").clear();
+			RootPanel.get("aside").clear();
+			NavigatorPanel np = new NavigatorPanel();
+			RootPanel.get("aside").add(np);
+
+			newGroup = result;
+			groupShowForm.setSelected(newGroup);
+			groupShowForm.getGroupHeader().setSelected(newGroup);
+			RootPanel.get("main").add(groupShowForm);
+			gstvm.addGroup(newGroup);
+
 		}
-		
+
 	}
-	
 
 }

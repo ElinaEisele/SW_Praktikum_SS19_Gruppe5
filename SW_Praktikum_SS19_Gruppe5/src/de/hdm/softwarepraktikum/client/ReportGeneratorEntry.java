@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.client.gui.report.ReportMain;
+import de.hdm.softwarepraktikum.client.gui.report.ReportShowForm;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
@@ -30,34 +31,13 @@ public class ReportGeneratorEntry implements EntryPoint{
 	private Anchor signInLink = new Anchor("Login");
 	private ReportMain report = new ReportMain();
 	private Button loginButton = new Button("Login");
-	private Button button =  new Button("TESTtest123");
-	private User u = CurrentUser.getUser();
 
 	
 	public void onModuleLoad() {
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
-		Window.alert("nach login");
-		
-		//Test-Button
-		RootPanel.get("reportMain").add(button);
-		report.loadForms();
-		
-		if(u == null) {
-			Window.alert("Hier fehlt der user!");
-		}
 
 	}
-	
-	public User getU() {
-		return u;
-	}
-
-	public void setU(User u) {
-		this.u = u;
-	}
-
-
 
 	private class LoginServiceCallback implements AsyncCallback<User> {
 
@@ -82,7 +62,6 @@ public class ReportGeneratorEntry implements EntryPoint{
 
 		@Override
 		public void onSuccess(User u) {
-			Window.alert("message");
 			CurrentUser.setUser(u);
 			
 			if (u.isLoggedIn()) {
