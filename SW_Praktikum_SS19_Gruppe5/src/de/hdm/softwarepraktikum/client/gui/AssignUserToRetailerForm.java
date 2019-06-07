@@ -191,11 +191,8 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	 */
 	private class UserListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
-			Window.alert("1");
 			int item = userListBox.getSelectedIndex();
-			Window.alert("2");
 			selectedUser = userArrayList.get(item);
-			Window.alert("3");
 		}
 	}
 
@@ -207,7 +204,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		public void onChange(ChangeEvent event) {
 			int item = retailerListBox.getSelectedIndex();
 			selectedRetailer = retailerArrayList.get(item);
-			Window.alert("1");
 		}
 	}
 
@@ -240,6 +236,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 				User user = selectedUser;
 				Retailer retailer = selectedRetailer;
+				
 
 				shoppinglistAdministration.assignUser(user, retailer, shoppinglistToDisplay,
 						new CreateAllocationCallback());
@@ -264,10 +261,12 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
+			Window.alert("Callback sucess");
 
-			RootPanel.get("main").clear();
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			RootPanel.get("main").add(ssf);
+//			RootPanel.get("main").clear();
+//			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+//			ssf.setSelected(shoppinglistToDisplay);
+//			RootPanel.get("main").add(ssf);
 		}
 	}
 

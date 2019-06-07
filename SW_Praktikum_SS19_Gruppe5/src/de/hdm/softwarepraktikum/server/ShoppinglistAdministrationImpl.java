@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.softwarepraktikum.server.db.*;
@@ -802,8 +803,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
-		this.retailerMapper.insertResponsibility(user.getId(), retailer.getId(), shoppinglist.getId());
-		}
+		this.retailerMapper.insertResponsibility(retailer.getId(), user.getId(), shoppinglist.getId());
+	}
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
