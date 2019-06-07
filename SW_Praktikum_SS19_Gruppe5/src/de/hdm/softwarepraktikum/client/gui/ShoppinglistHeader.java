@@ -99,6 +99,16 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		this.add(showUserRetailerAllocation);
 
 	}
+	
+	
+
+	public Group getGroupToDisplay() {
+		return groupToDisplay;
+	}
+
+	public void setGroupToDisplay(Group groupToDisplay) {
+		this.groupToDisplay = groupToDisplay;
+	}
 
 	public ShoppinglistShowForm getShoppinglistShowForm() {
 		return shoppinglistShowForm;

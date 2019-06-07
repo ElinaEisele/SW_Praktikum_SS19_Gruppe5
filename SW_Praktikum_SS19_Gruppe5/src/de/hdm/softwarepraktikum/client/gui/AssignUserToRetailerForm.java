@@ -87,10 +87,15 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 		mainPanel.add(assignUserToRetailerGrid);
 
+		
+//		shoppinglistAdministration.getGroupOf(shoppinglistToDisplay, new );
+
 		/**
 		 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code> Namen.
 		 */
-		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
+
+//		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
+
 		
 		/**
 		 * Befï¿½llen der Dropdown-Liste mit <code>Retailer</code> Namen.
@@ -100,8 +105,11 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	}
 
 	public void onLoad() {		
-	
-Window.alert("1 "+ shoppinglistToDisplay.getName());
+
+		Window.alert("1: Shoppinglistenname "+ shoppinglistToDisplay.getName());
+		Window.alert("1: Shoppinglistid " + shoppinglistToDisplay.getId());
+		Window.alert("2: Gruppenid:" + String.valueOf(shoppinglistToDisplay.getGroupId()));
+
 
 		shoppinglistAdministration.getGroupOf(shoppinglistToDisplay, new AsyncCallback<Group>() {
 			
@@ -112,6 +120,7 @@ Window.alert("1 "+ shoppinglistToDisplay.getName());
 
 			@Override
 			public void onSuccess(Group result) {
+
 				Window.alert("2 "+shoppinglistToDisplay.getName());
 				Window.alert("3 : " +String.valueOf(shoppinglistToDisplay.getId()));
 				if (result==null) {
@@ -120,7 +129,7 @@ Window.alert("1 "+ shoppinglistToDisplay.getName());
 					Window.alert(result.getName());
 				}
 				/**
-				 * Zum Befüllen der Dropdown-Liste mit <code>User</code> Namen.
+				 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code> Namen.
 				 */
 				shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
 

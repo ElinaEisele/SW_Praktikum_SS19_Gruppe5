@@ -601,7 +601,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		sl.setGroupId(group.getId());
 		
 		//Um die korrekte (mit der Datenbank konsistente) Id zu erhalten, muss erst die insert-Methode aufgerufen werden.
-		Shoppinglist shoppl =  this.shoppinglistMapper.insert(sl);
+		this.shoppinglistMapper.insert(sl);
 		
 //		//Alle Standardeintraege der Gruppe werden zwischengespeichert.
 //		ArrayList<Listitem> standard = this.listitemMapper.getStandardListitemsOf(group);
@@ -621,7 +621,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 //				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l));
 //			}
 //		}
-		return shoppl;
+		return sl;
 	}
 	
 	/**
