@@ -86,6 +86,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		actionButtonsPanel.add(discardButton);
 
 		mainPanel.add(assignUserToRetailerGrid);
+
 		/**
 		 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code> Namen.
 		 */
@@ -99,7 +100,9 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	}
 
 	public void onLoad() {		
-	Window.alert("1 "+ shoppinglistToDisplay.getName());
+	
+Window.alert("1 "+ shoppinglistToDisplay.getName());
+
 		shoppinglistAdministration.getGroupOf(shoppinglistToDisplay, new AsyncCallback<Group>() {
 			
 			@Override
@@ -110,12 +113,19 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 			@Override
 			public void onSuccess(Group result) {
 				Window.alert("2 "+shoppinglistToDisplay.getName());
+				Window.alert("3 : " +String.valueOf(shoppinglistToDisplay.getId()));
 				if (result==null) {
 					Window.alert("result ist null");
+				}else {
+					Window.alert(result.getName());
 				}
+				/**
+				 * Zum Befüllen der Dropdown-Liste mit <code>User</code> Namen.
+				 */
+				shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
+
 			}
 		});
-		
 	
 		RootPanel.get("main").add(mainPanel);
 	}
