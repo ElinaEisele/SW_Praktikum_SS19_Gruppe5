@@ -52,7 +52,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
+	 * angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
 	public AssignUserToRetailerForm() {
@@ -86,13 +86,14 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		actionButtonsPanel.add(discardButton);
 
 		mainPanel.add(assignUserToRetailerGrid);
-		
-		
-		
-		
+
+		/**
+		 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code> Namen.
+		 */
+		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
 		
 		/**
-		 * Befüllen der Dropdown-Liste mit <code>Retailer</code> Namen.
+		 * Befï¿½llen der Dropdown-Liste mit <code>Retailer</code> Namen.
 		 */
 		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
 		// shoppinglistAdministration.getRetailersOf(shoppinglist, callback);
@@ -165,7 +166,7 @@ Window.alert("1 "+ shoppinglistToDisplay.getName());
 	}
 
 	/**
-	 * Zum Befüllen der Dropdown-Liste mit <code>User</code> Namen.
+	 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code> Namen.
 	 */
 	private class GetAllUsersOfGroupCallback implements AsyncCallback<ArrayList<User>> {
 
@@ -187,7 +188,7 @@ Window.alert("1 "+ shoppinglistToDisplay.getName());
 	}
 
 	/**
-	 * Befüllen der Dropdown-Liste mit <code>Retailer</code> Namen.
+	 * Befï¿½llen der Dropdown-Liste mit <code>Retailer</code> Namen.
 	 */
 	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
 
@@ -209,7 +210,7 @@ Window.alert("1 "+ shoppinglistToDisplay.getName());
 
 	/**
 	 * ChangeHandler zum erkennen welches <code>User</code> Objekt der
-	 * Dropdown-Liste ausgewählt wurde und dieses selectedUser zuordnen.
+	 * Dropdown-Liste ausgewï¿½hlt wurde und dieses selectedUser zuordnen.
 	 */
 	private class UserListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
@@ -223,7 +224,7 @@ Window.alert("1 "+ shoppinglistToDisplay.getName());
 
 	/**
 	 * ChangeHandler zum erkennen welches <code>Retailer</code> Objekt der
-	 * Dropdown-Liste ausgewählt wurde und dieses selectedRetailer zuordnen .
+	 * Dropdown-Liste ausgewï¿½hlt wurde und dieses selectedRetailer zuordnen .
 	 */
 	private class RetailerListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
@@ -234,7 +235,7 @@ Window.alert("1 "+ shoppinglistToDisplay.getName());
 	}
 
 	/**
-	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zur
+	 * Clickhandler zum verwerfen der Eingaben und zur Rï¿½ckkehr zur
 	 * ShoppinglistShowForm.
 	 * 
 	 */
@@ -274,7 +275,7 @@ Window.alert("1 "+ shoppinglistToDisplay.getName());
 
 	/**
 	 * Nach dem erfolgreichen Erstellen der Zuweisung wird das Formular geschlossen
-	 * und die aktuell ausgewählte Shoppinglist erneut geöffnet.
+	 * und die aktuell ausgewï¿½hlte Shoppinglist erneut geï¿½ffnet.
 	 * 
 	 */
 	private class CreateAllocationCallback implements AsyncCallback<Void> {
