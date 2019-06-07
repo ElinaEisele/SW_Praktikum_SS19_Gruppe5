@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>Shoppinglist</code> Objekte. Diese umfasst Methoden
+ * Mapper Klasse fuer </code>Shoppinglist</code> Objekte. Diese umfasst Methoden
  * um Shoppinglist Objekte zu erstellen zu suchen, zu modifizieren und zu
  * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
@@ -22,7 +22,7 @@ public class ShoppinglistMapper {
 	private static ShoppinglistMapper shoppinglistMapper = null;
 
 	/**
-	 * Geschützter Konstruktor verhindert die Moeglichkeit, mit <code>new</code>
+	 * Geschuetzter Konstruktor verhindert die Moeglichkeit, mit <code>new</code>
 	 * neue Instanzen dieser Klasse zu erzeugen.
 	 */
 
@@ -154,14 +154,14 @@ public class ShoppinglistMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("MAX(id) AS maxid FROM shoppinglists ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM shoppinglists ");
 
 			if (rs.next()) {
 				shoppinglist.setId(rs.getInt("maxid") + 1);
 			}
 			
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO shoppinglists (id, creationDate, name, usergroup_id) "
-					+ "VALUES (?, ?, ?)",
+					+ "VALUES (?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, shoppinglist.getId());
@@ -239,7 +239,7 @@ public class ShoppinglistMapper {
 
 		try {
 		
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO responsibilities (retailer_id, user_id, shoppinglist_id)" 
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO responsibilities (retailer_id, user_id, shoppinglist_id) " 
 					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 		
 			pstmt.setInt(1, retailerId);
@@ -255,7 +255,7 @@ public class ShoppinglistMapper {
 	
 	/**
 	 * 
-	 * Zuweisung löschen.
+	 * Zuweisung lï¿½schen.
 	 * 
 	 * @param shoppinglistId
 	 */
@@ -275,7 +275,7 @@ public class ShoppinglistMapper {
 
 	/**
 	 * 
-	 * Die übergeordnete Shoppinglist eines listitems finden.
+	 * Die ï¿½bergeordnete Shoppinglist eines listitems finden.
 	 * 
 	 * @param listitem
 	 * @return Shoppinglist-Objekt
@@ -325,7 +325,7 @@ public class ShoppinglistMapper {
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN usergroups "
-					+ "ON shoppinglists.usergroup_id = usergroup.id"
+					+ "ON shoppinglists.usergroup_id = usergroups.id "
 					+ "WHERE usergroups.id = " + group.getId());
 			
 			while (rs.next()) {
@@ -360,8 +360,8 @@ public class ShoppinglistMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN users"
-					+ "ON shoppinglists.user_id = users.id"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM shoppinglists INNER JOIN users "
+					+ "ON shoppinglists.user_id = users.id "
 					+ "WHERE users.id = " + user.getId());
 			
 			while (rs.next()) {

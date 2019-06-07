@@ -7,6 +7,8 @@ import com.google.gwt.core.client.GWT;
 import de.hdm.softwarepraktikum.shared.CommonSettings;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
+import de.hdm.softwarepraktikum.shared.ReportGenerator;
+import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 
@@ -14,7 +16,7 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
  * Klasse mit Eigenschaften und Diensten, die fuer alle Client-seitigen
  * Klassen relevant sind.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, TimBeutelspacher
  *
  */
 
@@ -27,6 +29,7 @@ public class ClientsideSettings extends CommonSettings{
 
 	private static ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 	private static LoginServiceAsync loginService = null;
+	private static ReportGeneratorAsync reportGenerator = null;
 	
 	/**
 	 * Name des Client-seitigen Loggers.
@@ -60,7 +63,7 @@ public class ClientsideSettings extends CommonSettings{
 	   * </p>
 	   * 
 	   * @return eindeutige Instanz des Typs <code>ShoppinglistAdministrationAsync</code>
-	   * @author ElinaEisele
+	   * @author ElinaEisele, TimBeutelspacher
 	   */
 	public static ShoppinglistAdministrationAsync getShoppinglistAdministration() {
 		if (shoppinglistAdministration == null) {
@@ -75,6 +78,15 @@ public class ClientsideSettings extends CommonSettings{
     		loginService = GWT.create(LoginService.class);
 		}
 		return loginService;
-}
+	}
+	
+	public static ReportGeneratorAsync getReportGenerator() {
+		if(reportGenerator == null) {
+			reportGenerator = GWT.create(ReportGenerator.class);
+		}
+		return reportGenerator;
+	}
+	
+	
 
 }

@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -30,6 +31,7 @@ public class NewGroupForm extends VerticalPanel{
 	
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
+	private Group newGroup = null;
 	
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Gruppe erstellen");
@@ -38,7 +40,7 @@ public class NewGroupForm extends VerticalPanel{
 	private TextBox nameTextBox = new TextBox();
 	
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button saveButton = new Button("Speicher");
+	private Button saveButton = new Button("Speichern");
 	private Button cancelButten = new Button("Abbrechen");
 	
 	public NewGroupForm() {
@@ -76,9 +78,11 @@ public class NewGroupForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			if (u != null) {
+				groupShowForm = new GroupShowForm();
 				shoppinglistAdministration.createGroupFor(u, nameTextBox.getValue(), new NewGroupAsyncCallback());
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(groupShowForm);
+
 			}
 		}
 		
@@ -88,9 +92,7 @@ public class NewGroupForm extends VerticalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (u != null) {
 				RootPanel.get("main").clear();
-			}
 		}
 		
 	}
@@ -104,8 +106,12 @@ public class NewGroupForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Group result) {
-			gstvm.addGroup(result);
-			groupShowForm.setSelected(result);
+			newGroup = result;
+			groupShowForm.setSelected(newGroup);
+			groupShowForm.getGroupHeader().setSelected(newGroup);
+			gstvm.addGroup(newGroup);
+
+
 		
 		}
 		

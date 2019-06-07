@@ -314,12 +314,12 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void assignUser (User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * Setzen bzw. entfernen eines Standard-Eintrags innerhalb einer Gruppe
 	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
 	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
 	 * @throws IllegalArgumentException
 	 */
-	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException; 
+	public void setStandardListitem(Listitem listitem, Group group, boolean value) throws IllegalArgumentException; 
 	
 	/**
 	 * Ausgeben des Product-Objekts aus einem Listitem-Objekt
@@ -451,16 +451,16 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Map<Shoppinglist, ArrayList<Listitem>> getListitemMapBy(String searchString, Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verknüpft.
+	 * Alle Listitems einer Shoppinglist werden in einer Map mit dem Produktnamen verknï¿½pft.
 	 * @param shoppinglist ist die aktuell selektierte Shoppingliste.
-	 * @return Map, welche Listitems mit dem dazugehörigen Produktname ausgibt.
+	 * @return Map, welche Listitems mit dem dazugehï¿½rigen Produktname ausgibt.
 	 * @throws IllegalArgumentException
 	 */
 	public Map<Listitem, String> getListitemsNameMapBy(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgabe des zugewiesenen Retailers eines Listitems.
-	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurückgegeben werden soll.
+	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zurï¿½ckgegeben werden soll.
 	 * @return Retailer-Objekt, welches dem Listitem zugewiesen ist.
 	 * @throws IllegalArgumentException
 	 */
@@ -473,4 +473,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Aendern des Namens einer Gruppe.
+	 * @param group ist das Group-Objekt, dessen Name geaendert werden soll.
+	 * @param name ist der neue Name der Gruppe.
+	 * @return neues Group-Objekt mit neuem Name
+	 * @throws IllegalArgumentException
+	 */
+	public Group changeNameOf(Group group, String name) throws IllegalArgumentException;
 }

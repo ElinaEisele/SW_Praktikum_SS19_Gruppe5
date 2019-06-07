@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -23,6 +24,9 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 public class DeleteGroupDialogBox extends DialogBox{
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
+	
+	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
+	
 	
 	private Group selectedGroup = null;
 
@@ -101,8 +105,9 @@ public class DeleteGroupDialogBox extends DialogBox{
 		public void onSuccess(Void result) {
 			if (group != null) {
 				setSelectedGroup(null);
-//				gstvm.removeGroup(group);
+				gstvm.removeGroup(group);
 				RootPanel.get("main").clear();
+		
 				
 			}
 		}

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse für </code>Group</code> Objekte. Diese umfasst Methoden um
+ * Mapper Klasse fuer </code>Group</code> Objekte. Diese umfasst Methoden um
  * Group Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das
  * Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen
  * und DB-Stukturen in Objekte umgewandelt werden.
@@ -22,7 +22,7 @@ public class GroupMapper {
 	private static GroupMapper groupMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von GroupMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen von GroupMapper.
 	 */
 	protected GroupMapper() {
 	}
@@ -53,7 +53,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups ");
 
 			while (rs.next()) {
 				Group g = new Group();
@@ -231,7 +231,7 @@ public class GroupMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?)",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?) ",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, userId);
@@ -246,7 +246,7 @@ public class GroupMapper {
 	
 	/**
 	 * 
-	 * User aus einer Gruppe löschen
+	 * User aus einer Gruppe loeschen
 	 * 
 	 * @param userId
 	 * @param groupId
@@ -268,7 +268,7 @@ public class GroupMapper {
 	
 	/**
 	 * 
-	 * Eine Membershipbeziehung löschen.
+	 * Eine Membershipbeziehung loeschen.
 	 * 
 	 * @param usergroup_id
 	 */
@@ -289,7 +289,7 @@ public class GroupMapper {
 	
 
 	/**
-	 * Methode, um die Gruppenzugehörigkeit einer Shoppingliste festzustellen
+	 * Methode, um die Gruppenzugehoerigkeit einer Shoppingliste festzustellen
 	 * 
 	 * @param shoppinglist
 	 * @return Group-Objekt
@@ -301,12 +301,12 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id"
+			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id "
 					+ "usergroups.id as usergroup_id, "
 					+ "usergroups.creationDate as usergroup_creationDate, "
 					+ "usergroups.name as usergroup_name "
 					+ "FROM shoppinglists INNER JOIN usergroups "
-					+ "ON shoppinglists.usergroup_id = usergroups.id"
+					+ "ON shoppinglists.usergroup_id = usergroups.id "
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {

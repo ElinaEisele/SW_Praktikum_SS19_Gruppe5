@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -16,20 +17,21 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Klasse für die Anordnung der Buttons im <code>GroupHeader</code>, der in der
+ * Klasse fuer die Anordnung der Buttons im <code>GroupHeader</code>, der in der
  * <code>GroupShowForm</code> angezeigt wird.
  * 
- * @author ElinaEisele, JonasWagenknecht
+ * @author ElinaEisele, JonasWagenknecht, LeoniFriedrich
  */
 
 public class GroupHeader extends HorizontalPanel {
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	private Group groupToDisplay = null;
-//	private GroupShoppinglistTreeViewModel gstvm = null;
+	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
 		
-	private Label groupHeaderLabel = new Label("Gruppe");
+	private Label groupHeaderLabel = new Label();
+	private String groupName = null;
 
 	private Button newShoppinglist = new Button();
 	private Button addUser = new Button();
@@ -41,7 +43,6 @@ public class GroupHeader extends HorizontalPanel {
 	
 	public GroupHeader() {
 		
-//		groupHeaderLabel.setText(shoppinglistAdministration.getGroupName(groupToDisplay, new GroupNameCallback()));
 		
 		Image newShoppinglistImg = new Image();
 		newShoppinglistImg.setUrl("images/clipboard.png");
@@ -89,7 +90,7 @@ public class GroupHeader extends HorizontalPanel {
 	}
 
 	public void onLoad() {
-
+						
 		this.add(groupHeaderLabel);
 		this.add(newShoppinglist);
 		this.add(addUser);
@@ -98,7 +99,7 @@ public class GroupHeader extends HorizontalPanel {
 		this.add(deleteGroup);
 		this.add(showUsers);
 		this.add(showRetailers);
-
+		
 
 	}
 	
@@ -111,10 +112,20 @@ public class GroupHeader extends HorizontalPanel {
 	public void setGroupShowForm(GroupShowForm groupShowForm) {
 		this.groupShowForm = groupShowForm;
 	}
+	
+	
+
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
 
 	/**
-	 * Sobald eine <code>Group</code> ausgewählt wird, wird das Label mit dem
-	 * Gruppenname befüllt.
+	 * Sobald eine <code>Group</code> ausgewaehlt wird, wird das Label mit dem
+	 * Gruppenname befuellt.
 	 * 
 	 * @param g das zu setzende <code>Group</code> Objekt.
 	 */
@@ -128,6 +139,10 @@ public class GroupHeader extends HorizontalPanel {
 		}
 	}
 	
+	public Group getSelected() {
+		return groupToDisplay;
+	}
+	
 
 	
 	/**
@@ -139,17 +154,19 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			if (groupToDisplay != null) {
-				NewShoppinglistForm nsf = new NewShoppinglistForm(groupToDisplay);
-//				nsf.setGstvm(GroupHeader.this.gstvm);
+			if (groupToDisplay != null) {
+				
+				NewShoppinglistForm nsf = new NewShoppinglistForm();
+				nsf.setGstvm(GroupHeader.this.gstvm);
 				nsf.setGroupHeader(GroupHeader.this);
-//				GroupShowForm gsf = new GroupShowForm(nsf.getGroupHeader(), nsf);
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(nsf);
-//				RootPanel.get("main").add(gsf);
-//			} else {
-//				Notification.show("Es wurde keine Gruppe ausgewählt.");
-//			}
+				nsf.setSelectedGroup(groupToDisplay);
+				
+				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
+				gsf.setSelected(groupToDisplay);
+			
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
 		}
 		
 	}
@@ -159,14 +176,18 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
-				AddUserToGroupDialogBox audb = new AddUserToGroupDialogBox();
-//				audb.setGstvm(GroupHeader.this.gstvm);
-				audb.show();
+				AddUserToGroupForm autgf = new AddUserToGroupForm();
+				autgf.setGstvm(GroupHeader.this.gstvm);
+				autgf.setGroupHeader(GroupHeader.this);
+				autgf.setSelectedGroup(groupToDisplay);
+				
+				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, autgf);
+				gsf.setSelected(groupToDisplay);
+						
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
 		}
-		
 	}
 	
 	private class LeaveGroupClickHandler implements ClickHandler{
@@ -175,7 +196,8 @@ public class GroupHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
 				LeaveGroupDialogBox ldb = new LeaveGroupDialogBox();
-//				ldb.setGstvm(GroupHeader.this.gstvm);
+				ldb.setGstvm(GroupHeader.this.gstvm);
+				ldb.setSelectedGroup(groupToDisplay);
 				ldb.show();
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -203,9 +225,12 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
-				EditGroupNameDialogBox edb = new EditGroupNameDialogBox();
-//				edb.setGstvm(GroupHeader.this.gstvm);
-				edb.show();
+				EditGroupNameForm egnf = new EditGroupNameForm();
+				egnf.setGstvm(GroupHeader.this.gstvm);
+				egnf.setSelectedGroup(groupToDisplay);
+				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
+				gsf.setSelected(groupToDisplay);
+				
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
@@ -217,13 +242,13 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-//			if (groupToDisplay != null) {
+			if (groupToDisplay != null) {
 				ShowUsersDialogBox sudb = new ShowUsersDialogBox();
 				sudb.setSelectedGroup(groupToDisplay);
 				sudb.show();
-//			} else {
-//				Notification.show("Es wurde keine Gruppe ausgewählt.");
-//			}
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
 		}
 		
 	}
@@ -232,7 +257,12 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			if (groupToDisplay != null) {
+				ShowRetailersDialogBox srdb = new ShowRetailersDialogBox();
+				srdb.show();
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
 			
 		}
 		
@@ -244,21 +274,7 @@ public class GroupHeader extends HorizontalPanel {
 	 * ***************************************************************************
 	 */
 	
-	private class GroupNameCallback implements AsyncCallback<String>{
 
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void onSuccess(String result) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 	
 
 }

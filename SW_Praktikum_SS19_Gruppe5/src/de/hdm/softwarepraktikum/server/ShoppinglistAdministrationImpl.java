@@ -20,9 +20,14 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * 
  */
 
-@SuppressWarnings("serial")
+
 public class ShoppinglistAdministrationImpl extends RemoteServiceServlet implements ShoppinglistAdministration {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Referenz auf den UserMapper, welcher User-Objekte mit der Datenbank
 	 * abgleicht.
@@ -164,9 +169,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				this.delete(s);
 			}
 		}
-		//Alle Memberships im Zusammenhang mit dieser Gruppe werden gelöscht.
+		//Alle Memberships im Zusammenhang mit dieser Gruppe werden geloescht.
 		this.groupMapper.deleteMemberships(group.getId());
-		//Als letztes wird die Gruppe an sich gelöscht.
+		//Als letztes wird die Gruppe an sich geloescht.
 		this.groupMapper.delete(group);
 	}
 	
@@ -212,6 +217,19 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.groupMapper.findById(groupId);
 	}
 	
+	/**
+	 * Aendern des Namens einer Gruppe.
+	 * @param group ist das Group-Objekt, dessen Name geaendert werden soll.
+	 * @param name ist der neue Name der Gruppe.
+	 * @return neues Group-Objekt mit neuem Name
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Group changeNameOf(Group group, String name) throws IllegalArgumentException {
+		group.setName(name);
+		this.save(group);
+		return group;
+	}
 	
 /**
  * **********************************************************************************
@@ -317,7 +335,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt geloescht.
 		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
 		
-		//Nachdem das Product-Objekt gelöscht wurde kann das Listitem-Objekt gelöscht werden.
+		//Nachdem das Product-Objekt geloescht wurde kann das Listitem-Objekt geloescht werden.
 		this.listitemMapper.delete(listitem);
 	}	
 	
@@ -341,19 +359,26 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		ArrayList<Listitem> list = new ArrayList<Listitem>();
+		if(shoppinglist == null) {
+			return list;
+		}
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
 	/**
-	 * Setzen eines Standard-Eintrags innerhalb einer Gruppe
+	 * Setzen bzw. entfernen eines Standard-Eintrags innerhalb einer Gruppe
 	 * @param listitem ist der Eintrag, welcher als Standard gesetzt wird
 	 * @param group ist die Gruppe, in welcher der Standardeintrag gesetzt wird
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public void setStandardListitem(Listitem listitem, Group group) throws IllegalArgumentException {
-		this.listitemMapper.setStandardListitemOf(group, listitem);
-		
+	public void setStandardListitem(Listitem listitem, Group group, boolean value) throws IllegalArgumentException {
+		//der zustand muss nur aktualisiert werden, wenn der Wert ein anderer als der vorherige ist.
+		if(listitem.isStandard() == value) {
+			listitem.setStandard(value);
+			this.listitemMapper.update(listitem);
+		}
 	}
 	
 	/**
@@ -578,24 +603,24 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Um die korrekte (mit der Datenbank konsistente) Id zu erhalten, muss erst die insert-Methode aufgerufen werden.
 		Shoppinglist shoppl =  this.shoppinglistMapper.insert(sl);
 		
-		//Alle Standardeintraege der Gruppe werden zwischengespeichert.
-		ArrayList<Listitem> standard = this.listitemMapper.getStandardListitemsOf(group);
-		
-		//Neue Listitem-Objekte mit der Fremdschluesselbeziehung zur neuen Shoppinglist werden erstellt.
-		for(Listitem l : standard) {
-			/*
-			 * Überpruefen, ob das Listitem einem Retailer zugewiesen wurde. Damit wird entschieden, welche createListitem() aufgerufen wird.
-			 * Hierbei muss beachtet werden, dass die ReatilerId "1" der Default-Wert ist.
-			 */
-			if(this.getRetailerOf(l).getId() != 1) {
-				//Erstellen eines Listitems MIT Retailer.
-				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l));
-			}
-			else {
-				//Erstellen eines Listitems OHNE Retailer.
-				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l));
-			}
-		}
+//		//Alle Standardeintraege der Gruppe werden zwischengespeichert.
+//		ArrayList<Listitem> standard = this.listitemMapper.getStandardListitemsOf(group);
+//		
+//		//Neue Listitem-Objekte mit der Fremdschluesselbeziehung zur neuen Shoppinglist werden erstellt.
+//		for(Listitem l : standard) {
+//			/*
+//			 * ueberpruefen, ob das Listitem einem Retailer zugewiesen wurde. Damit wird entschieden, welche createListitem() aufgerufen wird.
+//			 * Hierbei muss beachtet werden, dass die ReatilerId "1" der Default-Wert ist.
+//			 */
+//			if(this.getRetailerOf(l).getId() != 1) {
+//				//Erstellen eines Listitems MIT Retailer.
+//				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l));
+//			}
+//			else {
+//				//Erstellen eines Listitems OHNE Retailer.
+//				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l));
+//			}
+//		}
 		return shoppl;
 	}
 	
@@ -694,7 +719,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(User user) throws IllegalArgumentException {
-		this.userMapper.update(user);
+		this.userMapper.insert(user);
 	}
 	
 	/**
@@ -911,7 +936,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		if(shoppinglist != null) {
 			HashMap<Listitem, String> listitemNameMap = new LinkedHashMap<Listitem, String>();
 			
-			// Alle Listitems aus der Ã¼bergebenen Shoppinglist werden zwischengespeichert.
+			// Alle Listitems aus der uebergebenen Shoppinglist werden zwischengespeichert.
 			ArrayList<Listitem> listitems = this.getListitemsOf(shoppinglist);
 			
 			for(Listitem l : listitems) {
@@ -922,5 +947,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return null;
 	}
-	
+
+
+
 }

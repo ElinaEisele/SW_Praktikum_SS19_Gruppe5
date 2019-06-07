@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -35,7 +36,12 @@ public class NewListitemForm extends HorizontalPanel {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
+	private GroupShoppinglistTreeViewModel gstvm = null;
+	private ShoppinglistHeader shoppinglistHeader;
+
 	private Shoppinglist shoppinglistToDisplay = null;
+	private ListitemShowForm shoppinglistShowForm;
+
 	private ListitemUnit selectedlistitemUnit = null;
 	private Retailer selectedRetailer = null;
 
@@ -44,6 +50,7 @@ public class NewListitemForm extends HorizontalPanel {
 
 	private NumberFormat decimalFormatter = NumberFormat.getDecimalFormat();
 
+	private VerticalPanel mainPanel = new VerticalPanel();
 	private Grid shoppinglistGrid;
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -53,7 +60,6 @@ public class NewListitemForm extends HorizontalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button("Neu");
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("verwerfen und zurueck");
 
@@ -67,29 +73,31 @@ public class NewListitemForm extends HorizontalPanel {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
-		shoppinglistGrid = new Grid(5, 3);
+		shoppinglistGrid = new Grid(6, 2);
+
+		Label newListitemLabel = new Label("Neuen Eintrag erstellen");
+		shoppinglistGrid.setWidget(0, 0, newListitemLabel);
 
 		Label productNameLabel = new Label("Produkt Name: ");
-		shoppinglistGrid.setWidget(0, 0, productNameLabel);
-		shoppinglistGrid.setWidget(0, 1, productNameTextBox);
+		shoppinglistGrid.setWidget(1, 0, productNameLabel);
+		shoppinglistGrid.setWidget(1, 1, productNameTextBox);
 
 		Label amountLabel = new Label("Menge: ");
-		shoppinglistGrid.setWidget(1, 0, amountLabel);
-		shoppinglistGrid.setWidget(1, 1, amountTextBox);
+		shoppinglistGrid.setWidget(2, 0, amountLabel);
+		shoppinglistGrid.setWidget(2, 1, amountTextBox);
 
 		Label unitNameLabel = new Label("Einheit: ");
-		shoppinglistGrid.setWidget(2, 0, unitNameLabel);
-		shoppinglistGrid.setWidget(2, 1, unitNameListBox);
+		shoppinglistGrid.setWidget(3, 0, unitNameLabel);
+		shoppinglistGrid.setWidget(3, 1, unitNameListBox);
 		unitNameListBox.addChangeHandler(new UnitNameListBoxChangeHandler());
 
-		Label retailerNameLabel = new Label("Händler: ");
-		shoppinglistGrid.setWidget(3, 0, retailerNameLabel);
-		shoppinglistGrid.setWidget(3, 1, retailerNameListBox);
-		shoppinglistGrid.setWidget(3, 2, newRetailerButton);
+		Label retailerNameLabel = new Label("Haendler: ");
+		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
+		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
-		shoppinglistGrid.setWidget(4, 1, actionButtonsPanel);
+		shoppinglistGrid.setWidget(5, 1, actionButtonsPanel);
 
 		saveButton.addClickHandler(new NewListitemClickHandler());
 		saveButton.setEnabled(true);
@@ -99,6 +107,7 @@ public class NewListitemForm extends HorizontalPanel {
 		discardButton.setEnabled(true);
 		actionButtonsPanel.add(discardButton);
 
+		mainPanel.add(shoppinglistGrid);
 		/**
 		 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
 		 */
@@ -112,7 +121,31 @@ public class NewListitemForm extends HorizontalPanel {
 	}
 
 	public void onLoad() {
-		this.add(shoppinglistGrid);
+		RootPanel.get("main").add(mainPanel);
+	}
+
+	public ShoppinglistHeader getShoppinglistHeader() {
+		return shoppinglistHeader;
+	}
+
+	public void setShoppinglistHeader(ShoppinglistHeader shoppinglistHeader) {
+		this.shoppinglistHeader = shoppinglistHeader;
+	}
+
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
+
+	public Shoppinglist getShoppinglistToDisplay() {
+		return shoppinglistToDisplay;
+	}
+
+	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
+		this.shoppinglistToDisplay = shoppinglistToDisplay;
 	}
 
 	/**
@@ -127,10 +160,11 @@ public class NewListitemForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<ListitemUnit> listitemUnitArrayList) {
-			for (int i = 0; i < listitemUnitArrayList.size(); i++) {
-				unitNameListBox.addItem(listitemUnitArrayList.get(i).getName());
-				selectedlistitemUnit = listitemUnitArrayList.get(0);
+		public void onSuccess(ArrayList<ListitemUnit> result) {
+			listitemUnitArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				unitNameListBox.addItem(result.get(i).getName());
+				selectedlistitemUnit = result.get(0);
 			}
 		}
 
@@ -148,10 +182,11 @@ public class NewListitemForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<Retailer> retailerArrayList) {
-			for (int i = 0; i < retailerArrayList.size(); i++) {
-				retailerNameListBox.addItem(retailerArrayList.get(i).getName());
-				selectedRetailer = retailerArrayList.get(0);
+		public void onSuccess(ArrayList<Retailer> result) {
+			retailerArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				retailerNameListBox.addItem(result.get(i).getName());
+				selectedRetailer = result.get(0);
 			}
 		}
 	}
@@ -162,8 +197,10 @@ public class NewListitemForm extends HorizontalPanel {
 	 */
 	private class UnitNameListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
+
 			int item = unitNameListBox.getSelectedIndex();
 			selectedlistitemUnit = listitemUnitArrayList.get(item);
+
 		}
 	}
 
@@ -173,8 +210,10 @@ public class NewListitemForm extends HorizontalPanel {
 	 */
 	private class RetailerNameListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
+
 			int item = retailerNameListBox.getSelectedIndex();
 			selectedRetailer = retailerArrayList.get(item);
+
 		}
 	}
 
@@ -187,9 +226,13 @@ public class NewListitemForm extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if (shoppinglistToDisplay != null) {
+				RootPanel.get("main").clear();
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setSelected(shoppinglistToDisplay);
+				RootPanel.get("main").add(ssf);
 
-			// tbd: Ansicht schließen und zurück zu Shoppinglist CellTable
-			// selectedShoppinglist
+			}
 		}
 
 	}
@@ -239,8 +282,10 @@ public class NewListitemForm extends HorizontalPanel {
 			if (result != null) {
 
 				RootPanel.get("main").clear();
-				// RootPanel.get().add(w);
-				// RootPanel.get().add(w);
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setSelected(shoppinglistToDisplay);
+				RootPanel.get("main").add(ssf);
+
 			}
 		}
 	}

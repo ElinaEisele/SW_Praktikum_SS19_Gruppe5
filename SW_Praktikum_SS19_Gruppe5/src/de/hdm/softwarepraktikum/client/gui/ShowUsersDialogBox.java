@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -12,6 +13,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.User;
@@ -24,7 +26,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  *
  */
 public class ShowUsersDialogBox extends DialogBox{
-	
+		
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 		
 	private Group selectedGroup;
@@ -34,25 +36,22 @@ public class ShowUsersDialogBox extends DialogBox{
 	private FlexTable usersFlexTable = new FlexTable();
 	private Button cancelButton = new Button("Schließen");
 	
+	
+	
 	public ShowUsersDialogBox() {
-		
-//		shoppinglistAdministration.getUsersOf(selectedGroup, new ShowUsersCallback());
-		
+				
 		this.setGlassEnabled(true);
 				
 		cancelButton.setStylePrimaryName("cancelButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
 		
-		infoLabel.setText("Hier seteht der Gruppenname");
-		
-//		infoLabel.setText("Mitglieder der Gruppe " + selectedGroup.getName() + ":");
-
 		mainPanel.add(infoLabel);
-//		mainPanel.add(usersFlexTable);
+		mainPanel.add(usersFlexTable);
 		mainPanel.add(cancelButton);
 		
 		this.add(mainPanel);
 		this.center();
+		
 	}
 
 
@@ -62,6 +61,8 @@ public class ShowUsersDialogBox extends DialogBox{
 
 	public void setSelectedGroup(Group selectedGroup) {
 		this.selectedGroup = selectedGroup;
+		this.infoLabel.setText("Mitglieder der Gruppe " + selectedGroup.getName());
+		shoppinglistAdministration.getUsersOf(selectedGroup, new ShowUsersCallback());
 	}
 	
 	private class CancelClickHandler implements ClickHandler{
@@ -80,11 +81,17 @@ public class ShowUsersDialogBox extends DialogBox{
 			Notification.show("Folgender Fehler ist aufgetreten: \n" + caught.toString());
 		}
 
+//		@Override
+//		public void onSuccess(ArrayList<User> result) {
+//			Notification.show("Erfolgreiches ShowUserCallback");
+//		}
+
 		@Override
 		public void onSuccess(ArrayList<User> result) {
+			
 			usersFlexTable.setText(0, 0, "Name");
 			usersFlexTable.setText(0, 1, "Email");
-			
+						
 			int i = 1;
 			for (User u : result) {
 				usersFlexTable.setText(i, 0, u.getName());

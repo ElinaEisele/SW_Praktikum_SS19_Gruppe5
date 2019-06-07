@@ -22,17 +22,17 @@ public class NavigatorPanel extends VerticalPanel{
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
-	private User user = CurrentUser.getUser();
+	private User u = CurrentUser.getUser();
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
-	private GroupShowForm gsf = new GroupShowForm();
-	private ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+	private GroupShowForm gsf;
+	private ShoppinglistShowForm ssf;
 	
-	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
+	private GroupShoppinglistTreeViewModel gstvm;
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Button newGroupButton = new Button("Neue Gruppe erstellen");
 	
-	private CellTree cellTree = new CellTree(gstvm, "Root");
+	private CellTree cellTree;
 	private Label refreshInfoLabel = new Label();
 		
 	public void onLoad() {
@@ -46,10 +46,20 @@ public class NavigatorPanel extends VerticalPanel{
 			}
 			
 		};
+		
 		timer.schedule(10000);
-		gstvm.setGroupForm(gsf);
+		
+		gsf = new GroupShowForm();
+		ssf = new ShoppinglistShowForm();
+		gstvm = new GroupShoppinglistTreeViewModel();
+		cellTree = new CellTree(gstvm, "Root");
+		
+		gstvm.setGroupShowForm(gsf);
 		gsf.setGstvm(gstvm);
 		
+		gstvm.setShoppinglistShowForm(ssf);
+		ssf.setGstvm(gstvm);
+				
 		cellTree.setAnimationEnabled(true);
 		
 		newGroupButton.addClickHandler(new NewGroupClickHandler());
@@ -86,7 +96,7 @@ public class NavigatorPanel extends VerticalPanel{
 	}
 
 	public void refreshInfo() {
-		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroups(), user, new RefreshDataCallback());
+		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroups(), u, new RefreshDataCallback());
 	}
 	
 	private class RefreshDataCallback implements AsyncCallback<Boolean>{
@@ -113,7 +123,7 @@ public class NavigatorPanel extends VerticalPanel{
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (user != null) {
+			if (u != null) {
 				NewGroupForm ngf = new NewGroupForm();
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(ngf);

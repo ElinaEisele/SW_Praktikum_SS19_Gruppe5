@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -19,6 +23,7 @@ import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.BusinessObject;
 import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.*;
@@ -39,9 +44,12 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	private GroupShowForm groupShowForm;
 	private ShoppinglistShowForm shoppinglistShowForm;
 	
+	private ShoppinglistContent shoppinglistContent;
+	private ShoppinglistCellTable shoppinglistCellTable;
+
+	
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
-	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 	private ListDataProvider<Group> groupDataProvider = new ListDataProvider<Group>();
 	
@@ -65,6 +73,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 			if (bo == null) {
 				return null;
 			} else {
+				// prüfen ob Gruppe oder Shippingliste
 				return bo.getId();
 			}
 		}
@@ -88,8 +97,9 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 			if (selection instanceof Group) {
 				setSelectedGroup((Group) selection);
 			} else if (selection instanceof Shoppinglist){
-				setSelectedShoppinglsit((Shoppinglist) selection);
+				setSelectedShoppinglist((Shoppinglist) selection);
 			}
+
 		}
 		
 	}
@@ -102,6 +112,20 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		shoppinglistDataProviders = new HashMap<Group, ListDataProvider<Shoppinglist>>();		
 	}
 	
+	
+	
+	public SingleSelectionModel<BusinessObject> getSelectionModel() {
+		return selectionModel;
+	}
+
+
+
+	public void setSelectionModel(SingleSelectionModel<BusinessObject> selectionModel) {
+		this.selectionModel = selectionModel;
+	}
+
+
+
 	public ArrayList<Group> getUserGroups() {
 		return userGroups;
 	}
@@ -110,11 +134,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		this.userGroups = userGroups;
 	}
 	
-	void setGroupForm(GroupShowForm gsf) {
+	void setGroupShowForm(GroupShowForm gsf) {
 		groupShowForm = gsf;
 	}
 	
-	void setShoppinglistForm(ShoppinglistShowForm ssf) {
+	void setShoppinglistShowForm(ShoppinglistShowForm ssf) {
 		shoppinglistShowForm = ssf;
 	}
 	
@@ -123,8 +147,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	}
 	
 	void setSelectedGroup(Group g) {
+		RootPanel.get("main").clear();
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
+		selectedShoppinglist = null;
+		RootPanel.get("main").add(groupShowForm);	
 
 	}
 	
@@ -133,9 +160,12 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	}
 	
 
-	void setSelectedShoppinglsit(Shoppinglist s) {
+	void setSelectedShoppinglist(Shoppinglist s) {	
+		RootPanel.get("main").clear();		
 		selectedShoppinglist = s;
 		shoppinglistShowForm.setSelected(s);
+		RootPanel.get("main").add(shoppinglistShowForm);
+
 	}
 	
 	/**
@@ -158,7 +188,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 	 */
 	void updateGroup(Group group) {
 		List<Group> groupList = groupDataProvider.getList();
-		int i = 0;
+		int i = 1;
 		for (Group g : groupList) {
 			if (g.getId() == group.getId()) {
 				groupList.set(i, group);
@@ -188,6 +218,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel{
 		 * Wurde noch kein Shoppinglist Provider für diese <code>Group</code> erstellt, so muss
 		 * diese auch nicht bearbeitet werden.
 		 */
+		
 		if (!shoppinglistDataProviders.containsKey(group)) {
 			return;
 		}
