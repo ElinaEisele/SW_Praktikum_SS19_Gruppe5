@@ -33,6 +33,7 @@ public class NewGroupForm extends VerticalPanel {
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
 	private Group newGroup = null;
+	private Group oldSelectedGroup = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Gruppe erstellen");
@@ -74,6 +75,14 @@ public class NewGroupForm extends VerticalPanel {
 		this.gstvm = gstvm;
 	}
 
+	public Group getOldSelectedGroup() {
+		return oldSelectedGroup;
+	}
+
+	public void setOldSelectedGroup(Group oldSelectedGroup) {
+		this.oldSelectedGroup = oldSelectedGroup;
+	}
+
 	private class SaveClickHandler implements ClickHandler {
 
 		@Override
@@ -91,7 +100,12 @@ public class NewGroupForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+
 			RootPanel.get("main").clear();
+			GroupShowForm gsf = new GroupShowForm();
+			gsf.setSelected(oldSelectedGroup);
+			RootPanel.get("main").add(gsf);
+
 		}
 
 	}
