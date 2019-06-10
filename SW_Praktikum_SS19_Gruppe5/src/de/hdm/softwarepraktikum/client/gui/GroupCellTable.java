@@ -11,14 +11,9 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.ListDataProvider;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -26,7 +21,8 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Diese Klasse dient zur Darstellung aller Listen einer Gruppe.
+ * Diese Klasse dient zur Darstellung aller Einkaufslisten einer Gruppe in einem
+ * <code>CellTable</code> Widget.
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
@@ -37,27 +33,15 @@ public class GroupCellTable extends VerticalPanel {
 			.getShoppinglistAdministration();
 
 	private GroupShoppinglistTreeViewModel gstvm = null;
-
-	private ShoppinglistShowForm shoppinglistShowForm;
-	private ListDataProvider<Shoppinglist> listDataProvider;
 	private GroupShowForm groupShowForm = null;
-	private Shoppinglist shoppinglistToDisplay = null;
 	private Group groupToDisplay = null;
-	private Label label = new Label("Huiuiui");
 
-	VerticalPanel vPanel = new VerticalPanel();
-
-	private ArrayList<Shoppinglist> shoppinglists = new ArrayList<>();
 	private CellTable<Shoppinglist> table = new CellTable<Shoppinglist>();
 
 	public GroupCellTable() {
 
-		table.setStyleName("shoppinglist-CellTable");
-		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-		listDataProvider = (ListDataProvider<Shoppinglist>) table.getKeyProvider();
-
 		/**
-		 * Column containing the product name of a listitem
+		 * Spalte zur Darstellung des Namen einer <code>Shoppinglist</code>
 		 * 
 		 */
 		Column<Shoppinglist, String> shoppinglistNameToDisplay = new Column<Shoppinglist, String>(new TextCell()) {
@@ -70,7 +54,8 @@ public class GroupCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Clickable edit button containing an image
+		 * Spalte, die ein klickbares Bild enthält, das die Einkaufsliste bei Klick in
+		 * einer neuen <code>ShoppinglistShowForm</code> darstellt.
 		 * 
 		 */
 		Column<Shoppinglist, String> imageColumn = new Column<Shoppinglist, String>(new ClickableTextCell() {
@@ -89,18 +74,18 @@ public class GroupCellTable extends VerticalPanel {
 			public void onBrowserEvent(Context context, Element elem, Shoppinglist object, NativeEvent event) {
 				super.onBrowserEvent(context, elem, object, event);
 				if ("click".equals(event.getType())) {
-					
+
 					RootPanel.get("main").clear();
-					
+
 					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 //					ssf.setGstvm(gstvm);
 //					gstvm.setSelectedGroup(null);
 //					gstvm.setSelectedShoppinglist(object);
-					
+
 					ssf.setSelected(object);
-					
+
 					RootPanel.get("main").add(ssf);
-											
+
 				}
 			}
 		};
@@ -111,34 +96,16 @@ public class GroupCellTable extends VerticalPanel {
 	}
 
 	public void onLoad() {
-		
-		shoppinglistAdministration.getShoppinglistsOf(groupToDisplay, new AsyncCallback<ArrayList<Shoppinglist>>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Notification.show("Das Laden der Einkaufslisten ist fehlgeschlagen");
+		/**
+		 * AsyncCallback der eine ArrayList mit <code>Shoppinglist</code>-Objekten der
+		 * entsprechenden Gruppe zurueckgeben soll.
+		 * 
+		 */
+		shoppinglistAdministration.getShoppinglistsOf(groupShowForm.getSelected(), new GetShoppinglistsOfCallback());
 
-			}
+		this.add(table);
 
-			@Override
-			public void onSuccess(ArrayList<Shoppinglist> result) {
-
-//				// Set the total row count
-				table.setRowCount(result.size(), true);
-//				// Push the data into the widget.
-				table.setRowData(0, result);
-//				Window.alert("uff"+ result.get(0).getName());
-//				
-//				Window.alert(groupToDisplay.getName());	
-
-				vPanel.add(label);
-				vPanel.add(table);
-
-			}
-
-		});
-		label.setText(groupToDisplay.getName());
-		this.add(vPanel);
 	}
 
 	public GroupShowForm getGroupShowForm() {
@@ -166,5 +133,32 @@ public class GroupCellTable extends VerticalPanel {
 
 	public Group getSelected() {
 		return groupToDisplay;
+	}
+
+	/**
+	 * AsyncCallback der eine ArrayList mit <code>Shoppinglist</code>-Objekten der
+	 * entsprechenden Gruppe zurückgeben soll.
+	 * 
+	 */
+	private class GetShoppinglistsOfCallback implements AsyncCallback<ArrayList<Shoppinglist>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Notification.show("Das Laden der Einkaufslisten ist fehlgeschlagen");
+
+		}
+
+		@Override
+		public void onSuccess(ArrayList<Shoppinglist> result) {
+
+			/**
+			 * Daten dem <code>CellTable</code> Widget hinzufuegen.
+			 * 
+			 */
+			table.setRowCount(result.size(), true);
+			table.setRowData(0, result);
+
+		}
+
 	}
 }
