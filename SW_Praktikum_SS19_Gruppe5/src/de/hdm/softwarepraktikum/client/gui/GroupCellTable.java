@@ -11,6 +11,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -83,6 +84,7 @@ public class GroupCellTable extends VerticalPanel {
 //					gstvm.setSelectedShoppinglist(object);
 
 					ssf.setSelected(object);
+					ssf.setSelectedGroup(groupToDisplay);
 
 					RootPanel.get("main").add(ssf);
 
