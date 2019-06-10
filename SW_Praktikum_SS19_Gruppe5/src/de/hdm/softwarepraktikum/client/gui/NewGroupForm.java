@@ -88,9 +88,12 @@ public class NewGroupForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (u != null) {
+				if (nameTextBox.getValue() == "") {
+					Window.alert("Niemand hat die Absicht eine Gruppe ohne Namen anzulegen");
+				}else {
 				groupShowForm = new GroupShowForm();
 				shoppinglistAdministration.createGroupFor(u, nameTextBox.getValue(), new NewGroupAsyncCallback());
-
+				}
 			}
 		}
 
