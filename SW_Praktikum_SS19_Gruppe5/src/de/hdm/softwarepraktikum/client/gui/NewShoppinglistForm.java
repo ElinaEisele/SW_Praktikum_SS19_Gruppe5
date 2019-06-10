@@ -135,7 +135,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 			RootPanel.get("aside").clear();
 			NavigatorPanel np = new NavigatorPanel();
 			RootPanel.get("aside").add(np);
-			gstvm.addShoppinglistToGroup(result, selectedGroup);
+			//gstvm.addShoppinglistToGroup(result, selectedGroup); //not working
 			// die neu erstellte Shoppinglist wird in der ShoppinglistShowForm gesetzt
 			shoppinglistShowForm.setSelected(result);
 			shoppinglistShowForm.setSelectedGroup(selectedGroup);
