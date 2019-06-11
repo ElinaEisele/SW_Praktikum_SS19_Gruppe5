@@ -87,7 +87,7 @@ public class GroupShowForm extends VerticalPanel {
 
 		groupCellTable.setSelected(selectedGroup);
 		groupHeader.setSelected(selectedGroup);
-
+		groupCellTable.setGroupShowForm(GroupShowForm.this);
 		groupHeader.setGroupShowForm(GroupShowForm.this);
 
 		this.add(groupHeader);
