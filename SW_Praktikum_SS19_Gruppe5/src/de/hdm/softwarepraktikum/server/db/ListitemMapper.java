@@ -296,8 +296,8 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					+ "FROM shoppinglists INNER JOIN listitems " 
-					+ "ON shoppinglists.listitem_id = listitems.id "
+					+ "FROM listitems INNER JOIN shoppinglists " 
+					+ "ON listitems.shoppinglist_id = shoppinglists.id "
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {
