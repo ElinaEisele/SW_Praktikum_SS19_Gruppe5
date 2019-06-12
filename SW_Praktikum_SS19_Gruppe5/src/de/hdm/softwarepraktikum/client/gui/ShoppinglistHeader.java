@@ -179,6 +179,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				nlf.setGstvm(ShoppinglistHeader.this.gstvm);
 				nlf.setShoppinglistHeader(ShoppinglistHeader.this);
 				nlf.setShoppinglistToDisplay(shoppinglistToDisplay);
+				nlf.setGroupToDisplay(groupToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, nlf);
 				ssf.setSelected(shoppinglistToDisplay);
 
