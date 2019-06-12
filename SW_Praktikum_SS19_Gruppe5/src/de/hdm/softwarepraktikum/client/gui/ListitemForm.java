@@ -37,7 +37,8 @@ public class ListitemForm extends VerticalPanel {
 			.getShoppinglistAdministration();
 
 	private GroupShoppinglistTreeViewModel gstvm = null;
-	private ShoppinglistHeader shoppinglistHeader;
+	private ShoppinglistHeader shoppinglistHeader = null;
+	private ListitemHeader listitemHeader = null;
 	private Shoppinglist shoppinglistToDisplay = null;
 	private ListitemUnit selectedlistitemUnit = null;
 	private Retailer selectedRetailer = null;
@@ -58,6 +59,7 @@ public class ListitemForm extends VerticalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
+	private Button newRetailerButton = new Button("Neu");
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("verwerfen und zurueck");
 
@@ -71,7 +73,7 @@ public class ListitemForm extends VerticalPanel {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
-		shoppinglistGrid = new Grid(6, 2);
+		shoppinglistGrid = new Grid(6, 3);
 
 		Label productNameLabel = new Label("Produkt Name: ");
 		shoppinglistGrid.setWidget(1, 0, productNameLabel);
@@ -89,7 +91,8 @@ public class ListitemForm extends VerticalPanel {
 		Label retailerNameLabel = new Label("Haendler: ");
 		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
-
+		shoppinglistGrid.setWidget(4, 2, newRetailerButton);
+		newRetailerButton.addClickHandler(new NewRetailerClickhandler());
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
@@ -155,6 +158,30 @@ public class ListitemForm extends VerticalPanel {
 
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
+	}
+
+	public Shoppinglist getShoppinglistToDisplay() {
+		return shoppinglistToDisplay;
+	}
+
+	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
+		this.shoppinglistToDisplay = shoppinglistToDisplay;
+	}
+
+	public Listitem getSelectedListitem() {
+		return selectedListitem;
+	}
+
+	public void setSelectedListitem(Listitem selectedListitem) {
+		this.selectedListitem = selectedListitem;
+	}
+
+	public ListitemHeader getListitemHeader() {
+		return listitemHeader;
+	}
+
+	public void setListitemHeader(ListitemHeader listitemHeader) {
+		this.listitemHeader = listitemHeader;
 	}
 
 	/**
@@ -301,6 +328,28 @@ public class ListitemForm extends VerticalPanel {
 			int item = retailerNameListBox.getSelectedIndex();
 			selectedRetailer = retailerArrayList.get(item);
 		}
+	}
+
+	private class NewRetailerClickhandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (selectedListitem != null) {
+				RootPanel.get("main").clear();
+				NewRetailerForm nrf = new NewRetailerForm();
+
+				listitemHeader = new ListitemHeader();
+				listitemHeader.setListitemToDisplay(selectedListitem);
+				nrf.setListitemHeader(listitemHeader);
+				nrf.setSelectedListitem(selectedListitem);
+				ListitemShowForm lsf = new ListitemShowForm(listitemHeader, nrf);
+				lsf.setSelected(selectedListitem);
+				RootPanel.get("main").add(lsf);
+			} else {
+				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
+			}
+		}
+
 	}
 
 	/**

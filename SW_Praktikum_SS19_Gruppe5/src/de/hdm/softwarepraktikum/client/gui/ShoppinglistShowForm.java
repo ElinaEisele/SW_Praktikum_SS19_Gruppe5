@@ -67,6 +67,14 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		RootPanel.get("main").add(mainPanel);
 	}
 
+	public ShoppinglistShowForm(ShoppinglistHeader sh, NewRetailerForm nrf) {
+		shoppinglistHeader = sh;
+		//mainPanel.add(shoppinglistHeader);
+		mainPanel.add(nrf);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
+	}
+	
 	public ShoppinglistShowForm() {
 		shoppinglistHeader = new ShoppinglistHeader();
 		shoppinglistCellTable = new ShoppinglistCellTable();
