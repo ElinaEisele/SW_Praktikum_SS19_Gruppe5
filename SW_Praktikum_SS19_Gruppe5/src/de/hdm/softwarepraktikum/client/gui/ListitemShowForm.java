@@ -23,6 +23,11 @@ public class ListitemShowForm extends VerticalPanel {
 		mainPanel.add(nlf);
 
 	}
+	public ListitemShowForm(ListitemHeader lh, NewRetailerForm nrf) {
+		listitemHeader = lh;
+		mainPanel.add(nrf);
+
+	}
 
 	public ListitemShowForm() {
 		listitemHeader = new ListitemHeader();
@@ -54,4 +59,11 @@ public class ListitemShowForm extends VerticalPanel {
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
+	public ListitemHeader getListitemHeader() {
+		return listitemHeader;
+	}
+	public void setListitemHeader(ListitemHeader listitemHeader) {
+		this.listitemHeader = listitemHeader;
+	}
+	
 }

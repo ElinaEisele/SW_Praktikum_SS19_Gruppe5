@@ -60,6 +60,7 @@ public class NewListitemForm extends HorizontalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
+	private Button newRetailerButton = new Button("Neu");
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("verwerfen und zurueck");
 
@@ -73,7 +74,7 @@ public class NewListitemForm extends HorizontalPanel {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
-		shoppinglistGrid = new Grid(6, 2);
+		shoppinglistGrid = new Grid(6, 3);
 
 		Label newListitemLabel = new Label("Neuen Eintrag erstellen");
 		shoppinglistGrid.setWidget(0, 0, newListitemLabel);
@@ -94,6 +95,8 @@ public class NewListitemForm extends HorizontalPanel {
 		Label retailerNameLabel = new Label("Haendler: ");
 		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
+		shoppinglistGrid.setWidget(4, 2, newRetailerButton);
+		newRetailerButton.addClickHandler(new NewRetailerClickhandler());
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
@@ -217,6 +220,29 @@ public class NewListitemForm extends HorizontalPanel {
 		}
 	}
 
+	
+	private class NewRetailerClickhandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (shoppinglistToDisplay != null) {
+				RootPanel.get("main").clear();
+				NewRetailerForm nrf = new NewRetailerForm();
+
+				shoppinglistHeader = new ShoppinglistHeader();
+				shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+				nrf.setShoppinglistHeader(shoppinglistHeader);
+				nrf.setSelectedShoppinglist(shoppinglistToDisplay);
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nrf);
+				ssf.setSelected(shoppinglistToDisplay);
+				RootPanel.get("main").add(ssf);
+			} else {
+				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
+			}
+			
+		}
+		
+	}
 	/**
 	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zum Shoppinglist
 	 * CellTable
@@ -259,6 +285,12 @@ public class NewListitemForm extends HorizontalPanel {
 
 				shoppinglistAdministration.createListitem(shoppinglistToDisplay, productName, amount, listitemUnit,
 						retailer, new CreateListitemCallback());
+				Window.alert(shoppinglistToDisplay.getName());
+				Window.alert(productName);
+				Window.alert(String.valueOf(amount));
+				Window.alert(listitemUnit.getName());
+				Window.alert(retailer.getName());
+				
 			} else {
 				Notification.show("Keine Shoppinglist ausgewaehlt");
 			}
