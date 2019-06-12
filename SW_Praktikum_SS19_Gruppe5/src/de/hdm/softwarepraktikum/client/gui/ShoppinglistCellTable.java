@@ -161,7 +161,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Spalte, die ein klickbares Bild enthält, das die Klasse zur Bearbeitung des
+		 * Spalte, die ein klickbares Bild enthï¿½lt, das die Klasse zur Bearbeitung des
 		 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
 		 * 
 		 */
@@ -216,7 +216,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		 * success method
 		 * 
 		 */
-		Window.alert(shoppinglistShowForm.getSelectedShoppinglist().getName());
+		Window.alert("SCT: "+shoppinglistShowForm.getSelectedShoppinglist().getName());
 		shoppinglistAdministration.getListitemsOf(shoppinglistShowForm.getSelectedShoppinglist(),
 				new AsyncCallback<ArrayList<Listitem>>() {
 
@@ -229,7 +229,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 					@Override
 					public void onSuccess(ArrayList<Listitem> result) {
 						if (result == null) {
-							Window.alert("Keine Eintraege");
+							Window.alert("result == null --> Keine Eintraege");
 						} else {
 							// Set the total row count
 							table.setRowCount(result.size(), true);
