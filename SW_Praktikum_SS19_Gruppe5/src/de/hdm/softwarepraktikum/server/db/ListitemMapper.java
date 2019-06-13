@@ -132,10 +132,8 @@ public class ListitemMapper {
 
 			if (rs.next()) {
 				listitem.setId(rs.getInt("maxid") + 1);
-				System.out.println("ListitemMapper maxid: "+ rs.getInt("maxid"));
 			}
 			
-			System.out.println("ListitemMapper: maxid + 1: " + listitem.getId());
 
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO listitems "
 					+ "(id, creationDate, amount, isStandard, product_id, shoppinglist_id, unit_id, usergroup_id, "
