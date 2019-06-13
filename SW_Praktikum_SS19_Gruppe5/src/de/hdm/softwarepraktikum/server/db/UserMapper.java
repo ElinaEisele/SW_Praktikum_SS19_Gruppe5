@@ -63,12 +63,12 @@ public class UserMapper {
 				u.setGmailAddress(rs.getString("gMail"));
 				users.add(u);
 			}
-			return users;
-
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return users;
 
 	}
 
@@ -127,13 +127,12 @@ public class UserMapper {
 				u.setGmailAddress(rs.getString("gMail"));
 				users.add(u);
 			}
-			
-			return users;
-
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return users;
 
 	}
 
@@ -321,8 +320,6 @@ public class UserMapper {
 				u.setGmailAddress(rs.getString("gMail"));
 				users.add(u);
 			}
-			
-			return users;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
