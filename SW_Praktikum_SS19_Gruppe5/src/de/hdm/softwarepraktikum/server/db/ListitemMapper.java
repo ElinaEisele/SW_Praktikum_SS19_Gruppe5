@@ -143,8 +143,6 @@ public class ListitemMapper {
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			
-			listitem.setGroupID(3);
-
 			pstmt.setInt(1, listitem.getId());
 			pstmt.setDate(2, (Date) listitem.getCreationDate());
 			pstmt.setFloat(3, listitem.getAmount());
@@ -183,6 +181,7 @@ public class ListitemMapper {
 
 			pstmt.setFloat(1, listitem.getAmount());
 			pstmt.setBoolean(2, listitem.isStandard());
+			pstmt.setInt(3, listitem.getId());
 			pstmt.setBoolean(3, listitem.isArchived());
 			pstmt.setInt(4, listitem.getId());
 			pstmt.executeUpdate();
