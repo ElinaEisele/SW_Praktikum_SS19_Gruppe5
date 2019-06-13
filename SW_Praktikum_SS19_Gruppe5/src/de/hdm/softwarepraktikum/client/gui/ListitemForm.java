@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
 import de.hdm.softwarepraktikum.shared.bo.Product;
@@ -43,6 +44,7 @@ public class ListitemForm extends VerticalPanel {
 	private ListitemUnit selectedlistitemUnit = null;
 	private Retailer selectedRetailer = null;
 	private Listitem selectedListitem = null;
+	private Group groupToDisplay = null;
 
 	private ArrayList<Retailer> retailerArrayList;
 	private ArrayList<ListitemUnit> listitemUnitArrayList;
@@ -65,7 +67,7 @@ public class ListitemForm extends VerticalPanel {
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
+	 * angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
 	public ListitemForm() {
@@ -109,32 +111,32 @@ public class ListitemForm extends VerticalPanel {
 		mainPanel.add(shoppinglistGrid);
 
 		/**
-		 * Zum Befüllen der TextBox mit dem Produktname.
+		 * Zum Befï¿½llen der TextBox mit dem Produktname.
 		 */
 		shoppinglistAdministration.getProductOf(selectedListitem, new GetProductNameCallback());
 
 		/**
-		 * Zum Befüllen der TextBox mit der Menge.
+		 * Zum Befï¿½llen der TextBox mit der Menge.
 		 */
 		shoppinglistAdministration.getAmountOf(selectedListitem, new GetAmountCallback());
 
 		/**
-		 * Zum Befüllen der TextBox mit der Einheit.
+		 * Zum Befï¿½llen der TextBox mit der Einheit.
 		 */
 		shoppinglistAdministration.getListitemUnitOf(selectedListitem, new GetListitemUnitCallback());
 
 		/**
-		 * Zum Befüllen der TextBox mit dem Haendlername.
+		 * Zum Befï¿½llen der TextBox mit dem Haendlername.
 		 */
 		shoppinglistAdministration.getRetailerOf(selectedListitem, new GetRetailerCallback());
 
 		/**
-		 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
+		 * Zum Befï¿½llen der Dropdown-Liste mit <code>Unit</code>.
 		 */
 		shoppinglistAdministration.getAllListitemUnits(new GetAllListitemUnitsCallback());
 
 		/**
-		 * Befüllen der Dropdown-Liste mit <code>Retailer</code>.
+		 * Befï¿½llen der Dropdown-Liste mit <code>Retailer</code>.
 		 */
 		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
 
@@ -184,8 +186,17 @@ public class ListitemForm extends VerticalPanel {
 		this.listitemHeader = listitemHeader;
 	}
 
+	public Group getGroupToDisplay() {
+		return groupToDisplay;
+	}
+
+	public void setGroupToDisplay(Group groupToDisplay) {
+		this.groupToDisplay = groupToDisplay;
+	}
+
+
 	/**
-	 * Zum Befüllen der TextBox mit dem Produktname.
+	 * Zum Befï¿½llen der TextBox mit dem Produktname.
 	 */
 	private class GetProductNameCallback implements AsyncCallback<Product> {
 
@@ -204,7 +215,7 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Befüllen der TextBox mit der Menge.
+	 * Zum Befï¿½llen der TextBox mit der Menge.
 	 */
 	private class GetAmountCallback implements AsyncCallback<Float> {
 
@@ -222,7 +233,7 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Befüllen der TextBox mit der Einheit.
+	 * Zum Befï¿½llen der TextBox mit der Einheit.
 	 */
 
 	private class GetListitemUnitCallback implements AsyncCallback<ListitemUnit> {
@@ -246,7 +257,7 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Befüllen der TextBox mit dem Haendlername.
+	 * Zum Befï¿½llen der TextBox mit dem Haendlername.
 	 */
 	private class GetRetailerCallback implements AsyncCallback<Retailer> {
 
@@ -268,7 +279,7 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Befüllen der Dropdown-Liste mit <code>Unit</code>.
+	 * Zum Befï¿½llen der Dropdown-Liste mit <code>Unit</code>.
 	 */
 	private class GetAllListitemUnitsCallback implements AsyncCallback<ArrayList<ListitemUnit>> {
 
@@ -289,7 +300,7 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Befüllen der Dropdown-Liste mit <code>Retailer</code>.
+	 * Befï¿½llen der Dropdown-Liste mit <code>Retailer</code>.
 	 */
 	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
 
@@ -310,7 +321,7 @@ public class ListitemForm extends VerticalPanel {
 
 	/**
 	 * ChangeHandler zum erkennen welches <code>Unit</code> Objekt der
-	 * Dropdown-Liste ausgewählt wurde und dieses selectedListitemUnit zuordnen .
+	 * Dropdown-Liste ausgewï¿½hlt wurde und dieses selectedListitemUnit zuordnen .
 	 */
 	private class UnitNameListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
@@ -321,7 +332,7 @@ public class ListitemForm extends VerticalPanel {
 
 	/**
 	 * ChangeHandler zum erkennen welches <code>Retailer</code> Objekt der
-	 * Dropdown-Liste ausgewählt wurde und dieses selectedRetailer zuordnen .
+	 * Dropdown-Liste ausgewï¿½hlt wurde und dieses selectedRetailer zuordnen .
 	 */
 	private class RetailerNameListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
@@ -353,7 +364,7 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zum Shoppinglist
+	 * Clickhandler zum verwerfen der Eingaben und zur Rï¿½ckkehr zum Shoppinglist
 	 * CellTable
 	 * 
 	 */
@@ -382,13 +393,13 @@ public class ListitemForm extends VerticalPanel {
 				try {
 					amount = (float) decimalFormatter.parse(amountTextBox.getText());
 				} catch (NumberFormatException nfe) {
-					Window.alert("ungültiger Wert!");
+					Window.alert("ungï¿½ltiger Wert!");
 					return;
 				}
 				ListitemUnit listitemUnit = selectedlistitemUnit;
 				Retailer retailer = selectedRetailer;
 
-				shoppinglistAdministration.createListitem(shoppinglistToDisplay, productName, amount, listitemUnit,
+				shoppinglistAdministration.createListitem(groupToDisplay, shoppinglistToDisplay, productName, amount, listitemUnit,
 						retailer, new CreateListitemCallback());
 			} else {
 				Notification.show("Keine Shoppinglist ausgewaehlt");
@@ -398,7 +409,7 @@ public class ListitemForm extends VerticalPanel {
 
 	/**
 	 * Nach dem erfolgreichen Erstellen wird das Formular geschlossen und die
-	 * aktuell ausgewählte Shoppinglist erneut geöffnet.
+	 * aktuell ausgewï¿½hlte Shoppinglist erneut geï¿½ffnet.
 	 * 
 	 */
 	private class CreateListitemCallback implements AsyncCallback<Listitem> {
