@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -25,7 +24,7 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Klasse zum Anzeigen eines Formulars, um die Zuweisungen zu Einzelhändlern von
+ * Klasse zum Anzeigen eines Formulars, um die Zuweisungen zu Einzelhï¿½ndlern von
  * einem Nutzer anzusehen.
  * 
  * @author ElinaEisele, JonasWagenknecht
@@ -45,6 +44,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	private User selectedUser = null;
 
 	private ArrayList<User> userArrayList;
+	private ArrayList<Retailer >retailerArrayList;
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Grid shoppinglistGrid;
 
@@ -60,7 +60,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
+	 * angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
 	public ShowUserRetailerAllocationForm() {
@@ -98,7 +98,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	public void onLoad() {
 		
 		/**
-		 * Zum Befüllen der Dropdown-Liste mit <code>User</code>.
+		 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code>.
 		 */
 		groupToDisplay = shoppinglistHeader.getGroupToDisplay();
 
@@ -135,7 +135,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 
 	/**
-	 * Zum Befüllen der Dropdown-Liste mit <code>User</code>.
+	 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code>.
 	 */
 	private class GetAllUserCallback implements AsyncCallback<ArrayList<User>> {
 
@@ -147,6 +147,9 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(ArrayList<User> result) {
+			
+			userArrayList = result;
+			
 			for (int i = 0; i < result.size(); i++) {
 				userListBox.addItem(result.get(i).getName());
 				selectedUser = result.get(0);
@@ -158,7 +161,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 	/**
 	 * ChangeHandler zum erkennen welches <code>User</code> Objekt der
-	 * Dropdown-Liste ausgewählt wurde und dieses selectedUser zuordnen .
+	 * Dropdown-Liste ausgewï¿½hlt wurde und dieses selectedUser zuordnen .
 	 */
 	private class UserListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
@@ -168,7 +171,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	}
 
 	/**
-	 * Clickhandler zur Rückkehr zur ShoppinglistShowForm
+	 * Clickhandler zur Rï¿½ckkehr zur ShoppinglistShowForm
 	 * 
 	 */
 	private class BackClickhandler implements ClickHandler {
@@ -193,8 +196,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				Window.alert(shoppinglistToDisplay.getName());
-				Window.alert(selectedUser.getName());
+								
 				shoppinglistAdministration.getRetailersOf(shoppinglistToDisplay, selectedUser,
 						new ShowAllocationCallback());
 				
@@ -218,19 +220,33 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<Retailer> retailerArrayList) {
+		public void onSuccess(ArrayList<Retailer> result) {
 			
+			retailerArrayList = result;
+						
 			userRetailerAllocationFlexTable.setText(0, 0, "User");
 			userRetailerAllocationFlexTable.setText(0, 1, "Haendler");
 			
 			userRetailerAllocationFlexTable.setText(1, 0, "Kein Nutzer ausgewaehlt");
-			userRetailerAllocationFlexTable.setText(1, 1, "Kein Haendler ausgewaehlt");
+			userRetailerAllocationFlexTable.setText(1, 1, "Kein Haendler zugwiesen");
 			userRetailerAllocationFlexTable.setText(1, 0, selectedUser.getName());
 
-			for (int i = 1; i <= retailerArrayList.size(); i++) {
-				userRetailerAllocationFlexTable.setText(1, i, retailerArrayList.get(i).getName());
+			
+			int i = 1;
+			for (Retailer r : retailerArrayList) {
+				userRetailerAllocationFlexTable.setText(i, 1, r.getName());
+				i++;
 			}
-
+			
+			for (Retailer r : retailerArrayList) {
+				userRetailerAllocationFlexTable.setText(i, 0, null);
+				userRetailerAllocationFlexTable.setText(i, 1, null);
+				i++;
+			}
+			
+			retailerArrayList = null;
+			
+			
 		}
 	}
 
