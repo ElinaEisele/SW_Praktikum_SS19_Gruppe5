@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 import com.google.appengine.api.utils.SystemProperty;
 
@@ -24,7 +25,7 @@ public class DBConnection {
 	
     private static Connection con = null;
     
-    private static String googleUrl = "jdbc:google:mysql://swpraktikumss19g5:europe-west3:sw-praktikum-ss19-g5?user=CarlaHofmann&password=CarlaHofmann";
+    private static String googleUrl = "jdbc:google:mysql://swpraktikum:main-mechanism-242607:europe-west3:swpraktikum/swpraktikum?user=root&password=swpraktikum";
     private static String localUrl = "jdbc:mysql://localhost:3306/swpraktikum?user=root&password=&serverTimezone=UTC";
     
     /**
@@ -48,7 +49,7 @@ public class DBConnection {
                 
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                 	
-                    //Klasse laden, welche das neue Präfix "jdbc: google: mysql: //" bereitstellt.
+                    //Klasse laden, welche das neue Präfix "jdbc:google:mysql: //" bereitstellt.
                 	
                     Class.forName("com.mysql.jdbc.GoogleDriver");
                     url = googleUrl;
