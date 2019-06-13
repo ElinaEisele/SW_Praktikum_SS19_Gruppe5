@@ -6,7 +6,7 @@ com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.g
 de.hdm.softwarepraktikum.shared.ReportGenerator, false, false, false, false, _, 1728382573
 de.hdm.softwarepraktikum.shared.bo.BusinessObject, false, false, true, false, de.hdm.softwarepraktikum.shared.bo.BusinessObject/1317516990, 1317516990
 de.hdm.softwarepraktikum.shared.bo.Group, false, false, true, true, de.hdm.softwarepraktikum.shared.bo.Group/434508, 434508
-de.hdm.softwarepraktikum.shared.bo.Listitem, false, false, true, true, de.hdm.softwarepraktikum.shared.bo.Listitem/1027435698, 1027435698
+de.hdm.softwarepraktikum.shared.bo.Listitem, false, false, true, true, de.hdm.softwarepraktikum.shared.bo.Listitem/185208957, 185208957
 de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject, false, false, true, false, de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject/1542534759, 1542534759
 de.hdm.softwarepraktikum.shared.bo.Shoppinglist, false, false, true, true, de.hdm.softwarepraktikum.shared.bo.Shoppinglist/3978627303, 3978627303
 de.hdm.softwarepraktikum.shared.bo.User, false, false, true, true, de.hdm.softwarepraktikum.shared.bo.User/4176830688, 4176830688
