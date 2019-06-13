@@ -63,13 +63,10 @@ public class GroupMapper {
 				groups.add(g);
 			}
 
-			return groups;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
-
+		return groups;
 	}
 
 	/**
@@ -128,13 +125,11 @@ public class GroupMapper {
 				groups.add(g);
 			}
 
-			return groups;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return groups;
 	}
 
 	/**
@@ -168,8 +163,8 @@ public class GroupMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-
 		}
+		
 
 	}
 
@@ -196,7 +191,7 @@ public class GroupMapper {
 			e.printStackTrace();
 			return null;
 		}
-
+		
 	}
 
 	/**
@@ -301,7 +296,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id "
+			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id, "
 					+ "usergroups.id as usergroup_id, "
 					+ "usergroups.creationDate as usergroup_creationDate, "
 					+ "usergroups.name as usergroup_name "
@@ -319,10 +314,9 @@ public class GroupMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
 		}
-		
 		return null;
-
 	}
 
 	/**
@@ -354,14 +348,12 @@ public class GroupMapper {
 				g.setName(rs.getString("usergroup_name"));
 				groups.add(g);
 			}
-			
-			return groups;
-
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return groups;
 	}
 	
 

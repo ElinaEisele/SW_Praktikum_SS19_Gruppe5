@@ -44,10 +44,16 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 * Fremdschluesselbeziehung zur Gruppe des Eintrags.
 	 */
 	private int groupID;
+	
 	/**
 	 * Attribut, welches wiedergibt, ob ein Listitem ein Standard-Listitem innerhalb einer Gruppe ist.
 	 */
 	private boolean isStandard;
+	
+	/**
+	 * Attribut, welches angibt, ob ein Listitem-Objekt bereits eingekauft wurde.
+	 */
+	private boolean isArchived;
 	
 	/*
 	 * Default-Konstruktor
@@ -61,6 +67,7 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	public Listitem (float amount, ListitemUnit listitemUnit) {
 		this.setAmount(amount);
 		this.setListitemUnitID(listitemUnit.getId());
+		this.setArchived(false);
 	}
 
 	/**
@@ -159,5 +166,19 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	 */
 	public void setGroupID(int groupID) {
 		this.groupID = groupID;
+	}
+
+	/*
+	 * Augeben des boolean-Werts is Archived.
+	 */
+	public boolean isArchived() {
+		return isArchived;
+	}
+
+	/*
+	 * Setzen des isArchived Attributs.
+	 */
+	public void setArchived(boolean isArchived) {
+		this.isArchived = isArchived;
 	}
 }

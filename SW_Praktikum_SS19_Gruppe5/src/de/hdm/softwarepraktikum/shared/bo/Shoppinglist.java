@@ -35,7 +35,7 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	 */
 	public Shoppinglist(String name) {
 		super(name);
-//		this.setGroupId(1);
+		this.setGroupId(1);
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	 */
 	public Shoppinglist(String name, ArrayList <Listitem>listitems) {
 		super(name);
-//		this.setGroupId(1);
+		this.setGroupId(1);
 		this.listitems=listitems;		
 	}
 	
