@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
@@ -28,9 +29,11 @@ public class NewRetailerForm extends VerticalPanel {
 			.getShoppinglistAdministration();
 
 	private Shoppinglist selectedShoppinglist = null;
-
+	private Listitem selectedListitem = null;
+	private ShoppinglistHeader shoppinglistHeader;
+	private ListitemHeader listitemHeader;
 	private VerticalPanel mainPanel = new VerticalPanel();
-
+	private GroupShoppinglistTreeViewModel gstvm;
 	private TextBox retailerNameTextBox = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
@@ -44,27 +47,42 @@ public class NewRetailerForm extends VerticalPanel {
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
-		newRetailerGrid = new Grid(4, 2);
+		newRetailerGrid = new Grid(3, 2);
 		mainPanel.add(newRetailerGrid);
+
+		Label descriptionLabel = new Label("Neuen Einzelhaendler anlegen");
+		newRetailerGrid.setWidget(0, 0, descriptionLabel);
 
 		Label newRetailerLabel = new Label("Name des Einzelhaendlers: ");
 		newRetailerGrid.setWidget(1, 0, newRetailerLabel);
 		newRetailerGrid.setWidget(1, 1, retailerNameTextBox);
 
+		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
+		newRetailerGrid.setWidget(2, 1, actionButtonsPanel);
+
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
 		cancelButton.setStylePrimaryName("cancelButton");
 		confirmButton.setStylePrimaryName("confirmButton");
-		buttonPanel.add(confirmButton);
-		buttonPanel.add(cancelButton);
-
-		mainPanel.add(newRetailerLabel);
-		mainPanel.add(buttonPanel);
+		actionButtonsPanel.add(confirmButton);
+		actionButtonsPanel.add(cancelButton);
 
 	}
 
 	public void onLoad() {
 		this.add(mainPanel);
+	}
+
+	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
+		this.selectedShoppinglist = selectedShoppinglist;
+	}
+
+	public ShoppinglistHeader getShoppinglistHeader() {
+		return shoppinglistHeader;
+	}
+
+	public void setShoppinglistHeader(ShoppinglistHeader shoppinglistHeader) {
+		this.shoppinglistHeader = shoppinglistHeader;
 	}
 
 	public Shoppinglist getSelectedShoppinglist() {
@@ -75,6 +93,30 @@ public class NewRetailerForm extends VerticalPanel {
 		this.selectedShoppinglist = selectedShoppinglist;
 	}
 
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
+
+	public ListitemHeader getListitemHeader() {
+		return listitemHeader;
+	}
+
+	public void setListitemHeader(ListitemHeader listitemHeader) {
+		this.listitemHeader = listitemHeader;
+	}
+
+	public Listitem getSelectedListitem() {
+		return selectedListitem;
+	}
+
+	public void setSelectedListitem(Listitem selectedListitem) {
+		this.selectedListitem = selectedListitem;
+	}
+
 	/**
 	 * ClickHandler zum schliessen der DialogBox.
 	 */
@@ -82,9 +124,19 @@ public class NewRetailerForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RootPanel.get("main").clear();
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			RootPanel.get("main").add(ssf);
+			if (selectedShoppinglist != null) {
+
+				NewListitemForm nlf = new NewListitemForm();
+
+				shoppinglistHeader = new ShoppinglistHeader();
+				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+				nlf.setGstvm(shoppinglistHeader.getGstvm());
+				nlf.setShoppinglistHeader(shoppinglistHeader);
+				nlf.setShoppinglistToDisplay(selectedShoppinglist);
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
+				ssf.setSelected(selectedShoppinglist);
+
+			}
 		}
 	}
 
@@ -119,8 +171,16 @@ public class NewRetailerForm extends VerticalPanel {
 
 			retailerNameTextBox.setText("");
 			RootPanel.get("main").clear();
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			RootPanel.get("main").add(ssf);
+			NewListitemForm nlf = new NewListitemForm();
+
+			shoppinglistHeader = new ShoppinglistHeader();
+			shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+			nlf.setShoppinglistHeader(shoppinglistHeader);
+			nlf.setShoppinglistToDisplay(selectedShoppinglist);
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
+			ssf.setSelected(selectedShoppinglist);
+
+			RootPanel.get("main").add(nlf);
 		}
 
 	}

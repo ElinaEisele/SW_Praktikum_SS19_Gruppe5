@@ -72,7 +72,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		mainPanel.add(shoppinglistGrid);
 		mainPanel.add(userRetailerAllocationFlexTable);
 
-		Label showUserRetailerAllocationLabel = new Label("Zuweisung anzeigen:");
+		Label showUserRetailerAllocationLabel = new Label("Zuweisung anzeigen fuer:");
 		shoppinglistGrid.setWidget(0, 0, showUserRetailerAllocationLabel);
 
 		Label userLabel = new Label("Benutzername: ");
@@ -91,14 +91,19 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		backButton.setEnabled(true);
 		actionButtonsPanel.add(backButton);
 
-		/**
-		 * Zum Befüllen der Dropdown-Liste mit <code>User</code>.
-		 */
-		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUserCallback());
+		
 
 	}
 
 	public void onLoad() {
+		
+		/**
+		 * Zum Befüllen der Dropdown-Liste mit <code>User</code>.
+		 */
+		groupToDisplay = shoppinglistHeader.getGroupToDisplay();
+
+		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUserCallback());
+		
 		RootPanel.get("main").add(mainPanel);
 
 	}
@@ -137,11 +142,6 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
-			if (shoppinglistToDisplay !=null) {
-				Window.alert("nicht null");
-			}else {
-				Window.alert("null");
-			}
 
 		}
 
@@ -178,6 +178,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 			RootPanel.get("main").clear();
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(groupToDisplay);
 			RootPanel.get("main").add(ssf);
 		}
 
@@ -197,7 +198,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 						new ShowAllocationCallback());
 
 			} else {
-				Notification.show("Es wurde keine Gruppe ausgewÃ¤hlt.");
+				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
 			}
 		}
 
@@ -216,15 +217,16 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(ArrayList<Retailer> retailerArrayList) {
-
+			
 			userRetailerAllocationFlexTable.setText(0, 0, "User");
 			userRetailerAllocationFlexTable.setText(0, 1, "Haendler");
-			userRetailerAllocationFlexTable.setText(0, 1, selectedUser.getName());
+			
 			userRetailerAllocationFlexTable.setText(1, 0, "Kein Nutzer ausgewaehlt");
 			userRetailerAllocationFlexTable.setText(1, 1, "Kein Haendler ausgewaehlt");
+			userRetailerAllocationFlexTable.setText(1, 0, selectedUser.getName());
 
 			for (int i = 1; i <= retailerArrayList.size(); i++) {
-				userRetailerAllocationFlexTable.setText(i, 1, retailerArrayList.get(i).getName());
+				userRetailerAllocationFlexTable.setText(1, i, retailerArrayList.get(i).getName());
 			}
 
 		}

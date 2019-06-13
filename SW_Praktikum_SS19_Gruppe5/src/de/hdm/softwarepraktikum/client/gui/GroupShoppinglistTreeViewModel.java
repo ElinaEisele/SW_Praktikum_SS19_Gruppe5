@@ -46,6 +46,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 
 	private ShoppinglistContent shoppinglistContent;
 	private ShoppinglistCellTable shoppinglistCellTable;
+	private NavigatorPanel navigatorPanel = new NavigatorPanel();
 
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
@@ -139,9 +140,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	}
 
 	void setSelectedGroup(Group g) {
+		navigatorPanel.setSelectedGroup(selectedGroup);
 		RootPanel.get("main").clear();
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
+
 		selectedShoppinglist = null;
 		shoppinglistShowForm.setSelected(null);
 		RootPanel.get("main").add(groupShowForm);
@@ -156,10 +159,9 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		RootPanel.get("main").clear();
 		selectedShoppinglist = s;
 		shoppinglistShowForm.setSelected(s);
-		
-		
+
 		if (s != null) {
-			
+
 			shoppinglistAdministration.getGroupOf(selectedShoppinglist, new AsyncCallback<Group>() {
 
 				@Override
@@ -171,15 +173,15 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 				public void onSuccess(Group result) {
 					selectedGroup = result;
 					shoppinglistShowForm.setSelectedGroup(selectedGroup);
-					
+
 					RootPanel.get("main").add(shoppinglistShowForm);
 
 				}
 
 			});
-			
+
 		}
-		
+
 	}
 
 	/**
