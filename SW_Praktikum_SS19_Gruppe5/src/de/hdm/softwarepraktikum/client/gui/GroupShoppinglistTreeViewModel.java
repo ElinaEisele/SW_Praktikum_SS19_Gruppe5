@@ -72,8 +72,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 			if (bo == null) {
 				return null;
 			} else {
-				// prüfen ob Gruppe oder Shippingliste
-				return bo.getId();
+				if (bo instanceof Group) {
+					return new Integer(bo.getId());
+				} else {
+					return new Integer(-bo.getId());
+				}
 			}
 		}
 

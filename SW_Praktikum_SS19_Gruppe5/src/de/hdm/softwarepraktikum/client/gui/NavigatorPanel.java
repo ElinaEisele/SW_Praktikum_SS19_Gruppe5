@@ -119,7 +119,7 @@ public class NavigatorPanel extends VerticalPanel {
 		@Override
 		public void onSuccess(Boolean result) {
 			if (result == true) {
-				refreshInfoLabel.setText("Es gibt Änderungen Ihrer Shoppingliste, bitte Seite aktualisieren!");
+//				refreshInfoLabel.setText("Es gibt Änderungen Ihrer Shoppingliste, bitte Seite aktualisieren!");
 				refreshInfoLabel.setStyleName("refreshInfoLabel");
 				RootPanel.get("header").add(refreshInfoLabel);
 
