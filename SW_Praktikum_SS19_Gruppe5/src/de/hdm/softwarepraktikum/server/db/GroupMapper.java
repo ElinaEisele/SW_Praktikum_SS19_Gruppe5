@@ -1,6 +1,11 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
@@ -53,7 +58,7 @@ public class GroupMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups ");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups");
 
 			while (rs.next()) {
 				Group g = new Group();
@@ -66,6 +71,7 @@ public class GroupMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return groups;
 	}
 
@@ -78,6 +84,7 @@ public class GroupMapper {
 	public Group findById(int id) {
 
 		Connection con = DBConnection.connection();
+		Group g = new Group();
 
 		try {
 
@@ -86,18 +93,16 @@ public class GroupMapper {
 
 			if (rs.next()) {
 
-				Group g = new Group();
 				g.setId(rs.getInt("id"));
 				g.setCreationDate(rs.getDate("creationDate"));
 				g.setName(rs.getString("name"));
-				return g;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return g;
 	}
 
 	/**
@@ -127,8 +132,8 @@ public class GroupMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
+		
 		return groups;
 	}
 
@@ -158,14 +163,14 @@ public class GroupMapper {
 			pstmt.setDate(2, (Date) group.getCreationDate());
 			pstmt.setString(3, group.getName());
 			pstmt.executeUpdate();
-			return group;
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
 		
-
+		return group;
+		
 	}
 
 	/**
@@ -185,12 +190,12 @@ public class GroupMapper {
 			pstmt.setString(1, group.getName());
 			pstmt.setInt(2, group.getId());
 			pstmt.executeUpdate();
-			return group;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		
+		return group;
 		
 	}
 
@@ -226,7 +231,7 @@ public class GroupMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?) ",
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO memberships (user_id, usergroup_id) VALUES (?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, userId);
@@ -292,6 +297,7 @@ public class GroupMapper {
 	public Group getGroupOf(Shoppinglist shoppinglist) {
 
 		Connection con = DBConnection.connection();
+		Group g = new Group();
 
 		try {
 
@@ -305,18 +311,16 @@ public class GroupMapper {
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
 
 			if (rs.next()) {
-				Group g = new Group();
 				g.setId(rs.getInt("usergroup_id"));
 				g.setCreationDate(rs.getDate("usergroup_creationDate"));
 				g.setName(rs.getString("usergroup_name"));
-				return g;
 			}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
-		return null;
+		
+		return g;
 	}
 
 	/**
@@ -351,8 +355,8 @@ public class GroupMapper {
 	
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
+		
 		return groups;
 	}
 	
