@@ -118,11 +118,18 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * Speichern eines Listitem-Objekt in der Datenbank
+	 * Speichern eines Listitem-Objekts in der Datenbank
 	 * @param listitem, Listitem-Objekt, welches in der Datenbank gepseichert werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void save(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Speichern eines Product-Objekts in der Datenbank
+	 * @param product ist das Product-Objekt, welches in der Datenbank gespeichert werden soll.
+	 * @throws IllegalArgumentException
+	 */
+	public void save(Product product) throws IllegalArgumentException;
 	
 	/**
 	 * Loeschen des uebergebenen User-Objekts

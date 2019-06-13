@@ -496,8 +496,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.productMapper.findById(listitem.getProductID());
 	}
 	
-	
-	
+	/**
+	 * Speichern eines Product-Objekts in der Datenbank
+	 * @param product ist das Product-Objekt, welches in der Datenbank gespeichert werden soll.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void save(Product product) throws IllegalArgumentException {
+		this.productMapper.update(product);
+	}
 	
 /**
  * **********************************************************************************
@@ -737,7 +744,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(User user) throws IllegalArgumentException {
-		this.userMapper.insert(user);
+		this.userMapper.update(user);
 	}
 	
 	/**
@@ -965,6 +972,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return null;
 	}
+
+
+	
 
 
 	
