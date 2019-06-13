@@ -1,4 +1,4 @@
-package de.hdm.softwarepraktikum.server.db;
+ package de.hdm.softwarepraktikum.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -62,14 +62,13 @@ public class ProductMapper {
 				p.setName(rs.getString("name"));
 				products.add(p);
 			}
-			
-			return products;
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}	
-
+		return products;
 	}
 
 	/**
@@ -126,12 +125,12 @@ public class ProductMapper {
 				product.setName(rs.getString("name"));
 				products.add(product);
 			}
-			return products;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return products;
 	}
 
 	/**
@@ -164,9 +163,9 @@ public class ProductMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return null;
 	}
 
 	/**
@@ -190,9 +189,9 @@ public class ProductMapper {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return null;
 	}
 
 	/**

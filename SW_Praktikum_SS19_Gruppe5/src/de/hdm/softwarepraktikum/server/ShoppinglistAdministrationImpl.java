@@ -364,6 +364,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		ArrayList<Listitem> list = new ArrayList<Listitem>();
 		if(shoppinglist == null) {
 			return list;
+			
 		}
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
@@ -453,6 +454,20 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.productMapper.findById(listitem.getProductID()).getName();
 	}
 	
+	/**
+	 * Archivieren einer Menge von Listitem-Objekten.
+	 * @param listitems sind die Listitems, welche archiviert werden sollen.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void archiveListitems(ArrayList<Listitem> listitems) throws IllegalArgumentException {
+		
+		for(Listitem l : listitems) {
+			l.setArchived(true);
+			this.save(l);
+		}
+	}
+
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
@@ -482,6 +497,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.productMapper.findById(listitem.getProductID());
 	}
 	
+	/**
+	 * Speichern eines Product-Objekts in der Datenbank
+	 * @param product ist das Product-Objekt, welches in der Datenbank gespeichert werden soll.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void save(Product product) throws IllegalArgumentException {
+		this.productMapper.update(product);
+	}
 	
 /**
  * **********************************************************************************
@@ -721,7 +745,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(User user) throws IllegalArgumentException {
-		this.userMapper.insert(user);
+		this.userMapper.update(user);
 	}
 	
 	/**
@@ -950,6 +974,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return null;
 	}
 
+
+	
+
+
+	
 
 
 }

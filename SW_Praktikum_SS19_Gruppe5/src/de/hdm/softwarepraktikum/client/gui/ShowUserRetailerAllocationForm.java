@@ -200,7 +200,6 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 				shoppinglistAdministration.getRetailersOf(shoppinglistToDisplay, selectedUser,
 						new ShowAllocationCallback());
 				
-				
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
