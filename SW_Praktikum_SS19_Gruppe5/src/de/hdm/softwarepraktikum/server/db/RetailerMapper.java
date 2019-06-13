@@ -63,12 +63,12 @@ public class RetailerMapper {
 				r.setName(rs.getString("name"));
 				retailers.add(r);
 			}
-			return retailers;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return retailers;
 	}
 
 	/**
@@ -125,13 +125,11 @@ public class RetailerMapper {
 				retailers.add(r);
 			}
 
-			return retailers;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return retailers;
 	}
 
 	/**
@@ -165,9 +163,9 @@ public class RetailerMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return null;
 	}
 
 	/**
@@ -191,9 +189,9 @@ public class RetailerMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return null;
 	}
 
 	/**
@@ -308,13 +306,12 @@ public class RetailerMapper {
 				r.setName(rs.getString("name"));
 				retailers.add(r);
 			}	
-			return retailers;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return retailers;
 	}
 	
 	
@@ -344,12 +341,12 @@ public class RetailerMapper {
 				r.getName();
 				retailers.add(r);
 			}	
-			return retailers;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return retailers;
 		
 		
 	}
@@ -383,13 +380,11 @@ public class RetailerMapper {
 				r.setName(rs.getString("name"));
 				retailers.add(r);
 			}
-			
-			return retailers;
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return retailers;
 	}
 }

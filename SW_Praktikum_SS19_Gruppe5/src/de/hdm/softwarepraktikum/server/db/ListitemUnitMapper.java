@@ -64,12 +64,12 @@ public class ListitemUnitMapper {
 				liu.setName(rs.getString("name"));
 				units.add(liu);
 			}
-			return units;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return units;
 	}
 
 	/**
@@ -126,13 +126,11 @@ public class ListitemUnitMapper {
 				units.add(liu);
 			}
 
-			return units;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return units;
 	}
 
 	/**
@@ -165,9 +163,9 @@ public class ListitemUnitMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return null;
 	}
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank
@@ -193,7 +191,7 @@ public class ListitemUnitMapper {
 			e.printStackTrace();
 			return null;
 		}
-
+		
 	}
 
 	/**
@@ -247,7 +245,6 @@ public class ListitemUnitMapper {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 }
