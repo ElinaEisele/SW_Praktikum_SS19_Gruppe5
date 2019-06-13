@@ -155,7 +155,9 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(ArrayList<User> result) {
+			
 			userArrayList = result;
+			
 			for (int i = 0; i < result.size(); i++) {
 				userListBox.addItem(result.get(i).getName());
 				selectedUser = result.get(0);
@@ -193,6 +195,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		public void onChange(ChangeEvent event) {
 			int item = userListBox.getSelectedIndex();
 			selectedUser = userArrayList.get(item);
+
 		}
 	}
 
@@ -263,10 +266,13 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		@Override
 		public void onSuccess(Void result) {
 
-//			RootPanel.get("main").clear();
-//			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-//			ssf.setSelected(shoppinglistToDisplay);
-//			RootPanel.get("main").add(ssf);
+			RootPanel.get("main").clear();
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(groupToDisplay);
+			Window.alert(shoppinglistToDisplay.getName());
+			Window.alert(groupToDisplay.getName());
+			RootPanel.get("main").add(ssf);
 		}
 	}
 
