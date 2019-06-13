@@ -55,7 +55,7 @@ public class GroupCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Spalte, die ein klickbares Bild enthält, das die Einkaufsliste bei Klick in
+		 * Spalte, die ein klickbares Bild enthï¿½lt, das die Einkaufsliste bei Klick in
 		 * einer neuen <code>ShoppinglistShowForm</code> darstellt.
 		 * 
 		 */
@@ -139,7 +139,7 @@ public class GroupCellTable extends VerticalPanel {
 
 	/**
 	 * AsyncCallback der eine ArrayList mit <code>Shoppinglist</code>-Objekten der
-	 * entsprechenden Gruppe zurückgeben soll.
+	 * entsprechenden Gruppe zurï¿½ckgeben soll.
 	 * 
 	 */
 	private class GetShoppinglistsOfCallback implements AsyncCallback<ArrayList<Shoppinglist>> {

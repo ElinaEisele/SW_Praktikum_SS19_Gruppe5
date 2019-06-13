@@ -234,8 +234,11 @@ public class RetailerMapper {
 					+ "VALUES (?, ?, ?) ", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, retailerId);
+			System.out.println("1: "+retailerId);
 			pstmt.setInt(2, userId);
+			System.out.println("2: "+userId);
 			pstmt.setInt(3, shoppinglistId);
+			System.out.println("3: "+shoppinglistId);
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -300,7 +303,7 @@ public class RetailerMapper {
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
-				r.setId(rs.getInt("int"));
+				r.setId(rs.getInt("id"));
 				r.setCreationDate(rs.getDate("creationDate"));
 				r.setName(rs.getString("name"));
 				retailers.add(r);
@@ -371,16 +374,19 @@ public class RetailerMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN retailers "
 					+ "ON responsibilities.retailer_id = retailers.id "
 					+ "WHERE shoppinglist_id = " + shoppinglist.getId() + " and user_id = " + user.getId());
+			
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
-				r.getId();
-				r.getCreationDate();
-				r.getName();
+				r.setId(rs.getInt("id"));
+				r.setCreationDate(rs.getDate("creationDate"));
+				r.setName(rs.getString("name"));
 				retailers.add(r);
 			}
+			
 			return retailers;
-
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

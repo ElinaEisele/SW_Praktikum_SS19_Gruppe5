@@ -140,10 +140,12 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	}
 
 	void setSelectedGroup(Group g) {
-		navigatorPanel.setSelectedGroup(selectedGroup);
+//		navigatorPanel.setSelectedGroup(selectedGroup);
 		RootPanel.get("main").clear();
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
+		navigatorPanel.setSelectedGroup(selectedGroup);
+
 
 		selectedShoppinglist = null;
 		shoppinglistShowForm.setSelected(null);
