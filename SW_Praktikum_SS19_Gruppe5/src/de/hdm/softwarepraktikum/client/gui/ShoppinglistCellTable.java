@@ -10,12 +10,15 @@ import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -49,10 +52,15 @@ public class ShoppinglistCellTable extends VerticalPanel {
 	private Label unitName = new Label("");
 	private Label retailerName = new Label("");
 
+	private Button archive;
+
 	public ShoppinglistCellTable() {
 
+		archive = new Button("Abhaken");
+		archive.addClickHandler(new ArchiveClickHandler());
+
 		/**
-		 * Spalte zur Darstellung des Namen eines <code>Product</code>
+		 * Spalte zur Darstellung einer Checkbox.
 		 * 
 		 */
 		Column<Listitem, Boolean> checkColumn = new Column<Listitem, Boolean>(new CheckboxCell(true, false)) {
@@ -216,7 +224,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		 * success method
 		 * 
 		 */
-		Window.alert("SCT: "+shoppinglistShowForm.getSelectedShoppinglist().getName());
+		Window.alert("SCT: " + shoppinglistShowForm.getSelectedShoppinglist().getName());
 		shoppinglistAdministration.getListitemsOf(shoppinglistShowForm.getSelectedShoppinglist(),
 				new AsyncCallback<ArrayList<Listitem>>() {
 
@@ -231,14 +239,18 @@ public class ShoppinglistCellTable extends VerticalPanel {
 						if (result == null) {
 							Window.alert("result == null --> Keine Eintraege");
 						} else {
+							Window.alert(String.valueOf(result.get(0).getAmount()));
+							
 							// Set the total row count
 							table.setRowCount(result.size(), true);
 							// Push the data into the widget.
 							table.setRowData(0, result);
+							
 						}
 					}
 				});
 
+		this.add(archive);
 		this.add(table);
 
 	}
@@ -266,4 +278,12 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		}
 	}
 
+	private class ArchiveClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+
+		}
+
+	}
 }
