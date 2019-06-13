@@ -24,12 +24,13 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  */
 
 public class GroupHeader extends HorizontalPanel {
-	
-	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
+
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
+			.getShoppinglistAdministration();
 	private Group groupToDisplay = null;
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
-		
+
 	private Label groupHeaderLabel = new Label();
 	private String groupName = null;
 
@@ -40,16 +41,15 @@ public class GroupHeader extends HorizontalPanel {
 	private Button deleteGroup = new Button();
 	private Button showUsers = new Button();
 	private Button showRetailers = new Button();
-	
+
 	public GroupHeader() {
-		
-		
+
 		Image newShoppinglistImg = new Image();
 		newShoppinglistImg.setUrl("images/clipboard.png");
 		newShoppinglistImg.setSize("32px", "32px");
 		newShoppinglist.getElement().appendChild(newShoppinglistImg.getElement());
 		newShoppinglist.addClickHandler(new NewShoppinglistClickHandler());
-		
+
 		Image addUserImg = new Image();
 		addUserImg.setUrl("images/add-user.png");
 		addUserImg.setSize("32px", "32px");
@@ -61,8 +61,8 @@ public class GroupHeader extends HorizontalPanel {
 		leaveGroupImg.setSize("32px", "32px");
 		leaveGroup.getElement().appendChild(leaveGroupImg.getElement());
 		leaveGroup.addClickHandler(new LeaveGroupClickHandler());
-		//leaveGroup.setStyleName("leaveGroupButton");
-		
+		// leaveGroup.setStyleName("leaveGroupButton");
+
 		Image editGroupImg = new Image();
 		editGroupImg.setUrl("images/edit.png");
 		editGroupImg.setSize("32px", "32px");
@@ -74,23 +74,23 @@ public class GroupHeader extends HorizontalPanel {
 		deleteImg.setSize("32px", "32px");
 		deleteGroup.getElement().appendChild(deleteImg.getElement());
 		deleteGroup.addClickHandler(new DeleteGroupClickHandler());
-		
+
 		Image showUsersImg = new Image();
 		showUsersImg.setUrl("images/user.png");
 		showUsersImg.setSize("32px", "32px");
 		showUsers.getElement().appendChild(showUsersImg.getElement());
 		showUsers.addClickHandler(new ShowUsersClickHandler());
-		
+
 		Image showRetailersImg = new Image();
 		showRetailersImg.setUrl("images/shop.png");
 		showRetailersImg.setSize("32px", "32px");
 		showRetailers.getElement().appendChild(showRetailersImg.getElement());
 		showRetailers.addClickHandler(new ShowRetailersClickHandler());
-		
+
 	}
 
 	public void onLoad() {
-						
+
 		this.add(groupHeaderLabel);
 		this.add(newShoppinglist);
 		this.add(addUser);
@@ -99,12 +99,9 @@ public class GroupHeader extends HorizontalPanel {
 		this.add(deleteGroup);
 		this.add(showUsers);
 		this.add(showRetailers);
-		
 
 	}
-	
-	
-	
+
 	public GroupShowForm getGroupShowForm() {
 		return groupShowForm;
 	}
@@ -112,8 +109,6 @@ public class GroupHeader extends HorizontalPanel {
 	public void setGroupShowForm(GroupShowForm groupShowForm) {
 		this.groupShowForm = groupShowForm;
 	}
-	
-	
 
 	public GroupShoppinglistTreeViewModel getGstvm() {
 		return gstvm;
@@ -133,45 +128,43 @@ public class GroupHeader extends HorizontalPanel {
 		if (g != null) {
 			groupToDisplay = g;
 			groupHeaderLabel.setText(groupToDisplay.getName());
-			
+
 		} else {
 			this.clear();
 		}
 	}
-	
+
 	public Group getSelected() {
 		return groupToDisplay;
 	}
-	
 
-	
 	/**
 	 * ***************************************************************************
 	 * ABSCHNITT der ClickHandler
 	 * ***************************************************************************
 	 */
-	private class NewShoppinglistClickHandler implements ClickHandler{
+	private class NewShoppinglistClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
-				
+
 				NewShoppinglistForm nsf = new NewShoppinglistForm();
 				nsf.setGstvm(GroupHeader.this.gstvm);
 				nsf.setGroupHeader(GroupHeader.this);
 				nsf.setSelectedGroup(groupToDisplay);
-				
+
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
 				gsf.setSelected(groupToDisplay);
-			
+
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
 		}
-		
+
 	}
-	
-	private class AddUserClickHandler implements ClickHandler{
+
+	private class AddUserClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -180,17 +173,17 @@ public class GroupHeader extends HorizontalPanel {
 				autgf.setGstvm(GroupHeader.this.gstvm);
 				autgf.setGroupHeader(GroupHeader.this);
 				autgf.setSelectedGroup(groupToDisplay);
-				
+
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, autgf);
 				gsf.setSelected(groupToDisplay);
-						
+
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
 		}
 	}
-	
-	private class LeaveGroupClickHandler implements ClickHandler{
+
+	private class LeaveGroupClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -203,13 +196,14 @@ public class GroupHeader extends HorizontalPanel {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
 		}
-		
+
 	}
-	
+
 	/**
-	 * ClickHandler dient dem erzeugen einer <code>DeleteGroupDialogBox</code> Instanz.
+	 * ClickHandler dient dem erzeugen einer <code>DeleteGroupDialogBox</code>
+	 * Instanz.
 	 */
-	private class DeleteGroupClickHandler implements ClickHandler{
+	private class DeleteGroupClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -217,10 +211,10 @@ public class GroupHeader extends HorizontalPanel {
 			ddb.setSelectedGroup(groupToDisplay);
 			ddb.show();
 		}
-		
+
 	}
-	
-	private class EditClickHandler implements ClickHandler{
+
+	private class EditClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -230,15 +224,15 @@ public class GroupHeader extends HorizontalPanel {
 				egnf.setSelectedGroup(groupToDisplay);
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
 				gsf.setSelected(groupToDisplay);
-				
+
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
 		}
-		
+
 	}
-	
-	private class ShowUsersClickHandler implements ClickHandler{
+
+	private class ShowUsersClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -250,10 +244,10 @@ public class GroupHeader extends HorizontalPanel {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
 		}
-		
+
 	}
-	
-	private class ShowRetailersClickHandler implements ClickHandler{
+
+	private class ShowRetailersClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -263,18 +257,15 @@ public class GroupHeader extends HorizontalPanel {
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * ***************************************************************************
 	 * ABSCHNITT der Callbacks
 	 * ***************************************************************************
 	 */
-	
-
-	
 
 }

@@ -63,12 +63,12 @@ public class RetailerMapper {
 				r.setName(rs.getString("name"));
 				retailers.add(r);
 			}
-			return retailers;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return retailers;
 	}
 
 	/**
@@ -125,13 +125,11 @@ public class RetailerMapper {
 				retailers.add(r);
 			}
 
-			return retailers;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return retailers;
 	}
 
 	/**
@@ -165,9 +163,9 @@ public class RetailerMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return null;
 	}
 
 	/**
@@ -191,9 +189,9 @@ public class RetailerMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return null;
 	}
 
 	/**
@@ -231,7 +229,7 @@ public class RetailerMapper {
 		try {
 
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO responsibilities (retailer_id, user_id, shoppinglist_id) "
-					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					+ "VALUES (?, ?, ?) ", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, retailerId);
 			pstmt.setInt(2, userId);
@@ -305,13 +303,12 @@ public class RetailerMapper {
 				r.setName(rs.getString("name"));
 				retailers.add(r);
 			}	
-			return retailers;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
-
+		return retailers;
 	}
 	
 	
@@ -341,12 +338,12 @@ public class RetailerMapper {
 				r.getName();
 				retailers.add(r);
 			}	
-			return retailers;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return retailers;
 		
 		
 	}
@@ -379,11 +376,11 @@ public class RetailerMapper {
 				r.getName();
 				retailers.add(r);
 			}
-			return retailers;
-
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return retailers;
 	}
 }

@@ -66,13 +66,12 @@ public class ShoppinglistMapper {
 				sl.setId(rs.getInt("usergroup_id"));
 				shoppinglists.add(sl);
 			}
-			return shoppinglists;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+		
 		}
-
+		return shoppinglists;
 	}
 
 	/**
@@ -130,13 +129,11 @@ public class ShoppinglistMapper {
 				sl.setGroupId(rs.getInt("usergroup_id"));
 				shoppinglists.add(sl);
 			}
-			
-			return shoppinglists;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return shoppinglists;
 
 	}
 
@@ -173,11 +170,9 @@ public class ShoppinglistMapper {
 			return shoppinglist;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			
-			return null;
+			e.printStackTrace();	
 		}
-
+		return null;
 	}
 
 	/**
@@ -200,10 +195,9 @@ public class ShoppinglistMapper {
 			return shoppinglist;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			
-			return null;
+			e.printStackTrace();	
 		}
+		return null;
 
 	}
 
@@ -335,12 +329,11 @@ public class ShoppinglistMapper {
 				sl.setName(rs.getString("name"));
 				shoppinglists.add(sl);
 			}
-			return shoppinglists;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			e.printStackTrace();	
 		}
+		return shoppinglists;
 		
 	}
 
@@ -371,12 +364,12 @@ public class ShoppinglistMapper {
 				sl.setName(rs.getString("name"));
 				shoppinglists.add(sl);
 			}
-			return shoppinglists;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return shoppinglists;
 		
 	}
 	

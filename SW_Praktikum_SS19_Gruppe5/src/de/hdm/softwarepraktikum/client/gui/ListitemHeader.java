@@ -95,6 +95,22 @@ public class ListitemHeader extends HorizontalPanel {
 		this.listitemShowForm = listitemShowForm;
 	}
 
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
+
+	public Listitem getListitemToDisplay() {
+		return listitemToDisplay;
+	}
+
+	public void setListitemToDisplay(Listitem listitemToDisplay) {
+		this.listitemToDisplay = listitemToDisplay;
+	}
+
 	/**
 	 * ***************************************************************************
 	 * Abschnitt der ClickHandler

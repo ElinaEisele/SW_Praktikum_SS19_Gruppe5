@@ -1,6 +1,5 @@
 package de.hdm.softwarepraktikum.client.gui;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -18,9 +17,9 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 public class GroupShowForm extends VerticalPanel {
 
 	private GroupHeader groupHeader = null;
-	private GroupContent groupContent = null;
 	private GroupCellTable groupCellTable = null;
 	private NewShoppinglistForm newShoppinglistForm = null;
+	private NewGroupForm newGroupForm = null;
 	private VerticalPanel mainPanel = new VerticalPanel();
 
 	private Group selectedGroup = null;
@@ -56,7 +55,7 @@ public class GroupShowForm extends VerticalPanel {
 		groupHeader = gh;
 		mainPanel.add(new GroupContent());
 		// GroupContent noch eine Gruppe zuweisen!
-		
+
 	}
 
 	public GroupShowForm(GroupHeader gh, GroupCellTable gct) {
@@ -66,11 +65,15 @@ public class GroupShowForm extends VerticalPanel {
 		RootPanel.get("main").add(mainPanel);
 	}
 
+	public GroupShowForm(NewGroupForm newGroupForm) {
+		mainPanel.add(newGroupForm);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
+	}
+
 	public GroupShowForm() {
+
 		groupHeader = new GroupHeader();
-
-		groupContent = new GroupContent();
-
 		groupCellTable = new GroupCellTable();
 
 		groupHeader.setStylePrimaryName("groupHeader");
@@ -83,9 +86,10 @@ public class GroupShowForm extends VerticalPanel {
 	public void onLoad() {
 
 		groupCellTable.setSelected(selectedGroup);
-		groupCellTable.setGroupShowForm(GroupShowForm.this);
 		groupHeader.setSelected(selectedGroup);
+		groupCellTable.setGroupShowForm(GroupShowForm.this);
 		groupHeader.setGroupShowForm(GroupShowForm.this);
+
 		this.add(groupHeader);
 		this.add(mainPanel);
 
@@ -114,6 +118,5 @@ public class GroupShowForm extends VerticalPanel {
 	public void setGroupHeader(GroupHeader groupHeader) {
 		this.groupHeader = groupHeader;
 	}
-	
 
 }

@@ -1,5 +1,6 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -34,6 +35,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, AssignUserToRetailerForm autrf) {
 		shoppinglistHeader = sh;
+		autrf.setGroupToDisplay(selectedGroup);
 		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(autrf);
 		RootPanel.get("main").clear();
@@ -65,6 +67,14 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		RootPanel.get("main").add(mainPanel);
 	}
 
+	public ShoppinglistShowForm(ShoppinglistHeader sh, NewRetailerForm nrf) {
+		shoppinglistHeader = sh;
+		//mainPanel.add(shoppinglistHeader);
+		mainPanel.add(nrf);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
+	}
+	
 	public ShoppinglistShowForm() {
 		shoppinglistHeader = new ShoppinglistHeader();
 		shoppinglistCellTable = new ShoppinglistCellTable();
@@ -80,9 +90,11 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		shoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+		shoppinglistHeader.setGroupToDisplay(selectedGroup);
 		
 		this.add(shoppinglistHeader);
 		this.add(mainPanel);
+
 
 	}
 

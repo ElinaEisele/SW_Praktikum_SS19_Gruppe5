@@ -22,7 +22,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * </p>
  * <p>
  * <code>@RemoteServiceRelativePath("shoppinglistadministration")</code> ist bei der
- * Adressierung des aus der zugehï¿½rigen Impl-Klasse entstehenden
+ * Adressierung des aus der zugehoerigen Impl-Klasse entstehenden
  * Servlet-Kompilats behilflich. Es gibt im Wesentlichen einen Teil der URL des
  * Servlets an.
  * </p>
@@ -86,7 +86,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer) throws IllegalArgumentException;
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Einen Retailer anlegen
@@ -118,11 +118,18 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
-	 * Speichern eines Listitem-Objekt in der Datenbank
+	 * Speichern eines Listitem-Objekts in der Datenbank
 	 * @param listitem, Listitem-Objekt, welches in der Datenbank gepseichert werden soll
 	 * @throws IllegalArgumentException
 	 */
 	public void save(Listitem listitem) throws IllegalArgumentException;
+	
+	/**
+	 * Speichern eines Product-Objekts in der Datenbank
+	 * @param product ist das Product-Objekt, welches in der Datenbank gespeichert werden soll.
+	 * @throws IllegalArgumentException
+	 */
+	public void save(Product product) throws IllegalArgumentException;
 	
 	/**
 	 * Loeschen des uebergebenen User-Objekts
@@ -406,7 +413,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
 
 	
 	/**
@@ -482,4 +489,11 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Group changeNameOf(Group group, String name) throws IllegalArgumentException;
+	
+	/**
+	 * Archivieren einer Menge von Listitem-Objekten.
+	 * @param listitems sind die Listitems, welche archiviert werden sollen.
+	 * @throws IllegalArgumentException
+	 */
+	public void archiveListitems(ArrayList<Listitem> listitems) throws IllegalArgumentException;
 }

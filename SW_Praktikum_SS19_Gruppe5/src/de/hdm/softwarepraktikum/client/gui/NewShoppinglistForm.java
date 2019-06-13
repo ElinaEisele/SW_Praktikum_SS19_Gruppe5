@@ -34,6 +34,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 	private Group selectedGroup = null;
 	private GroupHeader groupHeader = null;
 	private ShoppinglistShowForm shoppinglistShowForm = new ShoppinglistShowForm();
+	private Shoppinglist selectedShoppinglist = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Einkaufsliste erstellen");
@@ -46,7 +47,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 	private Button cancelButton = new Button("Abbrechen");
 
 	public NewShoppinglistForm() {
-		
+
 		grid.setWidget(0, 0, nameLabel);
 		grid.setWidget(0, 1, nameTextBox);
 
@@ -62,7 +63,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 	}
 
-	public void onLoad() {		
+	public void onLoad() {
 		RootPanel.get("main").add(mainPanel);
 
 	}
@@ -96,11 +97,14 @@ public class NewShoppinglistForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
+				if (nameTextBox.getValue() == "") {
+					Window.alert("Niemand hat die Absicht eine Einkaufsliste ohne Namen anzulegen");
+				}else {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
 						new NewShoppinglistAsyncCallback());
-
+				}
 			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
+				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
 			}
 		}
 
@@ -129,9 +133,12 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Shoppinglist result) {
+			selectedShoppinglist = result;
 			RootPanel.get("main").clear();
-
-			gstvm.addShoppinglistToGroup(result, selectedGroup);
+			RootPanel.get("aside").clear();
+			NavigatorPanel np = new NavigatorPanel();
+			RootPanel.get("aside").add(np);
+			//gstvm.addShoppinglistToGroup(result, selectedGroup); //not working
 			// die neu erstellte Shoppinglist wird in der ShoppinglistShowForm gesetzt
 			shoppinglistShowForm.setSelected(result);
 			shoppinglistShowForm.setSelectedGroup(selectedGroup);

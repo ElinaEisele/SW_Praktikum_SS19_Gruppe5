@@ -81,6 +81,11 @@ public class DeleteGroupDialogBox extends DialogBox{
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				shoppinglistAdministration.delete(selectedGroup, new DeleteGroupCallback(selectedGroup));
+				RootPanel.get("aside").clear();
+				RootPanel.get("main").clear();
+
+				NavigatorPanel np = new NavigatorPanel();
+				RootPanel.get("aside").add(np);
 				DeleteGroupDialogBox.this.hide();
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
