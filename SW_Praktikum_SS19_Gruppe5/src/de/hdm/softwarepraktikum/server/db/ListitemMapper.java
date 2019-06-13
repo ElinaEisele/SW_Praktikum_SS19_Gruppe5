@@ -175,12 +175,15 @@ public class ListitemMapper {
 
 		try {
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? and isStandard ? "
-					+ "WHERE id = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? AND isStandard ?"
+					+ " AND isArchived = ? AND retailer_id = ? AND unit_id = ? WHERE id = ?");
 
 			pstmt.setFloat(1, listitem.getAmount());
 			pstmt.setBoolean(2, listitem.isStandard());
-			pstmt.setInt(3, listitem.getId());
+			pstmt.setBoolean(3, listitem.isArchived());
+			pstmt.setInt(4, listitem.getRetailerID());
+			pstmt.setInt(5, listitem.getListitemUnitID());
+			pstmt.setInt(6, listitem.getId());
 			pstmt.executeUpdate();
 
 			return listitem;
@@ -280,7 +283,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Methode, um alle Listitems einer Shoppingliste auszugeben.
+	 * Methode, um alle nicht-archivierten Listitems einer Shoppingliste auszugeben.
 	 * 
 	 * @param shoppinglist
 	 * @return ArrayList<Listitem>
@@ -294,9 +297,11 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					+ "FROM listitems INNER JOIN shoppinglists " 
-					+ "ON listitems.shoppinglist_id = shoppinglists.id "
-					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
+
+					+ "FROM shoppinglists INNER JOIN listitems " 
+					+ "ON shoppinglists.listitem_id = listitems.id "
+					+ "WHERE shoppinglists.id = " + shoppinglist.getId()
+					+ "AND isArchived = FALSE");
 
 			if (rs.next()) {
 
@@ -324,6 +329,51 @@ public class ListitemMapper {
 	}
 
 	/**
+	 * Methode, um alle archivierten Listitems einer Shoppingliste auszugeben.
+	 * 
+	 * @param shoppinglist
+	 * @return ArrayList<Listitem>
+	 */
+	public ArrayList<Listitem> getArchivedListitemsOf(Shoppinglist shoppinglist) {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					+ "FROM shoppinglists INNER JOIN listitems " 
+					+ "ON shoppinglists.listitem_id = listitems.id "
+					+ "WHERE shoppinglists.id = " + shoppinglist.getId()
+					+ "AND isArchived = TRUE");
+
+			if (rs.next()) {
+
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
+				listitems.add(li);
+			}
+
+			return listitems;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+			return null;
+		}
+
+	}
+	
+	/**
 	 * Methode, um alle Listitems eines Retailers zu finden.
 	 * 
 	 * @param retailer
@@ -339,7 +389,8 @@ public class ListitemMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
 					+ "ON listitems.retailer_id = retailers.id " 
-					+ "WHERE retailers.id = " + retailer.getId());
+					+ "WHERE retailers.id = " + retailer.getId()
+					+ "AND isArchived = FALSE");
 
 			while (rs.next()) {
 				Listitem li = new Listitem();
