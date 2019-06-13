@@ -132,4 +132,6 @@ public interface ShoppinglistAdministrationAsync {
 	void getGroupOf(Shoppinglist shoppinglist, AsyncCallback<Group> callback) throws IllegalArgumentException;
 	
 	void changeNameOf(Group group, String name, AsyncCallback<Group> callback) throws IllegalArgumentException;
+	
+	void archiveListitems(ArrayList<Listitem> listitems, AsyncCallback<Void> callback) throws IllegalArgumentException;
 }

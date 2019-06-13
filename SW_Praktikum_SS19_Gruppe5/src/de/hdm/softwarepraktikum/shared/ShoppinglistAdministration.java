@@ -22,7 +22,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * </p>
  * <p>
  * <code>@RemoteServiceRelativePath("shoppinglistadministration")</code> ist bei der
- * Adressierung des aus der zugehï¿½rigen Impl-Klasse entstehenden
+ * Adressierung des aus der zugehoerigen Impl-Klasse entstehenden
  * Servlet-Kompilats behilflich. Es gibt im Wesentlichen einen Teil der URL des
  * Servlets an.
  * </p>
@@ -482,4 +482,11 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Group changeNameOf(Group group, String name) throws IllegalArgumentException;
+	
+	/**
+	 * Archivieren einer Menge von Listitem-Objekten.
+	 * @param listitems sind die Listitems, welche archiviert werden sollen.
+	 * @throws IllegalArgumentException
+	 */
+	public void archiveListitems(ArrayList<Listitem> listitems) throws IllegalArgumentException;
 }

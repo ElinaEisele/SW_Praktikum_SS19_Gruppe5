@@ -453,6 +453,20 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.productMapper.findById(listitem.getProductID()).getName();
 	}
 	
+	/**
+	 * Archivieren einer Menge von Listitem-Objekten.
+	 * @param listitems sind die Listitems, welche archiviert werden sollen.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void archiveListitems(ArrayList<Listitem> listitems) throws IllegalArgumentException {
+		
+		for(Listitem l : listitems) {
+			l.setArchived(true);
+			this.save(l);
+		}
+	}
+
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
@@ -481,6 +495,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Product getProductOf(Listitem listitem) throws IllegalArgumentException {
 		return this.productMapper.findById(listitem.getProductID());
 	}
+	
+	
 	
 	
 /**
@@ -950,6 +966,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return null;
 	}
 
+
+	
 
 
 }
