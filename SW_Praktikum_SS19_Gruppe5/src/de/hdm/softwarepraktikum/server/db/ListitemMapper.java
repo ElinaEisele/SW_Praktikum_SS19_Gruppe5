@@ -297,16 +297,11 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
-<<<<<<< HEAD
+
 					+ "FROM shoppinglists INNER JOIN listitems " 
 					+ "ON shoppinglists.listitem_id = listitems.id "
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId()
 					+ "AND isArchived = FALSE");
-=======
-					+ "FROM listitems INNER JOIN shoppinglists " 
-					+ "ON listitems.shoppinglist_id = shoppinglists.id "
-					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
->>>>>>> branch 'TimBeutelspacher' of https://github.com/ElinaEisele/SW_Praktikum_SS19_Gruppe5.git
 
 			if (rs.next()) {
 
