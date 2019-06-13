@@ -345,7 +345,6 @@ public class ListitemMapper {
 					+ "AND isArchived = TRUE");
 
 			while(rs.next()) {
-
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
