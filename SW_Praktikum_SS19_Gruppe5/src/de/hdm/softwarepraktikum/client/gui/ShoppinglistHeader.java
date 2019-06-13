@@ -99,6 +99,16 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		this.add(showUserRetailerAllocation);
 
 	}
+	
+	
+
+	public Group getGroupToDisplay() {
+		return groupToDisplay;
+	}
+
+	public void setGroupToDisplay(Group groupToDisplay) {
+		this.groupToDisplay = groupToDisplay;
+	}
 
 	public ShoppinglistShowForm getShoppinglistShowForm() {
 		return shoppinglistShowForm;
@@ -169,6 +179,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				nlf.setGstvm(ShoppinglistHeader.this.gstvm);
 				nlf.setShoppinglistHeader(ShoppinglistHeader.this);
 				nlf.setShoppinglistToDisplay(shoppinglistToDisplay);
+				nlf.setGroupToDisplay(groupToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, nlf);
 				ssf.setSelected(shoppinglistToDisplay);
 
@@ -194,9 +205,12 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
 				autrdb.setShoppinglistHeader(ShoppinglistHeader.this);
 				autrdb.setShoppinglistToDisplay(shoppinglistToDisplay);
-
+				autrdb.setGroupToDisplay(groupToDisplay);
+			
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, autrdb);
 				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
+				
 
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");

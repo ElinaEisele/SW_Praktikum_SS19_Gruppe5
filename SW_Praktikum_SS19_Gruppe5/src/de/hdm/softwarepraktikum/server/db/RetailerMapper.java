@@ -231,7 +231,7 @@ public class RetailerMapper {
 		try {
 
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO responsibilities (retailer_id, user_id, shoppinglist_id) "
-					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					+ "VALUES (?, ?, ?) ", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, retailerId);
 			pstmt.setInt(2, userId);
