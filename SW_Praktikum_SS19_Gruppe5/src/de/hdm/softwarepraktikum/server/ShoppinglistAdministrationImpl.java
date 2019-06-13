@@ -250,7 +250,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException {
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException {
 		
 		Listitem li = new Listitem(amount, listitemUnit);
 		// Fremdschluessel zum Retailer wird auf default-Wert 1 gesetzt.
@@ -260,7 +260,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setShoppinglistID(shoppinglist.getId());
 		
 		// Fremdschluessel zur Gruppe wird gesetzt.
-		li.setGroupID(shoppinglist.getGroupId());
+		li.setGroupID(group.getId());
 		
 		// Fremdschluessel zur ListitemUnit wird gesetzt
 		li.setListitemUnitID(listitemUnit.getId());
@@ -288,7 +288,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit,
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit,
 			Retailer retailer) throws IllegalArgumentException {
 		
 		//Listitem mit den uebergebenen Parametern wird erstellt.
@@ -298,7 +298,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setShoppinglistID(shoppinglist.getId());
 				
 		// Fremdschluessel zur Gruppe wird gesetzt.
-		li.setGroupID(shoppinglist.getGroupId());
+		li.setGroupID(group.getId());
 		
 		// Fremdschluessel zur ListitemUnit wird gesetzt
 		li.setListitemUnitID(listitemUnit.getId());	

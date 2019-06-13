@@ -86,7 +86,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer) throws IllegalArgumentException;
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Einen Retailer anlegen
@@ -406,7 +406,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
 
 	
 	/**

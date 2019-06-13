@@ -219,6 +219,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 			RootPanel.get("main").clear();
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(groupToDisplay);
 			RootPanel.get("main").add(ssf);
 		}
 
@@ -261,7 +262,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			Window.alert("Callback sucess");
 
 //			RootPanel.get("main").clear();
 //			ShoppinglistShowForm ssf = new ShoppinglistShowForm();

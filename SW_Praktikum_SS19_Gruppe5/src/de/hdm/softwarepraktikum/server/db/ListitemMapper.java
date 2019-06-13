@@ -121,33 +121,38 @@ public class ListitemMapper {
 	 * @return Listitem-Objekt
 	 */
 	public Listitem insert(Listitem listitem) {
-
+		
 		Connection con = DBConnection.connection();
 
 		try {
-
+			
+			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM listitems ");
 
 			if (rs.next()) {
 				listitem.setId(rs.getInt("maxid") + 1);
 			}
+			
 
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO listitems "
 					+ "(id, creationDate, amount, isStandard, product_id, shoppinglist_id, unit_id, usergroup_id, "
 					+ "retailer_id) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
+			
+			listitem.setGroupID(3);
 
 			pstmt.setInt(1, listitem.getId());
 			pstmt.setDate(2, (Date) listitem.getCreationDate());
 			pstmt.setFloat(3, listitem.getAmount());
-			pstmt.setBoolean(4, listitem.isStandard());
+			pstmt.setBoolean(4, listitem.isStandard()); 
 			pstmt.setInt(5, listitem.getProductID());
 			pstmt.setInt(6, listitem.getShoppinglistID());
 			pstmt.setInt(7, listitem.getListitemUnitID());
 			pstmt.setInt(8, listitem.getGroupID());
 			pstmt.setInt(9, listitem.getRetailerID());
+
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -292,10 +297,16 @@ public class ListitemMapper {
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
+<<<<<<< HEAD
 					+ "FROM shoppinglists INNER JOIN listitems " 
 					+ "ON shoppinglists.listitem_id = listitems.id "
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId()
 					+ "AND isArchived = FALSE");
+=======
+					+ "FROM listitems INNER JOIN shoppinglists " 
+					+ "ON listitems.shoppinglist_id = shoppinglists.id "
+					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
+>>>>>>> branch 'TimBeutelspacher' of https://github.com/ElinaEisele/SW_Praktikum_SS19_Gruppe5.git
 
 			if (rs.next()) {
 

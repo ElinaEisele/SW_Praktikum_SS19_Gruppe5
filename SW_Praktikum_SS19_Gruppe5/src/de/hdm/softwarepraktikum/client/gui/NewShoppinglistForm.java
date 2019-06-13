@@ -47,7 +47,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 	private Button cancelButton = new Button("Abbrechen");
 
 	public NewShoppinglistForm() {
-		
+
 		grid.setWidget(0, 0, nameLabel);
 		grid.setWidget(0, 1, nameTextBox);
 
@@ -63,7 +63,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 	}
 
-	public void onLoad() {		
+	public void onLoad() {
 		RootPanel.get("main").add(mainPanel);
 
 	}
@@ -97,12 +97,14 @@ public class NewShoppinglistForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
+				if (nameTextBox.getValue() == "") {
+					Window.alert("Niemand hat die Absicht eine Einkaufsliste ohne Namen anzulegen");
+				}else {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
 						new NewShoppinglistAsyncCallback());
-//				Window.alert("NSF: SlId im ClickHandler" + selectedShoppinglist.getId());
-								
+				}
 			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
+				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
 			}
 		}
 
@@ -132,21 +134,20 @@ public class NewShoppinglistForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Shoppinglist result) {
 			selectedShoppinglist = result;
-			Window.alert("NSF: GroupId: " + String.valueOf(selectedShoppinglist.getGroupId()));
 			RootPanel.get("main").clear();
 			RootPanel.get("aside").clear();
 			NavigatorPanel np = new NavigatorPanel();
 			RootPanel.get("aside").add(np);
-			gstvm.addShoppinglistToGroup(result, selectedGroup);
+			//gstvm.addShoppinglistToGroup(result, selectedGroup); //not working
 			// die neu erstellte Shoppinglist wird in der ShoppinglistShowForm gesetzt
 			shoppinglistShowForm.setSelected(result);
 			shoppinglistShowForm.setSelectedGroup(selectedGroup);
 
 			// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe
 			// Callback)
-			
+
 			RootPanel.get("main").add(shoppinglistShowForm);
-					}
+		}
 
 	}
 
