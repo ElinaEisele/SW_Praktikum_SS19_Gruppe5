@@ -193,9 +193,11 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-
+				Window.alert(shoppinglistToDisplay.getName());
+				Window.alert(selectedUser.getName());
 				shoppinglistAdministration.getRetailersOf(shoppinglistToDisplay, selectedUser,
 						new ShowAllocationCallback());
+				
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
