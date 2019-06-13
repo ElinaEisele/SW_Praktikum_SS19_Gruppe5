@@ -224,7 +224,6 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		 * success method
 		 * 
 		 */
-		Window.alert("SCT: " + shoppinglistShowForm.getSelectedShoppinglist().getName());
 		shoppinglistAdministration.getListitemsOf(shoppinglistShowForm.getSelectedShoppinglist(),
 				new AsyncCallback<ArrayList<Listitem>>() {
 
@@ -236,17 +235,12 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(ArrayList<Listitem> result) {
-						if (result == null) {
-							Window.alert("result == null --> Keine Eintraege");
-						} else {
-							Window.alert(String.valueOf(result.get(0).getAmount()));
-							
+						
 							// Set the total row count
 							table.setRowCount(result.size(), true);
 							// Push the data into the widget.
 							table.setRowData(0, result);
-							
-						}
+
 					}
 				});
 

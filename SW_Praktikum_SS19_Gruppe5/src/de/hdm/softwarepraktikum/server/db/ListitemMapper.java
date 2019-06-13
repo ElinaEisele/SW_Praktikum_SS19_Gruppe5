@@ -294,17 +294,13 @@ public class ListitemMapper {
 		Connection con = DBConnection.connection();
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
 
-		int i = 0;
 		try {
-			System.out.println("Hier nix");
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems "
 					+ "WHERE shoppinglist_id = " + shoppinglist.getId()
 					+ " AND isArchived = " + 0);
-System.out.println("Hier nixxxxxxx");
 			
 			while(rs.next()) {
-				System.out.println("RS x" + i++);
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
