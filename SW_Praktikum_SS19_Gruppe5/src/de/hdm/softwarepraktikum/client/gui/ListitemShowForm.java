@@ -1,8 +1,10 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
  * Klasse zur Darstellung eines Shoppinglist-Listitems.
@@ -12,35 +14,47 @@ import de.hdm.softwarepraktikum.shared.bo.Listitem;
  */
 public class ListitemShowForm extends VerticalPanel {
 	private ListitemHeader listitemHeader = null;
-	private ListitemContent listitemContent = null;
+	private ListitemForm listitemForm;
+	private ShoppinglistCellTable shoppinglistCellTable;
 	private VerticalPanel mainPanel = new VerticalPanel();
 
 	private Listitem selectedListitem;
+	private Shoppinglist selectedShoppinglist;
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 
-	public ListitemShowForm(ListitemHeader lh, NewListitemForm nlf) {
+	public ListitemShowForm(ListitemHeader lh, ListitemForm lf) {
 		listitemHeader = lh;
-		mainPanel.add(nlf);
+		lf.setSelectedListitem(selectedListitem);
+		lf.setShoppinglistToDisplay(selectedShoppinglist);
+		mainPanel.add(lf);
 
 	}
 	public ListitemShowForm(ListitemHeader lh, NewRetailerForm nrf) {
 		listitemHeader = lh;
 		mainPanel.add(nrf);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
 
 	}
 
 	public ListitemShowForm() {
+		
 		listitemHeader = new ListitemHeader();
-		listitemContent = new ListitemContent();
+		listitemForm = new ListitemForm();
 
-		listitemHeader.setStylePrimaryName("listitemHeader");
-		listitemContent.setStylePrimaryName("listitemContent");
+		listitemHeader.setStylePrimaryName("listitemHeader");		
 
-		mainPanel.add(listitemContent);
+		mainPanel.add(listitemForm);
 	}
 
 	public void onLoad() {
+				
+		listitemForm.setListitemShowForm(ListitemShowForm.this);
+		listitemForm.setShoppinglistToDisplay(selectedShoppinglist);
+		listitemForm.setSelectedListitem(selectedListitem);
 		listitemHeader.setListitemShowForm(ListitemShowForm.this);
+		listitemHeader.setShoppinglistToDisplay(selectedShoppinglist);
+		listitemHeader.setListitemToDisplay(selectedListitem);
 
 		this.add(listitemHeader);
 		this.add(mainPanel);
@@ -65,5 +79,12 @@ public class ListitemShowForm extends VerticalPanel {
 	public void setListitemHeader(ListitemHeader listitemHeader) {
 		this.listitemHeader = listitemHeader;
 	}
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
+	}
+	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
+		this.selectedShoppinglist = selectedShoppinglist;
+	}
+
 	
 }

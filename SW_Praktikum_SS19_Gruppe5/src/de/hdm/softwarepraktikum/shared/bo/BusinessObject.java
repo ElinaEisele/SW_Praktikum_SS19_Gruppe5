@@ -1,7 +1,8 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
-import java.io.Serializable;
 import java.sql.Date;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * <p>
@@ -21,7 +22,7 @@ import java.sql.Date;
  * @author TimBeutelspacher
  */
 
-public abstract class BusinessObject implements Serializable{
+public abstract class BusinessObject implements IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 	
