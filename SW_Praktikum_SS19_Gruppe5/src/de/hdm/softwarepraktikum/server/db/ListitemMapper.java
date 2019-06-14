@@ -608,6 +608,3 @@ public class ListitemMapper {
 	}
 
 }
-
-
-

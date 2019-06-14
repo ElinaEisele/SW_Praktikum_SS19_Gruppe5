@@ -152,7 +152,7 @@ public class NewListitemForm extends HorizontalPanel {
 	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
 		this.shoppinglistToDisplay = shoppinglistToDisplay;
 	}
-	
+
 	public Group getGroupToDisplay() {
 		return groupToDisplay;
 	}
@@ -160,9 +160,6 @@ public class NewListitemForm extends HorizontalPanel {
 	public void setGroupToDisplay(Group groupToDisplay) {
 		this.groupToDisplay = groupToDisplay;
 	}
-
-
-
 
 	/**
 	 * Zum Bef�llen der Dropdown-Liste mit <code>Unit</code>.
@@ -233,8 +230,7 @@ public class NewListitemForm extends HorizontalPanel {
 		}
 	}
 
-	
-	private class NewRetailerClickhandler implements ClickHandler{
+	private class NewRetailerClickhandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -244,18 +240,22 @@ public class NewListitemForm extends HorizontalPanel {
 
 				shoppinglistHeader = new ShoppinglistHeader();
 				shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+				shoppinglistHeader.setGroupToDisplay(groupToDisplay);
 				nrf.setShoppinglistHeader(shoppinglistHeader);
 				nrf.setSelectedShoppinglist(shoppinglistToDisplay);
+				nrf.setSelectedGroup(groupToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nrf);
 				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
 				RootPanel.get("main").add(ssf);
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}
-			
+
 		}
-		
+
 	}
+
 	/**
 	 * Clickhandler zum verwerfen der Eingaben und zur R�ckkehr zum Shoppinglist
 	 * CellTable
@@ -269,8 +269,11 @@ public class NewListitemForm extends HorizontalPanel {
 				RootPanel.get("main").clear();
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
 				RootPanel.get("main").add(ssf);
 
+			} else {
+				Notification.show("Keine Einkaufsliste ausgewaehlt");
 			}
 		}
 
@@ -296,10 +299,9 @@ public class NewListitemForm extends HorizontalPanel {
 				ListitemUnit listitemUnit = selectedlistitemUnit;
 				Retailer retailer = selectedRetailer;
 
-				shoppinglistAdministration.createListitem(groupToDisplay, shoppinglistToDisplay, productName, amount, listitemUnit,
-						retailer, new CreateListitemCallback());
+				shoppinglistAdministration.createListitem(groupToDisplay, shoppinglistToDisplay, productName, amount,
+						listitemUnit, retailer, new CreateListitemCallback());			
 
-				
 			} else {
 				Notification.show("Keine Shoppinglist ausgewaehlt");
 			}
@@ -325,8 +327,11 @@ public class NewListitemForm extends HorizontalPanel {
 				RootPanel.get("main").clear();
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
 				RootPanel.get("main").add(ssf);
 
+			}else {
+				Notification.show("Das Anlegen eines neuen Eintrags ist fehlgeschlagen!");
 			}
 		}
 	}
