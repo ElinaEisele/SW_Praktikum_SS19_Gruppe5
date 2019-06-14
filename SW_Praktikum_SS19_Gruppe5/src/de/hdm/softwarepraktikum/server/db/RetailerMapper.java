@@ -1,6 +1,11 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
@@ -52,9 +57,8 @@ public class RetailerMapper {
 		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
 
 		try {
-
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM retailers ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM retailers");
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
@@ -65,9 +69,9 @@ public class RetailerMapper {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			
+			e.printStackTrace();	
 		}
+		
 		return retailers;
 	}
 
@@ -78,7 +82,9 @@ public class RetailerMapper {
 	 * @return Retailer-Objekt
 	 */
 	public Retailer findById(int id) {
+		
 		Connection con = DBConnection.connection();
+		Retailer r = new Retailer();
 
 		try {
 
@@ -86,17 +92,16 @@ public class RetailerMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM retailers WHERE id = " + id);
 
 			if (rs.next()) {
-				Retailer r = new Retailer();
 				r.setId(rs.getInt("id"));
 				r.setCreationDate(rs.getDate("creationDate"));
 				r.setName(rs.getString("name"));
-				return r;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		
+		return r;
 
 	}
 
@@ -113,7 +118,6 @@ public class RetailerMapper {
 		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM retailers WHERE name = '" + name + "'");
 
@@ -127,8 +131,8 @@ public class RetailerMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
+		
 		return retailers;
 	}
 
@@ -144,28 +148,26 @@ public class RetailerMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM retailers");
 
 			if (rs.next()) {
 				retailer.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO retailers (id, creationDate, name) VALUES (?, ?, ?) ", 
-					Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO retailers (id, creationDate, name) "
+					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, retailer.getId());
 			pstmt.setDate(2, (Date) retailer.getCreationDate());
 			pstmt.setString(3, retailer.getName());
 			pstmt.executeUpdate();
-			return retailer;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
-		return null;
+		
+		return retailer;
 	}
 
 	/**
@@ -179,19 +181,17 @@ public class RetailerMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			PreparedStatement pstmt = con.prepareStatement("UPDATE retailers SET name = ? WHERE id = ?");
 
 			pstmt.setString(1, retailer.getName());
 			pstmt.setInt(2, retailer.getId());
 			pstmt.executeUpdate();
-			return retailer;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
-		return null;
+		
+		return retailer;
 	}
 
 	/**
@@ -204,7 +204,6 @@ public class RetailerMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM retailers WHERE id = " + retailer.getId());
 
@@ -215,7 +214,6 @@ public class RetailerMapper {
 	}
 	
 	/**
-	 * 
 	 * Eine neue Zuweisung erstellen
 	 * 
 	 * @param retailer_id
@@ -227,13 +225,15 @@ public class RetailerMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			PreparedStatement pstmt = con.prepareStatement("INSERT INTO responsibilities (retailer_id, user_id, shoppinglist_id) "
 					+ "VALUES (?, ?, ?) ", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, retailerId);
+			System.out.println("1: "+retailerId);
 			pstmt.setInt(2, userId);
+			System.out.println("2: "+userId);
 			pstmt.setInt(3, shoppinglistId);
+			System.out.println("3: "+shoppinglistId);
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -242,7 +242,6 @@ public class RetailerMapper {
 	}
 
 	/**
-	 * 
 	 * Finden des Retailers eines Listitems
 	 * 
 	 * @param listitem
@@ -252,27 +251,28 @@ public class RetailerMapper {
 	public Retailer getRetailerOf(Listitem listitem) {
 
 		Connection con = DBConnection.connection();
+		Retailer r = new Retailer();
 
 		try {
-
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name "
-							+ "FROM listitems INNER JOIN retailers "
-							+ "ON listitems.retailer_Id = retailers.id "
-							+ "WHERE listitem_id = " + listitem.getId());
+			ResultSet rs = stmt.executeQuery("SELECT retailers.id AS retailer_id, "
+					+ "retailers.creationDate AS retailer_creationDate, "
+					+ "retailers.name AS retailer_name"
+					+ "FROM listitems INNER JOIN retailers "
+					+ "ON listitems.retailer_Id = retailers.id "
+					+ "WHERE listitem_id = " + listitem.getId());
 
 			if (rs.next()) {
-				Retailer r = new Retailer();
-				r.setId(rs.getInt("id"));
-				r.setCreationDate(rs.getDate("creationDate"));
-				r.setName(rs.getString("name"));
-				return r;
+				r.setId(rs.getInt("retailer_id"));
+				r.setCreationDate(rs.getDate("retailer_creationDate"));
+				r.setName(rs.getString("retailer_name"));
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		
+		return r;
 	}
 
 	/**
@@ -291,23 +291,25 @@ public class RetailerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT retailers.id, retailers.creationDate, retailers.name "
+			ResultSet rs = stmt.executeQuery("SELECT retailers.id AS retailer_id, "
+					+ "retailers.creationDate AS retailer_creationDate, "
+					+ "retailers.name AS retailer_name "
 					+ "FROM responsibilities INNER JOIN retailers "
 					+ "ON responsibilities.retailer_id = retailers.id "
 					+ "WHERE user_id = " + user.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
-				r.setId(rs.getInt("int"));
-				r.setCreationDate(rs.getDate("creationDate"));
-				r.setName(rs.getString("name"));
+				r.setId(rs.getInt("retailer_id"));
+				r.setCreationDate(rs.getDate("retailer_creationDate"));
+				r.setName(rs.getString("retailer_name"));
 				retailers.add(r);
 			}	
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
+		
 		return retailers;
 	}
 	
@@ -327,25 +329,24 @@ public class RetailerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN retailers "
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					+ "FROM listitems INNER JOIN retailers "
 					+ "ON listitems.retailer_id = retailers.id "
 					+ "WHERE shoppinglist_id = " + shoppinglist.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
-				r.getId();
-				r.getCreationDate();
-				r.getName();
+				r.setId(rs.getInt("id"));
+				r.setCreationDate(rs.getDate("creationDate"));
+				r.setName(rs.getString("name"));
 				retailers.add(r);
 			}	
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
+		
 		return retailers;
-		
-		
 	}
 	
 	/**
@@ -365,22 +366,25 @@ public class RetailerMapper {
 		try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN retailers "
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					+ "FROM responsibilities INNER JOIN retailers "
 					+ "ON responsibilities.retailer_id = retailers.id "
-					+ "WHERE shoppinglist_id = " + shoppinglist.getId() + " and user_id = " + user.getId());
-
+					+ "WHERE shoppinglist_id = " + shoppinglist.getId() 
+					+ " AND user_id = " + user.getId());
+			
 			while (rs.next()) {
 				Retailer r = new Retailer();
-				r.getId();
-				r.getCreationDate();
-				r.getName();
+				r.setId(rs.getInt("id"));
+				r.setCreationDate(rs.getDate("creationDate"));
+				r.setName(rs.getString("name"));
 				retailers.add(r);
 			}
-		
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
 		}
+		
 		return retailers;
 	}
 }

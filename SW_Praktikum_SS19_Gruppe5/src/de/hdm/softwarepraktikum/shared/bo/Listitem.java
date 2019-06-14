@@ -67,7 +67,7 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	public Listitem (float amount, ListitemUnit listitemUnit) {
 		this.setAmount(amount);
 		this.setListitemUnitID(listitemUnit.getId());
-		this.setArchived(false);
+	//	this.setArchived(false);
 	}
 
 	/**

@@ -364,6 +364,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		ArrayList<Listitem> list = new ArrayList<Listitem>();
 		if(shoppinglist == null) {
 			return list;
+			
 		}
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}

@@ -1,6 +1,11 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
@@ -51,9 +56,8 @@ public class UserMapper {
 		ArrayList<User> users = new ArrayList<User>();
 
 		try {
-
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM users ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM users");
 
 			while (rs.next()) {
 				User u = new User();
@@ -66,8 +70,8 @@ public class UserMapper {
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
+		
 		return users;
 
 	}
@@ -81,25 +85,24 @@ public class UserMapper {
 	public User findById(int id) {
 
 		Connection con = DBConnection.connection();
+		User u = new User();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE id = " + id);
 
 			if (rs.next()) {
-				User u = new User();
 				u.setId(rs.getInt("id"));
 				u.setCreationDate(rs.getDate("creationDate"));
 				u.setName(rs.getString("name"));
 				u.setGmailAddress(rs.getString("gMail"));
-				return u;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		
+		return u;
 	}
 
 	/**
@@ -130,8 +133,8 @@ public class UserMapper {
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
+		
 		return users;
 
 	}
@@ -146,25 +149,24 @@ public class UserMapper {
 	public User findByGMail(String gmail) {
 
 		Connection con = DBConnection.connection();
+		User u = new User();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE gMail = '" + gmail + "'");
 
 			if (rs.next()) {
-				User u = new User();
 				u.setId(rs.getInt("id"));
 				u.setCreationDate(rs.getDate("creationDate"));
 				u.setGmailAddress(rs.getString("gMail"));
 				u.setName(rs.getString("name"));
-				return u;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		
+		return u;
 
 	}
 
@@ -179,7 +181,6 @@ public class UserMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM users ");
 
@@ -195,12 +196,12 @@ public class UserMapper {
 			pstmt.setString(3, user.getName());
 			pstmt.setString(4, user.getGmailAddress());
 			pstmt.executeUpdate();
-			return user;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		
+		return user;
 
 	}
 	
@@ -216,18 +217,18 @@ public class UserMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			PreparedStatement pstmt = con.prepareStatement("UPDATE users SET name = ?, gMail = ? WHERE id = ?");
 			
-			PreparedStatement pstmt = con.prepareStatement("UPDATE users SET Name = ?, gMail = ? WHERE User_ID = ?");
-			pstmt.setString(1, user.getName());
-			pstmt.setString(2, user.getGmailAddress());
-			pstmt.setInt(3, user.getId());
-			pstmt.executeUpdate();
-			return user;
+				pstmt.setString(1, user.getName());
+				pstmt.setString(2, user.getGmailAddress());
+				pstmt.setInt(3, user.getId());
+				pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		
+		return user;
 
 	}
 
@@ -242,7 +243,6 @@ public class UserMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM users WHERE id = " + user.getId());
 
@@ -262,7 +262,6 @@ public class UserMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM responsibilities WHERE user_id = " + userId);
 
@@ -283,7 +282,6 @@ public class UserMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM memberships WHERE user_id = " + userId);
 
@@ -306,18 +304,21 @@ public class UserMapper {
 		ArrayList<User> users = new ArrayList<User>();
 
 		try {
-
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM memberships INNER JOIN users "
+			ResultSet rs = stmt.executeQuery("SELECT users.id AS user_id, "
+					+ "users.creationDate AS user_creationDate, "
+					+ "users.name AS user_name, "
+					+ "users.gMail AS user_gMail "
+					+ "FROM memberships INNER JOIN users "
 					+ "ON memberships.user_id = users.id "
 					+ "WHERE memberships.usergroup_id = " + group.getId());
 
 			while (rs.next()) {
 				User u = new User();
-				u.setId(rs.getInt("id"));
-				u.setCreationDate(rs.getDate("creationDate"));
-				u.setName(rs.getString("name"));
-				u.setGmailAddress(rs.getString("gMail"));
+				u.setId(rs.getInt("user_id"));
+				u.setCreationDate(rs.getDate("user_creationDate"));
+				u.setName(rs.getString("user_name"));
+				u.setGmailAddress(rs.getString("user_gMail"));
 				users.add(u);
 			}
 
@@ -330,47 +331,47 @@ public class UserMapper {
 	}
 
 	/**
-	 * 
 	 * User finden, welcher dem uebergebenen Listitem zugeordnet ist.
 	 * 
 	 * @param listitem
 	 * @return User-Objekt
 	 */
-  
 	public User getGroupMemberOf(Listitem listitem){
 
 		Connection con = DBConnection.connection();
+		User u = new User();
 
 		try {
-			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems INNER JOIN responsibilities "
+			ResultSet rs = stmt.executeQuery("SELECT responsibilities.retailer_id AS r_id "
+					+ "FROM listitems INNER JOIN responsibilities "
 					+ "ON listitems.retailer_id = responsibilities.retailer_id "
 					+ "WHERE listitems.id = " + listitem.getId());
 			
 			while(rs.next()) {
-				int r_id = rs.getInt("retailer_id");
+				int r_id = rs.getInt("r_id");
 			
-				ResultSet rs2 = stmt.executeQuery("SELECT * FROM respinsibilities INNER JOIN users "
+				ResultSet rs2 = stmt.executeQuery("SELECT users.id AS user_id, "
+						+ "users.creationDate AS user_creationDate, "
+						+ "users.name AS user_name, "
+						+ "users.gMail AS user_gMail "
+						+ "FROM respinsibilities INNER JOIN users "
 						+ "ON responsibilities.user_id = users.id "
 						+ "WHERE responsibilities.retailer_id = " + r_id);
 	
 				while (rs2.next()) {
-					User u = new User();
-					u.setId(rs2.getInt("id"));
-					u.setCreationDate(rs2.getDate("creationDate"));
-					u.setName(rs2.getString("name"));
-					u.setGmailAddress(rs2.getString("gMail"));
-					return u;
+					u.setId(rs.getInt("user_id"));
+					u.setCreationDate(rs.getDate("user_creationDate"));
+					u.setName(rs.getString("user_name"));
+					u.setGmailAddress(rs.getString("user_gMail"));
 				}
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
 		
-		return null;
+		return u;
 
 	}
 }

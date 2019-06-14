@@ -72,8 +72,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 			if (bo == null) {
 				return null;
 			} else {
-				// prüfen ob Gruppe oder Shippingliste
-				return bo.getId();
+				if (bo instanceof Group) {
+					return new Integer(bo.getId());
+				} else {
+					return new Integer(-bo.getId());
+				}
 			}
 		}
 
@@ -140,10 +143,12 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	}
 
 	void setSelectedGroup(Group g) {
-		navigatorPanel.setSelectedGroup(selectedGroup);
+//		navigatorPanel.setSelectedGroup(selectedGroup);
 		RootPanel.get("main").clear();
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
+		navigatorPanel.setSelectedGroup(selectedGroup);
+
 
 		selectedShoppinglist = null;
 		shoppinglistShowForm.setSelected(null);
