@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -13,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
@@ -30,6 +32,7 @@ public class NewRetailerForm extends VerticalPanel {
 
 	private Shoppinglist selectedShoppinglist = null;
 	private Listitem selectedListitem = null;
+	private Group selectedGroup = null;
 	private ShoppinglistHeader shoppinglistHeader;
 	private ListitemHeader listitemHeader;
 	private VerticalPanel mainPanel = new VerticalPanel();
@@ -89,8 +92,12 @@ public class NewRetailerForm extends VerticalPanel {
 		return selectedShoppinglist;
 	}
 
-	public void setSelectedGroup(Shoppinglist selectedShoppinglist) {
-		this.selectedShoppinglist = selectedShoppinglist;
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
 	}
 
 	public GroupShoppinglistTreeViewModel getGstvm() {
@@ -124,19 +131,39 @@ public class NewRetailerForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (selectedShoppinglist != null) {
+			retailerNameTextBox.setText("");
+			RootPanel.get("main").clear();
 
-				NewListitemForm nlf = new NewListitemForm();
-
+			if (selectedGroup != null && selectedShoppinglist != null) {
+				
 				shoppinglistHeader = new ShoppinglistHeader();
 				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
-				nlf.setGstvm(shoppinglistHeader.getGstvm());
+				NewListitemForm nlf = new NewListitemForm();
 				nlf.setShoppinglistHeader(shoppinglistHeader);
 				nlf.setShoppinglistToDisplay(selectedShoppinglist);
+				nlf.setGroupToDisplay(selectedGroup);
+				
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
 				ssf.setSelected(selectedShoppinglist);
+				ssf.setSelectedGroup(selectedGroup);
+				
+				RootPanel.get("main").add(nlf);
+			} else if (selectedListitem != null) {
+				
+				listitemHeader = new ListitemHeader();
+				listitemHeader.setShoppinglistToDisplay(selectedShoppinglist);
+				listitemHeader.setListitemToDisplay(selectedListitem);
+				ListitemForm lf = new ListitemForm();
+				lf.setListitemHeader(listitemHeader);
+				lf.setSelectedListitem(selectedListitem);
+				lf.setShoppinglistToDisplay(selectedShoppinglist);
 
-			}
+				ListitemShowForm lsf = new ListitemShowForm(listitemHeader, lf);
+				lsf.setSelected(selectedListitem);
+				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				Window.alert(selectedShoppinglist.getName());
+				RootPanel.get("main").add(lf);
+			} 
 		}
 	}
 
@@ -171,16 +198,38 @@ public class NewRetailerForm extends VerticalPanel {
 
 			retailerNameTextBox.setText("");
 			RootPanel.get("main").clear();
-			NewListitemForm nlf = new NewListitemForm();
 
-			shoppinglistHeader = new ShoppinglistHeader();
-			shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
-			nlf.setShoppinglistHeader(shoppinglistHeader);
-			nlf.setShoppinglistToDisplay(selectedShoppinglist);
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
-			ssf.setSelected(selectedShoppinglist);
+			if (selectedGroup != null && selectedShoppinglist != null) {
+				
+				shoppinglistHeader = new ShoppinglistHeader();
+				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+				NewListitemForm nlf = new NewListitemForm();
+				nlf.setShoppinglistHeader(shoppinglistHeader);
+				nlf.setShoppinglistToDisplay(selectedShoppinglist);
+				nlf.setGroupToDisplay(selectedGroup);
+				
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
+				ssf.setSelected(selectedShoppinglist);
+				ssf.setSelectedGroup(selectedGroup);
+				
+				RootPanel.get("main").add(nlf);
+			} else if (selectedListitem != null) {
+				
+				listitemHeader = new ListitemHeader();
+				listitemHeader.setShoppinglistToDisplay(selectedShoppinglist);
+				listitemHeader.setListitemToDisplay(selectedListitem);
+				ListitemForm lf = new ListitemForm();
+				lf.setListitemHeader(listitemHeader);
+				lf.setSelectedListitem(selectedListitem);
+				lf.setShoppinglistToDisplay(selectedShoppinglist);
 
-			RootPanel.get("main").add(nlf);
+				ListitemShowForm lsf = new ListitemShowForm(listitemHeader, lf);
+				lsf.setSelected(selectedListitem);
+				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				
+				RootPanel.get("main").add(lf);
+			} 
+
 		}
 
 	}
