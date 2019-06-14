@@ -177,13 +177,14 @@ public class ListitemMapper {
 		try {
 
 			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? AND isStandard ?"
-					+ " AND isArchived = ? WHERE id = ?");
+					+ " AND isArchived = ? AND unit_id = ? AND retailer_id = ? WHERE id = ?");
 
 			pstmt.setFloat(1, listitem.getAmount());
 			pstmt.setBoolean(2, listitem.isStandard());
-			pstmt.setInt(3, listitem.getId());
 			pstmt.setBoolean(3, listitem.isArchived());
-			pstmt.setInt(4, listitem.getId());
+			pstmt.setInt(4, listitem.getListitemUnitID());
+			pstmt.setInt(5, listitem.getRetailerID());
+			pstmt.setInt(6, listitem.getId());
 			pstmt.executeUpdate();
 
 			return listitem;
