@@ -46,6 +46,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 	private ShoppinglistShowForm shoppinglistShowForm;
 
 	private Shoppinglist shoppinglistToDisplay = null;
+	private Listitem listitemToDisplay = null;
 	private CellTable<Listitem> table = new CellTable<Listitem>();
 
 	private Label productName = new Label("");
@@ -191,13 +192,11 @@ public class ShoppinglistCellTable extends VerticalPanel {
 				if ("click".equals(event.getType())) {
 
 					RootPanel.get("main").clear();
+					listitemToDisplay = object;
 
 					ListitemShowForm lsf = new ListitemShowForm();
-//					ssf.setGstvm(gstvm);
-//					gstvm.setSelectedGroup(null);
-//					gstvm.setSelectedShoppinglist(object);
-
 					lsf.setSelected(object);
+					lsf.setSelectedShoppinglist(shoppinglistToDisplay);
 
 					RootPanel.get("main").add(lsf);
 				}
@@ -235,11 +234,11 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(ArrayList<Listitem> result) {
-						
-							// Set the total row count
-							table.setRowCount(result.size(), true);
-							// Push the data into the widget.
-							table.setRowData(0, result);
+
+						// Set the total row count
+						table.setRowCount(result.size(), true);
+						// Push the data into the widget.
+						table.setRowData(0, result);
 
 					}
 				});
@@ -255,6 +254,18 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	public void setShoppinglistShowForm(ShoppinglistShowForm shoppinglistShowForm) {
 		this.shoppinglistShowForm = shoppinglistShowForm;
+	}
+
+	public Listitem getListitemToDisplay() {
+		return listitemToDisplay;
+	}
+
+	public void setListitemToDisplay(Listitem listitemToDisplay) {
+		this.listitemToDisplay = listitemToDisplay;
+	}
+
+	public Shoppinglist getShoppinglistToDisplay() {
+		return shoppinglistToDisplay;
 	}
 
 	/**
