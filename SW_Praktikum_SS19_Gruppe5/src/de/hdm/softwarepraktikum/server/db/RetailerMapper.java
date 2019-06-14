@@ -387,4 +387,27 @@ public class RetailerMapper {
 		
 		return retailers;
 	}
+	
+	/**
+	 * Eine bestimmte Zuweisung loeschen.
+	 * 
+	 * @param retailerId ist die ID des Retailers, dessen Zusweisung geloescht weden soll.
+	 * @param userId ist die ID des users, dessen Zuweisung geloescht werden soll.
+	 * @param shoppinglistId ist die ID der Shoppinglist, in welcher eine Zusweisung geloescht werden soll.
+	 */
+	public void deleteResponsibility(int retailerId, int userId, int shoppinglistId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM responsibilities WHERE retailer_id = " + retailerId 
+					+ " AND user_id = " + userId 
+					+ " AND shoppinglist_id = " + shoppinglistId);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
