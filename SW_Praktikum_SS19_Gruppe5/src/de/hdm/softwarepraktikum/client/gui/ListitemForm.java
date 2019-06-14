@@ -443,7 +443,7 @@ public class ListitemForm extends VerticalPanel {
 				selectedListitem.setListitemUnitID(listitemUnit.getId());
 				selectedListitem.setRetailerID(retailer.getId());
 
-				//shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
+				shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
 
 				
 			} else {
@@ -463,12 +463,12 @@ public class ListitemForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			RootPanel.get("main").clear();
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			ssf.setSelected(shoppinglistToDisplay);
-			ssf.setSelectedGroup(groupToDisplay);
-			RootPanel.get("main").add(ssf);
-			Notification.show("Keine Shoppinglist ausgewaehlt");
+//			RootPanel.get("main").clear();
+//			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+//			ssf.setSelected(shoppinglistToDisplay);
+//			ssf.setSelectedGroup(groupToDisplay);
+//			RootPanel.get("main").add(ssf);
+//			Notification.show("Keine Shoppinglist ausgewaehlt");
 			
 		}
 		
@@ -494,8 +494,7 @@ public class ListitemForm extends VerticalPanel {
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(groupToDisplay);
 			RootPanel.get("main").add(ssf);
-			Notification.show("Keine Shoppinglist ausgewaehlt");
-
+			
 		}
 
 	}
