@@ -22,6 +22,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
+import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.User;
@@ -89,6 +90,8 @@ public class ReportShowForm extends VerticalPanel{
 	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
 	 */
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
+	
 	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	
 //	/**
@@ -127,7 +130,7 @@ public class ReportShowForm extends VerticalPanel{
 		
 		mainPanel.add(reportGrid);
 	
-//		reportGenerator.getGroupsOf(selectedUser, new GetGroupsOfUserCallback());	
+		shoppinglistAdministration.getGroupsOf(selectedUser, new GetGroupsOfUserCallback());	
 		
 	}
 	
@@ -181,7 +184,7 @@ public class ReportShowForm extends VerticalPanel{
 				//Eingegebenes Enddate festhalten
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
 				
-				//Ausfuehren der Report-Erstellung
+//				//Ausfuehren der Report-Erstellung
 				reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
 			}
 	}
