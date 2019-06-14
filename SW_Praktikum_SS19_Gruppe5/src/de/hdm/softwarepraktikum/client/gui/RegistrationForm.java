@@ -70,6 +70,7 @@ public class RegistrationForm extends VerticalPanel{
 			String userName = lastNameTextBox.getText()+" "+firstNameTextBox.getText();
 			user.setName(userName);
 			shoppinglistAdministration.createUser(userName, user.getGmailAddress(), new SaveUserCallback());
+			Window.alert(user.getGmailAddress());
 		}
 		
 	}
