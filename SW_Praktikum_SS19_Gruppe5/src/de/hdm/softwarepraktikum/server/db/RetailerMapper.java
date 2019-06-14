@@ -350,6 +350,40 @@ public class RetailerMapper {
 	}
 	
 	/**
+	 * Alle zugewiesenen Händler einer Shoppingliste zurückgeben
+	 * 
+	 * @param shoppinglist
+	 * @return ArrayList<Retailer>
+	 */
+	public ArrayList<Retailer> getAssignedRetailersOf(Shoppinglist shoppinglist){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					+ "FROM responsibilities INNER JOIN retailers "
+					+ "ON responsibilities.retailer_id = retailers.id "
+					+ "WHERE shoppinglist_id = " + shoppinglist.getId());
+
+			while (rs.next()) {
+				Retailer r = new Retailer();
+				r.setId(rs.getInt("id"));
+				r.setCreationDate(rs.getDate("creationDate"));
+				r.setName(rs.getString("name"));
+				retailers.add(r);
+			}	
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return retailers;
+	}
+	
+	/**
 	 * 
 	 * Alle Retailer einer Shoppingliste finden, welche einem User zugeordnet sind
 	 * 
