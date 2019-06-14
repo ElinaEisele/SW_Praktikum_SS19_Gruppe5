@@ -496,4 +496,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void archiveListitems(ArrayList<Listitem> listitems) throws IllegalArgumentException;
+	
+	/**
+	 * Eine Zuweisung wird gelöscht.
+	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
+	 * @param user ist der User, dessen Zuweisung gelöscht werden soll.
+	 * @param shoppinglist ist die Shoppinglist, innerhalb 
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteAssignment(Retailer retailer, User user, Shoppinglist shoppinglist) throws IllegalArgumentException;
 }
