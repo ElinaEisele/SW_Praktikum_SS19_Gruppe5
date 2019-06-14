@@ -99,9 +99,9 @@ public class ReportShowForm extends VerticalPanel{
 	 * Befuellen der Dropdown-Liste mit den<code>Gruppen</code> Namen eines Users.
 	 */
 		
-//	shoppinglistAdministration.getGroupsOf(selectedUser, new GetGroupsOfUserCallback());
-//	Window.alert(selectedUser.getName());
-		shoppinglistAdministration.getAllGroups(new GetAllGroupsCallback());
+	shoppinglistAdministration.getGroupsOf(selectedUser, new GetGroupsOfUserCallback());
+	Window.alert(selectedUser.getName());
+//shoppinglistAdministration.getAllGroups(new GetGroupsOfUserCallback());
 	}
 	
 	public void onLoad() {
@@ -114,12 +114,13 @@ public class ReportShowForm extends VerticalPanel{
 		/**
 		 *  Alle Gruppen des aktuellen Users werden zwischenespeichert.
 		 */
-//		groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(user, new GetGroupsCallback());
 		
+	//	groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(selectedUser, new GetGroupsOfUserCallback());
+
 		if(reportGenerator == null) {
 			ClientsideSettings.getReportGenerator();
 		}
-		
+	
 		/**
 		 * Gruppennamen werden der Drop-Downliste hinzugefuegt..
 		 */
@@ -144,13 +145,14 @@ public class ReportShowForm extends VerticalPanel{
 		this.add(mainPanel);
 		this.add(addPanel);
 		
+//	shoppinglistAdministration.getAllGroups(new GetGroupsOfUserCallback());	
 		
 		groupSelector.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 				selectedGroup = groupsOfCurrentUser.get(groupSelector.getSelectedIndex());
 			}
-			
+		
 		});
 		
 		showReportButton.addClickHandler(new ClickHandler() {
@@ -205,7 +207,7 @@ public class ReportShowForm extends VerticalPanel{
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-			Window.alert("Fehler" + caught.toString());	
+			Window.alert("Fehler " + caught.toString());	
 			}
 
 			@Override
@@ -220,19 +222,20 @@ public class ReportShowForm extends VerticalPanel{
 
 			
 	}
-	private class GetAllGroupsCallback implements AsyncCallback <ArrayList<Group>>{
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("nicht erfolgreich");
-		}
-
-		@Override
-		public void onSuccess(ArrayList<Group> result) {
-			Window.alert("erfolgreich");
-			
-		}
-		
-	}
+	
+//	private class GetAllGroupsCallback implements AsyncCallback <ArrayList<Group>>{
+//
+//		@Override
+//		public void onFailure(Throwable caught) {
+//			Window.alert("nicht erfolgreich");
+//		}
+//
+//		@Override
+//		public void onSuccess(ArrayList<Group> result) {
+//			Window.alert("erfolgreich");
+//			
+//		}
+//		
+//	}
 	
 }
