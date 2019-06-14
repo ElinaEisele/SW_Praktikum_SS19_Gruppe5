@@ -41,8 +41,8 @@ public class ListitemForm extends VerticalPanel {
 	private ShoppinglistHeader shoppinglistHeader = null;
 	private ListitemHeader listitemHeader = null;
 	private Shoppinglist shoppinglistToDisplay = null;
-	private ListitemUnit selectedlistitemUnit = null;
-	private Retailer selectedRetailer = null;
+	private ListitemUnit selectedListitemUnit = new ListitemUnit();
+	private Retailer selectedRetailer = new Retailer();
 	private Listitem selectedListitem = null;
 	private ListitemShowForm listitemShowForm;
 	private Group groupToDisplay = null;
@@ -111,6 +111,15 @@ public class ListitemForm extends VerticalPanel {
 
 		mainPanel.add(shoppinglistGrid);
 
+		/**
+		 * Zum Bef�llen der Dropdown-Liste mit <code>Unit</code>.
+		 */
+		shoppinglistAdministration.getAllListitemUnits(new GetAllListitemUnitsCallback());
+
+		/**
+		 * Bef�llen der Dropdown-Liste mit <code>Retailer</code>.
+		 */
+		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
 	}
 
 	public void onLoad() {
@@ -134,15 +143,7 @@ public class ListitemForm extends VerticalPanel {
 		 */
 		shoppinglistAdministration.getRetailerOf(selectedListitem, new GetRetailerCallback());
 
-		/**
-		 * Zum Bef�llen der Dropdown-Liste mit <code>Unit</code>.
-		 */
-		shoppinglistAdministration.getAllListitemUnits(new GetAllListitemUnitsCallback());
-
-		/**
-		 * Bef�llen der Dropdown-Liste mit <code>Retailer</code>.
-		 */
-		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
+		
 
 		RootPanel.get("main").add(mainPanel);
 	}
@@ -204,7 +205,77 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Bef�llen der TextBox mit dem Produktname.
+	 * Zum Bef�llen der Dropdown-Liste mit <code>Unit</code>.
+	 */
+	private class GetAllListitemUnitsCallback implements AsyncCallback<ArrayList<ListitemUnit>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(ArrayList<ListitemUnit> result) {
+			listitemUnitArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				unitNameListBox.addItem(result.get(i).getName());
+				selectedListitemUnit = result.get(0);
+				
+			}
+		}
+
+	}
+
+	/**
+	 * Bef�llen der Dropdown-Liste mit <code>Retailer</code>.
+	 */
+	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(ArrayList<Retailer> result) {
+			retailerArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				retailerNameListBox.addItem(result.get(i).getName());
+				selectedRetailer = result.get(0);
+			}
+		}
+	}
+	
+	/**
+	 * ChangeHandler zum erkennen welches <code>Unit</code> Objekt der
+	 * Dropdown-Liste ausgew�hlt wurde und dieses selectedListitemUnit zuordnen .
+	 */
+	private class UnitNameListBoxChangeHandler implements ChangeHandler {
+		public void onChange(ChangeEvent event) {
+			
+			int item = unitNameListBox.getSelectedIndex();			
+			selectedListitemUnit = listitemUnitArrayList.get(item);
+			
+		}
+	}
+
+	/**
+	 * ChangeHandler zum erkennen welches <code>Retailer</code> Objekt der
+	 * Dropdown-Liste ausgew�hlt wurde und dieses selectedRetailer zuordnen .
+	 */
+	private class RetailerNameListBoxChangeHandler implements ChangeHandler {
+		public void onChange(ChangeEvent event) {
+			
+			int item = retailerNameListBox.getSelectedIndex();
+			selectedRetailer = retailerArrayList.get(item);
+			
+		}
+	}
+	
+	/**
+	 * Zum Befuellen der TextBox mit dem Produktname.
 	 */
 	private class GetProductNameCallback implements AsyncCallback<Product> {
 
@@ -255,8 +326,9 @@ public class ListitemForm extends VerticalPanel {
 		@Override
 		public void onSuccess(ListitemUnit result) {
 			for (int i = 0; i < listitemUnitArrayList.size(); i++) {
-				if (listitemUnitArrayList.get(i).getName() == selectedlistitemUnit.getName()) {
+				if (listitemUnitArrayList.get(i).getName() == result.getName()) {
 					unitNameListBox.setItemSelected(i, true);
+					selectedListitemUnit =listitemUnitArrayList.get(i);
 				}
 			}
 
@@ -278,76 +350,19 @@ public class ListitemForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Retailer result) {
 			for (int i = 0; i < retailerArrayList.size(); i++) {
-				if (retailerArrayList.get(i).getName() == selectedRetailer.getName()) {
+				if (retailerArrayList.get(i).getName() == result.getName()) {
 					retailerNameListBox.setItemSelected(i, true);
+					selectedRetailer = retailerArrayList.get(i);
+					
 				}
 			}
 		}
 
 	}
 
-	/**
-	 * Zum Bef�llen der Dropdown-Liste mit <code>Unit</code>.
-	 */
-	private class GetAllListitemUnitsCallback implements AsyncCallback<ArrayList<ListitemUnit>> {
+	
 
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onSuccess(ArrayList<ListitemUnit> listitemUnitArrayList) {
-			for (int i = 0; i < listitemUnitArrayList.size(); i++) {
-				unitNameListBox.addItem(listitemUnitArrayList.get(i).getName());
-				selectedlistitemUnit = listitemUnitArrayList.get(0);
-			}
-		}
-
-	}
-
-	/**
-	 * Bef�llen der Dropdown-Liste mit <code>Retailer</code>.
-	 */
-	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onSuccess(ArrayList<Retailer> retailerArrayList) {
-			for (int i = 0; i < retailerArrayList.size(); i++) {
-				retailerNameListBox.addItem(retailerArrayList.get(i).getName());
-				selectedRetailer = retailerArrayList.get(0);
-			}
-		}
-	}
-
-	/**
-	 * ChangeHandler zum erkennen welches <code>Unit</code> Objekt der
-	 * Dropdown-Liste ausgew�hlt wurde und dieses selectedListitemUnit zuordnen .
-	 */
-	private class UnitNameListBoxChangeHandler implements ChangeHandler {
-		public void onChange(ChangeEvent event) {
-			int item = unitNameListBox.getSelectedIndex();
-			selectedlistitemUnit = listitemUnitArrayList.get(item);
-		}
-	}
-
-	/**
-	 * ChangeHandler zum erkennen welches <code>Retailer</code> Objekt der
-	 * Dropdown-Liste ausgew�hlt wurde und dieses selectedRetailer zuordnen .
-	 */
-	private class RetailerNameListBoxChangeHandler implements ChangeHandler {
-		public void onChange(ChangeEvent event) {
-			int item = retailerNameListBox.getSelectedIndex();
-			selectedRetailer = retailerArrayList.get(item);
-		}
-	}
+	
 
 	private class NewRetailerClickhandler implements ClickHandler {
 
@@ -433,15 +448,19 @@ public class ListitemForm extends VerticalPanel {
 				try {
 					amount = (float) decimalFormatter.parse(amountTextBox.getText());
 				} catch (NumberFormatException nfe) {
-					Window.alert("ung�ltiger Wert!");
+					Window.alert("ungueltiger Wert!");
 					return;
 				}
-				ListitemUnit listitemUnit = selectedlistitemUnit;
+				ListitemUnit listitemUnit = selectedListitemUnit;
 				Retailer retailer = selectedRetailer;
+								
 				
 				selectedListitem.setAmount(amount);
+				Window.alert("Amount: " +String.valueOf(amount));
 				selectedListitem.setListitemUnitID(listitemUnit.getId());
+				Window.alert("Alte Retailer-ID: " +String.valueOf(listitemUnit.getId()));
 				selectedListitem.setRetailerID(retailer.getId());
+				Window.alert("Neue Retailer-ID: " +String.valueOf(retailer.getId()));
 
 				shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
 

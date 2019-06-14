@@ -605,6 +605,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		this.save(listitem);
 	}
 	
+	/**
+	 * Eine Zuweisung wird gelöscht.
+	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
+	 * @param user ist der User, dessen Zuweisung gelöscht werden soll.
+	 * @param shoppinglist ist die Shoppinglist, innerhalb 
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void deleteAssignment(Retailer retailer, User user, Shoppinglist shoppinglist) throws IllegalArgumentException{
+		retailerMapper.deleteResponsibility(retailer.getId(), user.getId(), shoppinglist.getId());
+	}
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Shoppinglist-Objekte
@@ -829,6 +840,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
 		this.retailerMapper.insertResponsibility(retailer.getId(), user.getId(), shoppinglist.getId());
 	}
+	
+	
+	
+	
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
