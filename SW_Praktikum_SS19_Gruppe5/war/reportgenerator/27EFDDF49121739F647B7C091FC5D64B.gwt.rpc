@@ -5,10 +5,10 @@ com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.g
 de.hdm.softwarepraktikum.shared.ShoppinglistAdministration, false, false, false, false, _, 2427407731
 de.hdm.softwarepraktikum.shared.bo.BusinessObject, true, false, true, false, de.hdm.softwarepraktikum.shared.bo.BusinessObject/1317516990, 1317516990
 de.hdm.softwarepraktikum.shared.bo.Group, true, true, true, true, de.hdm.softwarepraktikum.shared.bo.Group/434508, 434508
-de.hdm.softwarepraktikum.shared.bo.Listitem, true, true, true, true, de.hdm.softwarepraktikum.shared.bo.Listitem/1027435698, 1027435698
+de.hdm.softwarepraktikum.shared.bo.Listitem, true, true, true, true, de.hdm.softwarepraktikum.shared.bo.Listitem/185208957, 185208957
 de.hdm.softwarepraktikum.shared.bo.ListitemUnit, true, true, true, true, de.hdm.softwarepraktikum.shared.bo.ListitemUnit/2069643359, 2069643359
 de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject, true, false, true, false, de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject/1542534759, 1542534759
-de.hdm.softwarepraktikum.shared.bo.Product, true, true, false, false, de.hdm.softwarepraktikum.shared.bo.Product/2977266194, 2977266194
+de.hdm.softwarepraktikum.shared.bo.Product, true, true, true, true, de.hdm.softwarepraktikum.shared.bo.Product/2977266194, 2977266194
 de.hdm.softwarepraktikum.shared.bo.Retailer, true, true, true, true, de.hdm.softwarepraktikum.shared.bo.Retailer/1953215993, 1953215993
 de.hdm.softwarepraktikum.shared.bo.Shoppinglist, true, true, true, true, de.hdm.softwarepraktikum.shared.bo.Shoppinglist/3978627303, 3978627303
 de.hdm.softwarepraktikum.shared.bo.User, true, true, true, true, de.hdm.softwarepraktikum.shared.bo.User/4176830688, 4176830688
