@@ -1,6 +1,11 @@
 package de.hdm.softwarepraktikum.server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
@@ -55,7 +60,7 @@ public class ListitemUnitMapper {
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM units ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM units");
 
 			while (rs.next()) {
 				ListitemUnit liu = new ListitemUnit();
@@ -64,12 +69,12 @@ public class ListitemUnitMapper {
 				liu.setName(rs.getString("name"));
 				units.add(liu);
 			}
-			return units;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return units;
 	}
 
 	/**
@@ -79,26 +84,25 @@ public class ListitemUnitMapper {
 	 * @return Listitemunit-Objekt
 	 */
 	public ListitemUnit findById(int id) {
+		
 		Connection con = DBConnection.connection();
+		ListitemUnit liu = new ListitemUnit();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM units WHERE id = " + id);
 
 			if (rs.next()) {
-				ListitemUnit liu = new ListitemUnit();
 				liu.setId(rs.getInt("id"));
 				liu.setCreationDate(rs.getDate("creationDate"));
 				liu.setName(rs.getString("name"));
-				return liu;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return liu;
 
 	}
 	
@@ -114,7 +118,6 @@ public class ListitemUnitMapper {
 		ArrayList<ListitemUnit> units = new ArrayList<ListitemUnit>();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM units WHERE name = '" + name + "'");
 
@@ -126,13 +129,11 @@ public class ListitemUnitMapper {
 				units.add(liu);
 			}
 
-			return units;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
-
+		
+		return units;
 	}
 
 	/**
@@ -146,28 +147,26 @@ public class ListitemUnitMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM units ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM units");
 
 			if (rs.next()) {
 				unit.setId(rs.getInt("maxid") + 1);
 			}
 
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO units (id, creationDate, name) VALUES (?, ?, ?)", 
-					Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO units (id, creationDate, name) "
+					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-			pstmt.setInt(1, unit.getId());
-			pstmt.setDate(2, (Date) unit.getCreationDate());
-			pstmt.setString(3, unit.getName());
-			pstmt.executeUpdate();
-			return unit;
+				pstmt.setInt(1, unit.getId());
+				pstmt.setDate(2, (Date) unit.getCreationDate());
+				pstmt.setString(3, unit.getName());
+				pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
-
+		
+		return unit;
 	}
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank
@@ -183,17 +182,16 @@ public class ListitemUnitMapper {
 
 			PreparedStatement pstmt = con.prepareStatement("UPDATE units SET name = ? WHERE id = ?");
 
-			pstmt.setString(1, unit.getName());
-			pstmt.setInt(2, unit.getId());
-			pstmt.executeUpdate();
-
-			return unit;
+				pstmt.setString(1, unit.getName());
+				pstmt.setInt(2, unit.getId());
+				pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
 
+		return unit;
+		
 	}
 
 	/**
@@ -206,7 +204,6 @@ public class ListitemUnitMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("DELETE FROM units WHERE id = " + unit.getId());
 
@@ -217,7 +214,6 @@ public class ListitemUnitMapper {
 	}
 	
 	/**
-	 * 
 	 * Unit eines Eintrags finden
 	 * 
 	 * @param listitem
@@ -227,27 +223,29 @@ public class ListitemUnitMapper {
 	public ListitemUnit getUnitOf(Listitem listitem) {
 		
 		Connection con = DBConnection.connection();
+		ListitemUnit liu = new ListitemUnit();
 
 		try {
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT listitems.id, listitems.unit_id, units.creationDate, units.name "
+			ResultSet rs = stmt.executeQuery("SELECT listitems.id AS listitem_id, "
+					+ "listitems.unit_id AS unit_id, "
+					+ "units.creationDate AS unit_creationDate, "
+					+ "units.name AS unit_name "
 					+ "FROM listitems INNER JOIN units "
 					+ "ON listitems.unit_id = units.id "
 					+ "WHERE listitems.id = " + listitem.getId());
 			
 			while(rs.next()) {
-				ListitemUnit liu = new ListitemUnit();
 				liu.setId(rs.getInt("unit_id"));
-				liu.setCreationDate(rs.getDate("creationDate"));
-				liu.setName(rs.getString("name"));
-				return liu;
+				liu.setCreationDate(rs.getDate("unit_creationDate"));
+				liu.setName(rs.getString("unit_name"));
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return null;
+		
+		return liu;
 	}
 }

@@ -1,6 +1,8 @@
 
 div#reportMain{
-	background: midnightblue;
+	text-align: left;
+	background: lightgreen;
+	min-width: 800px;
 	
 }
 
