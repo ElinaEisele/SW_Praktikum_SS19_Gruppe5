@@ -67,18 +67,15 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 					RootPanel.get("aside").setVisible(false);
 					RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, u));
 					
-					Window.alert(u.getGmailAddress());
 				} else {
 
 					Editor editor = new Editor();
 					editor.loadForms();
 					
-					Window.alert(u.getGmailAddress());
 				}
 			} else {
 				loadLogin();
 				
-				Window.alert(u.getGmailAddress());
 			}
 		}
 

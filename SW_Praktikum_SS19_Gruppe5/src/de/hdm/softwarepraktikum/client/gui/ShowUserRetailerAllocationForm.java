@@ -97,7 +97,8 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		allocationFlexTable.setText(0, 1, "User");
 		allocationFlexTable.setText(0, 2, "Zuweisung löschen");
 		
-		
+		shoppinglistAdministration.getAssigndRetailersOf(shoppinglistToDisplay, new AssigndRetailerCallback());
+				
 		/**
 		 * Zum Bef�llen der Dropdown-Liste mit <code>User</code>.
 		 */
@@ -275,6 +276,47 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Void result) {
 			
+		}
+		
+	}
+	
+	private class AssigndRetailerCallback implements AsyncCallback<ArrayList<Retailer>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// 
+		}
+
+		@Override
+		public void onSuccess(ArrayList<Retailer> result) {
+			
+			int i = 1;
+			for (Retailer r : result) {
+				assigndRetailers.add(r.getName());
+				allocationFlexTable.setText(1, 0, r.getName());
+//				shoppinglistAdministration.getAssignedUser(shoppinglistToDisplay, r, new AssigndUserCallback());
+
+				i++;
+			}
+			
+			
+			Window.alert(String.valueOf(assigndRetailers.size()));
+
+			
+		}
+		
+	}
+	
+	private class AssigndUserCallback implements AsyncCallback<User>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(User result) {
 		}
 		
 	}
