@@ -66,12 +66,12 @@ public class ReportShowForm extends VerticalPanel{
 	/**
 	 * Speicher fuer das Startdate als SQL-Date
 	 */
-	private java.sql.Date sqlStartDate = null;
+	private Date sqlStartDate = null;
 	
 	/**
 	 * Speicher fuer das Enddate als SQL-
 	 */
-	private java.sql.Date sqlEndDate = null;
+	private Date sqlEndDate = null;
 	
 	/**
 	 * Speicher fuer die ausgewaehlte Gruppe
@@ -191,6 +191,7 @@ public class ReportShowForm extends VerticalPanel{
 		}
 		
 	}
+	
 	public User getUser() {
 		return selectedUser;	
 		}

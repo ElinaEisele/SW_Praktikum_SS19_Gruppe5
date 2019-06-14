@@ -30,7 +30,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		mainPanel.add(nlf);
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
-		
+
 	}
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, AssignUserToRetailerForm autrf) {
@@ -69,18 +69,18 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, NewRetailerForm nrf) {
 		shoppinglistHeader = sh;
-		//mainPanel.add(shoppinglistHeader);
+		// mainPanel.add(shoppinglistHeader);
 		mainPanel.add(nrf);
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}
-	
+
 	public ShoppinglistShowForm() {
 		shoppinglistHeader = new ShoppinglistHeader();
 		shoppinglistCellTable = new ShoppinglistCellTable();
 
 		shoppinglistHeader.setStylePrimaryName("shoppinglistHeader");
-		
+
 		mainPanel.add(shoppinglistCellTable);
 	}
 
@@ -91,10 +91,9 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setGroupToDisplay(selectedGroup);
-		
+
 		this.add(shoppinglistHeader);
 		this.add(mainPanel);
-
 
 	}
 
