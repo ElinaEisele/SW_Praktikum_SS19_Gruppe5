@@ -279,7 +279,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Methode, um alle nicht-archivierten Listitems einer Shoppingliste auszugeben.
+	 * Methode, um alle Listitems einer Shoppingliste auszugeben.
 	 * 
 	 * @param shoppinglist
 	 * @return ArrayList<Listitem>
@@ -291,11 +291,13 @@ public class ListitemMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+
 			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems "
 					+ "WHERE shoppinglist_id = " + shoppinglist.getId()
 					+ " AND isArchived = " + false);
 			
 			while(rs.next()) {
+
 				Listitem li = new Listitem();
 				li.setId(rs.getInt("id"));
 				li.setCreationDate(rs.getDate("creationDate"));
@@ -319,6 +321,7 @@ public class ListitemMapper {
 	}
 
 	/**
+
 	 * Methode, um alle archivierten Listitems einer Shoppingliste auszugeben.
 	 * 
 	 * @param shoppinglist
@@ -405,7 +408,7 @@ public class ListitemMapper {
 
 	/**
 	 * 
-	 * Methode, um Einträge nach Produktnamen in einer Shoppingliste zu suchen.
+	 * Methode, um Eintrï¿½ge nach Produktnamen in einer Shoppingliste zu suchen.
 	 * 
 	 * @param shoppinglist
 	 * @param productname
@@ -450,7 +453,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Methode, um die Standarteinträge einer Gruppe zu finden.
+	 * Methode, um die Standarteintrï¿½ge einer Gruppe zu finden.
 	 * 
 	 * @param group
 	 * @return ArrayList<Listitem>
