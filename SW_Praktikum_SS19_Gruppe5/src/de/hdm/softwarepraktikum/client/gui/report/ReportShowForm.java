@@ -127,7 +127,7 @@ public class ReportShowForm extends VerticalPanel{
 		
 		mainPanel.add(reportGrid);
 	
-		reportGenerator.getGroupsOf(selectedUser, new GetGroupsOfUserCallback());	
+//		reportGenerator.getGroupsOf(selectedUser, new GetGroupsOfUserCallback());	
 		
 	}
 	
@@ -135,9 +135,9 @@ public class ReportShowForm extends VerticalPanel{
 		
 		RootPanel.get("reportMain").add(mainPanel);
 		
-		if(reportGenerator == null) {
-			reportGenerator = ClientsideSettings.getReportGenerator();
-		}
+//		if(reportGenerator == null) {
+//			reportGenerator = ClientsideSettings.getReportGenerator();
+//		}
 		
 		if (selectedUser == null) {
 			Window.alert("User kommt nicht an");	
