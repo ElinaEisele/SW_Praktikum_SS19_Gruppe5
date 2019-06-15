@@ -594,6 +594,13 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
+	 * Ausgabe aller schon zugewiesenen Retailer.
+	 */
+	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.retailerMapper.getAssignedRetailersOf(shoppinglist);
+	}
+	
+	/**
 	 * Ein Retailer-Objekt wird einem Listitem als Beschaffungsort zugewiesen
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param listitem ist der Eintrag, welchem der Retailer zugeordnet wird
@@ -606,9 +613,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Eine Zuweisung wird gelöscht.
+	 * Eine Zuweisung wird gelï¿½scht.
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
-	 * @param user ist der User, dessen Zuweisung gelöscht werden soll.
+	 * @param user ist der User, dessen Zuweisung gelï¿½scht werden soll.
 	 * @param shoppinglist ist die Shoppinglist, innerhalb 
 	 * @throws IllegalArgumentException
 	 */

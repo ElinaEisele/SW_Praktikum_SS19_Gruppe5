@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -38,25 +39,30 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private ShoppinglistHeader shoppinglistHeader;
+	private ArrayList<String> assigndRetailers  = new ArrayList<String>();
 	
 	private Shoppinglist shoppinglistToDisplay = null;
 	private Group groupToDisplay = null;
 	private User selectedUser = null;
+	private Retailer selectedRetailer = null;
 
 	private ArrayList<User> userArrayList;
 	private ArrayList<Retailer >retailerArrayList;
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Grid shoppinglistGrid;
+	private HorizontalPanel addAllocationPanel = new HorizontalPanel();
+	private Label userRetailerAllocationLabel = new Label("Wer kauft wo ein?");
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
-	private FlexTable userRetailerAllocationFlexTable = new FlexTable();
+	private FlexTable allocationFlexTable = new FlexTable();
 
+	private ListBox retailerListBox = new ListBox();
 	private ListBox userListBox = new ListBox();
 
-	private Button showButton = new Button("Anzeigen");
 	private Button backButton = new Button("zurueck");
+	private Button saveButton = new Button("Hinzufügen");
+
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
@@ -64,46 +70,42 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	 * bestimmt.
 	 */
 	public ShowUserRetailerAllocationForm() {
+		
+		addAllocationPanel.add(retailerListBox);
+		addAllocationPanel.add(userListBox);
+		addAllocationPanel.add(saveButton);
+		addAllocationPanel.add(backButton);
+		
+		mainPanel.add(userRetailerAllocationLabel);
+		mainPanel.add(allocationFlexTable);
+		mainPanel.add(addAllocationPanel);
 
-		/**
-		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
-		 */
-		shoppinglistGrid = new Grid(4, 2);
-		mainPanel.add(shoppinglistGrid);
-		mainPanel.add(userRetailerAllocationFlexTable);
 
-		Label showUserRetailerAllocationLabel = new Label("Zuweisung anzeigen fuer:");
-		shoppinglistGrid.setWidget(0, 0, showUserRetailerAllocationLabel);
-
-		Label userLabel = new Label("Benutzername: ");
-		shoppinglistGrid.setWidget(1, 0, userLabel);
-		shoppinglistGrid.setWidget(1, 1, userListBox);
 		userListBox.addChangeHandler(new UserListBoxChangeHandler());
-
-		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
-		shoppinglistGrid.setWidget(2, 1, actionButtonsPanel);
-
-		showButton.addClickHandler(new ShowAllocationClickHandler());
-		showButton.setEnabled(true);
-		actionButtonsPanel.add(showButton);
-
+		retailerListBox.addChangeHandler(new RetailerListBoxChangeHandler());
+		
 		backButton.addClickHandler(new BackClickhandler());
 		backButton.setEnabled(true);
-		actionButtonsPanel.add(backButton);
-
+		saveButton.addClickHandler(new SaveClickHandler());
 		
 
 	}
 
 	public void onLoad() {
 		
+		allocationFlexTable.setText(0, 0, "Händler");
+		allocationFlexTable.setText(0, 1, "User");
+		allocationFlexTable.setText(0, 2, "Zuweisung löschen");
+		
+		shoppinglistAdministration.getAssigndRetailersOf(shoppinglistToDisplay, new AssigndRetailerCallback());
+				
 		/**
 		 * Zum Bef�llen der Dropdown-Liste mit <code>User</code>.
 		 */
 		groupToDisplay = shoppinglistHeader.getGroupToDisplay();
 
 		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUserCallback());
-		
+		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
 		RootPanel.get("main").add(mainPanel);
 
 	}
@@ -158,6 +160,27 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		}
 
 	}
+	
+	/**
+	 * Zum Befüllen der Drop-down Liste mit <code>Retailer</code>.
+	 */
+	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(ArrayList<Retailer> result) {
+			retailerArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				retailerListBox.addItem(result.get(i).getName());
+				selectedRetailer = result.get(0);
+			}
+		}
+	}
 
 	/**
 	 * ChangeHandler zum erkennen welches <code>User</code> Objekt der
@@ -168,6 +191,16 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 			int item = userListBox.getSelectedIndex();
 			selectedUser = userArrayList.get(item);
 		}
+	}
+	
+	private class RetailerListBoxChangeHandler implements ChangeHandler{
+
+		@Override
+		public void onChange(ChangeEvent event) {
+			int item = retailerListBox.getSelectedIndex();
+			selectedRetailer = retailerArrayList.get(item);
+		}
+		
 	}
 
 	/**
@@ -186,68 +219,107 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		}
 
 	}
-
+	
 	/**
-	 * Clickhandler zum Anzeigen der Zuweisung.
-	 * 
+	 * Clickhandler zum Löschen der Zuweisung.
 	 */
-	private class ShowAllocationClickHandler implements ClickHandler {
+	private class RemoveClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			int removedIndex = assigndRetailers.indexOf(selectedRetailer.getName());		
+			assigndRetailers.remove(removedIndex);
+			allocationFlexTable.removeRow(removedIndex + 1);
+		}
+	
+	}
+		
+	/**
+	 * ClickHandler zum Speichern von Zuweisungen
+	 */
+	private class SaveClickHandler implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-								
-				shoppinglistAdministration.getRetailersOf(shoppinglistToDisplay, selectedUser,
-						new ShowAllocationCallback());
 				
+				Button removeButton = new Button("löschen");
+				removeButton.addClickHandler(new RemoveClickHandler());
+				
+				shoppinglistAdministration.assignUser(selectedUser, selectedRetailer, shoppinglistToDisplay,
+						new CreateAllocationCallback());
+				
+				if (assigndRetailers.contains(selectedRetailer.getName())) return;
+				assigndRetailers.add(selectedRetailer.getName());
+				
+				int row = allocationFlexTable.getRowCount();
+				allocationFlexTable.setText(row, 0, selectedRetailer.getName());
+				allocationFlexTable.setText(row, 1, selectedUser.getName());
+				allocationFlexTable.setWidget(row, 2, removeButton);
 
 			} else {
-				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
+				Notification.show("Keine Shoppinglist ausgewaehlt");
 			}
 		}
-
+		
 	}
-
-	/**
-	 * Anzeige der Zuweisung.
-	 * 
-	 */
-	private class ShowAllocationCallback implements AsyncCallback<ArrayList<Retailer>> {
+	
+	private class CreateAllocationCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Das Anzeigen ist fehlgeschlagen!");
+			Notification.show("Das Anlegen einer neuen Zuweisung ist fehlgeschlagen!");
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			
+		}
+		
+	}
+	
+	private class AssigndRetailerCallback implements AsyncCallback<ArrayList<Retailer>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// 
 		}
 
 		@Override
 		public void onSuccess(ArrayList<Retailer> result) {
 			
-			retailerArrayList = result;
-						
-			userRetailerAllocationFlexTable.setText(0, 0, "User");
-			userRetailerAllocationFlexTable.setText(0, 1, "Haendler");
+			int i = 1;
+			for (Retailer r : result) {
+				assigndRetailers.add(r.getName());
+				allocationFlexTable.setText(1, 0, r.getName());
+//				shoppinglistAdministration.getAssignedUser(shoppinglistToDisplay, r, new AssigndUserCallback());
+
+				i++;
+			}
 			
-			userRetailerAllocationFlexTable.setText(1, 0, "Kein Nutzer ausgewaehlt");
-			userRetailerAllocationFlexTable.setText(1, 1, "Kein Haendler zugwiesen");
-			userRetailerAllocationFlexTable.setText(1, 0, selectedUser.getName());
+			
+			Window.alert(String.valueOf(assigndRetailers.size()));
 
 			
-			int i = 1;
-			for (Retailer r : retailerArrayList) {
-				userRetailerAllocationFlexTable.setText(i, 1, r.getName());
-				i++;
-			}
-			
-			for (Retailer r : retailerArrayList) {
-				userRetailerAllocationFlexTable.setText(i, 0, null);
-				userRetailerAllocationFlexTable.setText(i, 1, null);
-				i++;
-			}
-			
-			retailerArrayList = null;
-			
+		}
+		
+	}
+	
+	private class AssigndUserCallback implements AsyncCallback<User>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
 			
 		}
+
+		@Override
+		public void onSuccess(User result) {
+		}
+		
 	}
+		
 
 }
