@@ -12,7 +12,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
  * Klasse zum Anzeigen eines Dialogs, wenn ein Listitem geloescht werden soll.
@@ -26,6 +28,8 @@ public class DeleteListitemDialogBox extends DialogBox {
 			.getShoppinglistAdministration();
 
 	private Listitem selectedListitem = null;
+	private Shoppinglist selectedShoppinglist = null;
+	private Group selectedGroup = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmationLabel = new Label(
@@ -61,6 +65,24 @@ public class DeleteListitemDialogBox extends DialogBox {
 	public void setSelectedListitem(Listitem selectedListitem) {
 		this.selectedListitem = selectedListitem;
 	}
+	
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
+	}
+
+	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
+		this.selectedShoppinglist = selectedShoppinglist;
+	}
+
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+
+
 
 	private class CancelClickHandler implements ClickHandler {
 
@@ -104,9 +126,19 @@ public class DeleteListitemDialogBox extends DialogBox {
 
 			if (listitem != null) {
 				setSelectedListitem(null);
-//				gstvm.removeRetailer(retailer);
 
 				RootPanel.get("main").clear();
+
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+//				ssf.setGstvm(gstvm);
+//				gstvm.setSelectedGroup(null);
+//				gstvm.setSelectedShoppinglist(object);
+
+				ssf.setSelected(selectedShoppinglist);
+				ssf.setSelectedGroup(selectedGroup);
+
+				RootPanel.get("main").add(ssf);
+				
 
 			}
 		}
