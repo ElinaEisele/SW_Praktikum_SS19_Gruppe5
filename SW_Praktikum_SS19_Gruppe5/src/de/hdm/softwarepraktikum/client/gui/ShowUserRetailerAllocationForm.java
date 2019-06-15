@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.client.gui;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -11,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -39,7 +41,8 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private ShoppinglistHeader shoppinglistHeader;
-	private ArrayList<String> assigndRetailers  = new ArrayList<String>();
+	private ArrayList<Retailer> assigndRetailers  = new ArrayList<Retailer>();
+	private int row;
 	
 	private Shoppinglist shoppinglistToDisplay = null;
 	private Group groupToDisplay = null;
@@ -62,6 +65,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 	private Button backButton = new Button("zurueck");
 	private Button saveButton = new Button("Hinzufügen");
+	private Button removeButton = null;
 
 
 	/*
@@ -87,17 +91,18 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		backButton.addClickHandler(new BackClickhandler());
 		backButton.setEnabled(true);
 		saveButton.addClickHandler(new SaveClickHandler());
-		
 
 	}
 
 	public void onLoad() {
-		
+			
 		allocationFlexTable.setText(0, 0, "Händler");
 		allocationFlexTable.setText(0, 1, "User");
 		allocationFlexTable.setText(0, 2, "Zuweisung löschen");
 		
 		shoppinglistAdministration.getAssigndRetailersOf(shoppinglistToDisplay, new AssigndRetailerCallback());
+		
+		shoppinglistAdministration.getUserRetailerAllocation(shoppinglistToDisplay, new UserRetailerAllocationCallback());
 				
 		/**
 		 * Zum Bef�llen der Dropdown-Liste mit <code>User</code>.
@@ -227,10 +232,35 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+		
+			int rowIndex = allocationFlexTable.getCellForEvent(event).getRowIndex();
+			String retailerName = allocationFlexTable.getText(rowIndex, 0);
+						
+			for (int i = 0; i<assigndRetailers.size(); i++) {
+				if (assigndRetailers.get(i).getName() == retailerName) {
+					selectedRetailer = assigndRetailers.get(i);
+					
+				}
+			}
 			
-			int removedIndex = assigndRetailers.indexOf(selectedRetailer.getName());		
+			Window.alert(selectedRetailer.getName());
+			
+			int removedIndex = assigndRetailers.indexOf(selectedRetailer);		
 			assigndRetailers.remove(removedIndex);
 			allocationFlexTable.removeRow(removedIndex + 1);
+			
+			shoppinglistAdministration.deleteAssignment(selectedRetailer, shoppinglistToDisplay, new DeleteAsssignmentCallback());
+			
+			retailerListBox.clear();
+			shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
+			
+			for (int i = 0; i < assigndRetailers.size(); i++) {
+				allocationFlexTable.removeAllRows();
+			
+			}
+			shoppinglistAdministration.getUserRetailerAllocation(shoppinglistToDisplay, new UserRetailerAllocationCallback());
+
+		
 		}
 	
 	}
@@ -247,16 +277,22 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 				Button removeButton = new Button("löschen");
 				removeButton.addClickHandler(new RemoveClickHandler());
 				
-				shoppinglistAdministration.assignUser(selectedUser, selectedRetailer, shoppinglistToDisplay,
-						new CreateAllocationCallback());
-				
-				if (assigndRetailers.contains(selectedRetailer.getName())) return;
-				assigndRetailers.add(selectedRetailer.getName());
+				if (assigndRetailers.contains(selectedRetailer)) {
+					Notification.show("Dieser Händler wurde schon einem Nutzer zugewiesen.");
+					return;
+				} else{
+					shoppinglistAdministration.assignUser(selectedUser, selectedRetailer, shoppinglistToDisplay,
+							new CreateAllocationCallback());
+					assigndRetailers.add(selectedRetailer);
+				}
 				
 				int row = allocationFlexTable.getRowCount();
+				
 				allocationFlexTable.setText(row, 0, selectedRetailer.getName());
 				allocationFlexTable.setText(row, 1, selectedUser.getName());
 				allocationFlexTable.setWidget(row, 2, removeButton);
+				
+				Window.alert(selectedRetailer.getName());
 
 			} else {
 				Notification.show("Keine Shoppinglist ausgewaehlt");
@@ -290,24 +326,18 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		@Override
 		public void onSuccess(ArrayList<Retailer> result) {
 			
-			int i = 1;
 			for (Retailer r : result) {
-				assigndRetailers.add(r.getName());
-				allocationFlexTable.setText(1, 0, r.getName());
-//				shoppinglistAdministration.getAssignedUser(shoppinglistToDisplay, r, new AssigndUserCallback());
+				assigndRetailers.add(r);
 
-				i++;
 			}
 			
-			
-			Window.alert(String.valueOf(assigndRetailers.size()));
-
 			
 		}
 		
 	}
 	
-	private class AssigndUserCallback implements AsyncCallback<User>{
+	
+	private class UserRetailerAllocationCallback implements AsyncCallback<Map<String, String>>{
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -316,7 +346,35 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		}
 
 		@Override
-		public void onSuccess(User result) {
+		public void onSuccess(Map<String, String> result) {
+			
+			for (String key : result.keySet()) {
+				removeButton = new Button("löschen");
+				removeButton.addClickHandler(new RemoveClickHandler());
+
+				int row = allocationFlexTable.getRowCount();
+				
+				allocationFlexTable.setText(row, 0, key);
+				allocationFlexTable.setText(row, 1, result.get(key));
+				allocationFlexTable.setWidget(row, 2, removeButton);
+				
+			}
+			
+		}
+		
+	}
+	
+	private class DeleteAsssignmentCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			
 		}
 		
 	}
