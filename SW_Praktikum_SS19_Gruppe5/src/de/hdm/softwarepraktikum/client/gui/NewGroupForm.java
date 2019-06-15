@@ -107,9 +107,11 @@ public class NewGroupForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 
 			RootPanel.get("main").clear();
+			if (oldSelectedGroup!= null) {
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(oldSelectedGroup);
 			RootPanel.get("main").add(gsf);
+			}
 
 		}
 
