@@ -20,12 +20,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
@@ -47,11 +47,12 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	private Shoppinglist shoppinglistToDisplay = null;
 	private Listitem listitemToDisplay = null;
+	private Group selectedGroup = null;
 	private CellTable<Listitem> table = new CellTable<Listitem>();
 
-	private Label productName = new Label("");
-	private Label unitName = new Label("");
-	private Label retailerName = new Label("");
+	private String productName = null;
+	private String unitName = null;
+	private String retailerName = null;
 
 	private Button archive;
 
@@ -94,12 +95,12 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(String result) {
-						productName.setText(result);
+						productName = result;
 
 					}
 
 				});
-				return productName.getText();
+				return productName;
 			}
 		};
 
@@ -132,12 +133,12 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(ListitemUnit result) {
-						unitName.setText(result.getName());
+						unitName=result.getName();
 
 					}
 
 				});
-				return unitName.getText();
+				return unitName;
 
 			}
 		};
@@ -159,12 +160,12 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(Retailer result) {
-						retailerName.setText(result.getName());
+						retailerName =result.getName();
 
 					}
 
 				});
-				return retailerName.getText();
+				return retailerName;
 
 			}
 		};
@@ -197,6 +198,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 					ListitemShowForm lsf = new ListitemShowForm();
 					lsf.setSelected(object);
 					lsf.setSelectedShoppinglist(shoppinglistToDisplay);
+					lsf.setSelectedGroup(selectedGroup);
 
 					RootPanel.get("main").add(lsf);
 				}
@@ -266,6 +268,14 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	public Shoppinglist getShoppinglistToDisplay() {
 		return shoppinglistToDisplay;
+	}
+
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
 	}
 
 	/**

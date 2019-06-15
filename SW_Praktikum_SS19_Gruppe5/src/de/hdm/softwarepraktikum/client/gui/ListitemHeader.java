@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Label;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
@@ -27,6 +28,7 @@ public class ListitemHeader extends HorizontalPanel {
 	private ListitemShowForm listitemShowForm;
 	private Listitem listitemToDisplay = null;
 	private Shoppinglist shoppinglistToDisplay;
+	private Group selectedGroup = null;
 
 	private Label listitemHeaderLabel;
 
@@ -86,6 +88,14 @@ public class ListitemHeader extends HorizontalPanel {
 
 	}
 
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+
 	public ListitemShowForm getListitemShowForm() {
 		return listitemShowForm;
 	}
@@ -134,6 +144,9 @@ public class ListitemHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (listitemToDisplay != null) {
 				DeleteListitemDialogBox dldb = new DeleteListitemDialogBox();
+				dldb.setSelectedListitem(listitemToDisplay);
+				dldb.setSelectedShoppinglist(shoppinglistToDisplay);
+				dldb.setSelectedGroup(selectedGroup);
 				dldb.show();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
