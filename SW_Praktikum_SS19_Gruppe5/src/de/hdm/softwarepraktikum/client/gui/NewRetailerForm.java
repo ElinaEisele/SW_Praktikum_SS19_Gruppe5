@@ -39,7 +39,6 @@ public class NewRetailerForm extends VerticalPanel {
 	private GroupShoppinglistTreeViewModel gstvm;
 	private TextBox retailerNameTextBox = new TextBox();
 
-	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button confirmButton = new Button("Anlegen");
 	private Button cancelButton = new Button("Abbrechen");
 
@@ -135,35 +134,28 @@ public class NewRetailerForm extends VerticalPanel {
 			RootPanel.get("main").clear();
 
 			if (selectedGroup != null && selectedShoppinglist != null) {
-				
+
 				shoppinglistHeader = new ShoppinglistHeader();
 				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 				NewListitemForm nlf = new NewListitemForm();
 				nlf.setShoppinglistHeader(shoppinglistHeader);
 				nlf.setShoppinglistToDisplay(selectedShoppinglist);
 				nlf.setGroupToDisplay(selectedGroup);
-				
+
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
 				ssf.setSelected(selectedShoppinglist);
 				ssf.setSelectedGroup(selectedGroup);
-				
+
 				RootPanel.get("main").add(nlf);
 			} else if (selectedListitem != null) {
-				
-				listitemHeader = new ListitemHeader();
-				listitemHeader.setShoppinglistToDisplay(selectedShoppinglist);
-				listitemHeader.setListitemToDisplay(selectedListitem);
-				ListitemForm lf = new ListitemForm();
-				lf.setListitemHeader(listitemHeader);
-				lf.setSelectedListitem(selectedListitem);
-				lf.setShoppinglistToDisplay(selectedShoppinglist);
 
-				ListitemShowForm lsf = new ListitemShowForm(listitemHeader, lf);
+				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
-				Window.alert(selectedShoppinglist.getName());
-				RootPanel.get("main").add(lf);
-			} 
+
+				RootPanel.get("main").add(lsf);
+				
+			}
 		}
 	}
 
@@ -175,7 +167,12 @@ public class NewRetailerForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedShoppinglist != null) {
-				shoppinglistAdministration.createRetailer(retailerNameTextBox.getText(), new CreateRetailerCallback());
+				if (retailerNameTextBox.getText() != "") {
+					shoppinglistAdministration.createRetailer(retailerNameTextBox.getText(),
+							new CreateRetailerCallback());
+				} else {
+					Window.alert("Besser keinen Einzelhaendler anlegen als einen ohne Name anlegen");
+				}
 
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
@@ -207,28 +204,21 @@ public class NewRetailerForm extends VerticalPanel {
 				nlf.setShoppinglistHeader(shoppinglistHeader);
 				nlf.setShoppinglistToDisplay(selectedShoppinglist);
 				nlf.setGroupToDisplay(selectedGroup);
-				
+
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
 				ssf.setSelected(selectedShoppinglist);
 				ssf.setSelectedGroup(selectedGroup);
-				
+
 				RootPanel.get("main").add(nlf);
 			} else if (selectedListitem != null) {
-				
-				listitemHeader = new ListitemHeader();
-				listitemHeader.setShoppinglistToDisplay(selectedShoppinglist);
-				listitemHeader.setListitemToDisplay(selectedListitem);
-				ListitemForm lf = new ListitemForm();
-				lf.setListitemHeader(listitemHeader);
-				lf.setSelectedListitem(selectedListitem);
-				lf.setShoppinglistToDisplay(selectedShoppinglist);
 
-				ListitemShowForm lsf = new ListitemShowForm(listitemHeader, lf);
+				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
-				
-				RootPanel.get("main").add(lf);
-			} 
+
+				RootPanel.get("main").add(lsf);
+
+			}
 
 		}
 

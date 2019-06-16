@@ -88,6 +88,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 		shoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
+		shoppinglistCellTable.setSelectedGroup(selectedGroup);
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setGroupToDisplay(selectedGroup);
