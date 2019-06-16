@@ -93,6 +93,12 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getRetailersOf(Shoppinglist shoppinglist, User user, AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
 	
+	void getUserRetailerAllocation(Shoppinglist shoppinglist, AsyncCallback<Map<String, String>> callback) throws IllegalArgumentException;
+	
+	void getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer, AsyncCallback<User> callback);
+	
+	void getAssigndRetailersOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
+	
 	void assignRetailer(Retailer retailer, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
@@ -137,5 +143,5 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void archiveListitems(ArrayList<Listitem> listitems, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
-	void deleteAssignment(Retailer retailer, User user, Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
 }
