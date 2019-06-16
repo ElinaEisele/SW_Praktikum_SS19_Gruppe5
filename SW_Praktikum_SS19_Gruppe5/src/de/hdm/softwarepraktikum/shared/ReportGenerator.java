@@ -1,11 +1,13 @@
 package de.hdm.softwarepraktikum.shared;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 
 @RemoteServiceRelativePath("report")
@@ -24,5 +26,13 @@ public interface ReportGenerator extends RemoteService {
      * @throws IllegalArgumentException
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) throws IllegalArgumentException;
+    
+    /**
+     * 
+     * @param u
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public ArrayList<Group> getAllGroupsOf(User u) throws IllegalArgumentException;
 
 }
