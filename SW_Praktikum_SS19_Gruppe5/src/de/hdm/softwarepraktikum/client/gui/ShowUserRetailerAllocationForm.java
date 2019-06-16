@@ -7,12 +7,9 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -42,7 +39,6 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private ShoppinglistHeader shoppinglistHeader;
 	private ArrayList<Retailer> assigndRetailers  = new ArrayList<Retailer>();
-	private int row;
 	
 	private Shoppinglist shoppinglistToDisplay = null;
 	private Group groupToDisplay = null;
@@ -242,15 +238,13 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 					
 				}
 			}
-			
-			Window.alert(selectedRetailer.getName());
-			
+						
 			int removedIndex = assigndRetailers.indexOf(selectedRetailer);		
 			assigndRetailers.remove(removedIndex);
-			allocationFlexTable.removeRow(removedIndex + 1);
-			
+			allocationFlexTable.removeRow(rowIndex);
+						
 			shoppinglistAdministration.deleteAssignment(selectedRetailer, shoppinglistToDisplay, new DeleteAsssignmentCallback());
-			
+
 			retailerListBox.clear();
 			shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
 			
@@ -258,6 +252,10 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 				allocationFlexTable.removeAllRows();
 			
 			}
+			allocationFlexTable.setText(0, 0, "Händler");
+			allocationFlexTable.setText(0, 1, "User");
+			allocationFlexTable.setText(0, 2, "Zuweisung löschen");
+			
 			shoppinglistAdministration.getUserRetailerAllocation(shoppinglistToDisplay, new UserRetailerAllocationCallback());
 
 		
@@ -274,25 +272,17 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 				
-				Button removeButton = new Button("löschen");
-				removeButton.addClickHandler(new RemoveClickHandler());
-				
 				if (assigndRetailers.contains(selectedRetailer)) {
 					Notification.show("Dieser Händler wurde schon einem Nutzer zugewiesen.");
 					return;
 				} else{
+					assigndRetailers.add(selectedRetailer);
 					shoppinglistAdministration.assignUser(selectedUser, selectedRetailer, shoppinglistToDisplay,
 							new CreateAllocationCallback());
-					assigndRetailers.add(selectedRetailer);
 				}
 				
-				int row = allocationFlexTable.getRowCount();
 				
-				allocationFlexTable.setText(row, 0, selectedRetailer.getName());
-				allocationFlexTable.setText(row, 1, selectedUser.getName());
-				allocationFlexTable.setWidget(row, 2, removeButton);
 				
-				Window.alert(selectedRetailer.getName());
 
 			} else {
 				Notification.show("Keine Shoppinglist ausgewaehlt");
@@ -311,6 +301,15 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
+			
+			Button removeButton = new Button("löschen");
+			removeButton.addClickHandler(new RemoveClickHandler());
+			
+			int row = allocationFlexTable.getRowCount();
+			
+			allocationFlexTable.setText(row, 0, selectedRetailer.getName());
+			allocationFlexTable.setText(row, 1, selectedUser.getName());
+			allocationFlexTable.setWidget(row, 2, removeButton);
 			
 		}
 		
