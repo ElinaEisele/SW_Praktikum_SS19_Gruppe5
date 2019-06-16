@@ -11,9 +11,11 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 import de.hdm.softwarepraktikum.shared.report.Column;
 import de.hdm.softwarepraktikum.shared.report.Row;
+import de.hdm.softwarepraktikum.server.db.GroupMapper;;
 
 /**
  * Die Klasse stellt die vollstaendige Applikationslogik des ReportGenerators dar.
@@ -30,6 +32,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * da er diese ausgeben muss.
 	 */
 	private ShoppinglistAdministration administration = null;
+	
+	private GroupMapper groupMapper;
 	
 	 /**
      * <p>
@@ -123,5 +127,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		return null;
     	}
     }
+
+	@Override
+	public ArrayList<Group> getAllGroupsOf(User u) throws IllegalArgumentException {
+		
+		return null;
+		
+		
+	}
 }
 

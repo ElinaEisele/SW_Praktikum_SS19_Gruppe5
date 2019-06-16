@@ -2,7 +2,7 @@
 div#reportHeader{
 	list-style: none;
 	margin: 0;
-	background: deepskyblue;
+	background: gray;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -80,14 +80,19 @@ div#reportHeader{
 
 div#reportMain{
 	text-align: left;
-	background: lightgreen;
-	min-width: 800px;
-	
+	background: silver;
+	min-width: 800px;	
+}
+
+.NewReportLabel{
+	padding: 5px;
+	font-size: 150%;
+	font-weight: bold;
 }
 
 div#reportTrailer{
 	background: tomato;
-	background: deepskyblue;
+	background: gray;
 	padding: 10px;
 }
 
