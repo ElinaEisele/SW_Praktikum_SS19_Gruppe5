@@ -236,7 +236,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				suraf.setGstvm(ShoppinglistHeader.this.gstvm);
 				suraf.setShoppinglistHeader(ShoppinglistHeader.this);
 				suraf.setShoppinglistToDisplay(shoppinglistToDisplay);
-				// suraf.setGroupToDisplay(groupToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, suraf);
 				ssf.setSelected(shoppinglistToDisplay);
 
