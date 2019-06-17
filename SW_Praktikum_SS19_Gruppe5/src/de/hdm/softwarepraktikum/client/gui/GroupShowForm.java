@@ -72,6 +72,12 @@ public class GroupShowForm extends VerticalPanel {
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}
+	
+	public GroupShowForm(GroupHeader gh, ShowRetailersForm srf) {
+		mainPanel.add(srf);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
+	}
 
 	public GroupShowForm() {
 

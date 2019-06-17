@@ -33,15 +33,6 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 	}
 
-	public ShoppinglistShowForm(ShoppinglistHeader sh, AssignUserToRetailerForm autrf) {
-		shoppinglistHeader = sh;
-		autrf.setGroupToDisplay(selectedGroup);
-		mainPanel.add(shoppinglistHeader);
-		mainPanel.add(autrf);
-		RootPanel.get("main").clear();
-		RootPanel.get("main").add(mainPanel);
-	}
-
 	public ShoppinglistShowForm(ShoppinglistHeader sh, EditShoppinglistNameForm esnf) {
 		shoppinglistHeader = sh;
 		sh.setGstvm(gstvm);
