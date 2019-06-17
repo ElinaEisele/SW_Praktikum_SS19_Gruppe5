@@ -165,8 +165,6 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		shoppinglistShowForm.setSelected(s);
 		navigatorPanel.setSelectedShoppinglist(s);
 		
-		Window.alert("TVM: " + s.getName());
-
 		if (s != null) {
 
 			shoppinglistAdministration.getGroupOf(selectedShoppinglist, new AsyncCallback<Group>() {

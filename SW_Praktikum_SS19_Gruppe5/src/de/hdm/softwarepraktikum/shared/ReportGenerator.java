@@ -1,12 +1,16 @@
 package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 
@@ -30,9 +34,39 @@ public interface ReportGenerator extends RemoteService {
     /**
      * 
      * @param u
-     * @return
+     * @return ArrayList<Group>
      * @throws IllegalArgumentException
      */
     public ArrayList<Group> getAllGroupsOf(User u) throws IllegalArgumentException;
+
+	/**
+	 * 
+	 * @param g
+	 * @return ArrayList<Shoppinglist>
+	 * @throws IllegalArgumentException
+	 */
+    public ArrayList<Shoppinglist> getShoppinglistsOf(Group g) throws IllegalArgumentException;
+
+	/**
+	 * 
+	 * @param s
+	 * @return ArrayList<Listitem>
+	 * @throws IllegalArgumentException
+	 */
+    public ArrayList<Listitem> getListitemsOf(Shoppinglist s) throws IllegalArgumentException;
+
+	/**
+	 * 
+	 * @param l
+	 * @return String
+	 */
+    public String getProductnameOf(Listitem l) throws IllegalArgumentException;
+
+	/**
+	 * 
+	 * @param l
+	 * @return NamedBusinessObject
+	 */
+    public NamedBusinessObject getListitemUnitOf(Listitem l) throws IllegalArgumentException;
 
 }
