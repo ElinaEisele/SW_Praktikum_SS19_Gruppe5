@@ -79,6 +79,7 @@ public class StandardListitemOffDialogBox extends DialogBox {
 		public void onClick(ClickEvent event) {
 			if (selectedListitem != null) {
 				shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, false, new RemoveStandardCallback());
+				Notification.show("Eintrag nicht mehr als Standard gesetzt");
 				StandardListitemOffDialogBox.this.hide();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
