@@ -21,6 +21,7 @@ import de.hdm.softwarepraktikum.server.db.GroupMapper;
 import de.hdm.softwarepraktikum.server.db.ListitemMapper;
 import de.hdm.softwarepraktikum.server.db.ListitemUnitMapper;
 import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
+import de.hdm.softwarepraktikum.server.db.UserMapper;
 
 /**
  * Die Klasse stellt die vollstaendige Applikationslogik des ReportGenerators dar.
@@ -42,13 +43,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 */
 	private ReportGenerator report = null;
 	
-	private GroupMapper groupMapper = GroupMapper.groupMapper();
+	private GroupMapper groupMapper = null;
 	
-	private ShoppinglistMapper shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
+	private ShoppinglistMapper shoppinglistMapper = null;
 	
-	private ListitemMapper listitemMapper = ListitemMapper.listitemMapper();
+	private ListitemMapper listitemMapper = null;
 	
-	private ListitemUnitMapper listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
+	private ListitemUnitMapper listitemUnitMapper = null;
 	
 	 /**
      * <p>
@@ -70,9 +71,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
          * Fuer den Eigenbedarf erstellt ein ReportGeneratorImpl-Objekt 
          * ein ShoppinglistAdministrationImpl-Objekt. 
          */
-    	 ReportGeneratorImpl a = new ReportGeneratorImpl();
-    	 a.init();
-    	 this.report = a;
+    	
+//    	ReportGeneratorImpl a = new ReportGeneratorImpl();
+//    	 a.init();
+//    	 this.report = a;
+    	
+    	this.groupMapper = GroupMapper.groupMapper();
+		this.listitemMapper = ListitemMapper.listitemMapper();
+		this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
+		this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
     }
     
     /**
