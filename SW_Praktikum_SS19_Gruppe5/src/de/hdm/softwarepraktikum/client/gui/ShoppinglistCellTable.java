@@ -59,6 +59,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<>();
 	private ArrayList<Listitem> listitems = new ArrayList<>();
+
 	private Button archive;
 	private final MultiSelectionModel<Listitem> selectionModel = new MultiSelectionModel<Listitem>();
 
@@ -111,7 +112,6 @@ public class ShoppinglistCellTable extends VerticalPanel {
 						}
 
 					});
-
 					return productName;
 			}
 			
@@ -310,7 +310,6 @@ public class ShoppinglistCellTable extends VerticalPanel {
 							}
 						});
 			}
-
 		});
 
 		this.add(table);
