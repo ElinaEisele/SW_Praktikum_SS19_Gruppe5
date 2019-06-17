@@ -33,7 +33,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 	private Label shoppinglistHeaderLabel;
 	private Button newListitem;
 	private Button deleteShoppinglist;
-	private Button assignUserToRetailer;
 	private Button editShoppinglistName;
 	private Button showUserRetailerAllocation;
 
@@ -48,7 +47,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		shoppinglistHeaderLabel.setStyleName("ListLabel");
 		newListitem = new Button("Eintrag hinzufuegen");
 		deleteShoppinglist = new Button("Einkaufsliste loeschen");
-		assignUserToRetailer = new Button("Nutzer zuordnen");
 		editShoppinglistName = new Button("Editieren");
 		showUserRetailerAllocation = new Button("Nutzer Einzelhaendler zuweisung anzeigen");
 
@@ -65,13 +63,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		deleteShoppinglist.getElement().appendChild(deleteShoppinglistImg.getElement());
 		deleteShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		deleteShoppinglist.addClickHandler(new DeleteShoppinglistClickHandler());
-
-		Image assignUserToRetailerImg = new Image();
-		assignUserToRetailerImg.setUrl("images/man-pushing-a-shopping-cart.png");
-		assignUserToRetailerImg.setSize("16px", "16px");
-		assignUserToRetailer.getElement().appendChild(assignUserToRetailerImg.getElement());
-		assignUserToRetailer.setStyleName("ShoppinglistHeaderButton");
-		assignUserToRetailer.addClickHandler(new AssignUserToRetailerClickHandler());
 
 		Image editShoppinglistNameImg = new Image();
 		editShoppinglistNameImg.setUrl("images/edit.png");
@@ -93,7 +84,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 		this.add(shoppinglistHeaderLabel);
 		this.add(newListitem);
-		this.add(assignUserToRetailer);
 		this.add(editShoppinglistName);
 		this.add(deleteShoppinglist);
 		this.add(showUserRetailerAllocation);
@@ -190,34 +180,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 	}
 
-	/**
-	 * ClickHandler dient dem Erzeugen einer <code>AssignUserToRetailerForm</code>
-	 * Instanz.
-	 */
-	private class AssignUserToRetailerClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-
-			if (shoppinglistToDisplay != null) {
-
-				AssignUserToRetailerForm autrdb = new AssignUserToRetailerForm();
-				autrdb.setGstvm(ShoppinglistHeader.this.gstvm);
-				autrdb.setShoppinglistHeader(ShoppinglistHeader.this);
-				autrdb.setShoppinglistToDisplay(shoppinglistToDisplay);
-				autrdb.setGroupToDisplay(groupToDisplay);
-			
-				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, autrdb);
-				ssf.setSelected(shoppinglistToDisplay);
-				ssf.setSelectedGroup(groupToDisplay);
-				
-
-			} else {
-				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
-			}
-		}
-
-	}
 
 	/**
 	 * ClickHandler dient dem Erzeugen einer <code>EditShoppinglistNameForm</code>
