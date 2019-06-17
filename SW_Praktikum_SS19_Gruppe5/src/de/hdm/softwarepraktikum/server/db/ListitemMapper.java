@@ -178,24 +178,21 @@ public class ListitemMapper {
 		Connection con = DBConnection.connection();
 
 		try {
+			
+			Statement stmt = con.createStatement();
+			
+			stmt.executeUpdate("UPDATE listitems SET amount = " + listitem.getAmount() 
+			+ ", isStandard = " + listitem.isStandard()
+			+ ", isArchived = " + listitem.isArchived()
+			+ ", unit_id = " + listitem.getListitemUnitID()
+			+ ", retailer_id = " + listitem.getRetailerID()
+			+ " WHERE id = " + listitem.getId());
 
-			PreparedStatement pstmt = con.prepareStatement("UPDATE listitems SET amount = ? AND isStandard = ? "
-					+ "AND isArchived = ? AND unit_id = ? AND retailer_id = ? WHERE id = ?");
-
-				pstmt.setFloat(1, listitem.getAmount());
-				pstmt.setBoolean(2, listitem.isStandard());
-				pstmt.setBoolean(3, listitem.isArchived());
-				pstmt.setInt(4, listitem.getListitemUnitID());
-				pstmt.setInt(5, listitem.getRetailerID());
-				pstmt.setInt(6, listitem.getId());
-				pstmt.executeUpdate();
-
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return listitem;
-
 	}
 
 	/**
