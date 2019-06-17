@@ -1,18 +1,23 @@
 package de.hdm.softwarepraktikum.client.gui.report;
 
+import java.util.ArrayList;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.softwarepraktikum.shared.bo.Group;
+
 /**
  * Diese Klasse stellt die Texte fuer Impressum und Credits mittels
  * HTML-Format dar. Die Inhalte werden in einer DialogBox angezeigt.
  * 
- * @author LeoniFriedrich
+ * @author LeoniFriedrich & CarlaHofmann
  *
  */
 public class ReportTrailer extends VerticalPanel{
@@ -28,29 +33,16 @@ public class ReportTrailer extends VerticalPanel{
 		
 		buttonsPanel.add(impressumButton);
 		buttonsPanel.add(creditsButton);
+		
 		this.add(buttonsPanel);
 		this.setWidth("100%");
 		this.setCellHorizontalAlignment(buttonsPanel, ALIGN_CENTER);
+		
+		impressumButton.addClickHandler(new ImpressumButtonClickHandler());
+		creditsButton.addClickHandler(new CreditsButtonClickHandler());
+		
 		impressumButton.setStyleName("TrailerButton");
 		creditsButton.setStyleName("TrailerButton");
-		
-		/**
-		 * Anonyme innere Klasse zur Verarbeitung eines Klicks auf den <code>impressumButton</code>.
-		 */
-		impressumButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				impressumDialogBox = new ImpressumDialogBox();
-			}
-		});
-		
-		/**
-		 * Anonyme innere Klasse zur Verarbeitung eines Klicks auf den <code>creditsButton</code>.
-		 */
-		creditsButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				creditsDialogBox = new CreditsDialogBox();
-			}
-		});
 		
 	}
 	/**
@@ -66,7 +58,6 @@ public class ReportTrailer extends VerticalPanel{
 							+ "Kontakt</br>Telefon: 0711 8923-3242</br> E-Mail: <a href=\"mailto:info-wi7@hdm-stuttgart.de\" target=\"_top\">info-wi7@hdm-stuttgart.de "
 							+ "<br><a href=\"https:\\www.hdm-stuttgart.de\""
 							+ "impressum\"TARGET=\"_blank\">Impressum der Hochschule</a></br></br>" + "</div>"));
-					
 		}
 		
 	}
@@ -78,7 +69,32 @@ public class ReportTrailer extends VerticalPanel{
 	private class Credits extends HTML{
 		
 		public Credits() {
-			this.setHTML(("<div class = 'Credits'>" + "</br>" + "<b>Special Thanks goes to: </b></br></br> <br> <div>Icons made by <a href=\"https://www.flaticon.com/authors/kiranshastry\" title=\"Kiranshastry\">Kiranshastry</a> from <a href=\"https://www.flaticon.com/\" 			    title=\"Flaticon\">www.flaticon.com</a> is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" 			    title=\"Creative Commons BY 3.0\" target=\"_blank\">CC 3.0 BY</a></div></br>"));
+			this.setHTML(("<div class = 'Credits'>" + "</br>" + "<b>Special Thanks goes to: "
+					+ "</b></br></br> <br> <div>Icons made by <a "
+					+ "href=\"https://www.flaticon.com/authors/kiranshastry\" "
+					+ "title=\"Kiranshastry\">Kiranshastry</a> from <a "
+					+ "href=\"https://www.flaticon.com/\" 			    "
+					+ "title=\"Flaticon\">www.flaticon.com</a> is licensed by "
+					+ "<a href=\"http://creativecommons.org/licenses/by/3.0/\" 			    "
+					+ "title=\"Creative Commons BY 3.0\" target=\"_blank\">CC 3.0 BY</a></div></br>"));
+		}
+	}
+	
+	/**
+	 * Klasse zur Verarbeitung eines Klicks auf den <code>impressumButton</code>.
+	 */
+	public class ImpressumButtonClickHandler implements ClickHandler{
+		public void onClick(ClickEvent event) {
+				impressumDialogBox = new ImpressumDialogBox();
+			}
+	}
+	
+	/**
+	 * Klasse zur Verarbeitung eines Klicks auf den <code>creditsButton</code>.
+	 */
+	public class CreditsButtonClickHandler implements ClickHandler{
+		public void onClick(ClickEvent event) {
+			creditsDialogBox = new CreditsDialogBox();
 		}
 	}
 	

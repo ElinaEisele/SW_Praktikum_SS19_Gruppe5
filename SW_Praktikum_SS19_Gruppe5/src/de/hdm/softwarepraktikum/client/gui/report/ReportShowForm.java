@@ -85,79 +85,59 @@ public class ReportShowForm extends VerticalPanel{
 	/**
 	 * Speicher fuer alle Gruppen eines Users
 	 */
-	private ArrayList<Group> groupsOfCurrentUser = null;
+	private ArrayList<Group> groupsOfCurrentUser;
 
 	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
 	 */
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
-	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
+	/**
+	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportAdministrationImpl zuzugreifen.
+	 */
+	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();;
 	
-//	/**
-//	 * Instanziierung des asynchronen Interfaces, um auf doe Methoden der ReportAdministrationImpl zuzugreifen.
-//	 */
-//	private ReportGeneratorAsync reportGenerator = null;
-//	
-	
-	
-	
+
 	
 	public ReportShowForm () {
 		
-		reportGrid = new Grid (5, 2);
-		
 		Label newReportLabel = new Label ("Neuen Report erstellen");
-		reportGrid.setWidget(0, 0, newReportLabel);
+		newReportLabel.setStyleName("NewReportLabel");
+		
+		reportGrid = new Grid (4, 2);
 		
 		Label groupLabel = new Label ("Deine Gruppen: ");
-		reportGrid.setWidget(1, 0, groupLabel);
-		reportGrid.setWidget(1, 1, groupSelectorListBox);
+		reportGrid.setWidget(0, 0, groupLabel);
+		reportGrid.setWidget(0, 1, groupSelectorListBox);
+		groupSelectorListBox.addChangeHandler(new GroupSelectorListBoxChangeHandler());
 		
 		Label startDateLabel = new Label ("Startdatum waehlen: ");
-		reportGrid.setWidget(2, 0, startDateLabel);
+		reportGrid.setWidget(1, 0, startDateLabel);
 		startDateBox.setValue(new java.util.Date());
-		reportGrid.setWidget(2, 1, startDateBox);
+		reportGrid.setWidget(1, 1, startDateBox);
 		
 		Label endDateLabel = new Label ("Enddatum waehlen: ");
-		reportGrid.setWidget(3, 0, endDateLabel);
+		reportGrid.setWidget(2, 0, endDateLabel);
 		endDateBox.setValue(new java.util.Date());
-		reportGrid.setWidget(3, 1, endDateBox);
+		reportGrid.setWidget(2, 1, endDateBox);
 		
 		Label showReportButtonLabel = new Label ();
-		reportGrid.setWidget(4, 0, showReportButtonLabel);
-		reportGrid.setWidget(4, 1, showReportButton);
+		reportGrid.setWidget(3, 0, showReportButtonLabel);
+		reportGrid.setWidget(3, 1, showReportButton);
 		
-		mainPanel.add(reportGrid);
-	
-		shoppinglistAdministration.getGroupsOf(selectedUser, new GetGroupsOfUserCallback());	
+		mainPanel.add(newReportLabel);
+		mainPanel.add(reportGrid);	
+		
+		reportGenerator.getAllGroupsOf(selectedUser, new GetAllGroupsOfCallback());
+		
+//		reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
 		
 	}
 	
-	public void onLoad() {
+	public void onLoad() {	
 		
 		RootPanel.get("reportMain").add(mainPanel);
-		
-//		if(reportGenerator == null) {
-//			reportGenerator = ClientsideSettings.getReportGenerator();
-//		}
-		
-		if (selectedUser == null) {
-			Window.alert("User kommt nicht an");	
-		}else {
-			Window.alert(selectedUser.getGmailAddress());
-		}
-		
-		
-		if(groupsOfCurrentUser != null) {
-			for(Group g : groupsOfCurrentUser) {
-				//Hinzufuegen der einzelnen Gruppen zur DropList
-				groupSelectorListBox.addItem(g.getName());		
-			}
-		}else {
-			Window.alert("Hat nicht geklappt");
-		}
-	}
+}
 	
 
 	public User getUser() {
@@ -171,7 +151,12 @@ public class ReportShowForm extends VerticalPanel{
 	private class GroupSelectorListBoxChangeHandler implements ChangeHandler{
 			
 		public void onChange(ChangeEvent event) {
-			selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());	
+			
+			selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
+			
+//			int item = groupSelectorListBox.getSelectedIndex();
+//			selectedGroup = groupsOfCurrentUser.get(item);
+//			Window.alert("" + selectedGroup.getId());
 		}
 	}
 				
@@ -205,12 +190,11 @@ public class ReportShowForm extends VerticalPanel{
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(new HTML(writer.getReportText()));
 			}
-			
 		}
-		
 	}
+
 	
-	private class GetGroupsOfUserCallback implements AsyncCallback<ArrayList<Group>> {
+	private class GetAllGroupsOfCallback implements AsyncCallback<ArrayList<Group>> {
 		
 			@Override
 			public void onFailure(Throwable caught) {
