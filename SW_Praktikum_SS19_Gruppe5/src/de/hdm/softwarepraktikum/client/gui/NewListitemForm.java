@@ -213,7 +213,7 @@ public class NewListitemForm extends HorizontalPanel {
 
 			int item = unitNameListBox.getSelectedIndex();
 			selectedlistitemUnit = listitemUnitArrayList.get(item);
-
+Window.alert("" + selectedlistitemUnit.getId());
 		}
 	}
 

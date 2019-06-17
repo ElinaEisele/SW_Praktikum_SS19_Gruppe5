@@ -46,6 +46,8 @@ public class NewGroupForm extends VerticalPanel {
 	private Button cancelButten = new Button("Abbrechen");
 
 	public NewGroupForm() {
+		
+		nameTextBox.setFocus(true);
 
 		grid.setWidget(0, 0, nameLabel);
 		grid.setWidget(0, 1, nameTextBox);
@@ -105,9 +107,11 @@ public class NewGroupForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 
 			RootPanel.get("main").clear();
+			if (oldSelectedGroup!= null) {
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(oldSelectedGroup);
 			RootPanel.get("main").add(gsf);
+			}
 
 		}
 
