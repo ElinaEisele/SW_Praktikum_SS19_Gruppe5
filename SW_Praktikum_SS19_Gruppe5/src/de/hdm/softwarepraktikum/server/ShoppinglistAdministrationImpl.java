@@ -731,7 +731,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	
 	
 	/**
-	 * Eine Shoppinglist anlegen
+	 * Eine Shoppinglist anlegen und alle Standardeintraege hinzufuegen.
 	 * @param group Gruppe, welcher eine Shoppinglist hinzugefuegt werden soll
 	 * @param name Name der Shoppinglist
 	 * @return fertiges Shoppinglist-Objekt
@@ -741,6 +741,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public Shoppinglist createShoppinglistFor(Group group, String name) throws IllegalArgumentException {
 		//Erst wird ein neues Shoppinglist-Objekt erstellt.
 		Shoppinglist sl = new Shoppinglist(name);
+		
+		//Fremdschluessel zur Gruppe setzen
 		sl.setGroupId(group.getId());
 		
 		//Um die korrekte (mit der Datenbank konsistente) Id zu erhalten, muss erst die insert-Methode aufgerufen werden.
@@ -752,26 +754,27 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 		//Neue Listitem-Objekte mit der Fremdschluesselbeziehung zur neuen Shoppinglist werden erstellt.
 		for(Listitem l : standard) {
+			
+			//Bei jeder Iteration werden alle Listitems der neuen Shoppinglist hinzugefuegt.
 			ArrayList<Listitem> alreadyInSl = this.getListitemsOf(sl);
 			
+			//Nachdem etwas in der Shoppingliste vorhanden ist muss geprueft werden ob bereits ein gleiches Listitem vorhanden ist.
 			if(!alreadyInSl.isEmpty()) {
 				boolean isThere = true;
+				//Abfragen, ob bereits ein Listitem mit den selben Werten in der neuen Shoppinglist existiert
 				for(Listitem li : alreadyInSl) {
-					//Große IF-Abfrage
 					if(this.getAmountOf(l) == this.getAmountOf(li) && this.getRetailerOf(l).getId() == this.getRetailerOf(li).getId() 
 							&& l.getListitemUnitID() == li.getListitemUnitID() && this.getProductnameOf(l).equals(this.getProductnameOf(li))) {
 						isThere = false;
 					}
-					
 				}
+				// Falls noch kein solches Listitem existiert wird eins erstellt.
 				if(isThere) {
 					this.createListitem(group, sl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l), true);
-					System.out.println(this.getProductnameOf(l) +" wurde erstellt.");
 				}
 			}
-			
+			// Das erste Listitem wird direkt gesetzt.
 			else {
-				// Was wenn noch nichts im already-Array ist
 				this.createListitem(group, sl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l), true);
 			}
 		}
