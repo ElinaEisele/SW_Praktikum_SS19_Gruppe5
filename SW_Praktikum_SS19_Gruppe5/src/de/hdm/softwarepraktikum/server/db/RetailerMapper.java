@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
 
@@ -229,11 +231,8 @@ public class RetailerMapper {
 					+ "VALUES (?, ?, ?) ", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, retailerId);
-			System.out.println("1: "+retailerId);
 			pstmt.setInt(2, userId);
-			System.out.println("2: "+userId);
 			pstmt.setInt(3, shoppinglistId);
-			System.out.println("3: "+shoppinglistId);
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -350,7 +349,7 @@ public class RetailerMapper {
 	}
 	
 	/**
-	 * Alle zugewiesenen Händler einer Shoppingliste zurückgeben
+	 * Alle zugewiesenen Hï¿½ndler einer Shoppingliste zurï¿½ckgeben
 	 * 
 	 * @param shoppinglist
 	 * @return ArrayList<Retailer>
@@ -381,6 +380,97 @@ public class RetailerMapper {
 		}
 		
 		return retailers;
+	}
+	
+	/**
+	 * User der einem Retailer zugewiesen ist
+	 */
+	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) {
+		
+		Connection con = DBConnection.connection();
+		User u = new User();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN users "
+					+"ON responsibilities.user_id = users.id "
+					+"WHERE responsibilities.retailer_id = " + retailer.getId()
+					+" AND responsibilities.shoppinglist_id = " + shoppinglist.getId());
+			
+			if(rs.next()) {
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setName(rs.getString("name"));
+				u.setGmailAddress(rs.getString("gMail"));
+			}
+
+		} catch (SQLException e){
+			e.printStackTrace();
+	
+		}
+		
+		return u;
+	}
+	
+	
+	/** evtl raus:
+	 * Alle Zuweisungen in einer Shoppingliste
+	 */
+	public Map<String, String> getAllocationsOf(Shoppinglist shoppinglist){
+				
+		Connection con = DBConnection.connection();
+		Map<String, String> allocations = new HashMap<String, String>();
+		ArrayList<Retailer> retailers = new ArrayList<Retailer>();
+		
+		try {
+			Statement stmt1 = con.createStatement();
+			ResultSet rs1 = stmt1.executeQuery("SELECT * FROM responsibilities INNER JOIN retailers "
+					+ "ON responsibilities.retailer_id = retailers.id "
+					+ "WHERE responsibilities.shoppinglist_id = " + shoppinglist.getId());
+		
+			while (rs1.next()) {
+				
+				Retailer r = new Retailer();
+				r.setId(rs1.getInt("id"));
+				r.setCreationDate(rs1.getDate("creationDate"));
+				r.setName(rs1.getString("name"));
+				retailers.add(r);
+				
+			
+			}
+			
+			Statement stmt2 = con.createStatement();
+			
+			for (Retailer r : retailers) {
+				ResultSet rs2 = stmt2.executeQuery("SELECT * FROM responsibilities INNER JOIN users "
+						+ "ON responsibilities.user_id = users.id "
+						+ "WHERE responsibilities.shoppinglist_id = " + shoppinglist.getId()
+						+ " AND responsibilities.retailer_id = " + r.getId());
+								
+				if (rs2.next()) {
+					User u = new User();
+					u.setId(rs2.getInt("id"));
+					u.setCreationDate(rs2.getDate("creationDate"));
+					u.setName(rs2.getString("name"));
+					u.setGmailAddress(rs2.getString("gMail"));
+					
+					
+					allocations.put(r.getName(), u.getName());
+				}
+			}
+			
+			for (String key : allocations.keySet()) {
+				System.out.println("Key : " + key);
+				System.out.println("Value : " + allocations.get(key) + "\n");
+			}
+
+			
+		} catch (SQLException e) {
+			e.getStackTrace();
+		}
+		
+		
+		return allocations;
 	}
 	
 	/**
@@ -429,15 +519,14 @@ public class RetailerMapper {
 	 * @param userId ist die ID des users, dessen Zuweisung geloescht werden soll.
 	 * @param shoppinglistId ist die ID der Shoppinglist, in welcher eine Zusweisung geloescht werden soll.
 	 */
-	public void deleteResponsibility(int retailerId, int userId, int shoppinglistId) {
+	public void deleteResponsibility(Retailer retailer, Shoppinglist shoppinglist) {
 		
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM responsibilities WHERE retailer_id = " + retailerId 
-					+ " AND user_id = " + userId 
-					+ " AND shoppinglist_id = " + shoppinglistId);
+			stmt.executeUpdate("DELETE FROM responsibilities WHERE retailer_id = " + retailer.getId() 
+					+ " AND shoppinglist_id = " + shoppinglist.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();

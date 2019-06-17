@@ -594,6 +594,27 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
+	 * Ausgabe aller schon zugewiesenen Retailer.
+	 */
+	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.retailerMapper.getAssignedRetailersOf(shoppinglist);
+	}
+	
+	/**
+	 * Ausgabe aller HÃ¤ndler- und Nutzernamen Zuweisungen in einer <code>Shoppinglist</code>
+	 */
+	public Map<String, String> getUserRetailerAllocation(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.retailerMapper.getAllocationsOf(shoppinglist);
+	}
+	
+	/**
+	 * Ausgabe des zugewiesenen Nutzers.
+	 */
+	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) {
+		return this.retailerMapper.getAssigndUserOf(shoppinglist, retailer);
+	}
+	
+	/**
 	 * Ein Retailer-Objekt wird einem Listitem als Beschaffungsort zugewiesen
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param listitem ist der Eintrag, welchem der Retailer zugeordnet wird
@@ -606,15 +627,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Eine Zuweisung wird gelöscht.
+	 * Eine Zuweisung wird gelï¿½scht.
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
-	 * @param user ist der User, dessen Zuweisung gelöscht werden soll.
+	 * @param user ist der User, dessen Zuweisung gelï¿½scht werden soll.
 	 * @param shoppinglist ist die Shoppinglist, innerhalb 
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public void deleteAssignment(Retailer retailer, User user, Shoppinglist shoppinglist) throws IllegalArgumentException{
-		retailerMapper.deleteResponsibility(retailer.getId(), user.getId(), shoppinglist.getId());
+	public void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException{
+		retailerMapper.deleteResponsibility(retailer, shoppinglist);
 	}
 /**
  * **********************************************************************************

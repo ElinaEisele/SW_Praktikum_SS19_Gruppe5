@@ -66,14 +66,16 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 					RootPanel.get("header").setVisible(false);
 					RootPanel.get("aside").setVisible(false);
 					RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, u));
+					
 				} else {
 
 					Editor editor = new Editor();
 					editor.loadForms();
-
+					
 				}
 			} else {
 				loadLogin();
+				
 			}
 		}
 

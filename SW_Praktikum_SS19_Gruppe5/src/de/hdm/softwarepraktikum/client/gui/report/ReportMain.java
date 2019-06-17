@@ -2,6 +2,12 @@ package de.hdm.softwarepraktikum.client.gui.report;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
+/**
+ * 
+ * @author CarlaHofmann & LeoniFriedrich
+ *
+ */
+
 public class ReportMain {
 
 	private ReportHeader reportHeader = null;
