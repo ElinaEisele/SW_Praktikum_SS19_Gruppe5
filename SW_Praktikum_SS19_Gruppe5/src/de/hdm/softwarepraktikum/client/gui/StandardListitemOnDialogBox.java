@@ -79,6 +79,7 @@ public class StandardListitemOnDialogBox extends DialogBox {
 		public void onClick(ClickEvent event) {
 			if (selectedListitem != null) {
 				shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, true, new SetStandardCallback());
+				Notification.show("Eintrag als Standard gesetzt");
 				StandardListitemOnDialogBox.this.hide();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
