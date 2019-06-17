@@ -23,40 +23,41 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class LeaveGroupDialogBox extends DialogBox{
-	
-	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
+public class LeaveGroupDialogBox extends DialogBox {
+
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
+			.getShoppinglistAdministration();
 	private User u = CurrentUser.getUser();
 	private Group selectedGroup = null;
-	
+
 	private GroupShoppinglistTreeViewModel gstvm = null;
-	
+
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmationLabel = new Label("Sind Sie sicher, dass Sie diese Gruppe verlassen möchten?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button confirmButton = new Button("Gruppe verlassen");
 	private Button cancelButton = new Button("Abbrechen");
-	
+
 	public LeaveGroupDialogBox() {
-		
+
 		this.setGlassEnabled(true);
-		
+
 		cancelButton.setStylePrimaryName("cancelButton");
 		confirmButton.setStylePrimaryName("confirmButton");
-		
-		cancelButton.addClickHandler(new CancleClickHandler());
+
+		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
-		
+
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
-		
+
 		mainPanel.add(confirmationLabel);
 		mainPanel.add(buttonPanel);
-		
+
 		this.add(mainPanel);
 		this.center();
 	}
-	
+
 	public Group getSelectedGroup() {
 		return selectedGroup;
 	}
@@ -72,33 +73,37 @@ public class LeaveGroupDialogBox extends DialogBox{
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
-	
-	private class CancleClickHandler implements ClickHandler{
+
+	private class CancelClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			LeaveGroupDialogBox.this.hide();
 		}
-		
+
 	}
-	
-	
-	private class ConfirmClickHandler implements ClickHandler{
+
+	private class ConfirmClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				shoppinglistAdministration.removeUserFromGroup(u, selectedGroup, new RemoveUserCallback());
+				RootPanel.get("aside").clear();
+				RootPanel.get("main").clear();
+
+				NavigatorPanel np = new NavigatorPanel();
+				RootPanel.get("aside").add(np);
 				LeaveGroupDialogBox.this.hide();
-				
+
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
 		}
-		
+
 	}
-	
-	private class RemoveUserCallback implements AsyncCallback<Void>{
+
+	private class RemoveUserCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -109,13 +114,9 @@ public class LeaveGroupDialogBox extends DialogBox{
 		public void onSuccess(Void result) {
 			setSelectedGroup(null);
 			gstvm.removeGroup(selectedGroup);
-			
-		
-			
-			
+
 		}
-		
+
 	}
-	
 
 }

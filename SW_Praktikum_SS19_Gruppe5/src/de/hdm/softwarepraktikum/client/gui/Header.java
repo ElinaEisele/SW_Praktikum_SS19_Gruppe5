@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
+import de.hdm.softwarepraktikum.client.ReportGeneratorEntry;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
@@ -29,6 +30,7 @@ public class Header extends HorizontalPanel {
 	private Button abmeldenButton;
 	private Anchor reportLink;
 	private Anchor editorLink;
+	private ReportGeneratorEntry reportGenerator;
 
 	public void onLoad() {
 
@@ -93,8 +95,16 @@ public class Header extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			reportLink.setHref(GWT.getHostPageBaseURL()+"ReportGenerator.html");
-			Window.open(reportLink.getHref(), "_self", "");
+//			reportLink.setHref(GWT.getHostPageBaseURL()+"ReportGenerator.html");
+			Window.Location.assign("ReportGenerator.html");
+//			Window.open(reportLink.getHref(), "_self", "");
+			if(user != null) {
+				Window.alert(user.getGmailAddress());
+			}
+			Window.alert("User wird gleich gesetzt");
+			//reportGenerator.setU(user);
+			
+			Window.alert("User ist gesetzt");
 		}
 		
 	}

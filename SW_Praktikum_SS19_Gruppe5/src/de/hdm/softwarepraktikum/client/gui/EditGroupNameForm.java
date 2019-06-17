@@ -26,50 +26,50 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-public class EditGroupNameForm extends VerticalPanel{
-	
-	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
+public class EditGroupNameForm extends VerticalPanel {
+
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
+			.getShoppinglistAdministration();
 	private User u = CurrentUser.getUser();
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupHeader groupHeader = new GroupHeader();
 	private GroupShowForm groupShowForm;
 	private Group selectedGroup = null;
 	private Group changedGroup = null;
-	
+
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Gruppenname ändern");
 	private Grid grid = new Grid(1, 2);
 	private Label newNameLabel = new Label("Neuer Gruppenname: ");
 	private TextBox newNameTextBox = new TextBox();
-	
+
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button saveButton = new Button("Änderung speichern");
 	private Button cancelButton = new Button("Abbrechen");
-	
+
 	public EditGroupNameForm() {
-		
+
 		this.
-		
-		grid.setWidget(0, 0, newNameLabel);
+
+				grid.setWidget(0, 0, newNameLabel);
 		grid.setWidget(0, 1, newNameTextBox);
-		
+
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
-		
+
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
-		
+
 		mainPanel.add(infoLabel);
 		mainPanel.add(grid);
 		mainPanel.add(buttonPanel);
-		
+
 	}
-	
+
 	public void onLoad() {
-		
+
 		RootPanel.get("main").add(mainPanel);
 	}
-	
 
 	public GroupShoppinglistTreeViewModel getGstvm() {
 		return gstvm;
@@ -94,8 +94,8 @@ public class EditGroupNameForm extends VerticalPanel{
 	public void setSelectedGroup(Group selectedGroup) {
 		this.selectedGroup = selectedGroup;
 	}
-	
-	private class CancelClickHandler implements ClickHandler{
+
+	private class CancelClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -104,24 +104,21 @@ public class EditGroupNameForm extends VerticalPanel{
 			gsf.setSelected(selectedGroup);
 			RootPanel.get("main").add(gsf);
 		}
-		
+
 	}
-	
-	private class SaveClickHandler implements ClickHandler{
+
+	private class SaveClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
-				shoppinglistAdministration.changeNameOf(selectedGroup, newNameTextBox.getValue(), new ChangeNameCallback());
-				GroupShowForm gsf = new GroupShowForm();
-				gsf.setSelected(selectedGroup);
-				
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(gsf);
-			} 
+				shoppinglistAdministration.changeNameOf(selectedGroup, newNameTextBox.getValue(),
+						new ChangeNameCallback());
+
+			}
 		}
 	}
-	
-	private class ChangeNameCallback implements AsyncCallback<Group>{
+
+	private class ChangeNameCallback implements AsyncCallback<Group> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -130,11 +127,17 @@ public class EditGroupNameForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(Group result) {
+			RootPanel.get("aside").clear();
+			RootPanel.get("main").clear();
 			selectedGroup = result;
+			GroupShowForm gsf = new GroupShowForm();
+			gsf.setSelected(selectedGroup);
+			RootPanel.get("main").add(gsf);
+			NavigatorPanel np = new NavigatorPanel();
+			RootPanel.get("aside").add(np);
 			gstvm.updateGroup(result);
 		}
-		
+
 	}
-	
 
 }

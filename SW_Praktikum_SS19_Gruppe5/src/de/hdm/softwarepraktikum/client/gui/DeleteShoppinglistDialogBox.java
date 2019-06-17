@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
@@ -25,7 +26,10 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
+	private NavigatorPanel navigatorPanel;
+	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 	private Shoppinglist selectedShoppinglist = null;
+	private Group selectedGroup = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmationLabel = new Label(
@@ -64,6 +68,22 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 		this.selectedShoppinglist = selectedShoppinglist;
 	}
 
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
+
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -83,7 +103,7 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 						new DeleteShoppinglistCallback(selectedShoppinglist));
 				DeleteShoppinglistDialogBox.this.hide();
 			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
+				Notification.show("Es wurde keine Einkaufsliste ausgewaehlt.");
 			}
 		}
 
@@ -105,10 +125,12 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 		@Override
 		public void onSuccess(Void result) {
 			if (shoppinglist != null) {
-				setSelectedShoppinglist(null);
-//				gstvm.removeShoppinglist(shoppinglist);
 				RootPanel.get("main").clear();
-
+				RootPanel.get("aside").clear();
+				navigatorPanel = new NavigatorPanel();
+				gstvm.removeShoppinglistOfGroup(selectedShoppinglist, selectedGroup);
+				setSelectedShoppinglist(null);
+				RootPanel.get("aside").add(navigatorPanel);
 			}
 		}
 

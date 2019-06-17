@@ -29,7 +29,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 	public void onModuleLoad() {
 
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
-		loginService.login(GWT.getHostPageBaseURL() + "SW_Praktikum_SS19_Gruppe5.html", new LoginServiceCallback());
+		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
 
 	}
 
@@ -66,14 +66,16 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 					RootPanel.get("header").setVisible(false);
 					RootPanel.get("aside").setVisible(false);
 					RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, u));
+					
 				} else {
 
 					Editor editor = new Editor();
 					editor.loadForms();
-
+					
 				}
 			} else {
 				loadLogin();
+				
 			}
 		}
 

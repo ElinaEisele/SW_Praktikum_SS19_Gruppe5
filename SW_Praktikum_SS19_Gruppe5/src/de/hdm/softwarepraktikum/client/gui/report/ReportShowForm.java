@@ -7,17 +7,22 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
+import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.User;
@@ -28,7 +33,7 @@ import de.hdm.softwarepraktikum.shared.report.HTMLReportWriter;
 /**
  * Diese Klasse stellt den "main"-Teil der Report-HTML Seite dar.
  * 
- * @author TimBeutelspacher
+ * @author TimBeutelspacher LeoniFriedrich
  */
 
 public class ReportShowForm extends VerticalPanel{
@@ -38,6 +43,9 @@ public class ReportShowForm extends VerticalPanel{
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel addPanel = new HorizontalPanel();
+	private Grid reportGrid;
+	
+	private User selectedUser = CurrentUser.getUser(); 
 	
 	/**
 	 * Button zum anzeigen des Reports
@@ -57,76 +65,103 @@ public class ReportShowForm extends VerticalPanel{
 	/**
 	 * Drop-Down-Liste zur Gruppenauswahl
 	 */
-	private ListBox groupSelector = new ListBox();
+	private ListBox groupSelectorListBox = new ListBox();
 	
 	/**
-	 * Speicher für das Startdate als SQL-Date
+	 * Speicher fuer das Startdate als SQL-Date
 	 */
-	private java.sql.Date sqlStartDate = null;
+	private Date sqlStartDate = null;
 	
 	/**
-	 * Speicher für das Enddate als SQL-
+	 * Speicher fuer das Enddate als SQL-
 	 */
-	private java.sql.Date sqlEndDate = null;
+	private Date sqlEndDate = null;
 	
 	/**
-	 * Speicher für die ausgewaehlte Gruppe
+	 * Speicher fuer die ausgewaehlte Gruppe
 	 */
 	private Group selectedGroup = null;
 	
 	/**
-	 * Speicher für alle Gruppen eines Users
+	 * Speicher fuer alle Gruppen eines Users
 	 */
-	private ArrayList<Group> groupsOfCurrentUser = null;
-	
+	private ArrayList<Group> groupsOfCurrentUser;
+
 	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
 	 */
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
 	/**
-	 * Instanziierung des asynchronen Interfaces, um auf doe Methoden der ReportAdministrationImpl zuzugreifen.
+	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportAdministrationImpl zuzugreifen.
 	 */
-	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
+	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();;
 	
 
-	public void onLoad() {
+	
+	public ReportShowForm () {
 		
-		/**
-		 *  Alle Gruppen des aktuellen Users werden zwischenespeichert.
-		 */
-//		groupsOfCurrentUser = this.shoppinglistAdministration.getGroupsOf(user, new GetGroupsCallback());
+		Label newReportLabel = new Label ("Neuen Report erstellen");
+		newReportLabel.setStyleName("NewReportLabel");
 		
-		/**
-		 * Gruppennamen werden der Drop-Downliste hinzufügen.
-		 */
-		if(groupsOfCurrentUser != null) {
-			for(Group g : groupsOfCurrentUser) {
-				//Hinzufuegen der einzelnen Gruppen zur DropList
-				groupSelector.addItem(g.getName());		
-			}
-		}
+		reportGrid = new Grid (4, 2);
 		
-		mainPanel.add(groupSelector);
+		Label groupLabel = new Label ("Deine Gruppen: ");
+		reportGrid.setWidget(0, 0, groupLabel);
+		reportGrid.setWidget(0, 1, groupSelectorListBox);
+		groupSelectorListBox.addChangeHandler(new GroupSelectorListBoxChangeHandler());
 		
+		Label startDateLabel = new Label ("Startdatum waehlen: ");
+		reportGrid.setWidget(1, 0, startDateLabel);
 		startDateBox.setValue(new java.util.Date());
-		mainPanel.add(startDateBox);
+		reportGrid.setWidget(1, 1, startDateBox);
 		
+		Label endDateLabel = new Label ("Enddatum waehlen: ");
+		reportGrid.setWidget(2, 0, endDateLabel);
 		endDateBox.setValue(new java.util.Date());
-		mainPanel.add(endDateBox);
+		reportGrid.setWidget(2, 1, endDateBox);
 		
-		addPanel.add(showReportButton);
+		Label showReportButtonLabel = new Label ();
+		reportGrid.setWidget(3, 0, showReportButtonLabel);
+		reportGrid.setWidget(3, 1, showReportButton);
 		
+		mainPanel.add(newReportLabel);
+		mainPanel.add(reportGrid);	
 		
-		groupSelector.addChangeHandler(new ChangeHandler() {
-			@Override
-			public void onChange(ChangeEvent event) {
-				selectedGroup = groupsOfCurrentUser.get(groupSelector.getSelectedIndex());
-			}
+		reportGenerator.getAllGroupsOf(selectedUser, new GetAllGroupsOfCallback());
+		
+//		reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
+		
+	}
+	
+	public void onLoad() {	
+		
+		RootPanel.get("reportMain").add(mainPanel);
+}
+	
+
+	public User getUser() {
+		return selectedUser;	
+	}
+		
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+	
+	private class GroupSelectorListBoxChangeHandler implements ChangeHandler{
 			
-		});
+		public void onChange(ChangeEvent event) {
+			
+			selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
+			
+//			int item = groupSelectorListBox.getSelectedIndex();
+//			selectedGroup = groupsOfCurrentUser.get(item);
+//			Window.alert("" + selectedGroup.getId());
+		}
+	}
+				
+	private class ShowReportClickHandler implements ClickHandler {
 		
-		showReportButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				//Eingegebenes Startdate festhalten
 				sqlStartDate = new java.sql.Date(startDateBox.getValue().getTime());
@@ -134,11 +169,9 @@ public class ReportShowForm extends VerticalPanel{
 				//Eingegebenes Enddate festhalten
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
 				
-				//Ausführen der Report-Erstellung
+//				//Ausfuehren der Report-Erstellung
 				reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
-				
 			}
-		});
 	}
 	
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
@@ -157,8 +190,25 @@ public class ReportShowForm extends VerticalPanel{
 				RootPanel.get("main").clear();
 				RootPanel.get("main").add(new HTML(writer.getReportText()));
 			}
-			
 		}
-		
 	}
+
+	
+	private class GetAllGroupsOfCallback implements AsyncCallback<ArrayList<Group>> {
+		
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Fehler " + caught.toString());	
+			}
+
+			@Override
+			public void onSuccess(ArrayList<Group> result) {
+				groupsOfCurrentUser = result;
+				for (int i = 0; i < result.size(); i++) {
+					groupSelectorListBox.addItem(result.get(i).getName());
+					selectedGroup = result.get(0);	
+				}
+			}
+	}
+	
 }

@@ -63,12 +63,12 @@ public class UserMapper {
 				u.setGmailAddress(rs.getString("gMail"));
 				users.add(u);
 			}
-			return users;
-
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return users;
 
 	}
 
@@ -127,13 +127,12 @@ public class UserMapper {
 				u.setGmailAddress(rs.getString("gMail"));
 				users.add(u);
 			}
-			
-			return users;
-
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			
 		}
+		return users;
 
 	}
 
@@ -321,8 +320,6 @@ public class UserMapper {
 				u.setGmailAddress(rs.getString("gMail"));
 				users.add(u);
 			}
-			
-			return users;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -375,5 +372,36 @@ public class UserMapper {
 		
 		return null;
 
+	}
+	
+	public User getAssignedUser(Shoppinglist shoppinglist, Retailer retailer) {
+		
+		Connection con = DBConnection.connection();
+		User u = new User();
+
+		try {
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT users.id As user_id, "
+					+ "users.creationDate AS user_creationDate, "
+					+ "users.name AS user_name, "
+					+ "users.gMail AS user_gMail "
+					+ "FROM responsibilities INNER JOIN users "
+					+ "ON responsibilities.user_id = users.id "
+					+ "WHERE responsibilities.shoppinglist_id = " + shoppinglist.getId()
+					+ " AND responsibilities.retailer_id = " + retailer.getId());
+
+			while (rs.next()) {
+				u.setId(rs.getInt("user_id"));
+				u.setCreationDate(rs.getDate("user_creationDate"));
+				u.setName(rs.getString("user_name"));
+				u.setGmailAddress(rs.getString("user_gMail"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return u;
 	}
 }

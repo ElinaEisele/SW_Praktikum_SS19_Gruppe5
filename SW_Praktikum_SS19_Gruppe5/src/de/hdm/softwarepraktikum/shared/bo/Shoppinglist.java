@@ -22,7 +22,7 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	/*
 	 * Fremdschlï¿½sselbeziehung zur Gruppe, in welcher sich die Einkaufsliste befindet
 	 */
-	private int groupId = 1;
+	private int groupId;
 	
 	/*
 	 * Default-Konstruktor
@@ -39,7 +39,7 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	}
 	
 	/**
-	 * Konstruktor zum befüllen des CellTables
+	 * Konstruktor zum befï¿½llen des CellTables
 	 */
 	public Shoppinglist(String name, ArrayList <Listitem>listitems) {
 		super(name);

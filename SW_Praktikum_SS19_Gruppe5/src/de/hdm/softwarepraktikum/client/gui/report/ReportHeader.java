@@ -16,7 +16,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * fuer den Editor, einen fuer den ReportGenerator, einen fuer den Logout und
  * den Namen der Anwendung.
  * 
- * @author Felix Rapp
+ * @author FelixRapp & CarlaHofmann
  *
  */
 public class ReportHeader extends HorizontalPanel {
@@ -64,6 +64,7 @@ public class ReportHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			Window.alert(CurrentUser.getUser().getName() + " loggt sich jetzt aus.");
 			Window.open(user.getLogoutUrl(), "_self", "");
 
 		}

@@ -69,7 +69,8 @@ public class RegistrationForm extends VerticalPanel{
 		public void onClick(ClickEvent event) {
 			String userName = lastNameTextBox.getText()+" "+firstNameTextBox.getText();
 			user.setName(userName);
-			shoppinglistAdministration.save(user, new SaveUserCallback());
+			shoppinglistAdministration.createUser(userName, user.getGmailAddress(), new SaveUserCallback());
+			Window.alert(user.getGmailAddress());
 		}
 		
 	}
@@ -132,7 +133,7 @@ public class RegistrationForm extends VerticalPanel{
 		
 	}
 	
-	private class SaveUserCallback implements AsyncCallback<Void>{
+	private class SaveUserCallback implements AsyncCallback<User>{
 		
 		@Override
 		public void onFailure(Throwable caught) {
@@ -140,7 +141,7 @@ public class RegistrationForm extends VerticalPanel{
 		}
 
 		@Override
-		public void onSuccess(Void u) {
+		public void onSuccess(User u) {
 		Window.open(destinationUrl.getHref(), "_self", "");
 
 		}			

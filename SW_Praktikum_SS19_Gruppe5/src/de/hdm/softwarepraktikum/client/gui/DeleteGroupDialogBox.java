@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -80,6 +81,11 @@ public class DeleteGroupDialogBox extends DialogBox{
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				shoppinglistAdministration.delete(selectedGroup, new DeleteGroupCallback(selectedGroup));
+				RootPanel.get("aside").clear();
+				RootPanel.get("main").clear();
+
+				NavigatorPanel np = new NavigatorPanel();
+				RootPanel.get("aside").add(np);
 				DeleteGroupDialogBox.this.hide();
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");

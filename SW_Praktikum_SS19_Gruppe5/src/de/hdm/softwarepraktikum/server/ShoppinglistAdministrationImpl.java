@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.softwarepraktikum.server.db.*;
@@ -203,7 +204,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		return this.groupMapper.findById(shoppinglist.getGroupId());
+//		return this.groupMapper.findById(shoppinglist.getGroupId());
+		return this.groupMapper.getGroupOf(shoppinglist);
 	}
 	
 	/**
@@ -248,7 +250,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException {
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException {
 		
 		Listitem li = new Listitem(amount, listitemUnit);
 		// Fremdschluessel zum Retailer wird auf default-Wert 1 gesetzt.
@@ -258,7 +260,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setShoppinglistID(shoppinglist.getId());
 		
 		// Fremdschluessel zur Gruppe wird gesetzt.
-		li.setGroupID(shoppinglist.getGroupId());
+		li.setGroupID(group.getId());
 		
 		// Fremdschluessel zur ListitemUnit wird gesetzt
 		li.setListitemUnitID(listitemUnit.getId());
@@ -286,7 +288,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Listitem createListitem(Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit,
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit,
 			Retailer retailer) throws IllegalArgumentException {
 		
 		//Listitem mit den uebergebenen Parametern wird erstellt.
@@ -296,7 +298,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setShoppinglistID(shoppinglist.getId());
 				
 		// Fremdschluessel zur Gruppe wird gesetzt.
-		li.setGroupID(shoppinglist.getGroupId());
+		li.setGroupID(group.getId());
 		
 		// Fremdschluessel zur ListitemUnit wird gesetzt
 		li.setListitemUnitID(listitemUnit.getId());	
@@ -359,6 +361,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		ArrayList<Listitem> list = new ArrayList<Listitem>();
+		if(shoppinglist == null) {
+			return list;
+			
+		}
 		return this.listitemMapper.getListitemsOf(shoppinglist);
 	}
 	
@@ -447,6 +454,20 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.productMapper.findById(listitem.getProductID()).getName();
 	}
 	
+	/**
+	 * Archivieren einer Menge von Listitem-Objekten.
+	 * @param listitems sind die Listitems, welche archiviert werden sollen.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void archiveListitems(ArrayList<Listitem> listitems) throws IllegalArgumentException {
+		
+		for(Listitem l : listitems) {
+			l.setArchived(true);
+			this.save(l);
+		}
+	}
+
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
@@ -476,6 +497,15 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.productMapper.findById(listitem.getProductID());
 	}
 	
+	/**
+	 * Speichern eines Product-Objekts in der Datenbank
+	 * @param product ist das Product-Objekt, welches in der Datenbank gespeichert werden soll.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void save(Product product) throws IllegalArgumentException {
+		this.productMapper.update(product);
+	}
 	
 /**
  * **********************************************************************************
@@ -564,6 +594,27 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
+	 * Ausgabe aller schon zugewiesenen Retailer.
+	 */
+	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.retailerMapper.getAssignedRetailersOf(shoppinglist);
+	}
+	
+	/**
+	 * Ausgabe aller Händler- und Nutzernamen Zuweisungen in einer <code>Shoppinglist</code>
+	 */
+	public Map<String, String> getUserRetailerAllocation(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.retailerMapper.getAllocationsOf(shoppinglist);
+	}
+	
+	/**
+	 * Ausgabe des zugewiesenen Nutzers.
+	 */
+	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) {
+		return this.retailerMapper.getAssigndUserOf(shoppinglist, retailer);
+	}
+	
+	/**
 	 * Ein Retailer-Objekt wird einem Listitem als Beschaffungsort zugewiesen
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param listitem ist der Eintrag, welchem der Retailer zugeordnet wird
@@ -575,6 +626,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		this.save(listitem);
 	}
 	
+	/**
+	 * Eine Zuweisung wird gel�scht.
+	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
+	 * @param user ist der User, dessen Zuweisung gel�scht werden soll.
+	 * @param shoppinglist ist die Shoppinglist, innerhalb 
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException{
+		retailerMapper.deleteResponsibility(retailer, shoppinglist);
+	}
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Shoppinglist-Objekte
@@ -597,7 +659,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		sl.setGroupId(group.getId());
 		
 		//Um die korrekte (mit der Datenbank konsistente) Id zu erhalten, muss erst die insert-Methode aufgerufen werden.
-		Shoppinglist shoppl =  this.shoppinglistMapper.insert(sl);
+		this.shoppinglistMapper.insert(sl);
 		
 //		//Alle Standardeintraege der Gruppe werden zwischengespeichert.
 //		ArrayList<Listitem> standard = this.listitemMapper.getStandardListitemsOf(group);
@@ -617,7 +679,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 //				this.createListitem(shoppl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l));
 //			}
 //		}
-		return shoppl;
+		return sl;
 	}
 	
 	/**
@@ -715,7 +777,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(User user) throws IllegalArgumentException {
-		this.userMapper.insert(user);
+		this.userMapper.update(user);
 	}
 	
 	/**
@@ -797,8 +859,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
-		this.retailerMapper.insertResponsibility(user.getId(), retailer.getId(), shoppinglist.getId());
-		}
+		this.retailerMapper.insertResponsibility(retailer.getId(), user.getId(), shoppinglist.getId());
+	}
+	
+	
+	
+	
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
@@ -944,6 +1010,11 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return null;
 	}
 
+
+	
+
+
+	
 
 
 }

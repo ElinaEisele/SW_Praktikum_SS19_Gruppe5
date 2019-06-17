@@ -2,14 +2,15 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
@@ -26,6 +27,8 @@ public class ListitemHeader extends HorizontalPanel {
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 	private ListitemShowForm listitemShowForm;
 	private Listitem listitemToDisplay = null;
+	private Shoppinglist shoppinglistToDisplay;
+	private Group selectedGroup = null;
 
 	private Label listitemHeaderLabel;
 
@@ -35,25 +38,13 @@ public class ListitemHeader extends HorizontalPanel {
 
 	public ListitemHeader() {
 
-		Listitem l = new Listitem();
-		listitemToDisplay = l;
-
 		listitemHeaderLabel = new Label("Listitem Header");
-		// listitemHeaderLabel.setText(listitemToDisplay.getName());
 		listitemHeaderLabel.setText("Listitem  Tets");
 		listitemHeaderLabel.setStyleName("ListLabel");
 		deleteListitem = new Button("Eintrag loeschen");
 
 		setStandard = new Button("Standardartikel");
 		removeStandard = new Button("Nicht mehr Standardartikel");
-
-		if (listitemToDisplay.isStandard() == true) {
-			removeStandard.setEnabled(false);
-			removeStandard.setEnabled(true);
-		} else {
-			removeStandard.setEnabled(true);
-			removeStandard.setEnabled(false);
-		}
 
 		Image deleteListitemImg = new Image();
 		deleteListitemImg.setUrl("images/deleteListitemImg.png");
@@ -79,12 +70,30 @@ public class ListitemHeader extends HorizontalPanel {
 	}
 
 	public void onLoad() {
+		
+		shoppinglistAdministration.getProductnameOf(listitemToDisplay, new ProductNameAsyncCallback());
 
+		if (listitemToDisplay.isStandard() == true) {
+		removeStandard.setEnabled(false);
+		removeStandard.setEnabled(true);
+	} else {
+		removeStandard.setEnabled(true);
+		removeStandard.setEnabled(false);
+	}
+		
 		this.add(listitemHeaderLabel);
 		this.add(deleteListitem);
 		this.add(setStandard);
 		this.add(removeStandard);
 
+	}
+
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
 	}
 
 	public ListitemShowForm getListitemShowForm() {
@@ -95,11 +104,36 @@ public class ListitemHeader extends HorizontalPanel {
 		this.listitemShowForm = listitemShowForm;
 	}
 
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
+
+	public Listitem getListitemToDisplay() {
+		return listitemToDisplay;
+	}
+
+	public void setListitemToDisplay(Listitem listitemToDisplay) {
+		this.listitemToDisplay = listitemToDisplay;
+	}
+	
+	public Shoppinglist getShoppinglistToDisplay() {
+		return shoppinglistToDisplay;
+	}
+
+	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
+		this.shoppinglistToDisplay = shoppinglistToDisplay;
+	}
+
 	/**
 	 * ***************************************************************************
 	 * Abschnitt der ClickHandler
 	 * ***************************************************************************
 	 */
+
 
 	/**
 	 * ClickHandler dient dem Aufruf der <code>DeleteListitemDialogBox</code>.
@@ -110,6 +144,9 @@ public class ListitemHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (listitemToDisplay != null) {
 				DeleteListitemDialogBox dldb = new DeleteListitemDialogBox();
+				dldb.setSelectedListitem(listitemToDisplay);
+				dldb.setSelectedShoppinglist(shoppinglistToDisplay);
+				dldb.setSelectedGroup(selectedGroup);
 				dldb.show();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
@@ -150,6 +187,22 @@ public class ListitemHeader extends HorizontalPanel {
 			}
 		}
 
+	}
+	
+	private class ProductNameAsyncCallback implements AsyncCallback<String>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(String result) {
+			listitemHeaderLabel.setText(result);
+			
+		}
+		
 	}
 
 }

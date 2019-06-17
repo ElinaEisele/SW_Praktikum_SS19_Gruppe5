@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -51,11 +52,10 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
+	 * angeordnet, dessen Grï¿½ï¿½e sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
 	public AssignUserToRetailerForm() {
-
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
@@ -86,21 +86,29 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		actionButtonsPanel.add(discardButton);
 
 		mainPanel.add(assignUserToRetailerGrid);
-		/**
-		 * Zum Befüllen der Dropdown-Liste mit <code>User</code> Namen.
-		 */
-		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
 
+	}
+
+	public void onLoad() {		
+		
+		groupToDisplay = shoppinglistHeader.getGroupToDisplay();
+		
 		/**
-		 * Befüllen der Dropdown-Liste mit <code>Retailer</code> Namen.
+		 * Befï¿½llen der Dropdown-Liste mit <code>Retailer</code> Namen.
 		 */
 		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
-		// shoppinglistAdministration.getRetailersOf(shoppinglist, callback);
-	}
-
-	public void onLoad() {
+		
+		/**
+		 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code> Namen.
+		 */
+		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUsersOfGroupCallback());
+	
 		RootPanel.get("main").add(mainPanel);
+
 	}
+	
+	
+	
 
 	public ShoppinglistHeader getShoppinglistHeader() {
 		return shoppinglistHeader;
@@ -117,7 +125,6 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
 		this.gstvm = gstvm;
 	}
-	
 
 	public Shoppinglist getShoppinglistToDisplay() {
 		return shoppinglistToDisplay;
@@ -127,9 +134,16 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		this.shoppinglistToDisplay = shoppinglistToDisplay;
 	}
 
+	public Group getGroupToDisplay() {
+		return groupToDisplay;
+	}
+
+	public void setGroupToDisplay(Group groupToDisplay) {
+		this.groupToDisplay = groupToDisplay;
+	}
 
 	/**
-	 * Zum Befüllen der Dropdown-Liste mit <code>User</code> Namen.
+	 * Zum Befï¿½llen der Dropdown-Liste mit <code>User</code> Namen.
 	 */
 	private class GetAllUsersOfGroupCallback implements AsyncCallback<ArrayList<User>> {
 
@@ -140,17 +154,20 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<User> userArrayList) {
-			for (int i = 0; i < userArrayList.size(); i++) {
-				userListBox.addItem(userArrayList.get(i).getName());
-				selectedUser = userArrayList.get(0);
+		public void onSuccess(ArrayList<User> result) {
+			
+			userArrayList = result;
+			
+			for (int i = 0; i < result.size(); i++) {
+				userListBox.addItem(result.get(i).getName());
+				selectedUser = result.get(0);
 			}
 		}
 
 	}
 
 	/**
-	 * Befüllen der Dropdown-Liste mit <code>Retailer</code> Namen.
+	 * Befï¿½llen der Dropdown-Liste mit <code>Retailer</code> Namen.
 	 */
 	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
 
@@ -161,28 +178,30 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 		}
 
 		@Override
-		public void onSuccess(ArrayList<Retailer> retailerArrayList) {
-			for (int i = 0; i < retailerArrayList.size(); i++) {
-				retailerListBox.addItem(retailerArrayList.get(i).getName());
-				selectedRetailer = retailerArrayList.get(0);
+		public void onSuccess(ArrayList<Retailer> result) {
+			retailerArrayList = result;
+			for (int i = 0; i < result.size(); i++) {
+				retailerListBox.addItem(result.get(i).getName());
+				selectedRetailer = result.get(0);
 			}
 		}
 	}
 
 	/**
 	 * ChangeHandler zum erkennen welches <code>User</code> Objekt der
-	 * Dropdown-Liste ausgewählt wurde und dieses selectedUser zuordnen.
+	 * Dropdown-Liste ausgewï¿½hlt wurde und dieses selectedUser zuordnen.
 	 */
 	private class UserListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
 			int item = userListBox.getSelectedIndex();
 			selectedUser = userArrayList.get(item);
+
 		}
 	}
 
 	/**
 	 * ChangeHandler zum erkennen welches <code>Retailer</code> Objekt der
-	 * Dropdown-Liste ausgewählt wurde und dieses selectedRetailer zuordnen .
+	 * Dropdown-Liste ausgewï¿½hlt wurde und dieses selectedRetailer zuordnen .
 	 */
 	private class RetailerListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
@@ -192,7 +211,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 	}
 
 	/**
-	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zur
+	 * Clickhandler zum verwerfen der Eingaben und zur Rï¿½ckkehr zur
 	 * ShoppinglistShowForm.
 	 * 
 	 */
@@ -203,6 +222,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 			RootPanel.get("main").clear();
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(groupToDisplay);
 			RootPanel.get("main").add(ssf);
 		}
 
@@ -220,6 +240,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 				User user = selectedUser;
 				Retailer retailer = selectedRetailer;
+				
 
 				shoppinglistAdministration.assignUser(user, retailer, shoppinglistToDisplay,
 						new CreateAllocationCallback());
@@ -232,7 +253,7 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 	/**
 	 * Nach dem erfolgreichen Erstellen der Zuweisung wird das Formular geschlossen
-	 * und die aktuell ausgewählte Shoppinglist erneut geöffnet.
+	 * und die aktuell ausgewï¿½hlte Shoppinglist erneut geï¿½ffnet.
 	 * 
 	 */
 	private class CreateAllocationCallback implements AsyncCallback<Void> {
@@ -247,6 +268,10 @@ public class AssignUserToRetailerForm extends HorizontalPanel {
 
 			RootPanel.get("main").clear();
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(groupToDisplay);
+			Window.alert(shoppinglistToDisplay.getName());
+			Window.alert(groupToDisplay.getName());
 			RootPanel.get("main").add(ssf);
 		}
 	}
