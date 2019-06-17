@@ -58,6 +58,8 @@ public class ShoppinglistCellTable extends VerticalPanel {
 	private String retailerName = null;
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<>();
+	private ArrayList<Listitem> listitems = new ArrayList<>();
+
 	private Button archive;
 	private final MultiSelectionModel<Listitem> selectionModel = new MultiSelectionModel<Listitem>();
 
@@ -217,6 +219,45 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
+		 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
+		 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
+		 * 
+		 */
+		Column<Listitem, String> standardColumn = new Column<Listitem, String>(new ClickableTextCell() {
+			public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
+				sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+			}
+
+		})
+
+		{
+			@Override
+			public String getValue(Listitem object) {
+
+				if (object.isStandard() == true) {
+					return "like (1).png";
+				} else {
+					return "like.png";
+				}
+
+			}
+
+			public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
+				super.onBrowserEvent(context, elem, object, event);
+				if ("click".equals(event.getType())) {
+
+					if (object.isStandard() == true) {
+						shoppinglistAdministration.setStandardListitem(object, selectedGroup, false,
+								new UnselectStandardCallback());
+					} else if (object.isStandard() != true) {
+						shoppinglistAdministration.setStandardListitem(object, selectedGroup, true,
+								new SetStandardCallback());
+					}
+				}
+			}
+		};
+
+		/**
 		 * Add Columns to CellTable
 		 * 
 		 */
@@ -226,6 +267,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(unitNameToDisplay, "Einheit");
 		table.addColumn(retailerNameToDisplay, "Haendler");
 		table.addColumn(imageColumn, "Edit");
+		table.addColumn(standardColumn, "Standard");
 
 	}
 
@@ -236,27 +278,39 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		 * success method
 		 * 
 		 */
-		shoppinglistAdministration.getListitemsOf(shoppinglistShowForm.getSelectedShoppinglist(),
-				new AsyncCallback<ArrayList<Listitem>>() {
+		shoppinglistAdministration.getStandardListitemsOf(selectedGroup, new AsyncCallback<ArrayList<Listitem>>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						Notification.show("Das Laden der Eintraege ist fehlgeschlagen");
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
 
-					}
+			}
 
-					@Override
-					public void onSuccess(ArrayList<Listitem> result) {
+			@Override
+			public void onSuccess(ArrayList<Listitem> result) {
+				listitems.addAll(result);
+				shoppinglistAdministration.getListitemsOf(shoppinglistShowForm.getSelectedShoppinglist(),
+						new AsyncCallback<ArrayList<Listitem>>() {
 
-						// Set the total row count
-						table.setRowCount(result.size(), true);
-						// Push the data into the widget.
-						table.setRowData(0, result);
-						result.clear();
+							@Override
+							public void onFailure(Throwable caught) {
+								Notification.show("Das Laden der Eintraege ist fehlgeschlagen");
 
-					}
-				});
+							}
 
+							@Override
+							public void onSuccess(ArrayList<Listitem> result) {
+								listitems.addAll(result);
+								// Set the total row count
+								table.setRowCount(listitems.size(), true);
+								// Push the data into the widget.
+								table.setRowData(0, listitems);
+								listitems.clear();
+
+							}
+						});
+			}
+		});
 
 		this.add(table);
 		this.add(archive);
@@ -306,6 +360,57 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		}
 	}
 
+	private class UnselectStandardCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Nicht mehr standard");
+			RootPanel.get("main").clear();
+
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(selectedGroup);
+//			ssf.setGstvm(gstvm);
+//			gstvm.setSelectedGroup(null);
+//			gstvm.setSelectedShoppinglist(object);
+
+			RootPanel.get("main").add(ssf);
+
+		}
+
+	}
+
+	private class SetStandardCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("standard");
+			RootPanel.get("main").clear();
+
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(selectedGroup);
+//			ssf.setGstvm(gstvm);
+//			gstvm.setSelectedGroup(null);
+//			gstvm.setSelectedShoppinglist(object);
+
+			RootPanel.get("main").add(ssf);
+
+		}
+
+	}
 
 	private class ArchiveClickHandler implements ClickHandler {
 
