@@ -90,8 +90,10 @@ public class GroupShowForm extends VerticalPanel {
 
 		groupCellTable.setSelected(selectedGroup);
 		groupCellTable.setGstvm(gstvm);
-		groupHeader.setSelected(selectedGroup);
 		groupCellTable.setGroupShowForm(GroupShowForm.this);
+
+		groupHeader.setSelected(selectedGroup);
+		groupHeader.setGstvm(gstvm);
 		groupHeader.setGroupShowForm(GroupShowForm.this);
 
 		this.add(groupHeader);
