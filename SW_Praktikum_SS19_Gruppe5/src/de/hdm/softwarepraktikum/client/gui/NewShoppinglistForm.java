@@ -139,6 +139,8 @@ public class NewShoppinglistForm extends VerticalPanel {
 			selectedShoppinglist = result;
 			RootPanel.get("main").clear();
 
+			shoppinglistShowForm.setSelected(result);
+
 			RootPanel.get("main").add(shoppinglistShowForm);
 			
 			
