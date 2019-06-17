@@ -196,78 +196,71 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		})
 
 		{
-			@Override
-			public String getValue(Listitem object) {
-				return "edit.png";
+
+	@Override
+	public String getValue(Listitem object) {
+		return "edit.png";
+	}
+
+	public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
+		super.onBrowserEvent(context, elem, object, event);
+		if ("click".equals(event.getType())) {
+
+			RootPanel.get("main").clear();
+			listitemToDisplay = object;
+
+			ListitemShowForm lsf = new ListitemShowForm();
+			lsf.setSelected(object);
+			lsf.setSelectedShoppinglist(shoppinglistToDisplay);
+			lsf.setSelectedGroup(selectedGroup);
+
+			RootPanel.get("main").add(lsf);
+		}
+	}};
+
+	/**
+	 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
+	 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
+	 * 
+	 */
+	Column<Listitem, String> standardColumn=new Column<Listitem,String>(new ClickableTextCell(){public void render(Context context,SafeHtml value,SafeHtmlBuilder sb){sb.appendHtmlConstant("<img width=\"20\" src=\"images/"+value.asString()+"\">");}
+
+	})
+
+	{
+
+	@Override
+	public String getValue(Listitem object) {
+Window.alert(""+object.isStandard());
+		if (object.isStandard() == true) {
+			return "like (1).png";
+		} else {
+			return "like.png";
+		}
+
+	}
+	
+
+	public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
+		super.onBrowserEvent(context, elem, object, event);
+		if ("click".equals(event.getType())) {
+
+			if (object.isStandard() == true) {
+				shoppinglistAdministration.setStandardListitem(object, selectedGroup, false,
+						new UnselectStandardCallback());
+			} else if (object.isStandard() != true) {
+				shoppinglistAdministration.setStandardListitem(object, selectedGroup, true, new SetStandardCallback());
 			}
+		}
+	}
 
-			public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
-				super.onBrowserEvent(context, elem, object, event);
-				if ("click".equals(event.getType())) {
+	};
 
-					RootPanel.get("main").clear();
-					listitemToDisplay = object;
-
-					ListitemShowForm lsf = new ListitemShowForm();
-					lsf.setSelected(object);
-					lsf.setSelectedShoppinglist(shoppinglistToDisplay);
-					lsf.setSelectedGroup(selectedGroup);
-
-					RootPanel.get("main").add(lsf);
-				}
-			}
-		};
-
-		/**
-		 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
-		 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
-		 * 
-		 */
-		Column<Listitem, String> standardColumn = new Column<Listitem, String>(new ClickableTextCell() {
-			public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
-				sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
-			}
-
-		})
-
-		{
-			@Override
-			public String getValue(Listitem object) {
-
-				if (object.isStandard() == true) {
-					return "like (1).png";
-				} else {
-					return "like.png";
-				}
-
-			}
-
-			public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
-				super.onBrowserEvent(context, elem, object, event);
-				if ("click".equals(event.getType())) {
-
-					if (object.isStandard() == true) {
-						shoppinglistAdministration.setStandardListitem(object, selectedGroup, false,
-								new UnselectStandardCallback());
-					} else if (object.isStandard() != true) {
-						shoppinglistAdministration.setStandardListitem(object, selectedGroup, true,
-								new SetStandardCallback());
-					}
-				}
-			}
-		};
-
-		/**
-		 * Add Columns to CellTable
-		 * 
-		 */
-		table.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
-		table.addColumn(productNameToDisplay, "Produkt");
-		table.addColumn(amountToDisplay, "Menge");
-		table.addColumn(unitNameToDisplay, "Einheit");
-		table.addColumn(retailerNameToDisplay, "Haendler");
-		table.addColumn(imageColumn, "Edit");
-		table.addColumn(standardColumn, "Standard");
+	/**
+	 * Add Columns to CellTable
+	 * 
+	 */
+	table.addColumn(checkColumn,SafeHtmlUtils.fromSafeConstant("<br/>"));table.addColumn(productNameToDisplay,"Produkt");table.addColumn(amountToDisplay,"Menge");table.addColumn(unitNameToDisplay,"Einheit");table.addColumn(retailerNameToDisplay,"Haendler");table.addColumn(imageColumn,"Edit");table.addColumn(standardColumn,"Standard");
 
 	}
 
@@ -278,42 +271,28 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		 * success method
 		 * 
 		 */
-		shoppinglistAdministration.getStandardListitemsOf(selectedGroup, new AsyncCallback<ArrayList<Listitem>>() {
+		shoppinglistAdministration.getListitemsOf(shoppinglistShowForm.getSelectedShoppinglist(),
+				new AsyncCallback<ArrayList<Listitem>>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
+					@Override
+					public void onFailure(Throwable caught) {
+						Notification.show("Das Laden der Eintraege ist fehlgeschlagen");
 
-			}
+					}
 
-			@Override
-			public void onSuccess(ArrayList<Listitem> result) {
-				listitems.addAll(result);
-				shoppinglistAdministration.getListitemsOf(shoppinglistShowForm.getSelectedShoppinglist(),
-						new AsyncCallback<ArrayList<Listitem>>() {
+					@Override
+					public void onSuccess(ArrayList<Listitem> result) {
+						
+						// Set the total row count
+						table.setRowCount(result.size(), true);
+						// Push the data into the widget.
+						table.setRowData(0, result);
+//						result.clear();
+					}
+				});
 
-							@Override
-							public void onFailure(Throwable caught) {
-								Notification.show("Das Laden der Eintraege ist fehlgeschlagen");
-
-							}
-
-							@Override
-							public void onSuccess(ArrayList<Listitem> result) {
-								listitems.addAll(result);
-								// Set the total row count
-								table.setRowCount(listitems.size(), true);
-								// Push the data into the widget.
-								table.setRowData(0, listitems);
-								listitems.clear();
-
-							}
-						});
-			}
-		});
-
-		this.add(table);
-		this.add(archive);
+	this.add(table);
+	this.add(archive);
 
 	}
 
@@ -376,9 +355,6 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(selectedGroup);
-//			ssf.setGstvm(gstvm);
-//			gstvm.setSelectedGroup(null);
-//			gstvm.setSelectedShoppinglist(object);
 
 			RootPanel.get("main").add(ssf);
 
@@ -402,9 +378,6 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(selectedGroup);
-//			ssf.setGstvm(gstvm);
-//			gstvm.setSelectedGroup(null);
-//			gstvm.setSelectedShoppinglist(object);
 
 			RootPanel.get("main").add(ssf);
 

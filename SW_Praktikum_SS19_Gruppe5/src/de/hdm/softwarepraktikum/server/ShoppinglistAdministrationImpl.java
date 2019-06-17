@@ -278,6 +278,48 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
+	 * Ein Listitem anlegen ohne Retailer mit standard-Attribut
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+ 	 * @param standard ist der boolean-Wert, welcher festlegt, ob ein Listitem ein Standard-Listitem ist.
+	 * @param listitemUnit Mengeneinheit 
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, boolean standard) throws IllegalArgumentException {
+		
+		Listitem li = new Listitem(amount, listitemUnit);
+		// Fremdschluessel zum Retailer wird auf default-Wert 1 gesetzt.
+		li.setRetailerID(1);
+		
+		// Fremdschluessel zur Shoppinglist wird gesetzt.
+		li.setShoppinglistID(shoppinglist.getId());
+		
+		// Fremdschluessel zur Gruppe wird gesetzt.
+		li.setGroupID(group.getId());
+		
+		// Fremdschluessel zur ListitemUnit wird gesetzt
+		li.setListitemUnitID(listitemUnit.getId());
+		
+		//Boolean-Wert fuer Standard-Attribut wird gesetzt.
+		li.setStandard(standard);
+		
+		/**
+		 * Nach dem createProduct()-Aufruf erhaelt das Produkt die ID welche mit der Datenbank konsistent ist.
+		 * Somit kann die Fremdschluesselbeziehung vom Listitem zum Product gesetzt werden.
+		 */
+		Product p = this.createProduct(productname);
+		
+		li.setProductID(p.getId());;
+
+		//In der Insert-Methode erhaelt das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
+		return this.listitemMapper.insert(li);
+	}
+	
+	
+	/**
 	 * Ein Listitem anlegen mit Retailer
 	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
 	 * @param productname Bezeichneung des zu beschaffenden Artikels
@@ -305,6 +347,48 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
 		this.assignRetailer(retailer, li);
+		
+		//Enthaltenes Product-Objekt wird erstellt und erhaelt ID, welche mit der Datenbank konsistent ist.
+		Product p = this.createProduct(productname);
+		
+		//Fremdschluessel vom Listitem zum Product wird gesetzt.
+		li.setProductID(p.getId());
+		
+		return this.listitemMapper.insert(li);
+	}
+	
+	/**
+	 * Ein Listitem anlegen mit Retailer mit Standard-Attribut
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param listitemUnit Mengeneinheit 
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist.
+	 * @param standard ist der boolean-Wert, welcher festlegt, ob ein Listitem ein Standard-Listitem ist.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit,
+			Retailer retailer, boolean standard) throws IllegalArgumentException {
+		
+		//Listitem mit den uebergebenen Parametern wird erstellt.
+		Listitem li = new Listitem(amount, listitemUnit);
+		
+		// Fremdschluessel zur Shoppinglist wird gesetzt.
+		li.setShoppinglistID(shoppinglist.getId());
+				
+		// Fremdschluessel zur Gruppe wird gesetzt.
+		li.setGroupID(group.getId());
+		
+		// Fremdschluessel zur ListitemUnit wird gesetzt
+		li.setListitemUnitID(listitemUnit.getId());	
+		
+		//Fremdschluessel zum Retailer-Objekt wird gesetzt.
+		this.assignRetailer(retailer, li);
+		
+		//Boolean-Wert fuer Standard-Attribut wird gesetzt.
+		li.setStandard(standard);
 		
 		//Enthaltenes Product-Objekt wird erstellt und erhaelt ID, welche mit der Datenbank konsistent ist.
 		Product p = this.createProduct(productname);
@@ -665,19 +749,30 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Alle Standardeintraege der Gruppe werden zwischengespeichert.
 		ArrayList<Listitem> standard = this.listitemMapper.getStandardListitemsOf(group);
 		
+		
 		//Neue Listitem-Objekte mit der Fremdschluesselbeziehung zur neuen Shoppinglist werden erstellt.
 		for(Listitem l : standard) {
-			/*
-			 * ueberpruefen, ob das Listitem einem Retailer zugewiesen wurde. Damit wird entschieden, welche createListitem() aufgerufen wird.
-			 * Hierbei muss beachtet werden, dass die ReatilerId "1" der Default-Wert ist.
-			 */
-			if(this.getRetailerOf(l).getId() != 1) {
-				//Erstellen eines Listitems MIT Retailer.
-				this.createListitem(group, sl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l));
+			ArrayList<Listitem> alreadyInSl = this.getListitemsOf(sl);
+			
+			if(!alreadyInSl.isEmpty()) {
+				boolean isThere = true;
+				for(Listitem li : alreadyInSl) {
+					//Große IF-Abfrage
+					if(this.getAmountOf(l) == this.getAmountOf(li) && this.getRetailerOf(l).getId() == this.getRetailerOf(li).getId() 
+							&& l.getListitemUnitID() == li.getListitemUnitID() && this.getProductnameOf(l).equals(this.getProductnameOf(li))) {
+						isThere = false;
+					}
+					
+				}
+				if(isThere) {
+					this.createListitem(group, sl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l), true);
+					System.out.println(this.getProductnameOf(l) +" wurde erstellt.");
+				}
 			}
+			
 			else {
-				//Erstellen eines Listitems OHNE Retailer.
-				this.createListitem(group, sl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l));
+				// Was wenn noch nichts im already-Array ist
+				this.createListitem(group, sl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l), true);
 			}
 		}
 		return sl;
