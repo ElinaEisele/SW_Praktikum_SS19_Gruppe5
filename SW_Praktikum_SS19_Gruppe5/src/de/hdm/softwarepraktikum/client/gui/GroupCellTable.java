@@ -75,18 +75,25 @@ public class GroupCellTable extends VerticalPanel {
 			public void onBrowserEvent(Context context, Element elem, Shoppinglist object, NativeEvent event) {
 				super.onBrowserEvent(context, elem, object, event);
 				if ("click".equals(event.getType())) {
+					
+					Window.alert("GCT: " + object.getName());
+					if (gstvm == null) {
+						Window.alert("GCT: gstvm ist null ");
 
-					RootPanel.get("main").clear();
+					}
 
-					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+//					RootPanel.get("main").clear();
+					
+//					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 //					ssf.setGstvm(gstvm);
 //					gstvm.setSelectedGroup(null);
-//					gstvm.setSelectedShoppinglist(object);
+					gstvm.setSelectedShoppinglist(object);
+					gstvm.getSelectionModel().setSelected(object, true);
+					
+//					ssf.setSelected(object);
+//					ssf.setSelectedGroup(groupToDisplay);
 
-					ssf.setSelected(object);
-					ssf.setSelectedGroup(groupToDisplay);
-
-					RootPanel.get("main").add(ssf);
+//					RootPanel.get("main").add(ssf);
 
 				}
 			}
@@ -116,6 +123,14 @@ public class GroupCellTable extends VerticalPanel {
 
 	public void setGroupShowForm(GroupShowForm groupShowForm) {
 		this.groupShowForm = groupShowForm;
+	}
+
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
 	}
 
 	/**

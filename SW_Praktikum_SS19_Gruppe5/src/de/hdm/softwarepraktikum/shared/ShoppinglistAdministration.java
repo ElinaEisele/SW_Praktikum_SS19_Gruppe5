@@ -305,11 +305,28 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Retailer> getRetailersOf(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
 	
 	/**
+	 * Ausgabe aller schon zugewiesenen Retailer.
+	 */
+	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe aller Händler-Nutzer Zuweisungen in einer <code>Shoppinglist</code>
+	 */
+	public Map<String, String> getUserRetailerAllocation(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Ausgabe des zugewiesenen Nutzers.
+	 */
+	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
+
+	
+	/**
 	 * Ein Retailer-Objekt wird einem Listitem als Beschaffungsort zugewiesen
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param listitem ist der Eintrag, welchem der Retailer zugeordnet wird
 	 * @throws IllegalArgumentException
 	 */
+	
 	public void assignRetailer(Retailer retailer, Listitem listitem) throws IllegalArgumentException;
 	
 	/**
@@ -496,4 +513,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void archiveListitems(ArrayList<Listitem> listitems) throws IllegalArgumentException;
+	
+	/**
+	 * Eine Zuweisung wird gel�scht.
+	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
+	 * @param user ist der User, dessen Zuweisung gel�scht werden soll.
+	 * @param shoppinglist ist die Shoppinglist, innerhalb 
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
 }

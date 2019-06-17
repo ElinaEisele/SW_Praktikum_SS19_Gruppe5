@@ -594,6 +594,27 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
+	 * Ausgabe aller schon zugewiesenen Retailer.
+	 */
+	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.retailerMapper.getAssignedRetailersOf(shoppinglist);
+	}
+	
+	/**
+	 * Ausgabe aller Händler- und Nutzernamen Zuweisungen in einer <code>Shoppinglist</code>
+	 */
+	public Map<String, String> getUserRetailerAllocation(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.retailerMapper.getAllocationsOf(shoppinglist);
+	}
+	
+	/**
+	 * Ausgabe des zugewiesenen Nutzers.
+	 */
+	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) {
+		return this.retailerMapper.getAssigndUserOf(shoppinglist, retailer);
+	}
+	
+	/**
 	 * Ein Retailer-Objekt wird einem Listitem als Beschaffungsort zugewiesen
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param listitem ist der Eintrag, welchem der Retailer zugeordnet wird
@@ -605,6 +626,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		this.save(listitem);
 	}
 	
+	/**
+	 * Eine Zuweisung wird gel�scht.
+	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
+	 * @param user ist der User, dessen Zuweisung gel�scht werden soll.
+	 * @param shoppinglist ist die Shoppinglist, innerhalb 
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException{
+		retailerMapper.deleteResponsibility(retailer, shoppinglist);
+	}
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Shoppinglist-Objekte
@@ -829,6 +861,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void assignUser(User user, Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException {
 		this.retailerMapper.insertResponsibility(retailer.getId(), user.getId(), shoppinglist.getId());
 	}
+	
+	
+	
+	
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen

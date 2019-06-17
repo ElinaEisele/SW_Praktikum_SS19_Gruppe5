@@ -1,5 +1,6 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -23,7 +24,7 @@ public class GroupShowForm extends VerticalPanel {
 	private VerticalPanel mainPanel = new VerticalPanel();
 
 	private Group selectedGroup = null;
-	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
+	private GroupShoppinglistTreeViewModel gstvm = null;
 
 	public GroupShowForm(GroupHeader gh, NewShoppinglistForm nsf) {
 		groupHeader = gh;
@@ -60,6 +61,7 @@ public class GroupShowForm extends VerticalPanel {
 
 	public GroupShowForm(GroupHeader gh, GroupCellTable gct) {
 		groupHeader = gh;
+		groupCellTable = gct;
 		mainPanel.add(gct);
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
@@ -75,6 +77,7 @@ public class GroupShowForm extends VerticalPanel {
 
 		groupHeader = new GroupHeader();
 		groupCellTable = new GroupCellTable();
+		groupCellTable.setGstvm(gstvm);
 
 		groupHeader.setStylePrimaryName("groupHeader");
 		mainPanel.setStylePrimaryName("groupShowFormMainPanel");
@@ -86,13 +89,14 @@ public class GroupShowForm extends VerticalPanel {
 	public void onLoad() {
 
 		groupCellTable.setSelected(selectedGroup);
+		groupCellTable.setGstvm(gstvm);
 		groupHeader.setSelected(selectedGroup);
 		groupCellTable.setGroupShowForm(GroupShowForm.this);
 		groupHeader.setGroupShowForm(GroupShowForm.this);
 
 		this.add(groupHeader);
 		this.add(mainPanel);
-
+		
 	}
 
 	public void setSelected(Group g) {
