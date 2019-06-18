@@ -26,4 +26,9 @@ public class Retailer extends NamedBusinessObject implements IsSerializable{
 	public Retailer(String retailername) {
 		super(retailername);
 	}
+	
+	public Retailer (int id, String retailername) {
+		super(retailername);
+		this.setId(id);
+	}
 }
