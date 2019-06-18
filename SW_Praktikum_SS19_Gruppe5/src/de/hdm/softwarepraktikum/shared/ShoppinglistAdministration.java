@@ -107,7 +107,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
 	 * @param listitemUnit Mengeneinheit 
 	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
-	 * @param standard ist der boolean-Wert, welcher festlegt, ob ein Listitem ein Standard-Listitem ist.
+	 * 	 * @param standard ist der boolean-Wert, welcher festlegt, ob ein Listitem ein Standard-Listitem ist.
 	 * @return fertiges Listitem-Objekt
 	 * @throws IllegalArgumentException
 	 */
@@ -537,6 +537,14 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void archiveListitems(ArrayList<Listitem> listitems) throws IllegalArgumentException;
+	
+	/**
+	 * Saemtliche archivierte Listitem-Objekte einer bestimmten Shoppinglist werden ausgegeben.
+	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen.
+	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste.
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Listitem> getArchivedListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Eine Zuweisung wird gel�scht.

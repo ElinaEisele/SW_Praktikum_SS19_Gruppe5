@@ -204,8 +204,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
-//		return this.groupMapper.findById(shoppinglist.getGroupId());
-		return this.groupMapper.getGroupOf(shoppinglist);
+		return this.getGroupById(shoppinglist.getGroupId());
 	}
 	
 	/**
@@ -536,7 +535,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public String getProductnameOf(Listitem listitem) throws IllegalArgumentException {
-		return this.productMapper.findById(listitem.getProductID()).getName();
+		return this.getProductOf(listitem).getName();
 	}
 	
 	/**
@@ -553,6 +552,35 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 	}
 
+	/**
+	 * Saemtliche archivierte Listitem-Objekte einer bestimmten Shoppinglist werden ausgegeben.
+	  @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen.
+	  @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste.
+	  @throws IllegalArgumentException
+	 */
+	 
+	@Override
+	public ArrayList<Listitem> getArchivedListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		ArrayList<Listitem> list = new ArrayList<Listitem>();
+		if(shoppinglist == null) {
+			return list;
+		}
+		
+		//Alle Listitems werden zwischengespeichert.
+		ArrayList<Listitem> shoppinglistListitems = this.getListitemsOf(shoppinglist);
+		
+		//In dieser ArrayList werden nur die Listitems der bestimmten Shoppinglist zwischengespeichert, welceh archiviert wurden.
+		ArrayList<Listitem> archivedListitems = new ArrayList<Listitem>();
+		for(Listitem l : shoppinglistListitems) {
+			//Fremdschluessenbeziehung ueberpruefen.
+			if(l.isArchived()) {
+				archivedListitems.add(l);
+			}
+		}
+		
+		return archivedListitems;
+	}
+	
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
