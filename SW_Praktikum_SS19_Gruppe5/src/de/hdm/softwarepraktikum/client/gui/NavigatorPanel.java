@@ -143,11 +143,12 @@ public class NavigatorPanel extends VerticalPanel {
 				NewGroupForm ngf = new NewGroupForm();
 				if (selectedGroup != null) {
 					ngf.setOldSelectedGroup(selectedGroup);
-					GroupShowForm gsf = new GroupShowForm(ngf);
-					gsf.setSelected(selectedGroup);
-										
-
 				}
+				GroupShowForm gsf = new GroupShowForm(ngf);
+				if (selectedGroup != null) {
+					gsf.setSelected(selectedGroup);
+}
+
 
 			}
 		}
