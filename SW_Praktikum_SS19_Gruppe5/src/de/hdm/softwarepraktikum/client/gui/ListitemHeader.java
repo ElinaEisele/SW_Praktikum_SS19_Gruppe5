@@ -164,6 +164,7 @@ public class ListitemHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (listitemToDisplay != null) {
 				StandardListitemOnDialogBox slondb = new StandardListitemOnDialogBox();
+				slondb.setSelectedListitem(listitemToDisplay);
 				slondb.show();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
@@ -181,6 +182,7 @@ public class ListitemHeader extends HorizontalPanel {
 		public void onClick(ClickEvent event) {
 			if (listitemToDisplay != null) {
 				StandardListitemOffDialogBox sloffdb = new StandardListitemOffDialogBox();
+				sloffdb.setSelectedListitem(listitemToDisplay);
 				sloffdb.show();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");

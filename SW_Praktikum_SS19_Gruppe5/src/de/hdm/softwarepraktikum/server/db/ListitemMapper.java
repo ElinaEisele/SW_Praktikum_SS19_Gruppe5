@@ -494,7 +494,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Methode, um die Standarteintr�ge einer Gruppe zu finden.
+	 * Methode, um die Standarteintraege einer Gruppe zu finden.
 	 * 
 	 * @param group
 	 * @return ArrayList<Listitem>
@@ -507,7 +507,7 @@ public class ListitemMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					+ "FROM lisitems INNER JOIN usergroups " 
+					+ "FROM listitems INNER JOIN usergroups " 
 					+ "ON listitems.usergroup_id = usergroups.id "
 					+ "WHERE usergroups.id = " + group.getId() 
 					+ " AND listitems.isStandard = " + true

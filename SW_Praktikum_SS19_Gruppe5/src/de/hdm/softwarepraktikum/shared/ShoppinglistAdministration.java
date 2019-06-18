@@ -89,6 +89,44 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
+	 * Ein Listitem anlegen ohne Retailer
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param listitemUnit Mengeneinheit 
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
+	
+	/**
+	 * Ein Listitem anlegen ohne Retailer
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param listitemUnit Mengeneinheit 
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
+	 * @param standard ist der boolean-Wert, welcher festlegt, ob ein Listitem ein Standard-Listitem ist.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, boolean standard) throws IllegalArgumentException;
+	
+	/**
+	 * Ein Listitem anlegen mit Retailer mit Standard-Attribut.
+	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
+	 * @param productname Bezeichneung des zu beschaffenden Artikels
+	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
+	 * @param listitemUnit Mengeneinheit 
+	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
+	 * @param standard ist der boolean-Wert, welcher festlegt, ob ein Listitem ein Standard-Listitem ist.
+	 * @return fertiges Listitem-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer, boolean standard) throws IllegalArgumentException;
+	
+	/**
 	 * Einen Retailer anlegen
 	 * @param name Name des Einzelhaendlers
 	 * @return fertiges Listitem-Objekt
@@ -419,20 +457,6 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public Product createProduct(String name) throws IllegalArgumentException;
 
-
-	/**
-	 * Ein Listitem anlegen ohne Retailer
-	 * @param shoppinglist Einkaufsliste, in welcher ein Eintrag erstellt werden soll
-	 * @param productname Bezeichneung des zu beschaffenden Artikels
-	 * @param amount Mengenangabe des Artikels bezogen auf die Mengeneinheit
-	 * @param listitemUnit Mengeneinheit 
-	 * @param retailer Einzelhaendler, bei welchem der Artikel zu beschaffen ist. Hier kann auch die Moeglichkeit "Noch nicht bekannt" ausgewaehlt werden.
-	 * @return fertiges Listitem-Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Listitem createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit) throws IllegalArgumentException;
-
-	
 	/**
 	 * Methode, welche den Namen des zugeordneten Produktes zurueckgibt.
 	 * @param listitem Eintrag von welchem der Produktname aufgerufen werden soll.
