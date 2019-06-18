@@ -165,6 +165,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		shoppinglistShowForm.setSelected(s);
 		navigatorPanel.setSelectedShoppinglist(s);
 		
+		
 		if (s != null) {
 
 			shoppinglistAdministration.getGroupOf(selectedShoppinglist, new AsyncCallback<Group>() {
@@ -180,7 +181,6 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 					shoppinglistShowForm.setSelectedGroup(selectedGroup);
 
 					RootPanel.get("main").add(shoppinglistShowForm);
-
 				}
 
 			});
