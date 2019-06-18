@@ -204,7 +204,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public Group getGroupOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
-		return this.getGroupById(shoppinglist.getGroupId());
+		return this.groupMapper.getGroupOf(shoppinglist));
 	}
 	
 	/**
@@ -379,6 +379,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				
 		// Fremdschluessel zur Gruppe wird gesetzt.
 		li.setGroupID(group.getId());
+		System.out.println("Neues Listitem. Gruppen-ID: " +group.getId());
 		
 		// Fremdschluessel zur ListitemUnit wird gesetzt
 		li.setListitemUnitID(listitemUnit.getId());	
@@ -793,12 +794,13 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		
 		//Neue Listitem-Objekte mit der Fremdschluesselbeziehung zur neuen Shoppinglist werden erstellt.
 		for(Listitem l : standard) {
-			
+			System.out.println("Standard vorhanden");
 			//Bei jeder Iteration werden alle Listitems der neuen Shoppinglist hinzugefuegt.
 			ArrayList<Listitem> alreadyInSl = this.getListitemsOf(sl);
 			
 			//Nachdem etwas in der Shoppingliste vorhanden ist muss geprueft werden ob bereits ein gleiches Listitem vorhanden ist.
 			if(!alreadyInSl.isEmpty()) {
+				System.out.println("IST NICHT LEER");
 				boolean isThere = true;
 				//Abfragen, ob bereits ein Listitem mit den selben Werten in der neuen Shoppinglist existiert
 				for(Listitem li : alreadyInSl) {
@@ -810,11 +812,14 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 				// Falls noch kein solches Listitem existiert wird eins erstellt.
 				if(isThere) {
 					this.createListitem(group, sl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l), true);
+					System.out.println(this.getProductnameOf(l) +" wurde erstellt.");
 				}
 			}
 			// Das erste Listitem wird direkt gesetzt.
 			else {
+				System.out.println("IST LEER");
 				this.createListitem(group, sl, this.getProductnameOf(l), this.getAmountOf(l), this.getListitemUnitOf(l), this.getRetailerOf(l), true);
+				System.out.println(this.getProductnameOf(l) +" wurde erstellt.");
 			}
 		}
 		return sl;
