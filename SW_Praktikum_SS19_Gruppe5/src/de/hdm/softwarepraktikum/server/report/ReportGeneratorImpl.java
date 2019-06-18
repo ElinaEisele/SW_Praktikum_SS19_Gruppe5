@@ -12,6 +12,7 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
@@ -20,6 +21,7 @@ import de.hdm.softwarepraktikum.shared.report.Row;
 import de.hdm.softwarepraktikum.server.db.GroupMapper;
 import de.hdm.softwarepraktikum.server.db.ListitemMapper;
 import de.hdm.softwarepraktikum.server.db.ListitemUnitMapper;
+import de.hdm.softwarepraktikum.server.db.RetailerMapper;
 import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
 import de.hdm.softwarepraktikum.server.db.UserMapper;
 
@@ -51,6 +53,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	private ListitemUnitMapper listitemUnitMapper = null;
 	
+	private RetailerMapper retailerMapper = null;
+	
 	 /**
      * <p>
      * GWT benoetigt einen No-Argument Konstruktor und eine Intanziierung 
@@ -80,6 +84,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		this.listitemMapper = ListitemMapper.listitemMapper();
 		this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
 		this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
+		this.retailerMapper = RetailerMapper.retailerMapper();
     }
     
     /**
@@ -91,14 +96,25 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     }
     
     /**
+     * 
+     * @param g
+     * @param r
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Retailer r) throws IllegalArgumentException{
+    	return null;
+    	
+    }
+    
+    /**
      * Methode zum erstellen eines AllListitemsOfGroupReport
      * 
      * @param g Gruppe, fuer welche der Report erstellt werden soll
      * @return AllListitemsOfGroupReport der vollstaendige Report
      * @throws IllegalArgumentException
      */
-    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) 
-    		throws IllegalArgumentException {
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) throws IllegalArgumentException {
     	
     	if (this.getReportGenerator() != null) {
     		
@@ -150,6 +166,19 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		return null;
     	}
     }
+    
+    /**
+     * 
+     * @param g
+     * @param startdate
+     * @param enddate
+     * @param r
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, Retailer r) throws IllegalArgumentException {
+    	return null;
+    }
 
 	@Override
 	public ArrayList<Group> getAllGroupsOf(User u) throws IllegalArgumentException {
@@ -178,6 +207,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	public NamedBusinessObject getListitemUnitOf(Listitem l) throws IllegalArgumentException {
 		
 		return this.listitemUnitMapper.getUnitOf(l);
+	}
+
+	@Override
+	public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException {
+
+		return this.retailerMapper.findAll();
 	}
 	
 }
