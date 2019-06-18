@@ -448,9 +448,20 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		ArrayList<Listitem> list = new ArrayList<Listitem>();
 		if(shoppinglist == null) {
 			return list;
-			
 		}
-		return this.listitemMapper.getListitemsOf(shoppinglist);
+		
+		//Alle Listitems werden zwischengespeichert.
+		ArrayList<Listitem> allListitems = this.listitemMapper.findAll();
+		
+		//In dieser ArrayList werden nur die Listitems der bestimmten Shoppinglist zwischengespeichert.
+		ArrayList<Listitem> slListitems = new ArrayList<Listitem>();
+		for(Listitem l : allListitems) {
+			//Fremdschluessenbeziehung ueberpruefen.
+			if(l.getShoppinglistID() == shoppinglist.getId()) {
+				slListitems.add(l);
+			}
+		}
+		return slListitems;
 	}
 	
 	/**
