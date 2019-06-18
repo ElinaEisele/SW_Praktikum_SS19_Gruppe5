@@ -1,11 +1,14 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import java.util.ArrayList;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -38,7 +41,6 @@ public class AddUserToGroupForm extends VerticalPanel{
 	
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufügen.");
-	private Grid grid = new Grid(1, 2);
 	private Label emailLabel = new Label("Gmail-Adresse: ");
 	private TextBox emailTextBox = new TextBox();
 	
@@ -46,23 +48,29 @@ public class AddUserToGroupForm extends VerticalPanel{
 	private Button saveButton = new Button("Speichern");
 	private Button cancelButton = new Button("Abbrechen");
 	
+	private FlexTable userFlexTable = new FlexTable();
+	
 	public AddUserToGroupForm() {
 		
-		grid.setWidget(0, 0, emailLabel);
-		grid.setWidget(0, 1, emailTextBox);
+		userFlexTable.setText(0, 0, "Name");
+		userFlexTable.setText(0, 1, "G-Mail-Adresse");
 		
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
 		
+		buttonPanel.add(emailTextBox);
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
 		
 		mainPanel.add(infoLabel);
-		mainPanel.add(grid);
+		mainPanel.add(userFlexTable);
 		mainPanel.add(buttonPanel);
 	}
 	
 	public void onLoad() {
+		
+		shoppinglistAdministration.getUsersOf(selectedGroup, new UsersCallback());
+				
 		RootPanel.get("main").add(mainPanel);
 	}
 
@@ -110,11 +118,9 @@ public class AddUserToGroupForm extends VerticalPanel{
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				shoppinglistAdministration.getUserByMail(emailTextBox.getValue(), new GetUserCallback());
-				// neues Gruppenobjekt zurück geben?
 				GroupShowForm gsf = new GroupShowForm();
 				gsf.setSelected(selectedGroup);
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(gsf);
+
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
@@ -126,14 +132,16 @@ public class AddUserToGroupForm extends VerticalPanel{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("1. Folgender Fehler ist aufgetreten: " + caught.toString());
+			Notification.show("Folgender Fehler ist aufgetreten: " + caught.toString());
 		}
 
 		@Override
 		public void onSuccess(User result) {
 			newGroupMember = result;
 			shoppinglistAdministration.addUserToGroup(newGroupMember, selectedGroup, new AddUserCallback());
-
+			int row = userFlexTable.getRowCount();
+			userFlexTable.setText(row, 0, result.getName());
+			userFlexTable.setText(row, 1, result.getGmailAddress());
 		}
 		
 	}
@@ -142,12 +150,31 @@ public class AddUserToGroupForm extends VerticalPanel{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("2. Es ist folgender Fehler aufgetreten: " + caught.toString());
+			Notification.show("Es ist folgender Fehler aufgetreten: " + caught.toString());
 		}
 
 		@Override
 		public void onSuccess(Void result) {
 			Notification.show("Gruppenmitglied wurde hinzugefügt.");
+		}
+		
+	}
+	
+	private class UsersCallback implements AsyncCallback<ArrayList<User>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(ArrayList<User> result) {
+			
+			for (int i = 0; i<result.size(); i++) {
+				userFlexTable.setText(i+1, 0, result.get(i).getName());
+				userFlexTable.setText(i+1, 1, result.get(i).getGmailAddress());
+			}
 		}
 		
 	}

@@ -48,7 +48,7 @@ public class Listitem extends BusinessObject implements IsSerializable{
 	/**
 	 * Attribut, welches wiedergibt, ob ein Listitem ein Standard-Listitem innerhalb einer Gruppe ist.
 	 */
-	private boolean isStandard;
+	private boolean isStandard = false;
 	
 	/**
 	 * Attribut, welches angibt, ob ein Listitem-Objekt bereits eingekauft wurde.

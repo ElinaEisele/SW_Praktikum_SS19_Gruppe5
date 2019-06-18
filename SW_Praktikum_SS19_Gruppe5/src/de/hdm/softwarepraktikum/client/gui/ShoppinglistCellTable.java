@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.client.gui;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -9,11 +10,11 @@ import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.client.Window;
@@ -22,6 +23,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.DefaultSelectionEventManager;
+import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -54,11 +57,18 @@ public class ShoppinglistCellTable extends VerticalPanel {
 	private String unitName = null;
 	private String retailerName = null;
 
+	private ArrayList<Listitem> checkedListitems = new ArrayList<>();
+	private ArrayList<Listitem> listitems = new ArrayList<>();
+
 	private Button archive;
+	private final MultiSelectionModel<Listitem> selectionModel = new MultiSelectionModel<Listitem>();
 
 	public ShoppinglistCellTable() {
 
-		archive = new Button("Abhaken");
+		// Add a selection model so we can select cells.
+		table.setSelectionModel(selectionModel, DefaultSelectionEventManager.<Listitem>createCheckboxManager());
+
+		archive = new Button("Markierte Eintraege archivieren");
 		archive.addClickHandler(new ArchiveClickHandler());
 
 		/**
@@ -69,13 +79,15 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 			@Override
 			public Boolean getValue(Listitem object) {
-				return null;
+
+				return selectionModel.isSelected(object);
 
 			}
 		};
+
 		checkColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		checkColumn.setCellStyleNames("columncheck");
-		table.setColumnWidth(checkColumn, 40, Unit.PX);
+		// table.setColumnWidth(checkColumn, 40, Unit.PX);
 
 		/**
 		 * Spalte zur Darstellung des Namen eines <code>Product</code>
@@ -85,23 +97,24 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			@Override
 			public String getValue(Listitem object) {
 
-				shoppinglistAdministration.getProductnameOf(object, new AsyncCallback<String>() {
+					shoppinglistAdministration.getProductnameOf(object, new AsyncCallback<String>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
 
-					}
+						}
 
-					@Override
-					public void onSuccess(String result) {
-						productName = result;
+						@Override
+						public void onSuccess(String result) {
+							productName = result;
 
-					}
+						}
 
-				});
-				return productName;
+					});
+					return productName;
 			}
+			
 		};
 
 		/**
@@ -133,7 +146,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(ListitemUnit result) {
-						unitName=result.getName();
+						unitName = result.getName();
 
 					}
 
@@ -160,7 +173,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(Retailer result) {
-						retailerName =result.getName();
+						retailerName = result.getName();
 
 					}
 
@@ -183,38 +196,71 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		})
 
 		{
-			@Override
-			public String getValue(Listitem object) {
-				return "edit.png";
+
+	@Override
+	public String getValue(Listitem object) {
+		return "edit.png";
+	}
+
+	public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
+		super.onBrowserEvent(context, elem, object, event);
+		if ("click".equals(event.getType())) {
+
+			RootPanel.get("main").clear();
+			listitemToDisplay = object;
+
+			ListitemShowForm lsf = new ListitemShowForm();
+			lsf.setSelected(object);
+			lsf.setSelectedShoppinglist(shoppinglistToDisplay);
+			lsf.setSelectedGroup(selectedGroup);
+
+			RootPanel.get("main").add(lsf);
+		}
+	}};
+
+	/**
+	 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
+	 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
+	 * 
+	 */
+	Column<Listitem, String> standardColumn=new Column<Listitem,String>(new ClickableTextCell(){public void render(Context context,SafeHtml value,SafeHtmlBuilder sb){sb.appendHtmlConstant("<img width=\"20\" src=\"images/"+value.asString()+"\">");}
+
+	})
+
+	{
+
+	@Override
+	public String getValue(Listitem object) {
+Window.alert(""+object.isStandard());
+		if (object.isStandard() == true) {
+			return "like (1).png";
+		} else {
+			return "like.png";
+		}
+
+	}
+	
+
+	public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
+		super.onBrowserEvent(context, elem, object, event);
+		if ("click".equals(event.getType())) {
+
+			if (object.isStandard() == true) {
+				shoppinglistAdministration.setStandardListitem(object, selectedGroup, false,
+						new UnselectStandardCallback());
+			} else if (object.isStandard() != true) {
+				shoppinglistAdministration.setStandardListitem(object, selectedGroup, true, new SetStandardCallback());
 			}
+		}
+	}
 
-			public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
-				super.onBrowserEvent(context, elem, object, event);
-				if ("click".equals(event.getType())) {
+	};
 
-					RootPanel.get("main").clear();
-					listitemToDisplay = object;
-
-					ListitemShowForm lsf = new ListitemShowForm();
-					lsf.setSelected(object);
-					lsf.setSelectedShoppinglist(shoppinglistToDisplay);
-					lsf.setSelectedGroup(selectedGroup);
-
-					RootPanel.get("main").add(lsf);
-				}
-			}
-		};
-
-		/**
-		 * Add Columns to CellTable
-		 * 
-		 */
-		table.addColumn(checkColumn, "Check");
-		table.addColumn(productNameToDisplay, "Produkt");
-		table.addColumn(amountToDisplay, "Menge");
-		table.addColumn(unitNameToDisplay, "Einheit");
-		table.addColumn(retailerNameToDisplay, "Haendler");
-		table.addColumn(imageColumn, "Edit");
+	/**
+	 * Add Columns to CellTable
+	 * 
+	 */
+	table.addColumn(checkColumn,SafeHtmlUtils.fromSafeConstant("<br/>"));table.addColumn(productNameToDisplay,"Produkt");table.addColumn(amountToDisplay,"Menge");table.addColumn(unitNameToDisplay,"Einheit");table.addColumn(retailerNameToDisplay,"Haendler");table.addColumn(imageColumn,"Edit");table.addColumn(standardColumn,"Standard");
 
 	}
 
@@ -236,17 +282,17 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(ArrayList<Listitem> result) {
-
+						
 						// Set the total row count
 						table.setRowCount(result.size(), true);
 						// Push the data into the widget.
 						table.setRowData(0, result);
-
+//						result.clear();
 					}
 				});
 
-		this.add(archive);
-		this.add(table);
+	this.add(table);
+	this.add(archive);
 
 	}
 
@@ -293,12 +339,103 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		}
 	}
 
+	private class UnselectStandardCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Nicht mehr standard");
+			RootPanel.get("main").clear();
+
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(selectedGroup);
+
+			RootPanel.get("main").add(ssf);
+
+		}
+
+	}
+
+	private class SetStandardCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("standard");
+			RootPanel.get("main").clear();
+
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(selectedGroup);
+
+			RootPanel.get("main").add(ssf);
+
+		}
+
+	}
+
 	private class ArchiveClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 
+			Set<Listitem> s = selectionModel.getSelectedSet();
+
+			int n = s.size();
+			Listitem arr[] = new Listitem[n];
+
+			int i = 0;
+			for (Listitem x : s) {
+				arr[i++] = x;
+				checkedListitems.add(x);
+			}
+
+			if (checkedListitems.isEmpty() == true) {
+				Window.alert("Keine Eintraege ausgewaehlt");
+			} else {
+				shoppinglistAdministration.archiveListitems(checkedListitems, new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+
+						RootPanel.get("main").clear();
+
+						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+						ssf.setSelected(shoppinglistToDisplay);
+						ssf.setSelectedGroup(selectedGroup);
+//						ssf.setGstvm(gstvm);
+//						gstvm.setSelectedGroup(null);
+//						gstvm.setSelectedShoppinglist(object);
+
+						checkedListitems.clear();
+						selectionModel.clear();
+
+						RootPanel.get("main").add(ssf);
+
+					}
+
+				});
+			}
+
 		}
 
 	}
+
 }

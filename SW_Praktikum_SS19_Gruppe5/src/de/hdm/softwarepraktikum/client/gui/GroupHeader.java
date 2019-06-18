@@ -39,7 +39,6 @@ public class GroupHeader extends HorizontalPanel {
 	private Button leaveGroup = new Button();
 	private Button editGroupName = new Button();
 	private Button deleteGroup = new Button();
-	private Button showUsers = new Button();
 	private Button showRetailers = new Button();
 
 	public GroupHeader() {
@@ -75,12 +74,6 @@ public class GroupHeader extends HorizontalPanel {
 		deleteGroup.getElement().appendChild(deleteImg.getElement());
 		deleteGroup.addClickHandler(new DeleteGroupClickHandler());
 
-		Image showUsersImg = new Image();
-		showUsersImg.setUrl("images/user.png");
-		showUsersImg.setSize("32px", "32px");
-		showUsers.getElement().appendChild(showUsersImg.getElement());
-		showUsers.addClickHandler(new ShowUsersClickHandler());
-
 		Image showRetailersImg = new Image();
 		showRetailersImg.setUrl("images/shop.png");
 		showRetailersImg.setSize("32px", "32px");
@@ -97,7 +90,6 @@ public class GroupHeader extends HorizontalPanel {
 		this.add(leaveGroup);
 		this.add(editGroupName);
 		this.add(deleteGroup);
-		this.add(showUsers);
 		this.add(showRetailers);
 
 	}
@@ -232,28 +224,16 @@ public class GroupHeader extends HorizontalPanel {
 
 	}
 
-	private class ShowUsersClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
-				ShowUsersDialogBox sudb = new ShowUsersDialogBox();
-				sudb.setSelectedGroup(groupToDisplay);
-				sudb.show();
-			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
-			}
-		}
-
-	}
-
 	private class ShowRetailersClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
-				ShowRetailersDialogBox srdb = new ShowRetailersDialogBox();
-				srdb.show();
+				ShowRetailersForm srdb = new ShowRetailersForm();
+				srdb.setSelectedGroup(groupToDisplay);
+				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, srdb);
+				gsf.setSelected(groupToDisplay);
+				
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
