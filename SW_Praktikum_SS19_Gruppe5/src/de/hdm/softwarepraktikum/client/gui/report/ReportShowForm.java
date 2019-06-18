@@ -68,6 +68,11 @@ public class ReportShowForm extends VerticalPanel{
 	private ListBox groupSelectorListBox = new ListBox();
 	
 	/**
+	 * Drop-Down-Liste zur Haendlerwahl
+	 */
+	private ListBox retailerSelectorListBox = new ListBox();
+	
+	/**
 	 * Speicher fuer das Startdate als SQL-Date
 	 */
 	private Date sqlStartDate = null;
@@ -104,7 +109,7 @@ public class ReportShowForm extends VerticalPanel{
 		Label newReportLabel = new Label ("Neuen Report erstellen");
 		newReportLabel.setStyleName("NewReportLabel");
 		
-		reportGrid = new Grid (4, 2);
+		reportGrid = new Grid (5, 2);
 		
 		Label groupLabel = new Label ("Deine Gruppen: ");
 		reportGrid.setWidget(0, 0, groupLabel);
@@ -120,9 +125,13 @@ public class ReportShowForm extends VerticalPanel{
 		endDateBox.setValue(new java.util.Date());
 		reportGrid.setWidget(2, 1, endDateBox);
 		
+		Label retailerLabel = new Label ("Haendler waehlen: ");
+		reportGrid.setWidget(3, 0, retailerLabel);
+		reportGrid.setWidget(3, 1, retailerSelectorListBox);
+		
 		Label showReportButtonLabel = new Label ();
-		reportGrid.setWidget(3, 0, showReportButtonLabel);
-		reportGrid.setWidget(3, 1, showReportButton);
+		reportGrid.setWidget(4, 0, showReportButtonLabel);
+		reportGrid.setWidget(4, 1, showReportButton);
 		showReportButton.addClickHandler(new ShowReportClickHandler());
 		
 		mainPanel.add(newReportLabel);
