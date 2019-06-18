@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdm.softwarepraktikum.shared.bo.*;
 
@@ -317,6 +319,54 @@ public class ListitemMapper {
 		
 		return listitems;
 
+	}
+	
+	/**
+
+	 * Methode, um alle Listitemdaten für den CellTable auszugeben.
+	 * 
+	 * @param shoppinglist
+	 * @return ArrayList<Listitem>
+	 */
+	public Map<Listitem, ArrayList<String>> getListitemData(Shoppinglist shoppinglist){
+		Connection con = DBConnection.connection();
+		Map<Listitem, ArrayList<String>> listitemMap = new HashMap<Listitem, ArrayList<String>>();
+		
+		ArrayList<Listitem> listitemArrayList = new ArrayList<Listitem>();
+		ArrayList<String> stringArrayList = new ArrayList<String>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs1 = stmt.executeQuery("SELECT * FROM listitems WHERE listitems.shoppinglist_id = " + shoppinglist.getId());
+			
+			while(rs1.next()) {
+				Listitem l = new Listitem();
+				l.setId(rs1.getInt("id"));
+				l.setCreationDate(rs1.getDate("creationDate"));
+				l.setAmount(rs1.getFloat("amount"));
+				l.setStandard(rs1.getBoolean("isStandard"));
+				l.setProductID(rs1.getInt("product_id"));
+				l.setShoppinglistID(rs1.getInt("shoppinglist_id"));
+				l.setListitemUnitID(rs1.getInt("unit_id"));
+				l.setGroupID(rs1.getInt("usergroup_id"));
+				l.setRetailerID(rs1.getInt("retailer_id"));
+				l.setArchived(rs1.getBoolean("isArchived"));
+				listitemArrayList.add(l);
+			}
+			
+			Statement stmt2 = con.createStatement();
+			
+			for(Listitem l : listitemArrayList) {
+				ResultSet rs2 = stmt.executeQuery("SELECT name FROM products WHERE id = " + rs1.getInt("product_id"));
+				stringArrayList.add(rs2.toString());
+				
+				listitemMap.put(l, stringArrayList);
+			}
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listitemMap;
 	}
 
 	/**

@@ -288,6 +288,7 @@ Window.alert("" + selectedlistitemUnit.getId());
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
+				Window.alert(groupToDisplay.getName());
 				String productName = productNameTextBox.getText();
 				float amount = 0.0F;
 				try {

@@ -1,6 +1,7 @@
 package de.hdm.softwarepraktikum.client.gui;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.gwt.cell.client.Cell.Context;
@@ -278,38 +279,26 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		 * success method
 		 * 
 		 */
-		shoppinglistAdministration.getStandardListitemsOf(selectedGroup, new AsyncCallback<ArrayList<Listitem>>() {
+		shoppinglistAdministration.getListitemData(shoppinglistToDisplay, new AsyncCallback<Map<Listitem, ArrayList<String>>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
+				
 			}
 
 			@Override
-			public void onSuccess(ArrayList<Listitem> result) {
-				listitems.addAll(result);
-				shoppinglistAdministration.getListitemsOf(shoppinglistShowForm.getSelectedShoppinglist(),
-						new AsyncCallback<ArrayList<Listitem>>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								Notification.show("Das Laden der Eintraege ist fehlgeschlagen");
-
-							}
-
-							@Override
-							public void onSuccess(ArrayList<Listitem> result) {
-								listitems.addAll(result);
-								// Set the total row count
-								table.setRowCount(listitems.size(), true);
-								// Push the data into the widget.
-								table.setRowData(0, listitems);
-								listitems.clear();
-
-							}
-						});
+			public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+				int i = 0;
+				for(Listitem key : result.keySet()) {
+					Window.alert("");
+					Window.alert(result.get(key).get(i));
+					i++;
+				}
+				
+				
+				
 			}
+			
 		});
 
 		this.add(table);

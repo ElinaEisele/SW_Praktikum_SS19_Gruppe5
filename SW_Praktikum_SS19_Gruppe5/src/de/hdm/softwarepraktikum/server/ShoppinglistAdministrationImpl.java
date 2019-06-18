@@ -553,6 +553,14 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 	}
 
+	/**
+	 * Ausgabe aller Händler- und Nutzernamen Zuweisungen in einer <code>Shoppinglist</code>
+	 */
+	public Map<Listitem, ArrayList<String>> getListitemData(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.listitemMapper.getListitemData(shoppinglist);
+	}
+	
+
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
