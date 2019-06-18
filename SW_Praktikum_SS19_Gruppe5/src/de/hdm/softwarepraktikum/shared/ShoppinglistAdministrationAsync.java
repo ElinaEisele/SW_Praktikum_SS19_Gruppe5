@@ -123,6 +123,10 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 
+	void createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, boolean standard, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
+	
+	void createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer, boolean standard, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
+	
 	void refreshData(ArrayList<Group> groups, User u, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
 	void getProductnameOf(Listitem listitem, AsyncCallback<String> callback) throws IllegalArgumentException;

@@ -331,7 +331,6 @@ public class GroupMapper {
 	 */
 	public ArrayList<Group> getGroupsOf(User user) {
 
-		System.out.println("Hier");
 		Connection con = DBConnection.connection();
 		ArrayList<Group> groups = new ArrayList<Group>();
 
