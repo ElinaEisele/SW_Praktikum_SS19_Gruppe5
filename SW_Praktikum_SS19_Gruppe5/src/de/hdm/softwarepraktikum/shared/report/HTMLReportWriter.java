@@ -10,6 +10,15 @@ import java.util.ArrayList;
  * @author FelixRapp, TimBeutelspacher
  */
 public class HTMLReportWriter extends ReportWriter {
+	
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Default KonstruKtor
+	 */
+	public HTMLReportWriter() {
+		
+	}
 
   /**
    * Textfeld zum speichern des Ergebnisses
@@ -83,6 +92,15 @@ public class HTMLReportWriter extends ReportWriter {
   public String getTrailer() {
     return "</body></html>";
   }
+  
+  /**
+   * Auslesen des Ergebnisses der zuletzt aufgerufenen process-Methode.
+   * 
+   * @return Der Reporttext wird als String im HTML-Format
+   */
+  public String getReportText(){
+		  return this.getHeader() + this.reportText + this.getTrailer();
+  }
 
   /**
    * Erstellen des uebergebenen Reports und speichern im richtigen Format.
@@ -142,22 +160,12 @@ public void process(AllListitemsOfGroupReport r) {
     this.reportText = result.toString();
   }
 
-  /**
-   * Erstellen des übergebenen Reports und speichern im richtigen Format.
-   * 
-   * @param r der zu erstellende Report
-   */
-  @Override
-  public void process(AllShoppinglistsOfGroupReport r) {
+@Override
+public void process(AllShoppinglistsOfGroupReport r) {
+	// TODO Auto-generated method stub
+	
+}
 
-  }
+  
 
-  /**
-   * Auslesen des zuletzt erstellen Report.
-   * 
-   * @return String im HTML-Format
-   */
-  public String getReportText() {
-    return this.getHeader() + this.reportText + this.getTrailer();
-  }
 }

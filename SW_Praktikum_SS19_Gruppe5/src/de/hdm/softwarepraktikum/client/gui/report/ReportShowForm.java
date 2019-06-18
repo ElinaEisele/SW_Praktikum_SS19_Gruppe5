@@ -220,16 +220,6 @@ public class ReportShowForm extends VerticalPanel{
 		}
 		
 	}
-	
-	private class NoDateChangeHandler implements ChangeHandler{
-
-		@Override
-		public void onChange(ChangeEvent event) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 
 	
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {

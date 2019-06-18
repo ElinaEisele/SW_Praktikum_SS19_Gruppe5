@@ -78,9 +78,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
          * ein ShoppinglistAdministrationImpl-Objekt. 
          */
     	
-//    	ReportGeneratorImpl a = new ReportGeneratorImpl();
-//    	 a.init();
-//    	 this.report = a;
+    	ReportGeneratorImpl a = new ReportGeneratorImpl();
+    	 a.init();
+    	 this.report = a;
     	
     	this.groupMapper = GroupMapper.groupMapper();
 		this.listitemMapper = ListitemMapper.listitemMapper();
@@ -141,18 +141,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
         	Row tablehead = new Row();
         	
         	tablehead.addColumn(new Column("Bezeichnung"));
-        	tablehead.addColumn(new Column("Erstellungsdatum"));
         	tablehead.addColumn(new Column("Menge"));
         	tablehead.addColumn(new Column("Einheit"));
+        	tablehead.addColumn(new Column("Erstellungsdatum"));
         	result.addRow(tablehead);
         	
         	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
         	for(Listitem l : listitems) {
         		Row r = new Row();
         		r.addColumn(new Column(this.getReportGenerator().getProductnameOf(l)));
-        		r.addColumn(new Column(l.getCreationDateConvertToString()));
         		r.addColumn(new Column(String.valueOf(l.getAmount())));
         		r.addColumn(new Column(this.getReportGenerator().getListitemUnitOf(l).getName()));
+        		r.addColumn(new Column(l.getCreationDateConvertToString()));
         		result.addRow(r);
         	}
         	
@@ -165,6 +165,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
         	return result;
         	
     	} else {
+    		
     		return null;
     	}
     }
