@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
@@ -30,6 +31,27 @@ public interface ReportGenerator extends RemoteService {
      * @throws IllegalArgumentException
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) throws IllegalArgumentException;
+    
+    /**
+     * 
+     * @param g
+     * @param r
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Retailer r) throws IllegalArgumentException;
+    
+    /**
+     * 
+     * @param g
+     * @param startdate
+     * @param enddate
+     * @param r
+     * @return
+     * @throws IllegalArgumentException
+     */
+    
+    public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, Retailer r) throws IllegalArgumentException;
     
     /**
      * 
@@ -68,5 +90,13 @@ public interface ReportGenerator extends RemoteService {
 	 * @return NamedBusinessObject
 	 */
     public NamedBusinessObject getListitemUnitOf(Listitem l) throws IllegalArgumentException;
+    
+    /**
+     * 
+     * @param r
+     * @return Arraylist <Retailer>
+     * @throws IllegalArgumentException
+     */
+    public ArrayList<Retailer> getAllRetailers() throws IllegalArgumentException;
 
 }

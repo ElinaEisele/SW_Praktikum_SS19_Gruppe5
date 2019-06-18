@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -25,6 +26,7 @@ import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 import de.hdm.softwarepraktikum.shared.report.HTMLReportWriter;
@@ -73,6 +75,11 @@ public class ReportShowForm extends VerticalPanel{
 	private ListBox retailerSelectorListBox = new ListBox();
 	
 	/**
+	 * Checkbox fuer die Wahl ob das Datum beruecksichtigt wird. 
+	 */
+	private CheckBox dateCheckBox = new CheckBox();
+	
+	/**
 	 * Speicher fuer das Startdate als SQL-Date
 	 */
 	private Date sqlStartDate = null;
@@ -83,15 +90,32 @@ public class ReportShowForm extends VerticalPanel{
 	private Date sqlEndDate = null;
 	
 	/**
+	 * Speicher für Filteroption kein Datum
+	 */
+	private Boolean noDate = false;
+	
+	/**
 	 * Speicher fuer die ausgewaehlte Gruppe
 	 */
 	private Group selectedGroup = null;
 	
 	/**
+	 *Speicher fuer den ausgewaehlten Retailer 
+	 */
+	
+	private Retailer selectedRetailer = null;
+	
+	/**
 	 * Speicher fuer alle Gruppen eines Users
 	 */
 	private ArrayList<Group> groupsOfCurrentUser;
+	
+	/**
+	 * Speicher fuer alle Retailer
+	 */
 
+	private ArrayList<Retailer> allRetailers;
+	
 	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
 	 */
@@ -100,7 +124,7 @@ public class ReportShowForm extends VerticalPanel{
 	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportAdministrationImpl zuzugreifen.
 	 */
-	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();;
+	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	
 
 	
@@ -109,7 +133,7 @@ public class ReportShowForm extends VerticalPanel{
 		Label newReportLabel = new Label ("Neuen Report erstellen");
 		newReportLabel.setStyleName("NewReportLabel");
 		
-		reportGrid = new Grid (5, 2);
+		reportGrid = new Grid (5, 4);
 		
 		Label groupLabel = new Label ("Deine Gruppen: ");
 		reportGrid.setWidget(0, 0, groupLabel);
@@ -119,6 +143,10 @@ public class ReportShowForm extends VerticalPanel{
 		reportGrid.setWidget(1, 0, startDateLabel);
 		startDateBox.setValue(new java.util.Date());
 		reportGrid.setWidget(1, 1, startDateBox);
+		reportGrid.setWidget(1, 2, dateCheckBox);
+		Label dateCheckBoxLabel = new Label("Nicht nach Datum filtern");
+		reportGrid.setWidget(1, 3, dateCheckBoxLabel);
+		dateCheckBox.addClickHandler(new NoDateClickHandler());
 		
 		Label endDateLabel = new Label ("Enddatum waehlen: ");
 		reportGrid.setWidget(2, 0, endDateLabel);
@@ -138,6 +166,8 @@ public class ReportShowForm extends VerticalPanel{
 		mainPanel.add(reportGrid);	
 		
 		reportGenerator.getAllGroupsOf(selectedUser, new GetAllGroupsOfCallback());
+		
+		reportGenerator.getAllRetailers(new GetAllRetailersCallback());
 			
 	}
 	
@@ -160,18 +190,47 @@ public class ReportShowForm extends VerticalPanel{
 			public void onClick(ClickEvent event) {
 				//Gruppe festhalten
 				selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
-				Window.alert("Deine Gruppe: " + selectedGroup);
+				Window.alert(selectedGroup.getName());
 				
-				//Eingegebenes Startdate festhalten
 				sqlStartDate = new java.sql.Date(startDateBox.getValue().getTime());
-				
-				//Eingegebenes Enddate festhalten
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
+				Window.alert("Datum ist gesetzt.");
 				
-				//Ausfuehren der Report-Erstellung
-				reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
+				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
+				Window.alert("Dein Retailer ist: " + selectedRetailer.getName());
+				
+				if (noDate == true) {
+					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
+				
+				}else if (selectedRetailer.getId() == 0){
+					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
+					
+				}else {
+					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, selectedRetailer, new CreateAllListitemsOfGroupReport());
+					
+				}
 			}
 	}
+	
+	private class NoDateClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			noDate = true;			
+		}
+		
+	}
+	
+	private class NoDateChangeHandler implements ChangeHandler{
+
+		@Override
+		public void onChange(ChangeEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+
 	
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
 
@@ -211,4 +270,27 @@ public class ReportShowForm extends VerticalPanel{
 			}
 	}
 	
+	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Keine Retailer");
+		}
+
+		@Override
+		public void onSuccess(ArrayList<Retailer> result) {
+			ArrayList<Retailer> result1 = new ArrayList<Retailer>();
+			Retailer noRetailer = new Retailer(0, "Kein Haendler ausgewaehlt");
+			result1.add(noRetailer);
+			result1.addAll(result);
+			allRetailers = result1;
+			
+			for (int i = 0; i < result1.size(); i++) {
+				retailerSelectorListBox.addItem(result1.get(i).getName());
+				selectedRetailer = result1.get(0);
+			}
+			
+		}
+		
+	}
 }
