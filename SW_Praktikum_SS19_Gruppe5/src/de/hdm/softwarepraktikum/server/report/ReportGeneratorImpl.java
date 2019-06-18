@@ -43,6 +43,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * Der ReportGenerator benoetigt Zugriff auf die ShoppinglistAdministration,
 	 * da er diese ausgeben muss.
 	 */
+	private ShoppinglistAdministrationImpl shoppinglistAdministration = null;
+	
 	private ReportGenerator report = null;
 	
 	private GroupMapper groupMapper = null;
@@ -194,13 +196,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist s) throws IllegalArgumentException {
 		
-		return this.listitemMapper.getListitemsOf(s);
+		return this.shoppinglistAdministration.getListitemsOf(s);
 	}
 
 	@Override
 	public String getProductnameOf(Listitem l) throws IllegalArgumentException {
 		
-		return this.listitemMapper.getProductnameOf(l.getId());
+		return this.shoppinglistAdministration.getProductnameOf(l);
 	}
 
 	@Override
