@@ -357,10 +357,40 @@ public class ListitemMapper {
 			Statement stmt2 = con.createStatement();
 			
 			for(Listitem l : listitemArrayList) {
-				ResultSet rs2 = stmt.executeQuery("SELECT name FROM products WHERE id = " + rs1.getInt("product_id"));
-				stringArrayList.add(rs2.toString());
 				
+				ResultSet rs2 = stmt2.executeQuery("SELECT name FROM products WHERE id = " + l.getProductID());	
+				
+				if(rs2.next()) {
+					
+					Product p = new Product();
+					p.setName(rs2.getString("name"));
+					stringArrayList.add(p.getName());
+					listitemMap.put(l, stringArrayList);
+					
+				}	
+				
+				ResultSet rs3 = stmt2.executeQuery("SELECT name FROM retailers WHERE id = " + l.getRetailerID());
+				
+				if(rs3.next()) {
+				
+				Retailer r = new Retailer();
+				r.setName(rs3.getString("name"));
+				stringArrayList.add(r.getName());
 				listitemMap.put(l, stringArrayList);
+				
+				}
+				
+				ResultSet rs4 = stmt2.executeQuery("SELECT name FROM units WHERE id = " + l.getListitemUnitID());
+
+				if(rs4.next()) {
+			
+				ListitemUnit u = new ListitemUnit();
+				u.setName(rs4.getString("name"));
+				stringArrayList.add(u.getName());
+				listitemMap.put(l, stringArrayList);
+				
+				}
+				
 			}
 					
 		} catch (SQLException e) {

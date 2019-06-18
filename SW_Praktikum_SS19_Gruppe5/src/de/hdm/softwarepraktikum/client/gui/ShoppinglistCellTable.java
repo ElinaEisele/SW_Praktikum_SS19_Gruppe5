@@ -63,7 +63,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	private Button archive;
 	private final MultiSelectionModel<Listitem> selectionModel = new MultiSelectionModel<Listitem>();
-
+	
 	public ShoppinglistCellTable() {
 
 		// Add a selection model so we can select cells.
@@ -290,8 +290,8 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			public void onSuccess(Map<Listitem, ArrayList<String>> result) {
 				int i = 0;
 				for(Listitem key : result.keySet()) {
-					Window.alert("");
-					Window.alert(result.get(key).get(i));
+
+					Window.alert(""+ result.get(key));
 					i++;
 				}
 				
