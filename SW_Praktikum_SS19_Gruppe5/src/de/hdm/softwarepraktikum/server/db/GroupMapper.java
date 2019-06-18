@@ -106,38 +106,6 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Gruppe mithilfe des Gruppennamen finden
-	 * 
-	 * @param name
-	 * @return ArrayList<Group>
-	 */
-	public ArrayList<Group> findByName(String name) {
-
-		Connection con = DBConnection.connection();
-		ArrayList<Group> groups = new ArrayList<Group>();
-
-		try {
-
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM usergroups WHERE name = '" + name + "'");
-
-			while (rs.next()) {
-
-				Group g = new Group();
-				g.setId(rs.getInt("id"));
-				g.setCreationDate(rs.getDate("creationDate"));
-				g.setName(rs.getString("name"));
-				groups.add(g);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return groups;
-	}
-
-	/**
 	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen
 	 *
 	 * @param group
@@ -287,42 +255,6 @@ public class GroupMapper {
 		
 	}
 	
-
-	/**
-	 * Methode, um die Gruppenzugehoerigkeit einer Shoppingliste festzustellen
-	 * 
-	 * @param shoppinglist
-	 * @return Group-Objekt
-	 */
-	public Group getGroupOf(Shoppinglist shoppinglist) {
-
-		Connection con = DBConnection.connection();
-		Group g = new Group();
-
-		try {
-
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id as shoppinglist_id, "
-					+ "usergroups.id as usergroup_id, "
-					+ "usergroups.creationDate as usergroup_creationDate, "
-					+ "usergroups.name as usergroup_name "
-					+ "FROM shoppinglists INNER JOIN usergroups "
-					+ "ON shoppinglists.usergroup_id = usergroups.id "
-					+ "WHERE shoppinglists.id = " + shoppinglist.getId());
-
-			if (rs.next()) {
-				g.setId(rs.getInt("usergroup_id"));
-				g.setCreationDate(rs.getDate("usergroup_creationDate"));
-				g.setName(rs.getString("usergroup_name"));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return g;
-	}
-
 	/**
 	 * Methode, um alle Gruppen eines Users zu finden
 	 * 
