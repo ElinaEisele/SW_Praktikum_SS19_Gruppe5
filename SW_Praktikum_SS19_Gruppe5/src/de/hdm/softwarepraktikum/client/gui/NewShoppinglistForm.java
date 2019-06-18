@@ -64,6 +64,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
+
 		RootPanel.get("main").add(mainPanel);
 
 	}
@@ -102,6 +103,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 				}else {
 				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
 						new NewShoppinglistAsyncCallback());
+
 				}
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
@@ -133,20 +135,17 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Shoppinglist result) {
+			
 			selectedShoppinglist = result;
 			RootPanel.get("main").clear();
-			RootPanel.get("aside").clear();
-			NavigatorPanel np = new NavigatorPanel();
-			RootPanel.get("aside").add(np);
-			//gstvm.addShoppinglistToGroup(result, selectedGroup); //not working
-			// die neu erstellte Shoppinglist wird in der ShoppinglistShowForm gesetzt
-			shoppinglistShowForm.setSelected(result);
-			shoppinglistShowForm.setSelectedGroup(selectedGroup);
 
-			// die shoppinglistShowForm enthält schon die neu erstellte Shoppinglist (siehe
-			// Callback)
+			shoppinglistShowForm.setSelected(result);
 
 			RootPanel.get("main").add(shoppinglistShowForm);
+			
+			
+			gstvm.setSelectedShoppinglist(selectedShoppinglist);
+			gstvm.getSelectionModel().setSelected(selectedShoppinglist, true);
 		}
 
 	}

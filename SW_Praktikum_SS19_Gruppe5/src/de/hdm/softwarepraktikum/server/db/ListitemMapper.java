@@ -404,6 +404,48 @@ public class ListitemMapper {
 		return listitems;
 		
 	}
+	
+	/**
+	 * Alle Listeneinträge einer Gruppe finden
+	 * 
+	 * @param group
+	 * @return ArrayList<Listitem>
+	 */
+	public ArrayList<Listitem> getListitemsOf(Group group) {
+
+		Connection con = DBConnection.connection();
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					+ "FROM listitems "
+					+ "WHERE usergroup_id = " + group.getId()
+					+ " AND isArchived = " + false);
+
+			while (rs.next()) {
+				Listitem li = new Listitem();
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
+				li.setArchived(rs.getBoolean("isArchived"));
+				listitems.add(li);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listitems;
+		
+	}
+	
 
 	/**
 	 * 

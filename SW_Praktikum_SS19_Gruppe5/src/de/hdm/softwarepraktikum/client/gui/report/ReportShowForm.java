@@ -109,7 +109,6 @@ public class ReportShowForm extends VerticalPanel{
 		Label groupLabel = new Label ("Deine Gruppen: ");
 		reportGrid.setWidget(0, 0, groupLabel);
 		reportGrid.setWidget(0, 1, groupSelectorListBox);
-		groupSelectorListBox.addChangeHandler(new GroupSelectorListBoxChangeHandler());
 		
 		Label startDateLabel = new Label ("Startdatum waehlen: ");
 		reportGrid.setWidget(1, 0, startDateLabel);
@@ -124,20 +123,19 @@ public class ReportShowForm extends VerticalPanel{
 		Label showReportButtonLabel = new Label ();
 		reportGrid.setWidget(3, 0, showReportButtonLabel);
 		reportGrid.setWidget(3, 1, showReportButton);
+		showReportButton.addClickHandler(new ShowReportClickHandler());
 		
 		mainPanel.add(newReportLabel);
 		mainPanel.add(reportGrid);	
 		
 		reportGenerator.getAllGroupsOf(selectedUser, new GetAllGroupsOfCallback());
-		
-//		reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
-		
+			
 	}
 	
 	public void onLoad() {	
 		
 		RootPanel.get("reportMain").add(mainPanel);
-}
+	}
 	
 
 	public User getUser() {
@@ -147,29 +145,21 @@ public class ReportShowForm extends VerticalPanel{
 	public void setSelectedUser(User selectedUser) {
 		this.selectedUser = selectedUser;
 	}
-	
-	private class GroupSelectorListBoxChangeHandler implements ChangeHandler{
-			
-		public void onChange(ChangeEvent event) {
-			
-			selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
-			
-//			int item = groupSelectorListBox.getSelectedIndex();
-//			selectedGroup = groupsOfCurrentUser.get(item);
-//			Window.alert("" + selectedGroup.getId());
-		}
-	}
 				
 	private class ShowReportClickHandler implements ClickHandler {
 		
 			public void onClick(ClickEvent event) {
+				//Gruppe festhalten
+				selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
+				Window.alert("Deine Gruppe: " + selectedGroup);
+				
 				//Eingegebenes Startdate festhalten
 				sqlStartDate = new java.sql.Date(startDateBox.getValue().getTime());
 				
 				//Eingegebenes Enddate festhalten
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
 				
-//				//Ausfuehren der Report-Erstellung
+				//Ausfuehren der Report-Erstellung
 				reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
 			}
 	}
@@ -198,6 +188,7 @@ public class ReportShowForm extends VerticalPanel{
 		
 			@Override
 			public void onFailure(Throwable caught) {
+				Window.alert("Hier");
 				Window.alert("Fehler " + caught.toString());	
 			}
 
