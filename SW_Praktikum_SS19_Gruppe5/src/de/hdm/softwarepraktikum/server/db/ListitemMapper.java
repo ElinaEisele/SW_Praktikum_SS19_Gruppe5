@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse fï¿½r </code>Listitem</code> Objekte. Diese umfasst Methoden um
+ * Mapper Klasse fuer </code>Listitem</code> Objekte. Diese umfasst Methoden um
  * Listitem Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen.
  * Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
  * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
@@ -215,155 +215,6 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * Ausgeben des Amounts eines Listitems
-	 * 
-	 * @param listitem
-	 * @return float amount
-	 */
-	@SuppressWarnings("null")
-	public float getAmountOf (Listitem listitem) {
-		
-		Connection con = DBConnection.connection();
-		float amount;
-
-		try {
-			
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT amount FROM listitems WHERE id = " + listitem.getId());
-			
-			while(rs.next()) {
-				amount = rs.getFloat("amount");
-				return amount;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return (Float) null; //return 0.0f;
-
-	}
-	
-	/**
-	 * 
-	 * Produktname eines Eintrags finden.
-	 * 
-	 * @param listitem
-	 * @return String productname
-	 */
-	
-	public String getProductnameOf(int listitemId) {
-		
-		Connection con = DBConnection.connection();
-		String productname;
-		
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT listitems.id as listitem_id, "
-					+ "products.name as product_name "
-					+ "FROM products INNER JOIN listitems "
-					+ "ON products.id = listitems.product_id "
-					+ "WHERE listitems.id = " + listitemId);
-			
-			while(rs.next()) {
-				productname = rs.getString("product_name");
-				return productname;
-			}
-		
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return (String) null;
-	}
-
-	/**
-	 * Methode, um alle Listitems einer Shoppingliste auszugeben.
-	 * 
-	 * @param shoppinglist
-	 * @return ArrayList<Listitem>
-	 */
-	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) {
-		
-		Connection con = DBConnection.connection();
-		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems "
-					+ "WHERE shoppinglist_id = " + shoppinglist.getId()
-					+ " AND isArchived = " + false);
-			
-			while(rs.next()) {
-
-				Listitem li = new Listitem();
-				li.setId(rs.getInt("id"));
-				li.setCreationDate(rs.getDate("creationDate"));
-				li.setAmount(rs.getFloat("amount"));
-				li.setStandard(rs.getBoolean("isStandard"));
-				li.setProductID(rs.getInt("product_id"));
-				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
-				li.setListitemUnitID(rs.getInt("unit_id"));
-				li.setGroupID(rs.getInt("usergroup_id"));
-				li.setRetailerID(rs.getInt("retailer_id"));
-				li.setArchived(rs.getBoolean("isArchived"));
-				listitems.add(li);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return listitems;
-
-	}
-
-	/**
-
-	 * Methode, um alle archivierten Listitems einer Shoppingliste auszugeben.
-	 * 
-	 * @param shoppinglist
-	 * @return ArrayList<Listitem>
-	 */
-	public ArrayList<Listitem> getArchivedListitemsOf(Shoppinglist shoppinglist) {
-
-		Connection con = DBConnection.connection();
-		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
-
-		try {
-
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * "
-					+ "FROM shoppinglists INNER JOIN listitems " 
-					+ "ON shoppinglists.listitem_id = listitems.id "
-					+ "WHERE shoppinglists.id = " + shoppinglist.getId()
-					+ " AND isArchived = " + true);
-
-			while(rs.next()) {
-				Listitem li = new Listitem();
-				li.setId(rs.getInt("id"));
-				li.setCreationDate(rs.getDate("creationDate"));
-				li.setAmount(rs.getFloat("amount"));
-				li.setStandard(rs.getBoolean("isStandard"));
-				li.setProductID(rs.getInt("product_id"));
-				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
-				li.setListitemUnitID(rs.getInt("unit_id"));
-				li.setGroupID(rs.getInt("usergroup_id"));
-				li.setRetailerID(rs.getInt("retailer_id"));
-				li.setArchived(rs.getBoolean("isArchived"));
-				listitems.add(li);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return listitems;
-
-	}
-	
-	/**
 	 * Methode, um alle Listitems eines Retailers zu finden.
 	 * 
 	 * @param retailer
@@ -406,7 +257,7 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * Alle Listeneinträge einer Gruppe finden
+	 * Alle Listeneintraege einer Gruppe finden
 	 * 
 	 * @param group
 	 * @return ArrayList<Listitem>
@@ -449,7 +300,7 @@ public class ListitemMapper {
 
 	/**
 	 * 
-	 * Methode, um Eintrï¿½ge nach Produktnamen in einer Shoppingliste zu suchen.
+	 * Methode, um Eintraege nach Produktnamen in einer Shoppingliste zu suchen.
 	 * 
 	 * @param shoppinglist
 	 * @param productname
