@@ -412,6 +412,32 @@ public class RetailerMapper {
 		return u;
 	}
 	
+	public ArrayList<User> getAssigndUsersOf(Shoppinglist shoppinglist){
+		
+		Connection con = DBConnection.connection();
+		ArrayList<User> users = new ArrayList<User>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN users "
+					+ "ON responsibilities.user_id = users.id "
+					+ "WHERE responsibilities.shoppinglist_id = " + shoppinglist.getId());
+			
+			while (rs.next()) {
+				User u = new User();
+				u.setId(rs.getInt("id"));
+				u.setCreationDate(rs.getDate("creationDate"));
+				u.setName(rs.getString("name"));
+				u.setGmailAddress(rs.getString("gMail"));
+				users.add(u);
+			}
+			
+		}catch(SQLException e) {
+			e.getStackTrace();
+		}
+		return users;
+	}
+	
 	
 	/** evtl raus:
 	 * Alle Zuweisungen in einer Shoppingliste
