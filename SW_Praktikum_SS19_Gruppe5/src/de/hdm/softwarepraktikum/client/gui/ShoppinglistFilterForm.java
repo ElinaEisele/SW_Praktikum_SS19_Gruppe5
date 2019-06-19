@@ -38,7 +38,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel filterPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Label infoLabel = new Label("Filtern deine Schoppingliste!");
+	private Label infoLabel = new Label("Filter deine Einkaufsliste!");
 	private ListBox filterOptionsListBox = new ListBox();
 	private ListBox filterDetailsListBox = new ListBox();
 	private Button saveButton = new Button("Filtern");
@@ -103,6 +103,54 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 	
 
 	
+	
+	
+	private class OptionsChangeHandler implements ChangeHandler{
+
+		@Override
+		public void onChange(ChangeEvent event) {
+			int item = filterOptionsListBox.getSelectedIndex();
+			if (item == 0) {
+				shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
+				Window.alert(String.valueOf(item));
+			} if (item == 1) {
+				shoppinglistAdministration.getAssigndUserOf(selectedShoppinglist, new UsersCallback());
+				Window.alert(String.valueOf(item));
+			}
+		}
+		
+	}
+	
+	private class RetailerListBoxChangeHandler implements ChangeHandler{
+
+		@Override
+		public void onChange(ChangeEvent event) {
+			int item = filterDetailsListBox.getSelectedIndex();
+			selectedRetailer = retailerArrayList.get(item);
+		}
+		
+	}
+	
+	private class UsersCallback implements AsyncCallback<ArrayList<User>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(ArrayList<User> result) {
+			Window.alert(String.valueOf(result.size()));
+			userArrayList = result;
+			for (int i = 0; i<result.size(); i++) {
+				filterDetailsListBox.addItem(result.get(i).getName());
+				selectedUser = result.get(0);
+			}
+		}
+		
+	}
+	
 	private class RetailersCallback implements AsyncCallback<ArrayList<Retailer>>{
 
 		@Override
@@ -120,27 +168,6 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 		}
 		
 	}
-	
-	private class OptionsChangeHandler implements ChangeHandler{
-
-		@Override
-		public void onChange(ChangeEvent event) {
-			int item = filterOptionsListBox.getSelectedIndex();
-		}
-		
-	}
-	
-	private class RetailerListBoxChangeHandler implements ChangeHandler{
-
-		@Override
-		public void onChange(ChangeEvent event) {
-			int item = filterDetailsListBox.getSelectedIndex();
-			selectedRetailer = retailerArrayList.get(item);
-		}
-		
-	}
-	
-	
 	
 	
 
