@@ -78,9 +78,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
          * ein ShoppinglistAdministrationImpl-Objekt. 
          */
     	
-    	ReportGeneratorImpl a = new ReportGeneratorImpl();
-    	 a.init();
-    	 this.report = a;
+
     	
     	this.groupMapper = GroupMapper.groupMapper();
 		this.listitemMapper = ListitemMapper.listitemMapper();
