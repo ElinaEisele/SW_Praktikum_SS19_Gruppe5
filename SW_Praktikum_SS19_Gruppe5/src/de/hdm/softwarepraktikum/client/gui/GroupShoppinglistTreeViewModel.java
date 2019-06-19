@@ -167,6 +167,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		
 		if (s != null) {
 
+			Window.alert("selectedShoppinglist: " +selectedShoppinglist.getId() +", name: " +selectedShoppinglist.getName() +", GroupID:" +selectedShoppinglist.getGroupId());
 			shoppinglistAdministration.getGroupOf(selectedShoppinglist, new AsyncCallback<Group>() {
 
 				@Override
@@ -178,7 +179,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 				public void onSuccess(Group result) {
 					selectedGroup = result;
 					shoppinglistShowForm.setSelectedGroup(selectedGroup);
-
+					Window.alert("SH:" + selectedGroup.getName());
 					RootPanel.get("main").add(shoppinglistShowForm);
 
 				}

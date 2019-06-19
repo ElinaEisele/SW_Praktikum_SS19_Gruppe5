@@ -299,6 +299,7 @@ Window.alert("" + selectedlistitemUnit.getId());
 				ListitemUnit listitemUnit = selectedlistitemUnit;
 				Retailer retailer = selectedRetailer;
 
+				Window.alert("GUI-GruppenID: " +groupToDisplay.getId());
 				shoppinglistAdministration.createListitem(groupToDisplay, shoppinglistToDisplay, productName, amount,
 						listitemUnit, retailer, new CreateListitemCallback());			
 
