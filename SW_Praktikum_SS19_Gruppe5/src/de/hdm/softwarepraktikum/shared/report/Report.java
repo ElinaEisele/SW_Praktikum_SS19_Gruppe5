@@ -54,7 +54,7 @@ public class Report  implements Serializable {
 	 * @return Text des Impressums
 	 */
 	public Paragraph getImprint() {
-		return this.imprint;
+		return imprint;
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class Report  implements Serializable {
 	 * @return Paragraph-Objekt, welches die Kopfdaten wiedergibt.
 	 */
 	public Paragraph getHeaderData() {
-		return this.headerData;
+		return headerData;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class Report  implements Serializable {
 	   * @return Titeltext
 	   */
 	  public String getTitle() {
-	    return this.title;
+	    return title;
 	  }
 
 	  /**
@@ -102,7 +102,7 @@ public class Report  implements Serializable {
 	 * @return Date-Objekt, welches das Erstellungsdatum wiederspiegelt.
 	 */
 	public Date getCreationDate() {
-		return this.creationDate;
+		return creationDate;
 	}
 
 	/**

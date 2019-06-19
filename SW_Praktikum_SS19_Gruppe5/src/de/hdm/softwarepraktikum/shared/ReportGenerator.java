@@ -15,7 +15,7 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 
-@RemoteServiceRelativePath("reportgenerator")
+@RemoteServiceRelativePath("report")
 public interface ReportGenerator extends RemoteService {
 	
     /**

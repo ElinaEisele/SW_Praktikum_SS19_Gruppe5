@@ -147,7 +147,6 @@ public class ReportShowForm extends VerticalPanel{
 		Label dateCheckBoxLabel = new Label("Nicht nach Datum filtern");
 		reportGrid.setWidget(1, 3, dateCheckBoxLabel);
 		dateCheckBox.addClickHandler(new NoDateClickHandler());
-	
 		
 		Label endDateLabel = new Label ("Enddatum waehlen: ");
 		reportGrid.setWidget(2, 0, endDateLabel);
@@ -237,8 +236,8 @@ public class ReportShowForm extends VerticalPanel{
 			if(report != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
 				writer.process(report);
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(new HTML(writer.getReportText()));
+				RootPanel.get("reportMain").clear();
+				RootPanel.get("reportMain").add(new HTML(writer.getReportText()));
 			}
 		}
 	}
