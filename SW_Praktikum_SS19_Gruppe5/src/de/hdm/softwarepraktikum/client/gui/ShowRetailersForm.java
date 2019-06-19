@@ -122,7 +122,9 @@ public class ShowRetailersForm extends VerticalPanel {
 				Notification.show("Dieser Händler existiert schon.");
 			} else {
 				shoppinglistAdministration.createRetailer(retailerTextBox.getValue(), new NewRetailerCallback());
+
 			}
+			
 
 		}
 		
@@ -141,6 +143,9 @@ public class ShowRetailersForm extends VerticalPanel {
 			int row = retailersFlexTable.getRowCount();
 			retailersFlexTable.setText(row, 0, retailerTextBox.getValue());
 			retailers.add(result.getName());
+			
+			retailerTextBox.setText("");
+
 		}
 		
 	}

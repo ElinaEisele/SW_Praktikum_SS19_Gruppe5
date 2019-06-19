@@ -4,6 +4,7 @@ package de.hdm.softwarepraktikum.shared;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -356,6 +357,8 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * Ausgabe des zugewiesenen Nutzers.
 	 */
 	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
+
+	public ArrayList<User> getAssigndUserOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 
 	
 	/**
