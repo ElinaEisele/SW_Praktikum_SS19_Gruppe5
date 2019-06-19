@@ -319,7 +319,8 @@ public class ShoppinglistMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id AS shoppinglist_id, "
 					+ "shoppinglists.creationDate AS shoppinglist_creationDate, "
-					+ "shoppinglists.name AS shoppinglist_name "
+					+ "shoppinglists.name AS shoppinglist_name, "
+					+ "shoppinglists.usergroup_id AS shoppinglist_usergroup_id "
 					+ "FROM shoppinglists INNER JOIN usergroups "
 					+ "ON shoppinglists.usergroup_id = usergroups.id "
 					+ "WHERE usergroups.id = " + group.getId());
@@ -329,6 +330,7 @@ public class ShoppinglistMapper {
 				sl.setId(rs.getInt("shoppinglist_id"));
 				sl.setCreationDate(rs.getDate("shoppinglist_creationDate"));
 				sl.setName(rs.getString("shoppinglist_name"));
+				sl.setGroupId(rs.getInt("shoppinglist_usergroup_id"));
 				shoppinglists.add(sl);
 			}
 
