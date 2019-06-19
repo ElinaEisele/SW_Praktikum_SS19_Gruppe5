@@ -22,6 +22,13 @@ public class Report  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 * Default Konstruktor
+	 */
+	public Report() {
+		
+	}
+	
+	/**
 	 * Impressum der MaulTasche GmbH. Hierbei werden Informationen wie Firmenname,
 	 * Adresse, Logo, etc. 
 	 */
@@ -47,7 +54,7 @@ public class Report  implements Serializable {
 	 * @return Text des Impressums
 	 */
 	public Paragraph getImprint() {
-		return imprint;
+		return this.imprint;
 	}
 
 	/**
@@ -63,7 +70,7 @@ public class Report  implements Serializable {
 	 * @return Paragraph-Objekt, welches die Kopfdaten wiedergibt.
 	 */
 	public Paragraph getHeaderData() {
-		return headerData;
+		return this.headerData;
 	}
 
 	/**
@@ -95,7 +102,7 @@ public class Report  implements Serializable {
 	 * @return Date-Objekt, welches das Erstellungsdatum wiederspiegelt.
 	 */
 	public Date getCreationDate() {
-		return creationDate;
+		return this.creationDate;
 	}
 
 	/**
