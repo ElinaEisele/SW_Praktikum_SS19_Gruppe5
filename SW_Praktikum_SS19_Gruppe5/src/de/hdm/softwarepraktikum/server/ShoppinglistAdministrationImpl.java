@@ -738,6 +738,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.retailerMapper.getAssigndUserOf(shoppinglist, retailer);
 	}
 	
+	public ArrayList<User> getAssigndUserOf(Shoppinglist shoppinglist) {
+		return this.retailerMapper.getAssigndUsersOf(shoppinglist);
+	}
+	
 	/**
 	 * Ein Retailer-Objekt wird einem Listitem als Beschaffungsort zugewiesen
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt

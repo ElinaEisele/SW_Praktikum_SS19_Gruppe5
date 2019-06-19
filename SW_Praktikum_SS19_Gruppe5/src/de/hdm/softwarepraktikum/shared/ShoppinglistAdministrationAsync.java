@@ -97,6 +97,8 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer, AsyncCallback<User> callback);
 	
+	void getAssigndUserOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<User>> callback) throws IllegalArgumentException;
+	
 	void getAssigndRetailersOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
 	
 	void assignRetailer(Retailer retailer, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
