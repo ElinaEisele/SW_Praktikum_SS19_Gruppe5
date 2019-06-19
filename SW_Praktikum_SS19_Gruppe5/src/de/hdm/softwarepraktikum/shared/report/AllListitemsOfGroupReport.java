@@ -11,5 +11,12 @@ package de.hdm.softwarepraktikum.shared.report;
 public class AllListitemsOfGroupReport extends SimpleReport{
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Default Konstruktor.
+	 */
+	public AllListitemsOfGroupReport() {
+		
+	}
 
 }

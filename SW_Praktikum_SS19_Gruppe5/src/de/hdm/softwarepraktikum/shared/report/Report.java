@@ -1,7 +1,8 @@
 package de.hdm.softwarepraktikum.shared.report;
 
-import java.io.Serializable;
 import java.util.Date;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * <p>
@@ -17,20 +18,27 @@ import java.util.Date;
  * @author TimBeutelspacher
  *
  */
-public class Report  implements Serializable {
+public class Report  implements IsSerializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+     * Default Konstruktor.
+     */
+    public Report(){
+    	
+    }
 	
 	/**
 	 * Impressum der MaulTasche GmbH. Hierbei werden Informationen wie Firmenname,
 	 * Adresse, Logo, etc. 
 	 */
-	private Paragraph imprint = null;
+	private Paragraph imprint;
 	
 	/**
 	 * Kopfdaten den Berichts.
 	 */
-	private Paragraph headerData = null;
+	private Paragraph headerData;
 	
 	/**
 	 * Jeder Bericht kann einen individuellen Titel besitzen.
@@ -47,7 +55,7 @@ public class Report  implements Serializable {
 	 * @return Text des Impressums
 	 */
 	public Paragraph getImprint() {
-		return imprint;
+		return this.imprint;
 	}
 
 	/**
@@ -63,7 +71,7 @@ public class Report  implements Serializable {
 	 * @return Paragraph-Objekt, welches die Kopfdaten wiedergibt.
 	 */
 	public Paragraph getHeaderData() {
-		return headerData;
+		return this.headerData;
 	}
 
 	/**
@@ -95,7 +103,7 @@ public class Report  implements Serializable {
 	 * @return Date-Objekt, welches das Erstellungsdatum wiederspiegelt.
 	 */
 	public Date getCreationDate() {
-		return creationDate;
+		return this.creationDate;
 	}
 
 	/**
@@ -104,6 +112,17 @@ public class Report  implements Serializable {
 	 */
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+	
+	/**
+     * Hier wird das Erstellungsdatum in einen String gespeichert und gekürzt.
+     *
+     * @return Das zum Anzeigen formatierte Creationdate wird zurückgegeben.
+     */
+    public String getCreationDateString() {
+    	
+    	String creationDate = this.creationDate.toString().split("\\.")[0];
+    	return creationDate;
 	}
 
 	/**

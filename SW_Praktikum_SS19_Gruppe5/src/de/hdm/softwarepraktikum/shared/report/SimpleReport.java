@@ -17,6 +17,13 @@ import java.util.ArrayList;
 public class SimpleReport extends Report{
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+     * Default Konstruktor.
+     */
+    public SimpleReport() {
+        // TODO implement here
+    }
 
 	/**
 	 * Tabelle mit den Positionsdaten als <code>ArrayList</code> zwischengespeichert.
