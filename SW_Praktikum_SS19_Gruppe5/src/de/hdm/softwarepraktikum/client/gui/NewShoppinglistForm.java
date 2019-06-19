@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.TreeViewModel.NodeInfo;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -137,15 +138,21 @@ public class NewShoppinglistForm extends VerticalPanel {
 		public void onSuccess(Shoppinglist result) {
 			
 			selectedShoppinglist = result;
+			
 			RootPanel.get("main").clear();
-
+						
 			shoppinglistShowForm.setSelected(result);
 
 			RootPanel.get("main").add(shoppinglistShowForm);
 			
-			
+			Window.alert(selectedShoppinglist.getName());
+
 			gstvm.setSelectedShoppinglist(selectedShoppinglist);
 			gstvm.getSelectionModel().setSelected(selectedShoppinglist, true);
+			
+			
+			
+
 		}
 
 	}
