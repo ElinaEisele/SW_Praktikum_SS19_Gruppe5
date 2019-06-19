@@ -311,7 +311,6 @@ public class ListitemMapper {
 		Map<Listitem, ArrayList<String>> listitemMap = new HashMap<Listitem, ArrayList<String>>();
 
  		ArrayList<Listitem> listitemArrayList = new ArrayList<Listitem>();
-		ArrayList<String> stringArrayList = new ArrayList<String>();
 
  		try {
 			Statement stmt = con.createStatement();
@@ -335,6 +334,8 @@ public class ListitemMapper {
  			Statement stmt2 = con.createStatement();
 
  			for(Listitem l : listitemArrayList) {
+ 				
+ 				ArrayList<String> stringArrayList = new ArrayList<String>();
 				
  				ResultSet rs2 = stmt2.executeQuery("SELECT name FROM products WHERE id = " + l.getProductID());	
 
@@ -342,20 +343,17 @@ public class ListitemMapper {
  					
  					Product p = new Product();
 					p.setName(rs2.getString("name"));
-					stringArrayList.add(p.getName());
-					listitemMap.put(l, stringArrayList);
+					stringArrayList.add(p.getName());		
 
  				}	
 
  				ResultSet rs3 = stmt2.executeQuery("SELECT name FROM retailers WHERE id = " + l.getRetailerID());
 
  				if(rs3.next()) {
- 					
+
  				Retailer r = new Retailer();
 				r.setName(rs3.getString("name"));
 				stringArrayList.add(r.getName());
-				listitemMap.put(l, stringArrayList);					
-				listitemMap.put(l, stringArrayList);
 
  				}
 
@@ -366,10 +364,18 @@ public class ListitemMapper {
  				ListitemUnit u = new ListitemUnit();
 				u.setName(rs4.getString("name"));
 				stringArrayList.add(u.getName());
-				listitemMap.put(l, stringArrayList);
-
+				
  				}
+ 				
+ 				ResultSet rs5 = stmt2.executeQuery("SELECT amount FROM listitems WHERE id = " + l.getId());
 
+ 				if(rs5.next()) {
+ 				Float f = rs5.getFloat("amount");
+ 				stringArrayList.add(f.toString());
+ 
+ 				}
+ 				
+ 				listitemMap.put(l, stringArrayList);
  			}				
 
  		} catch (SQLException e) {
