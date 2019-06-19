@@ -44,7 +44,7 @@ public class ReportShowForm extends VerticalPanel{
 	 * Benoetigte Panel werden hier instanziiert.
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private HorizontalPanel addPanel = new HorizontalPanel();
+//	private HorizontalPanel addPanel = new HorizontalPanel();
 	private Grid reportGrid;
 	
 	private User selectedUser = CurrentUser.getUser(); 
@@ -147,6 +147,7 @@ public class ReportShowForm extends VerticalPanel{
 		Label dateCheckBoxLabel = new Label("Nicht nach Datum filtern");
 		reportGrid.setWidget(1, 3, dateCheckBoxLabel);
 		dateCheckBox.addClickHandler(new NoDateClickHandler());
+	
 		
 		Label endDateLabel = new Label ("Enddatum waehlen: ");
 		reportGrid.setWidget(2, 0, endDateLabel);
@@ -188,7 +189,7 @@ public class ReportShowForm extends VerticalPanel{
 	private class ShowReportClickHandler implements ClickHandler {
 		
 			public void onClick(ClickEvent event) {
-				//Gruppe festhalten
+				
 				selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
 				Window.alert(selectedGroup.getName());
 				
@@ -221,15 +222,6 @@ public class ReportShowForm extends VerticalPanel{
 		
 	}
 	
-	private class NoDateChangeHandler implements ChangeHandler{
-
-		@Override
-		public void onChange(ChangeEvent event) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 
 	
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
