@@ -301,7 +301,6 @@ public class UserMapper {
 	 */
 	
 	public ArrayList<User> getUsersOf(Group group){
-		System.out.println(group.getName());
 		
 		Connection con = DBConnection.connection();
 		ArrayList<User> users = new ArrayList<User>();

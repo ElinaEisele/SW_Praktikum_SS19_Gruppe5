@@ -412,16 +412,16 @@ public class RetailerMapper {
 		return u;
 	}
 	
-	public ArrayList<User> getAssigndUserOf(Shoppinglist shoppinglist){
+	public ArrayList<User> getAssigndUsersOf(Shoppinglist shoppinglist){
 		
 		Connection con = DBConnection.connection();
 		ArrayList<User> users = new ArrayList<User>();
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT responsibilities INNER JOIN users "
+			ResultSet rs = stmt.executeQuery("SELECT * FROM responsibilities INNER JOIN users "
 					+ "ON responsibilities.user_id = users.id "
-					+ "WHERE responsibilbities.shoppinglist_id = " + shoppinglist.getId());
+					+ "WHERE responsibilities.shoppinglist_id = " + shoppinglist.getId());
 			
 			while (rs.next()) {
 				User u = new User();

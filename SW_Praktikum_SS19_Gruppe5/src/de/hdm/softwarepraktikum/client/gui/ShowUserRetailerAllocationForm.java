@@ -107,7 +107,6 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		groupToDisplay = shoppinglistHeader.getGroupToDisplay();
 
 		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUserCallback());
-		Window.alert(groupToDisplay.getName());
 		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
 		RootPanel.get("main").add(mainPanel);
 
@@ -152,9 +151,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(ArrayList<User> result) {
-			
-			Window.alert(String.valueOf(result.size()));
-			
+						
 			userArrayList = result;
 			
 			for (int i = 0; i < result.size(); i++) {

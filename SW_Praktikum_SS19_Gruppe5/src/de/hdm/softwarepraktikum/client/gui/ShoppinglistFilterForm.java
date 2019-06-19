@@ -111,11 +111,11 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 		public void onChange(ChangeEvent event) {
 			int item = filterOptionsListBox.getSelectedIndex();
 			if (item == 0) {
+				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
-				Window.alert(String.valueOf(item));
 			} if (item == 1) {
+				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndUserOf(selectedShoppinglist, new UsersCallback());
-				Window.alert(String.valueOf(item));
 			}
 		}
 		
@@ -141,7 +141,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(ArrayList<User> result) {
-			Window.alert(String.valueOf(result.size()));
+
 			userArrayList = result;
 			for (int i = 0; i<result.size(); i++) {
 				filterDetailsListBox.addItem(result.get(i).getName());

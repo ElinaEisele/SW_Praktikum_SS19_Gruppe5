@@ -739,7 +739,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	public ArrayList<User> getAssigndUserOf(Shoppinglist shoppinglist) {
-		return this.retailerMapper.getAssigndUserOf(shoppinglist);
+		return this.retailerMapper.getAssigndUsersOf(shoppinglist);
 	}
 	
 	/**
