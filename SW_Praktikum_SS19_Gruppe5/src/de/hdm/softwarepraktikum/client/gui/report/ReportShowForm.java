@@ -44,7 +44,6 @@ public class ReportShowForm extends VerticalPanel{
 	 * Benoetigte Panel werden hier instanziiert.
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private HorizontalPanel addPanel = new HorizontalPanel();
 	private Grid reportGrid;
 	
 	private User selectedUser = CurrentUser.getUser(); 
@@ -117,11 +116,6 @@ public class ReportShowForm extends VerticalPanel{
 	private ArrayList<Retailer> allRetailers;
 	
 	/**
-	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
-	 */
-	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
-	
-	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportAdministrationImpl zuzugreifen.
 	 */
 	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
@@ -167,12 +161,10 @@ public class ReportShowForm extends VerticalPanel{
 		
 		reportGenerator.getAllGroupsOf(selectedUser, new GetAllGroupsOfCallback());
 		
-		reportGenerator.getAllRetailers(new GetAllRetailersCallback());
-			
+		reportGenerator.getAllRetailers(new GetAllRetailersCallback());			
 	}
 	
 	public void onLoad() {	
-		
 		RootPanel.get("reportMain").add(mainPanel);
 	}
 	
@@ -184,11 +176,17 @@ public class ReportShowForm extends VerticalPanel{
 	public void setSelectedUser(User selectedUser) {
 		this.selectedUser = selectedUser;
 	}
+	
+	/**
+	 * 
+	 *ClickHandler
+	 *
+	 */
 				
 	private class ShowReportClickHandler implements ClickHandler {
 		
 			public void onClick(ClickEvent event) {
-				//Gruppe festhalten
+				
 				selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
 				Window.alert(selectedGroup.getName());
 				
@@ -197,7 +195,7 @@ public class ReportShowForm extends VerticalPanel{
 				Window.alert("Datum ist gesetzt.");
 				
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
-				Window.alert("Dein Retailer ist: " + selectedRetailer.getName());
+				Window.alert("Dein Retailer ist: " + selectedRetailer.getName());				
 				
 				if (noDate == true) {
 					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
@@ -220,6 +218,12 @@ public class ReportShowForm extends VerticalPanel{
 		}
 		
 	}
+	
+	/**
+	 * 
+	 * Callback
+	 *
+	 */
 
 	
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
@@ -231,16 +235,22 @@ public class ReportShowForm extends VerticalPanel{
 		}
 
 		@Override
-		public void onSuccess(AllListitemsOfGroupReport report) {
-			if(report != null) {
+		public void onSuccess(AllListitemsOfGroupReport result) {
+			Window.alert("Step1");
+			if(result != null) {
+				Window.alert("Step2");
 				HTMLReportWriter writer = new HTMLReportWriter();
-				writer.process(report);
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(new HTML(writer.getReportText()));
+				Window.alert("Step3");
+				writer.process(result);
+				Window.alert("Step4");
+				HTML content = new HTML(writer.getReportText());
+				RootPanel.get("reportMain").add(content);
+			}else {
+				Window.alert("result = null");
 			}
 		}
+		
 	}
-
 	
 	private class GetAllGroupsOfCallback implements AsyncCallback<ArrayList<Group>> {
 		
