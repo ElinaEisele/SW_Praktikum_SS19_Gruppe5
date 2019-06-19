@@ -140,6 +140,10 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
+				
+				NavigatorPanel np = new NavigatorPanel();
+				RootPanel.get("aside").clear();
+				RootPanel.get("aside").add(np);
 
 				NewShoppinglistForm nsf = new NewShoppinglistForm();
 				nsf.setGstvm(GroupHeader.this.gstvm);
@@ -148,6 +152,8 @@ public class GroupHeader extends HorizontalPanel {
 
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
 				gsf.setSelected(groupToDisplay);
+				
+
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");

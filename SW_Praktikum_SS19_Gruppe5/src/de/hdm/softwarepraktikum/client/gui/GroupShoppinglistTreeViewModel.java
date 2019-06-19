@@ -165,6 +165,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		shoppinglistShowForm.setSelected(s);
 		navigatorPanel.setSelectedShoppinglist(s);
 		
+		
 		if (s != null) {
 
 			Window.alert("selectedShoppinglist: " +selectedShoppinglist.getId() +", name: " +selectedShoppinglist.getName() +", GroupID:" +selectedShoppinglist.getGroupId());
@@ -181,7 +182,6 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 					shoppinglistShowForm.setSelectedGroup(selectedGroup);
 					Window.alert("SH:" + selectedGroup.getName());
 					RootPanel.get("main").add(shoppinglistShowForm);
-
 				}
 
 			});

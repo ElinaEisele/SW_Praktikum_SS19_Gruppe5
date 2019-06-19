@@ -58,6 +58,7 @@ public class AddUserToGroupForm extends VerticalPanel{
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
 		
+		buttonPanel.add(emailLabel);
 		buttonPanel.add(emailTextBox);
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
@@ -120,6 +121,7 @@ public class AddUserToGroupForm extends VerticalPanel{
 				shoppinglistAdministration.getUserByMail(emailTextBox.getValue(), new GetUserCallback());
 				GroupShowForm gsf = new GroupShowForm();
 				gsf.setSelected(selectedGroup);
+				emailTextBox.setText("");
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");

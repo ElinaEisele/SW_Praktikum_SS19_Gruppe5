@@ -35,6 +35,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 	private Button deleteShoppinglist;
 	private Button editShoppinglistName;
 	private Button showUserRetailerAllocation;
+	private Button filter;
 
 	public ShoppinglistHeader() {
 
@@ -49,6 +50,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		deleteShoppinglist = new Button("Einkaufsliste loeschen");
 		editShoppinglistName = new Button("Editieren");
 		showUserRetailerAllocation = new Button("Nutzer Einzelhaendler zuweisung anzeigen");
+		filter = new Button("Filtern");
 
 		Image newListitemImg = new Image();
 		newListitemImg.setUrl("images/shopping-cart.png");
@@ -71,12 +73,16 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		editShoppinglistName.setStyleName("ShoppinglistHeaderButton");
 		editShoppinglistName.addClickHandler(new EditShoppinglistNameClickHandler());
 
-		Image showUserRetailerAllocationImg = new Image();
-		showUserRetailerAllocationImg.setUrl("images/showUserRetailerAllocation.png");
-		showUserRetailerAllocationImg.setSize("16px", "16px");
-		showUserRetailerAllocation.getElement().appendChild(showUserRetailerAllocationImg.getElement());
+//		Image showUserRetailerAllocationImg = new Image();
+//		showUserRetailerAllocationImg.setUrl("images/showUserRetailerAllocation.png");
+//		showUserRetailerAllocationImg.setSize("16px", "16px");
+//		showUserRetailerAllocation.getElement().appendChild(showUserRetailerAllocationImg.getElement());
 		showUserRetailerAllocation.setStyleName("ShoppinglistHeaderButton");
 		showUserRetailerAllocation.addClickHandler(new ShowUserRetailerAllocationClickHandler());
+		
+		
+		filter.addClickHandler(new FilterClickHandler());
+		filter.setStyleName("ShoppinglistHeaderButton");
 
 	}
 
@@ -87,6 +93,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		this.add(editShoppinglistName);
 		this.add(deleteShoppinglist);
 		this.add(showUserRetailerAllocation);
+		this.add(filter);
 
 	}
 	
@@ -244,6 +251,20 @@ public class ShoppinglistHeader extends HorizontalPanel {
 			}
 		}
 
+	}
+	
+	private class FilterClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ShoppinglistFilterForm sff = new ShoppinglistFilterForm();
+			sff.setShoppinglistHeader(ShoppinglistHeader.this);
+			sff.setSelectedShoppinglist(shoppinglistToDisplay);
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, sff);
+			ssf.setSelected(shoppinglistToDisplay);
+			
+		}
+		
 	}
 
 }
