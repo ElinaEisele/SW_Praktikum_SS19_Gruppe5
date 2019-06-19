@@ -116,7 +116,12 @@ public class ReportShowForm extends VerticalPanel{
 	private ArrayList<Retailer> allRetailers;
 	
 	/**
-	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportAdministrationImpl zuzugreifen.
+	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
+	 */	
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
+	
+	/**
+	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportGeneratorImpl zuzugreifen.
 	 */
 	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	
