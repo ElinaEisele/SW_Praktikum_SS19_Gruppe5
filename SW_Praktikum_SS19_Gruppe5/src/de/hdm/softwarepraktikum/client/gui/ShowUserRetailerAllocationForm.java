@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -46,7 +47,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	private Retailer selectedRetailer = null;
 
 	private ArrayList<User> userArrayList;
-	private ArrayList<Retailer >retailerArrayList;
+	private ArrayList<Retailer> retailerArrayList;
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel addAllocationPanel = new HorizontalPanel();
 	private Label userRetailerAllocationLabel = new Label("Wer kauft wo ein?");
@@ -150,7 +151,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(ArrayList<User> result) {
-			
+						
 			userArrayList = result;
 			
 			for (int i = 0; i < result.size(); i++) {
@@ -262,7 +263,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		}
 	
 	}
-		
+
 	/**
 	 * ClickHandler zum Speichern von Zuweisungen
 	 */
@@ -324,6 +325,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(ArrayList<Retailer> result) {
+			
 			
 			for (Retailer r : result) {
 				assigndRetailers.add(r);

@@ -19,6 +19,13 @@ public class SimpleReport extends Report{
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Default Konnstruktor 
+	 */
+	public SimpleReport() {
+		
+	}
+	
+	/**
 	 * Tabelle mit den Positionsdaten als <code>ArrayList</code> zwischengespeichert.
 	 */
 	private ArrayList<Row> table = new ArrayList<Row>();

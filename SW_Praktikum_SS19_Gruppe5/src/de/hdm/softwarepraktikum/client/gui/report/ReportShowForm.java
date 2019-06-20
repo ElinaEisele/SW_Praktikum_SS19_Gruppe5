@@ -44,7 +44,7 @@ public class ReportShowForm extends VerticalPanel{
 	 * Benoetigte Panel werden hier instanziiert.
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private HorizontalPanel addPanel = new HorizontalPanel();
+//	private HorizontalPanel addPanel = new HorizontalPanel();
 	private Grid reportGrid;
 	
 	private User selectedUser = CurrentUser.getUser(); 
@@ -188,7 +188,7 @@ public class ReportShowForm extends VerticalPanel{
 	private class ShowReportClickHandler implements ClickHandler {
 		
 			public void onClick(ClickEvent event) {
-				//Gruppe festhalten
+				
 				selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
 				Window.alert(selectedGroup.getName());
 				
@@ -201,13 +201,14 @@ public class ReportShowForm extends VerticalPanel{
 				
 				if (noDate == true) {
 					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
+					Window.alert("if: noDate == true" );
 				
 				}else if (selectedRetailer.getId() == 0){
 					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
-					
+					Window.alert("else if: selectedRetailer.getId() == 0");
 				}else {
 					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, selectedRetailer, new CreateAllListitemsOfGroupReport());
-					
+					Window.alert("else:");
 				}
 			}
 	}
@@ -221,15 +222,6 @@ public class ReportShowForm extends VerticalPanel{
 		
 	}
 	
-	private class NoDateChangeHandler implements ChangeHandler{
-
-		@Override
-		public void onChange(ChangeEvent event) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 
 	
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
@@ -241,12 +233,12 @@ public class ReportShowForm extends VerticalPanel{
 		}
 
 		@Override
-		public void onSuccess(AllListitemsOfGroupReport report) {
-			if(report != null) {
+		public void onSuccess(AllListitemsOfGroupReport result) {
+			if(result != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
-				writer.process(report);
-				RootPanel.get("main").clear();
-				RootPanel.get("main").add(new HTML(writer.getReportText()));
+				writer.process(result);
+				RootPanel.get("reportMain").clear();
+				RootPanel.get("reportMain").add(new HTML(writer.getReportText()));
 			}
 		}
 	}
