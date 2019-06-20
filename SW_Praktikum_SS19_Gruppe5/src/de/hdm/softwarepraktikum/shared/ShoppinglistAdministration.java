@@ -441,7 +441,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
+	public Map<Listitem, ArrayList<String>> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
@@ -580,4 +580,5 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
+
 }
