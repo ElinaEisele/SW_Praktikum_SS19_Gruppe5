@@ -201,13 +201,14 @@ public class ReportShowForm extends VerticalPanel{
 				
 				if (noDate == true) {
 					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
+					Window.alert("if: noDate == true" );
 				
 				}else if (selectedRetailer.getId() == 0){
 					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
-					
+					Window.alert("else if: selectedRetailer.getId() == 0");
 				}else {
 					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, selectedRetailer, new CreateAllListitemsOfGroupReport());
-					
+					Window.alert("else:");
 				}
 			}
 	}
