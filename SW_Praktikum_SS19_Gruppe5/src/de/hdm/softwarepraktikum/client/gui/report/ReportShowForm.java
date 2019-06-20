@@ -232,10 +232,10 @@ public class ReportShowForm extends VerticalPanel{
 		}
 
 		@Override
-		public void onSuccess(AllListitemsOfGroupReport report) {
-			if(report != null) {
+		public void onSuccess(AllListitemsOfGroupReport result) {
+			if(result != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
-				writer.process(report);
+				writer.process(result);
 				RootPanel.get("reportMain").clear();
 				RootPanel.get("reportMain").add(new HTML(writer.getReportText()));
 			}
