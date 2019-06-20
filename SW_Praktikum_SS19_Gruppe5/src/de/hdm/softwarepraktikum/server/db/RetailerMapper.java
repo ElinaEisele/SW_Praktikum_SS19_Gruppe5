@@ -256,10 +256,10 @@ public class RetailerMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT retailers.id AS retailer_id, "
 					+ "retailers.creationDate AS retailer_creationDate, "
-					+ "retailers.name AS retailer_name"
+					+ "retailers.name AS retailer_name "
 					+ "FROM listitems INNER JOIN retailers "
 					+ "ON listitems.retailer_Id = retailers.id "
-					+ "WHERE listitem_id = " + listitem.getId());
+					+ "WHERE listitems.id = " + listitem.getId());
 
 			if (rs.next()) {
 				r.setId(rs.getInt("retailer_id"));
