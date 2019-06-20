@@ -30,6 +30,7 @@ import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
@@ -47,10 +48,11 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	private ShoppinglistShowForm shoppinglistShowForm;
 	private ShoppinglistHeader shoppinglistHeader;
 	private VerticalPanel mainPanel = new VerticalPanel();
-	
+
 	private Shoppinglist shoppinglistToDisplay = null;
 	private Listitem listitemToDisplay = null;
 	private Group selectedGroup = null;
+	private Retailer selectedRetailer = null;
 	private CellTable<ArrayList<Object>> table = new CellTable<ArrayList<Object>>();
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
@@ -229,7 +231,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		 */
 		table.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
 		table.addColumn(productNameToDisplay, "Produkt");
-		table.addColumn(amountToDisplay, "Menge");
+		table.addColumn(amountToDisplay, "Mengesdfbdsfbfbd");
 		table.addColumn(unitNameToDisplay, "Einheit");
 		table.addColumn(retailerNameToDisplay, "Haendler");
 		table.addColumn(imageColumn, "Edit");
@@ -246,7 +248,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		 * success method
 		 * 
 		 */
-		shoppinglistAdministration.getListitemData(shoppinglistShowForm.getSelectedShoppinglist(),
+		shoppinglistAdministration.filterShoppinglistsByRetailer(shoppinglistToDisplay, selectedRetailer,
 				new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
 
 					@Override
@@ -257,7 +259,6 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onSuccess(Map<Listitem, ArrayList<String>> result) {
-
 						data.clear();
 						if (data.size() == 0) {
 
@@ -280,9 +281,10 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 						}
 					}
+
 				});
 
-this.add(mainPanel);
+		this.add(mainPanel);
 
 	}
 
@@ -313,13 +315,21 @@ this.add(mainPanel);
 	public void setSelectedGroup(Group selectedGroup) {
 		this.selectedGroup = selectedGroup;
 	}
-	
+
 	public ShoppinglistHeader getShoppinglistHeader() {
 		return shoppinglistHeader;
 	}
 
 	public void setShoppinglistHeader(ShoppinglistHeader shoppinglistHeader) {
 		this.shoppinglistHeader = shoppinglistHeader;
+	}
+
+	public Retailer getSelectedRetailer() {
+		return selectedRetailer;
+	}
+
+	public void setSelectedRetailer(Retailer selectedRetailer) {
+		this.selectedRetailer = selectedRetailer;
 	}
 
 	/**
@@ -391,7 +401,7 @@ this.add(mainPanel);
 			Set<ArrayList<Object>> s = selectionModel.getSelectedSet();
 
 			ArrayList<ArrayList<Object>> nm = new ArrayList<ArrayList<Object>>(s);
-		
+
 			for (int i = 0; i < nm.size(); i++) {
 				Listitem l = new Listitem();
 				l = (Listitem) nm.get(i).get(0);
