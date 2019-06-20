@@ -81,9 +81,13 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getListitemsByNameOf(Shoppinglist shoppinglist, String productname, AsyncCallback<ArrayList<Listitem>>callback) throws IllegalArgumentException;
 
-	void getListitemsOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Listitem>> callback);
+	void getListitemsOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
+	
+	void getAllListitemsOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
 	
 	void getAllRetailers(AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
+	
+	void getListitemData(Shoppinglist shoppinglist, AsyncCallback<Map<Listitem, ArrayList<String>>> callback) throws IllegalArgumentException;
 	
 	void getRetailersByName(String name, AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
 	

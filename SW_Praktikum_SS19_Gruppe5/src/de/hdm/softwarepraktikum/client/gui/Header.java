@@ -98,13 +98,7 @@ public class Header extends HorizontalPanel {
 //			reportLink.setHref(GWT.getHostPageBaseURL()+"ReportGenerator.html");
 			Window.Location.assign("ReportGenerator.html");
 //			Window.open(reportLink.getHref(), "_self", "");
-			if(user != null) {
-				Window.alert(user.getGmailAddress());
-			}
-			Window.alert("User wird gleich gesetzt");
-			//reportGenerator.setU(user);
-			
-			Window.alert("User ist gesetzt");
+		
 		}
 		
 	}

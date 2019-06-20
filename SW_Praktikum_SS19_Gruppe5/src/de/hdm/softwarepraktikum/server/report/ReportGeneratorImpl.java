@@ -72,15 +72,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * Initialsierungsmethode.
      */
     public void init() throws IllegalArgumentException{
-        
-        /*
-         * Fuer den Eigenbedarf erstellt ein ReportGeneratorImpl-Objekt 
-         * ein ShoppinglistAdministrationImpl-Objekt. 
-         */
-    	
-//    	ReportGeneratorImpl a = new ReportGeneratorImpl();
-//    	 a.init();
-//    	 this.report = a;
     	
     	this.groupMapper = GroupMapper.groupMapper();
 		this.listitemMapper = ListitemMapper.listitemMapper();

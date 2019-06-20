@@ -5,16 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.cell.client.TextCell;
-import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
@@ -23,10 +18,8 @@ import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.BusinessObject;
 import de.hdm.softwarepraktikum.shared.bo.Group;
-import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
-import de.hdm.softwarepraktikum.*;
 
 /**
  * Diese Implementierung des TreeViewModels sorgt f�r die Verwaltung des
@@ -168,7 +161,6 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		
 		if (s != null) {
 
-			Window.alert("selectedShoppinglist: " +selectedShoppinglist.getId() +", name: " +selectedShoppinglist.getName() +", GroupID:" +selectedShoppinglist.getGroupId());
 			shoppinglistAdministration.getGroupOf(selectedShoppinglist, new AsyncCallback<Group>() {
 
 				@Override
@@ -180,7 +172,6 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 				public void onSuccess(Group result) {
 					selectedGroup = result;
 					shoppinglistShowForm.setSelectedGroup(selectedGroup);
-					Window.alert("SH:" + selectedGroup.getName());
 					RootPanel.get("main").add(shoppinglistShowForm);
 				}
 
