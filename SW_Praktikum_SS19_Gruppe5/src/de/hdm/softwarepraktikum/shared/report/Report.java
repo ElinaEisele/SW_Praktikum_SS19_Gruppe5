@@ -22,6 +22,13 @@ public class Report  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 * Default Konstruktor
+	 */
+	public Report() {
+		
+	}
+	
+	/**
 	 * Impressum der MaulTasche GmbH. Hierbei werden Informationen wie Firmenname,
 	 * Adresse, Logo, etc. 
 	 */
@@ -79,7 +86,7 @@ public class Report  implements Serializable {
 	   * @return Titeltext
 	   */
 	  public String getTitle() {
-	    return this.title;
+	    return title;
 	  }
 
 	  /**
@@ -112,6 +119,17 @@ public class Report  implements Serializable {
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	/**
+     * Hier wird das Erstellungsdatum in einen String gespeichert und gekürzt.
+     *
+     * @return Das zum Anzeigen formatierte Creationdate wird zurückgegeben.
+     */
+    public String getCreationDateString() {
+    	
+    	String creationDate = this.creationDate.toString().split("\\.")[0];
+    	return creationDate;
 	}
 	
 	
