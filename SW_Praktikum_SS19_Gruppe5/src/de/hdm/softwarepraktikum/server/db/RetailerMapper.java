@@ -429,7 +429,10 @@ public class RetailerMapper {
 				u.setCreationDate(rs.getDate("creationDate"));
 				u.setName(rs.getString("name"));
 				u.setGmailAddress(rs.getString("gMail"));
-				users.add(u);
+				
+				if (!users.contains(u)) {
+					users.add(u);
+				}
 			}
 			
 		}catch(SQLException e) {

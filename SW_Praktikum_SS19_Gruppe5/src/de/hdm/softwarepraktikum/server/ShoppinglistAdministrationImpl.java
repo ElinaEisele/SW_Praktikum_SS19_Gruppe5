@@ -405,7 +405,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(Listitem listitem) throws IllegalArgumentException {
-		System.out.println("IMPL: ListitemID: " +listitem.getId());
 		this.listitemMapper.update(listitem);
 		
 	}
@@ -438,13 +437,40 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 
 	/**
+	 * Saemtliche nicht archivierte Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben.
+	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle nicht archivierten Listitem-Objekte ausgegeben werden sollen.
+	 * @return ArrayList mit allen nicht archivierten Listitem-Objekten aus einer bestimmten Einkaufsliste.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		ArrayList<Listitem> list = new ArrayList<Listitem>();
+		if(shoppinglist == null) {
+			return list;
+		}
+		
+		//Alle Listitems werden zwischengespeichert.
+		ArrayList<Listitem> allListitems = this.listitemMapper.findAll();
+		
+		//In dieser ArrayList werden nur die nicht archivierten Listitems der bestimmten Shoppinglist zwischengespeichert.
+		ArrayList<Listitem> slListitems = new ArrayList<Listitem>();
+		for(Listitem l : allListitems) {
+			//Fremdschluessenbeziehung ueberpruefen.
+			if(l.getShoppinglistID() == shoppinglist.getId() && l.isArchived() == false) {
+				slListitems.add(l);
+			}
+		}
+		return slListitems;
+	}
+	
+	/**
 	 * Saemtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben.
 	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen.
 	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste.
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
 		ArrayList<Listitem> list = new ArrayList<Listitem>();
 		if(shoppinglist == null) {
 			return list;
@@ -590,6 +616,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		
 		return archivedListitems;
+	}
+	
+	/**
+	 * Ausgabe aller Listitem Eigenschaften als String zur Bef�llung des <code>ShoppinglistCellTable</code>.
+	 * @param Shoppinglist object
+	 * @return Map mit Listitem-Objekten sowie den zugeh�rigen Daten als String
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Listitem, ArrayList<String>> getListitemData(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.listitemMapper.getListitemData(shoppinglist);
 	}
 	
 /**

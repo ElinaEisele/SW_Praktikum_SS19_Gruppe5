@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
@@ -43,6 +46,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 	private ListBox filterDetailsListBox = new ListBox();
 	private Button saveButton = new Button("Filtern");
 	private Button backButton = new Button("Abbrechen");
+	private String selectedOption;
 	
 	private ArrayList<Retailer> retailerArrayList;
 	private ArrayList<User> userArrayList;
@@ -54,10 +58,13 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 		filterOptionsListBox.addItem("Nutzer");
 		
 		filterOptionsListBox.addChangeHandler(new OptionsChangeHandler());
-		filterDetailsListBox.addChangeHandler(new RetailerListBoxChangeHandler());
+		filterDetailsListBox.addChangeHandler(new DetailsChangeHandler());
 		
 		filterPanel.add(filterOptionsListBox);
 		filterPanel.add(filterDetailsListBox);
+		
+		saveButton.addClickHandler(new SaveClickHandler());
+		backButton.addClickHandler(new CancelClickHandler());
 		
 		buttonPanel.add(saveButton);
 		buttonPanel.add(backButton);
@@ -70,7 +77,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 	
 	public void onLoad() {
 		
-		shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
+		shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new RetailersCallback());
 
 		
 		this.add(mainPanel);
@@ -101,8 +108,32 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 		this.selectedGroup = selectedGroup;
 	}
 	
+	private class SaveClickHandler implements ClickHandler{
 
+		@Override
+		public void onClick(ClickEvent event) {
+			if (selectedOption == "Händler") {
+				Window.alert(selectedRetailer.getName());
+			} else if (selectedOption == "Nutzer") {
+				Window.alert(selectedUser.getName());
+
+			}
+		}
+		
+	}
 	
+	private class CancelClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel.get("main").clear();
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(selectedShoppinglist);
+			ssf.setSelectedGroup(selectedGroup);
+			RootPanel.get("main").add(ssf);
+		}
+		
+	}
 	
 	
 	private class OptionsChangeHandler implements ChangeHandler{
@@ -112,7 +143,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 			int item = filterOptionsListBox.getSelectedIndex();
 			if (item == 0) {
 				filterDetailsListBox.clear();
-				shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
+				shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new RetailersCallback());
 			} if (item == 1) {
 				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndUserOf(selectedShoppinglist, new UsersCallback());
@@ -121,7 +152,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 		
 	}
 	
-	private class RetailerListBoxChangeHandler implements ChangeHandler{
+	private class DetailsChangeHandler implements ChangeHandler{
 
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -141,11 +172,12 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 
 		@Override
 		public void onSuccess(ArrayList<User> result) {
-
+			
 			userArrayList = result;
 			for (int i = 0; i<result.size(); i++) {
 				filterDetailsListBox.addItem(result.get(i).getName());
 				selectedUser = result.get(0);
+				selectedOption = "Nutzer";
 			}
 		}
 		
@@ -164,6 +196,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 			for (int i = 0; i<result.size(); i++) {
 				filterDetailsListBox.addItem(result.get(i).getName());
 				selectedRetailer = result.get(0);
+				selectedOption = "Händler";
 			}
 		}
 		

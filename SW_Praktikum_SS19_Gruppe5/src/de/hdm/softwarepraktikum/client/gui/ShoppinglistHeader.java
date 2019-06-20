@@ -2,8 +2,6 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -260,8 +258,10 @@ public class ShoppinglistHeader extends HorizontalPanel {
 			ShoppinglistFilterForm sff = new ShoppinglistFilterForm();
 			sff.setShoppinglistHeader(ShoppinglistHeader.this);
 			sff.setSelectedShoppinglist(shoppinglistToDisplay);
+			sff.setSelectedGroup(groupToDisplay);
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, sff);
 			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(groupToDisplay);
 			
 		}
 		
