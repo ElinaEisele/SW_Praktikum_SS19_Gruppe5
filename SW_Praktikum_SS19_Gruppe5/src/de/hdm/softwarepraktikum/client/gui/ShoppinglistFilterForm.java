@@ -29,16 +29,16 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  *
  */
 
-public class ShoppinglistFilterForm extends VerticalPanel{
-	
+public class ShoppinglistFilterForm extends VerticalPanel {
+
 	ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
-	
+
 	private ShoppinglistHeader shoppinglistHeader = null;
 	private Shoppinglist selectedShoppinglist = null;
 	private Retailer selectedRetailer = null;
 	private User selectedUser = null;
 	private Group selectedGroup = null;
-	
+
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel filterPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
@@ -48,39 +48,37 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 	private Button saveButton = new Button("Filtern");
 	private Button backButton = new Button("Abbrechen");
 	private String selectedOption;
-	
+
 	private ArrayList<Retailer> retailerArrayList;
 	private ArrayList<User> userArrayList;
 
-	
 	public ShoppinglistFilterForm() {
-		
+
 		filterOptionsListBox.addItem("Händler");
 		filterOptionsListBox.addItem("Nutzer");
-		
+
 		filterOptionsListBox.addChangeHandler(new OptionsChangeHandler());
 		filterDetailsListBox.addChangeHandler(new DetailsChangeHandler());
-		
+
 		filterPanel.add(filterOptionsListBox);
 		filterPanel.add(filterDetailsListBox);
-		
+
 		saveButton.addClickHandler(new SaveClickHandler());
 		backButton.addClickHandler(new CancelClickHandler());
-		
+
 		buttonPanel.add(saveButton);
 		buttonPanel.add(backButton);
-		
+
 		mainPanel.add(infoLabel);
 		mainPanel.add(filterPanel);
 		mainPanel.add(buttonPanel);
-		
+
 	}
-	
+
 	public void onLoad() {
-		
+
 		shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
 
-		
 		this.add(mainPanel);
 
 	}
@@ -108,22 +106,25 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 	public void setSelectedGroup(Group selectedGroup) {
 		this.selectedGroup = selectedGroup;
 	}
-	
-	private class SaveClickHandler implements ClickHandler{
+
+	private class SaveClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedOption == "Händler") {
+				
 				Window.alert(selectedRetailer.getName());
+
 			} else if (selectedOption == "Nutzer") {
+				
 				Window.alert(selectedUser.getName());
 
 			}
 		}
-		
+
 	}
-	
-	private class CancelClickHandler implements ClickHandler{
+
+	private class CancelClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -133,11 +134,10 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 			ssf.setSelectedGroup(selectedGroup);
 			RootPanel.get("main").add(ssf);
 		}
-		
+
 	}
-	
-	
-	private class OptionsChangeHandler implements ChangeHandler{
+
+	private class OptionsChangeHandler implements ChangeHandler {
 
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -145,46 +145,47 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 			if (item == 0) {
 				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
-			} if (item == 1) {
+			}
+			if (item == 1) {
 				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndUserOf(selectedShoppinglist, new UsersCallback());
 			}
 		}
-		
+
 	}
-	
-	private class DetailsChangeHandler implements ChangeHandler{
+
+	private class DetailsChangeHandler implements ChangeHandler {
 
 		@Override
 		public void onChange(ChangeEvent event) {
 			int item = filterDetailsListBox.getSelectedIndex();
 			selectedRetailer = retailerArrayList.get(item);
 		}
-		
+
 	}
-	
-	private class UsersCallback implements AsyncCallback<ArrayList<User>>{
+
+	private class UsersCallback implements AsyncCallback<ArrayList<User>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onSuccess(ArrayList<User> result) {
-			
+
 			userArrayList = result;
-			for (int i = 0; i<result.size(); i++) {
+			for (int i = 0; i < result.size(); i++) {
 				filterDetailsListBox.addItem(result.get(i).getName());
 				selectedUser = result.get(0);
 				selectedOption = "Nutzer";
 			}
 		}
-		
+
 	}
-	
-	private class RetailersCallback implements AsyncCallback<ArrayList<Retailer>>{
+
+	private class RetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -194,15 +195,13 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 		@Override
 		public void onSuccess(ArrayList<Retailer> result) {
 			retailerArrayList = result;
-			for (int i = 0; i<result.size(); i++) {
+			for (int i = 0; i < result.size(); i++) {
 				filterDetailsListBox.addItem(result.get(i).getName());
 				selectedRetailer = result.get(0);
 				selectedOption = "Händler";
 			}
 		}
-		
+
 	}
-	
-	
 
 }

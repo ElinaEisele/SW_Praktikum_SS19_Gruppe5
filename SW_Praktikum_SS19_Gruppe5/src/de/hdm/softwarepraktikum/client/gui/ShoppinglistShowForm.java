@@ -56,6 +56,14 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}
+	
+	public ShoppinglistShowForm(ShoppinglistHeader sh, FilteredShoppinglistCellTable fsct) {
+		shoppinglistHeader = sh;
+		mainPanel.add(shoppinglistHeader);
+		mainPanel.add(fsct);
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
+	}
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, NewRetailerForm nrf) {
 		shoppinglistHeader = sh;
@@ -66,6 +74,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	
 	public ShoppinglistShowForm(ShoppinglistHeader sh, ShoppinglistFilterForm sff) {
 		shoppinglistHeader = sh;
+		mainPanel.add(sh);
 		mainPanel.add(sff);
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
