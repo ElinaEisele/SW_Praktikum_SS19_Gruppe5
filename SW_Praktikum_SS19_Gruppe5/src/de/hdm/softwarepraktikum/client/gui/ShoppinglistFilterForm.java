@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -53,7 +52,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 	public ShoppinglistFilterForm() {
 
-		filterOptionsListBox.addItem("HÃ¤ndler");
+		filterOptionsListBox.addItem("Händler");
 		filterOptionsListBox.addItem("Nutzer");
 
 		filterOptionsListBox.addChangeHandler(new OptionsChangeHandler());
@@ -110,13 +109,29 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (selectedOption == "HÃ¤ndler") {
+			if (selectedOption == "Händler") {
+
+				RootPanel.get("main").clear();
+
+				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 				
-				Window.alert(selectedRetailer.getName());
+				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setShoppinglistHeader(shoppinglistHeader);
+				ssf.setFilteredshoppinglistCellTable(fsct);
+				ssf.setSelected(selectedShoppinglist);
+				ssf.setSelectedGroup(selectedGroup);
+				ssf.setSelectedRetailer(selectedRetailer);
+
+				RootPanel.get("main").add(ssf);
 
 			} else if (selectedOption == "Nutzer") {
-				
-				Window.alert(selectedUser.getName());
+				RootPanel.get("main").clear();
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setSelected(selectedShoppinglist);
+				ssf.setSelectedGroup(selectedGroup);
+				RootPanel.get("main").add(ssf);
 
 			}
 		}
@@ -197,7 +212,8 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 			for (int i = 0; i < result.size(); i++) {
 				filterDetailsListBox.addItem(result.get(i).getName());
 				selectedRetailer = result.get(0);
-				selectedOption = "HÃ¤ndler";
+				selectedOption = "Händler";
+
 			}
 		}
 
