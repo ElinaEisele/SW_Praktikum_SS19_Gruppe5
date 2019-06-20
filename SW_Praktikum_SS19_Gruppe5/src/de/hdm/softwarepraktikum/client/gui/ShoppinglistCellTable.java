@@ -381,17 +381,17 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			Set<ArrayList<Object>> s = selectionModel.getSelectedSet();
 
 			ArrayList<ArrayList<Object>> nm = new ArrayList<ArrayList<Object>>(s);
-
-			for (int i = 0; i <= nm.size(); i++) {
+		
+			for (int i = 0; i < nm.size(); i++) {
 				Listitem l = new Listitem();
 				l = (Listitem) nm.get(i).get(0);
 				checkedListitems.add(l);
-
 			}
 
 			if (checkedListitems.isEmpty() == true) {
 				Window.alert("Keine Eintraege ausgewaehlt");
 			} else {
+
 				shoppinglistAdministration.archiveListitems(checkedListitems, new AsyncCallback<Void>() {
 
 					@Override

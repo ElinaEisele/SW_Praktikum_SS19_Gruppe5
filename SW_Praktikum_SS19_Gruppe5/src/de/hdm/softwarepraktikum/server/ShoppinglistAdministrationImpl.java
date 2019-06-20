@@ -405,7 +405,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(Listitem listitem) throws IllegalArgumentException {
-		System.out.println("IMPL: ListitemID: " +listitem.getId());
 		this.listitemMapper.update(listitem);
 		
 	}
@@ -499,10 +498,40 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group, boolean value) throws IllegalArgumentException {
+		
+		
 		//der zustand muss nur aktualisiert werden, wenn der Wert ein anderer als der vorherige ist.
 		if(listitem.isStandard() != value) {
-			listitem.setStandard(value);
-			this.listitemMapper.update(listitem);
+			
+			//Zwischenspeichern aller Shoppinglists einer Gruppe
+			ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
+			shoppinglists = this.getShoppinglistsOf(group);
+			
+			//Falls eine Gruppe keine Shoppinglists hat, muss nichts geaendert werden
+			if(!shoppinglists.isEmpty()) {
+				
+				for(Shoppinglist s : shoppinglists) {
+					
+					//Zwischenspeichern aller Listitems der aktuellen Shoppinglist.
+					ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+					listitems = this.getListitemsOf(s);
+					
+					//Falls in einer Shoppingliste keine Listitems vorhanden sind, muss nichts geÃ¤ndert werden
+					if(!listitems.isEmpty()) {
+						
+						//Jedes Listitem soll geprueft werden
+						for(Listitem l : listitems) {
+							
+							//Pruefung ob ein Listitem die selben Werte wie das eigentliche Listitem hat.
+							if(this.getAmountOf(l) == this.getAmountOf(listitem) && this.getRetailerOf(l).getId() == this.getRetailerOf(listitem).getId() 
+									&& l.getListitemUnitID() == listitem.getListitemUnitID() && this.getProductnameOf(l).equals(this.getProductnameOf(listitem))) {
+								l.setStandard(value);
+								this.listitemMapper.update(l);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	
@@ -620,9 +649,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 	
 	/**
-	 * Ausgabe aller Listitem Eigenschaften als String zur Befüllung des <code>ShoppinglistCellTable</code>.
+	 * Ausgabe aller Listitem Eigenschaften als String zur Befï¿½llung des <code>ShoppinglistCellTable</code>.
 	 * @param Shoppinglist object
-	 * @return Map mit Listitem-Objekten sowie den zugehörigen Daten als String
+	 * @return Map mit Listitem-Objekten sowie den zugehï¿½rigen Daten als String
 	 * @throws IllegalArgumentException
 	 */
 	public Map<Listitem, ArrayList<String>> getListitemData(Shoppinglist shoppinglist) throws IllegalArgumentException{

@@ -133,8 +133,7 @@ public class ListitemMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			
-			
+		
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM listitems");
 
@@ -463,7 +462,8 @@ public class ListitemMapper {
 
  		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs1 = stmt.executeQuery("SELECT * FROM listitems WHERE listitems.shoppinglist_id = " + shoppinglist.getId());
+			ResultSet rs1 = stmt.executeQuery("SELECT * FROM listitems WHERE listitems.shoppinglist_id = " 
+			+ shoppinglist.getId() + " AND isArchived = " + false);
 
  			while(rs1.next()) {
 				Listitem l = new Listitem();

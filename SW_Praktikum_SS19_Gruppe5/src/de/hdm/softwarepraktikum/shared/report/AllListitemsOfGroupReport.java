@@ -19,4 +19,8 @@ public class AllListitemsOfGroupReport extends SimpleReport{
 		
 	}
 
+	public String getCreationDateConvertToString() {
+		return this.getCreationDate().toString();
+	}
+
 }

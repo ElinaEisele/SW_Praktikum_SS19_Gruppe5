@@ -256,10 +256,10 @@ public class RetailerMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT retailers.id AS retailer_id, "
 					+ "retailers.creationDate AS retailer_creationDate, "
-					+ "retailers.name AS retailer_name"
+					+ "retailers.name AS retailer_name "
 					+ "FROM listitems INNER JOIN retailers "
 					+ "ON listitems.retailer_Id = retailers.id "
-					+ "WHERE listitem_id = " + listitem.getId());
+					+ "WHERE listitems.id = " + listitem.getId());
 
 			if (rs.next()) {
 				r.setId(rs.getInt("retailer_id"));
@@ -329,7 +329,7 @@ public class RetailerMapper {
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					+ "FROM listitems INNER JOIN retailers "
+					+ "FROM retailers INNER JOIN listitems "
 					+ "ON listitems.retailer_id = retailers.id "
 					+ "WHERE shoppinglist_id = " + shoppinglist.getId());
 
@@ -338,8 +338,12 @@ public class RetailerMapper {
 				r.setId(rs.getInt("id"));
 				r.setCreationDate(rs.getDate("creationDate"));
 				r.setName(rs.getString("name"));
-				retailers.add(r);
-			}	
+				
+				if (!retailers.contains(r)) {
+
+					retailers.add(r);
+				}
+							}	
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -486,11 +490,6 @@ public class RetailerMapper {
 					
 					allocations.put(r.getName(), u.getName());
 				}
-			}
-			
-			for (String key : allocations.keySet()) {
-				System.out.println("Key : " + key);
-				System.out.println("Value : " + allocations.get(key) + "\n");
 			}
 
 			
