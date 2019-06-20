@@ -72,12 +72,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * Initialsierungsmethode.
      */
     public void init() throws IllegalArgumentException{
-    	    	
+
     	this.groupMapper = GroupMapper.groupMapper();
-		this.listitemMapper = ListitemMapper.listitemMapper();
-		this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
-		this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
-		this.retailerMapper = RetailerMapper.retailerMapper();
+      this.listitemMapper = ListitemMapper.listitemMapper();
+      this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
+      this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
+      this.retailerMapper = RetailerMapper.retailerMapper();
     }
     
     /**
@@ -96,6 +96,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * @throws IllegalArgumentException
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Retailer r) throws IllegalArgumentException{
+
 //    	if (this.getReportGenerator() != null) {
     	
     	//Anlegen eines leeren Reports
@@ -128,9 +129,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     			}    			
     		}
     		
-    		
-        	
-        	
         	//Erstellen eines Tabellenkopfs
         	Row tablehead = new Row();
         	
@@ -179,22 +177,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		//Liste mit allen Eintraegen der Gruppe
     		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
     		
-    		//Liste mit allen relevanten Eintraegen der Gruppe
-    		ArrayList<Listitem> relevantListitems = new ArrayList<Listitem>();
-    		
     		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
     		if(!shoppinglists.isEmpty()) {
     			for (Shoppinglist s: shoppinglists)	{
         			listitems.addAll(this.listitemMapper.getListitemsOf(s));
         		}
-    			for (Listitem l : listitems) {
-    				if(l.getCreationDate().compareTo(startdate) > 0) {
-    					if(l.getCreationDate().compareTo(enddate) < 0) {
-    							relevantListitems.add(l);
-    					
-        				}
-    				}
-    			}      			
     		}
     		
     		
@@ -212,6 +199,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
         	result.addRow(tablehead);
         	
         	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
+
         	for(Listitem l : relevantListitems) {
         		Row r2 = new Row();
         		r2.addColumn(new Column(this.listitemMapper.getProductnameOf(l.getId())));       		
@@ -246,6 +234,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * @throws IllegalArgumentException
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, Retailer r) throws IllegalArgumentException {
+
  //   	if (this.getReportGenerator() != null) {
     		
     		//Ausgeben aller Einkauslisten der Gruppe
@@ -309,6 +298,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 //    	} else {
 //    		return null;
 //    	}
+
     }
 
 	@Override
