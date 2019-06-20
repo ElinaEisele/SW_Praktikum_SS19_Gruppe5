@@ -171,6 +171,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Product product) throws IllegalArgumentException;
 	
 	/**
+	 * Loeschen des uebergebenen Product-Objekts
+	 * @param listitem Listitem-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
+	public void delete(Product product) throws IllegalArgumentException;
+	
+	/**
 	 * Loeschen des uebergebenen User-Objekts
 	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
