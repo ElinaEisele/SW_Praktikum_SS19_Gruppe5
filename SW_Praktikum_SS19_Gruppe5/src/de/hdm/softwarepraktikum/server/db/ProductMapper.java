@@ -199,13 +199,13 @@ public class ProductMapper {
 	 * @param product
 	 */
 	
-	public void delete(Product product) {
+	public void delete(int id) {
 
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM products WHERE id = " + product.getId());
+			stmt.executeUpdate("DELETE FROM products WHERE id = " + id);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
