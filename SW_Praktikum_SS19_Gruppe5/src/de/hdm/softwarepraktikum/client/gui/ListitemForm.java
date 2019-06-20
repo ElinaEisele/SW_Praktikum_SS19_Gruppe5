@@ -383,7 +383,6 @@ public class ListitemForm extends VerticalPanel {
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(shoppinglistToDisplay);
 
-				Window.alert(shoppinglistToDisplay.getName());
 				RootPanel.get("main").add(lsf);
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
@@ -456,11 +455,8 @@ public class ListitemForm extends VerticalPanel {
 								
 				
 				selectedListitem.setAmount(amount);
-				Window.alert("Amount: " +String.valueOf(amount));
 				selectedListitem.setListitemUnitID(listitemUnit.getId());
-				Window.alert("Alte Retailer-ID: " +String.valueOf(listitemUnit.getId()));
 				selectedListitem.setRetailerID(retailer.getId());
-				Window.alert("Neue Retailer-ID: " +String.valueOf(retailer.getId()));
 
 				shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
 
