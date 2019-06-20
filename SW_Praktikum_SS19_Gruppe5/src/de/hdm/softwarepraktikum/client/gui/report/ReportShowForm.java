@@ -44,7 +44,7 @@ public class ReportShowForm extends VerticalPanel{
 	 * Benoetigte Panel werden hier instanziiert.
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
-//	private HorizontalPanel addPanel = new HorizontalPanel();
+	private HorizontalPanel addPanel = new HorizontalPanel();
 	private Grid reportGrid;
 	
 	private User selectedUser = CurrentUser.getUser(); 
@@ -53,6 +53,11 @@ public class ReportShowForm extends VerticalPanel{
 	 * Button zum anzeigen des Reports
 	 */
 	private Button showReportButton = new Button("Report anzeigen");
+	
+	/**
+	 * Button zum Verlassen des Reports
+	 */
+	private Button getBackButton = new Button("Zur&uumlck");
 	
 	/**
 	 * DateBox-Widget zum auswaehlen des Startdatums
@@ -131,7 +136,7 @@ public class ReportShowForm extends VerticalPanel{
 	public ReportShowForm () {
 		
 		Label newReportLabel = new Label ("Neuen Report erstellen");
-		newReportLabel.setStyleName("NewReportLabel");
+		newReportLabel.setStyleName("Title");
 		
 		reportGrid = new Grid (5, 4);
 		
@@ -159,7 +164,7 @@ public class ReportShowForm extends VerticalPanel{
 		
 		Label showReportButtonLabel = new Label ();
 		reportGrid.setWidget(4, 0, showReportButtonLabel);
-		reportGrid.setWidget(4, 1, showReportButton);
+		reportGrid.setWidget(4, 3, showReportButton);
 		showReportButton.addClickHandler(new ShowReportClickHandler());
 		
 		mainPanel.add(newReportLabel);
@@ -199,16 +204,21 @@ public class ReportShowForm extends VerticalPanel{
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
 //				Window.alert("Dein Retailer ist: " + selectedRetailer.getName());
 				
-				if (noDate == true) {
-					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
-					Window.alert("if: noDate == true" );
-				
-				}else if (selectedRetailer.getId() == 0){
-					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
-					Window.alert("else if: selectedRetailer.getId() == 0");
+				if(noDate == true & selectedRetailer.getId() == 0) {
+					Window.alert("Du musst mindestens ein Datum oder einen Händler auswählen.");
+					
 				}else {
-					reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, selectedRetailer, new CreateAllListitemsOfGroupReport());
-					Window.alert("else:");
+					if (noDate == true) {
+						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
+//						Window.alert("if: noDate == true" );
+					
+					}else if (selectedRetailer.getId() == 0){
+						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
+//						Window.alert("else if: selectedRetailer.getId() == 0");
+					}else {
+						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, selectedRetailer, new CreateAllListitemsOfGroupReport());
+//						Window.alert("else:");
+					}
 				}
 			
 			}
@@ -219,6 +229,18 @@ public class ReportShowForm extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			noDate = true;			
+		}
+		
+	}
+	
+	private class GetBackClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			ReportShowForm rsf = new ReportShowForm();
+			RootPanel.get("reportMain").clear();
+			RootPanel.get("reportMain").add(rsf);
+			
 		}
 		
 	}
@@ -239,7 +261,10 @@ public class ReportShowForm extends VerticalPanel{
 				HTMLReportWriter writer = new HTMLReportWriter();
 				writer.process(result);
 				RootPanel.get("reportMain").clear();
-				RootPanel.get("reportMain").add(new HTML(writer.getReportText()));
+				RootPanel.get("reportMain").add(addPanel);
+				addPanel.add(new HTML(writer.getReportText()));
+				RootPanel.get("reportMain").add(getBackButton);
+				getBackButton.addClickHandler(new GetBackClickHandler());
 			}
 		}
 	}
