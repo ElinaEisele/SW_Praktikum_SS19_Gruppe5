@@ -215,7 +215,9 @@ public class GroupHeader extends HorizontalPanel {
 			if (groupToDisplay != null) {
 				EditGroupNameForm egnf = new EditGroupNameForm();
 				egnf.setGstvm(GroupHeader.this.gstvm);
+				egnf.setGroupHeader(GroupHeader.this);
 				egnf.setSelectedGroup(groupToDisplay);
+				
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
 				gsf.setSelected(groupToDisplay);
 
