@@ -97,7 +97,7 @@ public class Header extends HorizontalPanel {
 //			reportLink.setHref(GWT.getHostPageBaseURL()+"ReportGenerator.html");
 			Window.Location.assign("ReportGenerator.html");
 //			Window.open(reportLink.getHref(), "_self", "");
-		
+
 		}
 		
 	}

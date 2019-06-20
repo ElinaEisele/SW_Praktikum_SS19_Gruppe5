@@ -338,9 +338,10 @@ public class RetailerMapper {
 				r.setId(rs.getInt("id"));;
 				r.setCreationDate(rs.getDate("creationDate"));
 				r.setName(rs.getString("name"));
-				
+
 				retailers.add(r);
 			}	
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
