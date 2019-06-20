@@ -248,6 +248,8 @@ Window.alert("" + selectedlistitemUnit.getId());
 				ssf.setSelected(shoppinglistToDisplay);
 				ssf.setSelectedGroup(groupToDisplay);
 				RootPanel.get("main").add(ssf);
+				
+				Window.alert("Hier");
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
 			}

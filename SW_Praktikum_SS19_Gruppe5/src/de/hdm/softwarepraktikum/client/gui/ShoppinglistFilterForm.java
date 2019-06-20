@@ -77,7 +77,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 	
 	public void onLoad() {
 		
-		shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
+		shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new RetailersCallback());
 
 		
 		this.add(mainPanel);
@@ -143,7 +143,7 @@ public class ShoppinglistFilterForm extends VerticalPanel{
 			int item = filterOptionsListBox.getSelectedIndex();
 			if (item == 0) {
 				filterDetailsListBox.clear();
-				shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
+				shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new RetailersCallback());
 			} if (item == 1) {
 				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndUserOf(selectedShoppinglist, new UsersCallback());

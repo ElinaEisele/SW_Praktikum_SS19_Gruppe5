@@ -260,8 +260,10 @@ public class ShoppinglistHeader extends HorizontalPanel {
 			ShoppinglistFilterForm sff = new ShoppinglistFilterForm();
 			sff.setShoppinglistHeader(ShoppinglistHeader.this);
 			sff.setSelectedShoppinglist(shoppinglistToDisplay);
+			sff.setSelectedGroup(groupToDisplay);
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, sff);
 			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(groupToDisplay);
 			
 		}
 		
