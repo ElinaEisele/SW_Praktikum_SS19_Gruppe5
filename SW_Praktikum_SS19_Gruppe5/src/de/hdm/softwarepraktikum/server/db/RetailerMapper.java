@@ -256,10 +256,10 @@ public class RetailerMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT retailers.id AS retailer_id, "
 					+ "retailers.creationDate AS retailer_creationDate, "
-					+ "retailers.name AS retailer_name"
+					+ "retailers.name AS retailer_name "
 					+ "FROM listitems INNER JOIN retailers "
 					+ "ON listitems.retailer_Id = retailers.id "
-					+ "WHERE listitem_id = " + listitem.getId());
+					+ "WHERE listitems.id = " + listitem.getId());
 
 			if (rs.next()) {
 				r.setId(rs.getInt("retailer_id"));
@@ -429,7 +429,10 @@ public class RetailerMapper {
 				u.setCreationDate(rs.getDate("creationDate"));
 				u.setName(rs.getString("name"));
 				u.setGmailAddress(rs.getString("gMail"));
-				users.add(u);
+				
+				if (!users.contains(u)) {
+					users.add(u);
+				}
 			}
 			
 		}catch(SQLException e) {
