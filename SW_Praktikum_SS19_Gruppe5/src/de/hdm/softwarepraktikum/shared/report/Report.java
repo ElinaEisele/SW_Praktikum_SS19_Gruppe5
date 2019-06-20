@@ -121,5 +121,16 @@ public class Report  implements Serializable {
 		return serialVersionUID;
 	}
 	
+	/**
+     * Hier wird das Erstellungsdatum in einen String gespeichert und gekürzt.
+     *
+     * @return Das zum Anzeigen formatierte Creationdate wird zurückgegeben.
+     */
+    public String getCreationDateString() {
+    	
+    	String creationDate = this.creationDate.toString().split("\\.")[0];
+    	return creationDate;
+	}
+	
 	
 }
