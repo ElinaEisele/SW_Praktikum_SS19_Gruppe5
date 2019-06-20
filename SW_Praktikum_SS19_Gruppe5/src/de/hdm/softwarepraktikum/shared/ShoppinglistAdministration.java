@@ -171,6 +171,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Product product) throws IllegalArgumentException;
 	
 	/**
+	 * Loeschen des uebergebenen Product-Objekts
+	 * @param product Product-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
+	public void delete(Product product) throws IllegalArgumentException;
+	
+	/**
 	 * Loeschen des uebergebenen User-Objekts
 	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
@@ -434,7 +441,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
+	public Map<Listitem, ArrayList<String>> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
@@ -573,4 +580,5 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
+
 }

@@ -2,12 +2,14 @@ package de.hdm.softwarepraktikum.shared.report;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * Stellt einen einzelnen Absatz dar, dessen Inhalt als String abgespeichert wird.
  * 
  * @author FelixRapp
  */
-public class SimpleParagraph extends Paragraph implements Serializable {
+public class SimpleParagraph extends Paragraph implements IsSerializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -17,14 +19,14 @@ public class SimpleParagraph extends Paragraph implements Serializable {
   private String text = "";
 
   /**
-   * Es wird ein No-Argument Konstruktor benötigt. Da es einen Konstruktor mit Argumenten
+   * Es wird ein No-Argument Konstruktor benï¿½tigt. Da es einen Konstruktor mit Argumenten
    * gibt muss der No-Argument Konstruktor somit auch angegeben werden.
    */
   public SimpleParagraph() {
   }
 
   /**
-   * Konstruktur, der die Möglichkeit bietet bei Instanziierung, einen Wert festzulegen.
+   * Konstruktur, der die Mï¿½glichkeit bietet bei Instanziierung, einen Wert festzulegen.
    * 
    * @param value Der Inhalt des Absatzes
    */
@@ -42,7 +44,7 @@ public class SimpleParagraph extends Paragraph implements Serializable {
   }
 
   /**
-   * Ändern des Inhalts.
+   * ï¿½ndern des Inhalts.
    * 
    * @param text der neue Inhalt des Absatzes.
    */

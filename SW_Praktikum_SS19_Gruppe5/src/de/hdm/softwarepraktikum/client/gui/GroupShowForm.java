@@ -43,10 +43,10 @@ public class GroupShowForm extends VerticalPanel {
 
 	public GroupShowForm(GroupHeader gh, EditGroupNameForm egnf) {
 		groupHeader = gh;
-		gh.setGstvm(gstvm);
+		groupHeader.setGstvm(gstvm);
 		egnf.setGstvm(gstvm);
-		mainPanel.add(groupHeader);
 		mainPanel.add(egnf);
+		mainPanel.add(groupHeader);
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}
@@ -62,6 +62,7 @@ public class GroupShowForm extends VerticalPanel {
 		groupHeader = gh;
 		groupCellTable = gct;
 		mainPanel.add(gct);
+		mainPanel.add(groupHeader);
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}
@@ -73,7 +74,9 @@ public class GroupShowForm extends VerticalPanel {
 	}
 	
 	public GroupShowForm(GroupHeader gh, ShowRetailersForm srf) {
+		groupHeader = gh;
 		mainPanel.add(srf);
+		mainPanel.add(groupHeader);
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}

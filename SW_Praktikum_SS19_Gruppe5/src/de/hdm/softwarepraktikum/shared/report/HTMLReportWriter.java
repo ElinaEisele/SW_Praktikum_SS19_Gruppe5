@@ -110,7 +110,7 @@ public void process(AllListitemsOfGroupReport r) {
      */
     result.append("<H1>" + r.getTitle() + "</H1>");
     result.append("<H3>" + r.getCreationDateConvertToString() + "</H3>");
-    result.append("<table style=\"width:400px;border:1px solid silver\"><tr></table>");
+//    result.append("<table style=\"width:400px;border:1px solid silver\"><tr></table>");
 //    result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData())+ "</b></td>");
 //    result.append("</tr><tr><td></td><td>" + r.getCreationDate().toString() + "</td></tr></table>");
 
