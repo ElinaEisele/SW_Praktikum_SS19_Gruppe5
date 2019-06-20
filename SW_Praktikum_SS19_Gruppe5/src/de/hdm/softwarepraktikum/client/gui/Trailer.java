@@ -6,7 +6,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -63,7 +62,7 @@ public class Trailer extends VerticalPanel{
 		public Impressum() {
 			this.setHTML(("<div class = 'Impressum'>" + "</br>" + "<b>Hochschule der Medien</b>" + "</br>"
 							+ "<b>Wirtschaftsinformatik und digitale Medien</b></br>"
-							+ "Nobelstraße&#223e 10</br>" + "70563 Stuttgart</br></br>"
+							+ "Nobelstra&#223e 10</br>" + "70563 Stuttgart</br></br>"
 							+ "Kontakt</br>Telefon: 0711 8923-3242</br> E-Mail: <a href=\"mailto:info-wi7@hdm-stuttgart.de\" target=\"_top\">info-wi7@hdm-stuttgart.de "
 							+ "<br><a href=\"https:\\www.hdm-stuttgart.de\""
 							+ "impressum\"TARGET=\"_blank\">Impressum der Hochschule</a></br></br>" + "</div>"));

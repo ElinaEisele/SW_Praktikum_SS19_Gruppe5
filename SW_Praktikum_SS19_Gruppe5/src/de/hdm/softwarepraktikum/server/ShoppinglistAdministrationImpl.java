@@ -405,7 +405,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(Listitem listitem) throws IllegalArgumentException {
-		System.out.println("IMPL: ListitemID: " +listitem.getId());
 		this.listitemMapper.update(listitem);
 		
 	}
