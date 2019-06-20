@@ -391,19 +391,18 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			if (checkedListitems.isEmpty() == true) {
 				Window.alert("Keine Eintraege ausgewaehlt");
 			} else {
-				Window.alert("listitemid" + checkedListitems.get(0).getId());
+
 				shoppinglistAdministration.archiveListitems(checkedListitems, new AsyncCallback<Void>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
 						// TODO Auto-generated method stub
-						Window.alert("fadfjk");
 
 					}
 
 					@Override
 					public void onSuccess(Void result) {
-Window.alert("syssss");
+
 						RootPanel.get("main").clear();
 
 						ShoppinglistShowForm ssf = new ShoppinglistShowForm();

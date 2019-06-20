@@ -213,7 +213,7 @@ public class NewListitemForm extends HorizontalPanel {
 
 			int item = unitNameListBox.getSelectedIndex();
 			selectedlistitemUnit = listitemUnitArrayList.get(item);
-Window.alert("" + selectedlistitemUnit.getId());
+			
 		}
 	}
 
@@ -293,13 +293,12 @@ Window.alert("" + selectedlistitemUnit.getId());
 				try {
 					amount = (float) decimalFormatter.parse(amountTextBox.getText());
 				} catch (NumberFormatException nfe) {
-					Window.alert("Ungültiger Wert!");
+					Window.alert("Ungueltiger Wert!");
 					return;
 				}
 				ListitemUnit listitemUnit = selectedlistitemUnit;
 				Retailer retailer = selectedRetailer;
 
-				Window.alert("GUI-GruppenID: " +groupToDisplay.getId());
 				shoppinglistAdministration.createListitem(groupToDisplay, shoppinglistToDisplay, productName, amount,
 						listitemUnit, retailer, new CreateListitemCallback());			
 
