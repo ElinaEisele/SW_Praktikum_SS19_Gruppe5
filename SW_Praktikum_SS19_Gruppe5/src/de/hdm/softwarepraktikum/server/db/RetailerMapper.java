@@ -329,15 +329,16 @@ public class RetailerMapper {
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					+ "FROM listitems INNER JOIN retailers "
+					+ "FROM retailers INNER JOIN listitems "
 					+ "ON listitems.retailer_id = retailers.id "
 					+ "WHERE shoppinglist_id = " + shoppinglist.getId());
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
-				r.setId(rs.getInt("id"));
+				r.setId(rs.getInt("id"));;
 				r.setCreationDate(rs.getDate("creationDate"));
 				r.setName(rs.getString("name"));
+				
 				retailers.add(r);
 			}	
 
@@ -488,17 +489,10 @@ public class RetailerMapper {
 				}
 			}
 			
-			for (String key : allocations.keySet()) {
-				System.out.println("Key : " + key);
-				System.out.println("Value : " + allocations.get(key) + "\n");
-			}
-
-			
 		} catch (SQLException e) {
 			e.getStackTrace();
 		}
-		
-		
+	
 		return allocations;
 	}
 	
