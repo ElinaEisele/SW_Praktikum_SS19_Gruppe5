@@ -619,6 +619,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return archivedListitems;
 	}
 	
+	/**
+	 * Ausgabe aller Listitem Eigenschaften als String zur Befüllung des <code>ShoppinglistCellTable</code>.
+	 * @param Shoppinglist object
+	 * @return Map mit Listitem-Objekten sowie den zugehörigen Daten als String
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Listitem, ArrayList<String>> getListitemData(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.listitemMapper.getListitemData(shoppinglist);
+	}
+	
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Product-Objekte

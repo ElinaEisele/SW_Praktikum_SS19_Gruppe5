@@ -87,6 +87,8 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getAllRetailers(AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
 	
+	void getListitemData(Shoppinglist shoppinglist, AsyncCallback<Map<Listitem, ArrayList<String>>> callback) throws IllegalArgumentException;
+	
 	void getRetailersByName(String name, AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
 	
 	void getRetailerById(int retailerId, AsyncCallback<Retailer> callback) throws IllegalArgumentException;
