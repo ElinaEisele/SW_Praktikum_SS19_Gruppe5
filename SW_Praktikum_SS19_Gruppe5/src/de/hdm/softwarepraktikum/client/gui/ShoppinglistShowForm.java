@@ -1,6 +1,5 @@
 package de.hdm.softwarepraktikum.client.gui;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 

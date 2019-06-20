@@ -138,14 +138,11 @@ public class NewShoppinglistForm extends VerticalPanel {
 		public void onSuccess(Shoppinglist result) {
 			
 			selectedShoppinglist = result;
+					
+			shoppinglistShowForm.setSelected(result);
 			
 			RootPanel.get("main").clear();
-						
-			shoppinglistShowForm.setSelected(result);
-
 			RootPanel.get("main").add(shoppinglistShowForm);
-			
-			Window.alert(selectedShoppinglist.getName());
 
 			gstvm.setSelectedShoppinglist(selectedShoppinglist);
 			gstvm.getSelectionModel().setSelected(selectedShoppinglist, true);
