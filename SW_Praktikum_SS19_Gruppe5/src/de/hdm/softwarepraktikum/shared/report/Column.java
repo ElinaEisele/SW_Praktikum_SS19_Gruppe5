@@ -2,6 +2,8 @@ package de.hdm.softwarepraktikum.shared.report;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * Diese Klasse stellt die Unterteilung eines <code>Row</code> -Objektes dar.
  * <code>Column</code> implemtentiert das Interface <code>Serializable</code>,
@@ -10,13 +12,13 @@ import java.io.Serializable;
  * @author TimBeutelspacher
  */
 
-public class Column implements Serializable{
+public class Column implements IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Dieser String-Wert stellt den Wert innerhalb einer Spalte dar. Ingesamt gesehen
-	 * repräsentiert dieser Wert den Inhalt einer Zelle des Reports.
+	 * reprï¿½sentiert dieser Wert den Inhalt einer Zelle des Reports.
 	 */
 	private String value = "";
 
