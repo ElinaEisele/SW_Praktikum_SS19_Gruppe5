@@ -7,7 +7,6 @@ import java.util.Set;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.ClickableTextCell;
-import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
@@ -18,7 +17,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -32,8 +30,6 @@ import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
-import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
-import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
@@ -55,11 +51,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 	private Group selectedGroup = null;
 	private CellTable<ArrayList<Object>> table = new CellTable<ArrayList<Object>>();
 
-	private String productName = null;
-	private String unitName = null;
-	private String retailerName = null;
-
-	private ArrayList<Object> checkedListitems = new ArrayList<>();
+	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
 	private ArrayList<ArrayList<Object>> data = new ArrayList<>();
 
 	private Button archive;
@@ -72,7 +64,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 				DefaultSelectionEventManager.<ArrayList<Object>>createCheckboxManager());
 
 		archive = new Button("Markierte Eintraege archivieren");
-		// archive.addClickHandler(new ArchiveClickHandler());
+		archive.addClickHandler(new ArchiveClickHandler());
 
 		/**
 		 * Spalte zur Darstellung einer Checkbox.
@@ -148,82 +140,86 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			}
 		};
 
-//		/**
-//		 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
-//		 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
-//		 * 
-//		 */
-//		Column<Object, String> imageColumn = new Column<Object, String>(new ClickableTextCell() {
-//			public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
-//				sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
-//			}
-//
-//		})
-//
-//		{
-//
-//			@Override
-//			public String getValue(Listitem object) {
-//				return "edit.png";
-//			}
-//
-//			public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
-//				super.onBrowserEvent(context, elem, object, event);
-//				if ("click".equals(event.getType())) {
-//
-//					RootPanel.get("main").clear();
-//					listitemToDisplay = object;
-//
-//					ListitemShowForm lsf = new ListitemShowForm();
-//					lsf.setSelected(object);
-//					lsf.setSelectedShoppinglist(shoppinglistToDisplay);
-//					lsf.setSelectedGroup(selectedGroup);
-//
-//					RootPanel.get("main").add(lsf);
-//				}
-//			}
-//		};
+		/**
+		 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
+		 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
+		 * 
+		 */
+		Column<ArrayList<Object>, String> imageColumn = new Column<ArrayList<Object>, String>(new ClickableTextCell() {
+			public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
+				sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+			}
+
+		})
+
+		{
+
+			@Override
+			public String getValue(ArrayList<Object> object) {
+				return "edit.png";
+			}
+
+			public void onBrowserEvent(Context context, Element elem, ArrayList<Object> object, NativeEvent event) {
+				super.onBrowserEvent(context, elem, object, event);
+				if ("click".equals(event.getType())) {
+
+					RootPanel.get("main").clear();
+					listitemToDisplay = (Listitem) object.get(0);
+
+					ListitemShowForm lsf = new ListitemShowForm();
+					lsf.setSelected(listitemToDisplay);
+					lsf.setSelectedShoppinglist(shoppinglistToDisplay);
+					lsf.setSelectedGroup(selectedGroup);
+
+					RootPanel.get("main").add(lsf);
+				}
+			}
+		};
 
 		/**
 		 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
 		 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
 		 * 
 		 */
-//		Column<Listitem, String> standardColumn = new Column<Listitem, String>(new ClickableTextCell() {
-//			public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
-//				sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
-//			}
-//
-//		})
-//
-//		{
-//
-//			@Override
-//			public String getValue(Listitem object) {
-//				Window.alert("" + object.isStandard());
-//				if (object.isStandard() == true) {
-//					return "like (1).png";
-//				} else {
-//					return "like.png";
-//				}
-//
-//			}
-//
-//			public void onBrowserEvent(Context context, Element elem, Listitem object, NativeEvent event) {
-//				super.onBrowserEvent(context, elem, object, event);
-//				if ("click".equals(event.getType())) {
-//
-//					if (object.isStandard() == true) {
-//						shoppinglistAdministration.setStandardListitem(object, selectedGroup, false,
-//								new UnselectStandardCallback());
-//					} else if (object.isStandard() != true) {
-//						shoppinglistAdministration.setStandardListitem(object, selectedGroup, true,
-//								new SetStandardCallback());
-//					}
-//				}
-//			}
-//
-//		};
+		Column<ArrayList<Object>, String> standardColumn = new Column<ArrayList<Object>, String>(
+				new ClickableTextCell() {
+					public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
+						sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+					}
+
+				})
+
+		{
+
+			@Override
+			public String getValue(ArrayList<Object> object) {
+
+				listitemToDisplay = (Listitem) object.get(0);
+				if (listitemToDisplay.isStandard() == true) {
+					return "like (1).png";
+				} else {
+					return "like.png";
+				}
+
+			}
+
+			public void onBrowserEvent(Context context, Element elem, ArrayList<Object> object, NativeEvent event) {
+				super.onBrowserEvent(context, elem, object, event);
+				if ("click".equals(event.getType())) {
+
+					listitemToDisplay = (Listitem) object.get(0);
+
+					if (listitemToDisplay.isStandard() == true) {
+						shoppinglistAdministration.setStandardListitem(listitemToDisplay, selectedGroup, false,
+								new UnselectStandardCallback());
+					} else if (listitemToDisplay.isStandard() != true) {
+						shoppinglistAdministration.setStandardListitem(listitemToDisplay, selectedGroup, true,
+								new SetStandardCallback());
+					}
+				}
+			}
+
+		};
 
 		/**
 		 * Add Columns to CellTable
@@ -234,8 +230,8 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(amountToDisplay, "Menge");
 		table.addColumn(unitNameToDisplay, "Einheit");
 		table.addColumn(retailerNameToDisplay, "Haendler");
-//		table.addColumn(imageColumn, "Edit");
-//		table.addColumn(standardColumn, "Standard");
+		table.addColumn(imageColumn, "Edit");
+		table.addColumn(standardColumn, "Standard");
 
 	}
 
@@ -341,7 +337,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			Window.alert("Nicht mehr standard");
+
 			RootPanel.get("main").clear();
 
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
@@ -364,7 +360,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			Window.alert("standard");
+
 			RootPanel.get("main").clear();
 
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
@@ -377,57 +373,57 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	}
 
-//	private class ArchiveClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//
-//			Set<Object> s = selectionModel.getSelectedSet();
-//
-//			int n = s.size();
-//			Object arr[] = new Object[n];
-//
-//			int i = 0;
-//			for (Object x : s) {
-//				arr[i++] = x;
-//				checkedListitems.add(x);
-//			}
-//
-//			if (checkedListitems.isEmpty() == true) {
-//				Window.alert("Keine Eintraege ausgewaehlt");
-//			} else {
-//				shoppinglistAdministration.archiveListitems(checkedListitems, new AsyncCallback<Void>() {
-//
-//					@Override
-//					public void onFailure(Throwable caught) {
-//						// TODO Auto-generated method stub
-//
-//					}
-//
-//					@Override
-//					public void onSuccess(Void result) {
-//
-//						RootPanel.get("main").clear();
-//
-//						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-//						ssf.setSelected(shoppinglistToDisplay);
-//						ssf.setSelectedGroup(selectedGroup);
-////						ssf.setGstvm(gstvm);
-////						gstvm.setSelectedGroup(null);
-////						gstvm.setSelectedShoppinglist(object);
-//
-//						checkedListitems.clear();
-//						selectionModel.clear();
-//
-//						RootPanel.get("main").add(ssf);
-//
-//					}
-//
-//				});
-//			}
-//
-//		}
-//
-//	}
+	private class ArchiveClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+
+			Set<ArrayList<Object>> s = selectionModel.getSelectedSet();
+
+			ArrayList<ArrayList<Object>> nm = new ArrayList<ArrayList<Object>>(s);
+
+			for (int i = 0; i <= nm.size(); i++) {
+				Listitem l = new Listitem();
+				l = (Listitem) nm.get(i).get(0);
+				checkedListitems.add(l);
+
+			}
+
+			if (checkedListitems.isEmpty() == true) {
+				Window.alert("Keine Eintraege ausgewaehlt");
+			} else {
+				shoppinglistAdministration.archiveListitems(checkedListitems, new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+
+						RootPanel.get("main").clear();
+
+						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+						ssf.setSelected(shoppinglistToDisplay);
+						ssf.setSelectedGroup(selectedGroup);
+//						ssf.setGstvm(gstvm);
+//						gstvm.setSelectedGroup(null);
+//						gstvm.setSelectedShoppinglist(object);
+
+						checkedListitems.clear();
+						selectionModel.clear();
+
+						RootPanel.get("main").add(ssf);
+
+					}
+
+				});
+			}
+
+		}
+
+	}
 
 }
