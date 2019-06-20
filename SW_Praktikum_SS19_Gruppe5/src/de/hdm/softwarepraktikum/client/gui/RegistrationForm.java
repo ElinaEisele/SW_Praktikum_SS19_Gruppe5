@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
-import de.hdm.softwarepraktikum.shared.LoginInfo;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
@@ -70,7 +69,7 @@ public class RegistrationForm extends VerticalPanel{
 			String userName = lastNameTextBox.getText()+" "+firstNameTextBox.getText();
 			user.setName(userName);
 			shoppinglistAdministration.createUser(userName, user.getGmailAddress(), new SaveUserCallback());
-			Window.alert(user.getGmailAddress());
+
 		}
 		
 	}
