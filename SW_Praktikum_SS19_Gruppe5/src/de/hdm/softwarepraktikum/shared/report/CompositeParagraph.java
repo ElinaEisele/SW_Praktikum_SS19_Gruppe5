@@ -3,12 +3,14 @@ package de.hdm.softwarepraktikum.shared.report;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
- * Stellt mehrere Absätze (SimpleParagraph-Objekte) dar. 
+ * Stellt mehrere Absï¿½tze (SimpleParagraph-Objekte) dar. 
  * 
  * @author FelixRapp
  */
-public class CompositeParagraph extends Paragraph implements Serializable {
+public class CompositeParagraph extends Paragraph implements IsSerializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -18,9 +20,9 @@ public class CompositeParagraph extends Paragraph implements Serializable {
   private ArrayList<SimpleParagraph> subParagraphs = new ArrayList<SimpleParagraph>();
 
   /**
-   * Hinzufügen eines Abschnitts.
+   * Hinzufï¿½gen eines Abschnitts.
    * 
-   * @param p der hinzuzufügende Unterabschnitt.
+   * @param p der hinzuzufï¿½gende Unterabschnitt.
    */
   public void addSubParagraph(SimpleParagraph p) {
     this.subParagraphs.add(p);
@@ -38,14 +40,14 @@ public class CompositeParagraph extends Paragraph implements Serializable {
   /**
    * Auslesen aller Unterabschnitte.
    * 
-   * @return ArrayList, welche alle Unterabschnitte enthält.
+   * @return ArrayList, welche alle Unterabschnitte enthï¿½lt.
    */
   public ArrayList<SimpleParagraph> getSubParagraphs() {
     return this.subParagraphs;
   }
 
   /**
-   * Gibt die Anzahl der Unterabschnitte zurück.
+   * Gibt die Anzahl der Unterabschnitte zurï¿½ck.
    * 
    * @return Anzahl der Unterabschnitte
    */
@@ -56,31 +58,31 @@ public class CompositeParagraph extends Paragraph implements Serializable {
   /**
    * Ausgeben eines bestimmten Unterabschnitts.
    * 
-   * @param i der Index des gewünschten Unterabschnitts
+   * @param i der Index des gewï¿½nschten Unterabschnitts
    * 
-   * @return der gewünschte Unterabschnitt
+   * @return der gewï¿½nschte Unterabschnitt
    */
   public SimpleParagraph getParagraphAt(int i) {
     return this.subParagraphs.get(i);
   }
 
   /**
-   * Zurückgeben eines CompositeParagraph-Objekts als String.
+   * Zurï¿½ckgeben eines CompositeParagraph-Objekts als String.
    */
   @Override
 public String toString() {
     /*
-     * Neues StringBuffer-Objekt, in welchem die Ergebnisse angehängt werden.
+     * Neues StringBuffer-Objekt, in welchem die Ergebnisse angehï¿½ngt werden.
      */
     StringBuffer result = new StringBuffer();
 
-    // Schleife über alle Unterabschnitte
+    // Schleife ï¿½ber alle Unterabschnitte
     for (int i = 0; i < this.subParagraphs.size(); i++) {
       SimpleParagraph p = this.subParagraphs.get(i);
 
       /*
-       * Der Unterabschnitt wird in einer String umgewandelt und anschließend dem 
-       * StringBuffer angehängt.
+       * Der Unterabschnitt wird in einer String umgewandelt und anschlieï¿½end dem 
+       * StringBuffer angehï¿½ngt.
        */
       result.append(p.toString() + "\n");
     }

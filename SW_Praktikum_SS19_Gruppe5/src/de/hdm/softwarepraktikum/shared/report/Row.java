@@ -3,6 +3,8 @@ package de.hdm.softwarepraktikum.shared.report;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * Diese Klasse stellt in der Tabelle eines <code>SimpleReport</code> -Objektes eine Zeile dar.
  * Die Klasse <code>Row</code> implemtentiert das Interface <code>Serializable</code>, da diese vom Server zum 
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  *  
  * @author TimBeutelspacher
  */
-public class Row implements Serializable{
+public class Row implements IsSerializable{
 
 
 	private static final long serialVersionUID = 1L;
