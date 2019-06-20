@@ -66,6 +66,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	
 	public ShoppinglistShowForm(ShoppinglistHeader sh, ShoppinglistFilterForm sff) {
 		shoppinglistHeader = sh;
+		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(sff);
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
