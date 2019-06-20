@@ -416,12 +416,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
-		
-		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt geloescht.
-		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
-		
-		//Nachdem das Product-Objekt geloescht wurde kann das Listitem-Objekt geloescht werden.
+			
+		//Bevor das Product-Objekt geloescht wird kann das Listitem-Objekt geloescht werden.
 		this.listitemMapper.delete(listitem);
+		
+		//Das dazugehörige Product-Objekt wird gelöscht.
+		this.delete(this.getProductOf(listitem));
 	}	
 	
 	/**
@@ -696,6 +696,18 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void save(Product product) throws IllegalArgumentException {
 		this.productMapper.update(product);
 	}
+	
+	/**
+	 * Loeschen des uebergebenen Product-Objekts
+	 * @param product Product-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void delete(Product product) throws IllegalArgumentException {
+		
+		//Loeschen des Product-Objekts.
+		this.productMapper.delete(product);
+	}	
 	
 /**
  * **********************************************************************************
