@@ -261,6 +261,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 			sff.setSelectedGroup(groupToDisplay);
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, sff);
 			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(groupToDisplay);
 			
 		}
 		

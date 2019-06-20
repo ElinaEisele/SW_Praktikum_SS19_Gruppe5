@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -76,8 +75,8 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
-
-		shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
+		
+		shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new RetailersCallback());
 
 		this.add(mainPanel);
 
@@ -144,9 +143,9 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 			int item = filterOptionsListBox.getSelectedIndex();
 			if (item == 0) {
 				filterDetailsListBox.clear();
-				shoppinglistAdministration.getAssigndRetailersOf(selectedShoppinglist, new RetailersCallback());
-			}
-			if (item == 1) {
+
+				shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new RetailersCallback());
+			} if (item == 1) {
 				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndUserOf(selectedShoppinglist, new UsersCallback());
 			}
