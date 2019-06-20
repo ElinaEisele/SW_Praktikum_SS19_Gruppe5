@@ -1,6 +1,5 @@
 package de.hdm.softwarepraktikum.client.gui;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -98,7 +97,7 @@ public class Header extends HorizontalPanel {
 //			reportLink.setHref(GWT.getHostPageBaseURL()+"ReportGenerator.html");
 			Window.Location.assign("ReportGenerator.html");
 //			Window.open(reportLink.getHref(), "_self", "");
-			
+
 		}
 		
 	}

@@ -4,12 +4,9 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -58,6 +55,7 @@ public class AddUserToGroupForm extends VerticalPanel{
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
 		
+		buttonPanel.add(emailLabel);
 		buttonPanel.add(emailTextBox);
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
@@ -120,6 +118,7 @@ public class AddUserToGroupForm extends VerticalPanel{
 				shoppinglistAdministration.getUserByMail(emailTextBox.getValue(), new GetUserCallback());
 				GroupShowForm gsf = new GroupShowForm();
 				gsf.setSelected(selectedGroup);
+				emailTextBox.setText("");
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");

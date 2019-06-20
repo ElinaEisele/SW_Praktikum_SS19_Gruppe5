@@ -4,6 +4,7 @@ package de.hdm.softwarepraktikum.shared;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -170,6 +171,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Product product) throws IllegalArgumentException;
 	
 	/**
+	 * Loeschen des uebergebenen Product-Objekts
+	 * @param listitem Listitem-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
+	public void delete(Product product) throws IllegalArgumentException;
+	
+	/**
 	 * Loeschen des uebergebenen User-Objekts
 	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
@@ -295,12 +303,28 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Listitem> getListitemsByNameOf(Shoppinglist shoppinglist, String productname) throws IllegalArgumentException;
 	
 	/**
-	 * Saemtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben
-	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen
-	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste
+	 * Saemtliche nicht archivierte Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben.
+	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle nicht archivierten Listitem-Objekte ausgegeben werden sollen.
+	 * @return ArrayList mit allen nicht archivierten Listitem-Objekten aus einer bestimmten Einkaufsliste.
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Daten der Listitem-Objekte aus einer bestimmten Shoppinglist werden ausgegeben
+	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen
+	 * @return Map mit allen Daten der Listitem-Objekten aus einer bestimmten Einkaufsliste
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Listitem, ArrayList<String>> getListitemData(Shoppinglist shoppinglist) throws IllegalArgumentException;	
+	
+	/**
+	 * Saemtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben.
+	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen.
+	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste.
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Saemtliche Retailer-Objetke werden ausgegeben
@@ -356,6 +380,8 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * Ausgabe des zugewiesenen Nutzers.
 	 */
 	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
+
+	public ArrayList<User> getAssigndUserOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 
 	
 	/**

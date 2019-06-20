@@ -2,8 +2,6 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -11,10 +9,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
-import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
-import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Klasse fuer die Anordnung der Buttons im <code>GroupHeader</code>, der in der
@@ -140,6 +136,10 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
+				
+				NavigatorPanel np = new NavigatorPanel();
+				RootPanel.get("aside").clear();
+				RootPanel.get("aside").add(np);
 
 				NewShoppinglistForm nsf = new NewShoppinglistForm();
 				nsf.setGstvm(GroupHeader.this.gstvm);
@@ -148,6 +148,8 @@ public class GroupHeader extends HorizontalPanel {
 
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
 				gsf.setSelected(groupToDisplay);
+				
+
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -213,7 +215,9 @@ public class GroupHeader extends HorizontalPanel {
 			if (groupToDisplay != null) {
 				EditGroupNameForm egnf = new EditGroupNameForm();
 				egnf.setGstvm(GroupHeader.this.gstvm);
+				egnf.setGroupHeader(GroupHeader.this);
 				egnf.setSelectedGroup(groupToDisplay);
+				
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
 				gsf.setSelected(groupToDisplay);
 

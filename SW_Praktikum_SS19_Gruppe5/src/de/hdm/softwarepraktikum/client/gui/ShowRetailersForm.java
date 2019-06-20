@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -122,7 +120,9 @@ public class ShowRetailersForm extends VerticalPanel {
 				Notification.show("Dieser Händler existiert schon.");
 			} else {
 				shoppinglistAdministration.createRetailer(retailerTextBox.getValue(), new NewRetailerCallback());
+
 			}
+			
 
 		}
 		
@@ -141,6 +141,9 @@ public class ShowRetailersForm extends VerticalPanel {
 			int row = retailersFlexTable.getRowCount();
 			retailersFlexTable.setText(row, 0, retailerTextBox.getValue());
 			retailers.add(result.getName());
+			
+			retailerTextBox.setText("");
+
 		}
 		
 	}

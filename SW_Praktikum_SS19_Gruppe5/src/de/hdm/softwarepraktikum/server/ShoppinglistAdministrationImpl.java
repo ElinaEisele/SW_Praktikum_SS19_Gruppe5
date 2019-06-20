@@ -405,7 +405,6 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void save(Listitem listitem) throws IllegalArgumentException {
-		System.out.println("IMPL: ListitemID: " +listitem.getId());
 		this.listitemMapper.update(listitem);
 		
 	}
@@ -417,12 +416,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void delete(Listitem listitem) throws IllegalArgumentException {
-		
-		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt geloescht.
-		this.productMapper.delete(this.productMapper.findById(listitem.getProductID()));
-		
+			
 		//Nachdem das Product-Objekt geloescht wurde kann das Listitem-Objekt geloescht werden.
 		this.listitemMapper.delete(listitem);
+		
+		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt geloescht.
+				this.delete(this.getProductOf(listitem));
 	}	
 	
 	/**
@@ -438,13 +437,40 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	}
 
 	/**
+	 * Saemtliche nicht archivierte Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben.
+	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle nicht archivierten Listitem-Objekte ausgegeben werden sollen.
+	 * @return ArrayList mit allen nicht archivierten Listitem-Objekten aus einer bestimmten Einkaufsliste.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+		ArrayList<Listitem> list = new ArrayList<Listitem>();
+		if(shoppinglist == null) {
+			return list;
+		}
+		
+		//Alle Listitems werden zwischengespeichert.
+		ArrayList<Listitem> allListitems = this.listitemMapper.findAll();
+		
+		//In dieser ArrayList werden nur die nicht archivierten Listitems der bestimmten Shoppinglist zwischengespeichert.
+		ArrayList<Listitem> slListitems = new ArrayList<Listitem>();
+		for(Listitem l : allListitems) {
+			//Fremdschluessenbeziehung ueberpruefen.
+			if(l.getShoppinglistID() == shoppinglist.getId() && l.isArchived() == false) {
+				slListitems.add(l);
+			}
+		}
+		return slListitems;
+	}
+	
+	/**
 	 * Saemtliche Listitem-Objekte auch einer bestimmten Shoppinglist werden ausgegeben.
 	 * @param shoppinglist ist die Einkaufsliste, aus welcher alle Listitem-Objekte ausgegeben werden sollen.
 	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Einkaufsliste.
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ArrayList<Listitem> getListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
+	public ArrayList<Listitem> getAllListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException {
 		ArrayList<Listitem> list = new ArrayList<Listitem>();
 		if(shoppinglist == null) {
 			return list;
@@ -472,10 +498,40 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	@Override
 	public void setStandardListitem(Listitem listitem, Group group, boolean value) throws IllegalArgumentException {
+		
+		
 		//der zustand muss nur aktualisiert werden, wenn der Wert ein anderer als der vorherige ist.
 		if(listitem.isStandard() != value) {
-			listitem.setStandard(value);
-			this.listitemMapper.update(listitem);
+			
+			//Zwischenspeichern aller Shoppinglists einer Gruppe
+			ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
+			shoppinglists = this.getShoppinglistsOf(group);
+			
+			//Falls eine Gruppe keine Shoppinglists hat, muss nichts geaendert werden
+			if(!shoppinglists.isEmpty()) {
+				
+				for(Shoppinglist s : shoppinglists) {
+					
+					//Zwischenspeichern aller Listitems der aktuellen Shoppinglist.
+					ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+					listitems = this.getListitemsOf(s);
+					
+					//Falls in einer Shoppingliste keine Listitems vorhanden sind, muss nichts geändert werden
+					if(!listitems.isEmpty()) {
+						
+						//Jedes Listitem soll geprueft werden
+						for(Listitem l : listitems) {
+							
+							//Pruefung ob ein Listitem die selben Werte wie das eigentliche Listitem hat.
+							if(this.getAmountOf(l) == this.getAmountOf(listitem) && this.getRetailerOf(l).getId() == this.getRetailerOf(listitem).getId() 
+									&& l.getListitemUnitID() == listitem.getListitemUnitID() && this.getProductnameOf(l).equals(this.getProductnameOf(listitem))) {
+								l.setStandard(value);
+								this.listitemMapper.update(l);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	
@@ -592,6 +648,16 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return archivedListitems;
 	}
 	
+	/**
+	 * Ausgabe aller Listitem Eigenschaften als String zur Bef�llung des <code>ShoppinglistCellTable</code>.
+	 * @param Shoppinglist object
+	 * @return Map mit Listitem-Objekten sowie den zugeh�rigen Daten als String
+	 * @throws IllegalArgumentException
+	 */
+	public Map<Listitem, ArrayList<String>> getListitemData(Shoppinglist shoppinglist) throws IllegalArgumentException{
+		return this.listitemMapper.getListitemData(shoppinglist);
+	}
+	
 /**
  * **********************************************************************************
  * ABSCHNITT, Beginn: Methoden fuer Product-Objekte
@@ -630,6 +696,18 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void save(Product product) throws IllegalArgumentException {
 		this.productMapper.update(product);
 	}
+	
+	/**
+	 * Loeschen des uebergebenen Product-Objekts
+	 * @param listitem Listitem-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void delete(Product product) throws IllegalArgumentException {
+		
+		//Beim Loeschen eines Listitem-Objekts wird ebenfalls das enthaltene Product-Objekt geloescht.
+		this.productMapper.delete(product.getId());
+	}	
 	
 /**
  * **********************************************************************************
@@ -736,6 +814,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 */
 	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) {
 		return this.retailerMapper.getAssigndUserOf(shoppinglist, retailer);
+	}
+	
+	public ArrayList<User> getAssigndUserOf(Shoppinglist shoppinglist) {
+		return this.retailerMapper.getAssigndUsersOf(shoppinglist);
 	}
 	
 	/**
