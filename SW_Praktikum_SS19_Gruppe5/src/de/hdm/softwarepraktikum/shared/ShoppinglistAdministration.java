@@ -369,7 +369,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Ausgabe aller schon zugewiesenen Retailer.
 	 */
-	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	public ArrayList<Retailer> getAssignedRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgabe aller Händler-Nutzer Zuweisungen in einer <code>Shoppinglist</code>
@@ -432,7 +432,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungbereichc eines Nutzers liegen
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
+	public Map<Listitem, ArrayList<String>> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
 	
 	/**
 	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind

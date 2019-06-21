@@ -8,6 +8,7 @@ import com.google.gwt.view.client.ProvidesKey;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Klasse zur Uebersicht einer Shoppingliste mit einem Header und mit der
@@ -24,8 +25,9 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	private VerticalPanel mainPanel = new VerticalPanel();
 
 	private Retailer selectedRetailer = null;
-	private Shoppinglist selectedShoppinglist;
-	private Group selectedGroup;
+	private Shoppinglist selectedShoppinglist = null;
+	private Group selectedGroup = null;
+	private User selectedUser = null;
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, NewListitemForm nlf) {
@@ -54,13 +56,6 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}
-
-//	public ShoppinglistShowForm(ShoppinglistHeader sh, ShoppinglistCellTable slct) {
-//		shoppinglistHeader = sh;
-//		mainPanel.add(slct);
-//		RootPanel.get("main").clear();
-//		RootPanel.get("main").add(mainPanel);
-//	}
 	
 	public ShoppinglistShowForm(ShoppinglistHeader sh, FilteredShoppinglistCellTable fsct) {
 		shoppinglistHeader.setSelected(selectedGroup);
@@ -113,13 +108,12 @@ public class ShoppinglistShowForm extends VerticalPanel {
 			filteredshoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
 			filteredshoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 			filteredshoppinglistCellTable.setSelectedGroup(selectedGroup);
+			filteredshoppinglistCellTable.setSelectedUser(selectedUser);
 			
 		} else {
 			Window.alert("kein CellTable");
 		}
-		
-		
-		
+			
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setGroupToDisplay(selectedGroup);
@@ -193,6 +187,16 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		
 	}
 
+
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+		filteredshoppinglistCellTable.setSelectedUser(selectedUser);
+
+	}
 	
 	
 

@@ -733,10 +733,12 @@ public class ListitemMapper {
 	 * @param usernameId
 	 * @return ArrayList<Listitem>
 	 */
-	public ArrayList<Listitem> filterShoppinglistByUser(int shoppinglistId,  int userId){
+	public Map<Listitem, ArrayList<String>> filterShoppinglistByUser(int shoppinglistId,  int userId){
 		
 		Connection con = DBConnection.connection();
-		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+		Map<Listitem, ArrayList<String>> listitemMap = new HashMap<Listitem, ArrayList<String>>();
+
+ 		ArrayList<Listitem> listitemArrayList = new ArrayList<Listitem>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -744,8 +746,9 @@ public class ListitemMapper {
 					+ "FROM responsibilities INNER JOIN listitems "
 					+ "ON responsibilities.retailer_id = listitems.retailer_id "
 					+ "WHERE listitems.shoppinglist_id = " + shoppinglistId 
+					+ " AND responsibilities.shoppinglist_id = " + shoppinglistId
 					+ " AND responsibilities.user_id = " + userId
-					+ " AND listitems.isArchieved = " + false);
+					+ " AND listitems.isArchived = " + false);
 
 			while (rs.next()){
 			        Listitem li = new Listitem();
@@ -759,21 +762,69 @@ public class ListitemMapper {
 					li.setGroupID(rs.getInt("usergroup_id"));
 					li.setRetailerID(rs.getInt("retailer_id"));
 					li.setArchived(rs.getBoolean("isArchived"));
-			        listitems.add(li);		   
+					listitemArrayList.add(li);	   
 			}
 
+			Statement stmt2 = con.createStatement();
+
+ 			for(Listitem l : listitemArrayList) {
+ 				
+ 				ArrayList<String> stringArrayList = new ArrayList<String>();
+				
+ 				ResultSet rs2 = stmt2.executeQuery("SELECT name FROM products WHERE id = " + l.getProductID());	
+
+ 				if(rs2.next()) {
+ 					
+ 					Product p = new Product();
+					p.setName(rs2.getString("name"));
+					stringArrayList.add(p.getName());		
+
+ 				}	
+
+ 				ResultSet rs3 = stmt2.executeQuery("SELECT name FROM retailers WHERE id = " + l.getRetailerID());
+
+ 				if(rs3.next()) {
+
+ 				Retailer r = new Retailer();
+				r.setName(rs3.getString("name"));
+				stringArrayList.add(r.getName());
+
+ 				}
+
+ 				ResultSet rs4 = stmt2.executeQuery("SELECT name FROM units WHERE id = " + l.getListitemUnitID());
+
+ 				if(rs4.next()) {
+ 					
+ 				ListitemUnit u = new ListitemUnit();
+				u.setName(rs4.getString("name"));
+				stringArrayList.add(u.getName());
+				
+ 				}
+ 				
+ 				ResultSet rs5 = stmt2.executeQuery("SELECT amount FROM listitems WHERE id = " + l.getId());
+
+ 				if(rs5.next()) {
+ 				Float f = rs5.getFloat("amount");
+ 				stringArrayList.add(f.toString());
+ 
+ 				}
+ 				
+ 				listitemMap.put(l, stringArrayList);
+ 			}				
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return listitems;
+		return listitemMap;
 	}
 	
 	/**
 	 * Eine Shoppingliste anhand eines Retailers filtern.
 	 * 
-	 * @param shoppinglist
-	 * @param retailername
+	 * @param shoppinglistId
+	 * @param retailerId
 	 * @return ArrayList<Listitem>
 	 */
 
