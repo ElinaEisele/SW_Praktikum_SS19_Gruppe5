@@ -52,7 +52,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 	public ShoppinglistFilterForm() {
 
-		filterOptionsListBox.addItem("Händler");
+		filterOptionsListBox.addItem("Hï¿½ndler");
 		filterOptionsListBox.addItem("Nutzer");
 
 		filterOptionsListBox.addChangeHandler(new OptionsChangeHandler());
@@ -109,7 +109,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (selectedOption == "Händler") {
+			if (selectedOption == "Hï¿½ndler") {
 
 				RootPanel.get("main").clear();
 
@@ -231,7 +231,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 			for (int i = 0; i < result.size(); i++) {
 				filterDetailsListBox.addItem(result.get(i).getName());
 				selectedRetailer = result.get(0);
-				selectedOption = "Händler";
+				selectedOption = "Hï¿½ndler";
 
 			}
 		}

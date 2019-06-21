@@ -263,7 +263,6 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		
 
 		if (shoppinglistToDisplay != null && selectedUser != null) {
-			Window.alert("hier");
 			contentLabel.setText("Filter by user");
 			shoppinglistAdministration.filterShoppinglistsByUser(shoppinglistToDisplay, selectedUser,
 					new AsyncCallback<Map<Listitem, ArrayList<String>>>() {

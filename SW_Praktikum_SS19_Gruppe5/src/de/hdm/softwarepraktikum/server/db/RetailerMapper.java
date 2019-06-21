@@ -339,7 +339,9 @@ public class RetailerMapper {
 				r.setCreationDate(rs.getDate("creationDate"));
 				r.setName(rs.getString("name"));
 
-				retailers.add(r);
+				if (!retailers.contains(r)) {
+					retailers.add(r);
+				}
 			}	
 
 
