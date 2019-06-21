@@ -21,6 +21,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
@@ -58,7 +59,9 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
 	private ArrayList<ArrayList<Object>> data = new ArrayList<>();
 
-	private Button archive;
+	private Button backButton;
+	private Button archiveButton;
+
 	private final MultiSelectionModel<ArrayList<Object>> selectionModel = new MultiSelectionModel<ArrayList<Object>>();
 
 	public FilteredShoppinglistCellTable() {
@@ -67,8 +70,14 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		table.setSelectionModel(selectionModel,
 				DefaultSelectionEventManager.<ArrayList<Object>>createCheckboxManager());
 
-		archive = new Button("Markierte Eintraege archivieren");
-		archive.addClickHandler(new ArchiveClickHandler());
+		backButton = new Button("Zurueck");
+		backButton.addClickHandler(new BackClickHandler());
+		archiveButton = new Button("Markierte Eintraege archivieren");
+		archiveButton.addClickHandler(new ArchiveClickHandler());
+		
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		buttonPanel.add(archiveButton);
+		buttonPanel.add(backButton);
 
 		/**
 		 * Spalte zur Darstellung einer Checkbox.
@@ -238,7 +247,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(standardColumn, "Standard");
 
 		mainPanel.add(table);
-		mainPanel.add(archive);
+		mainPanel.add(buttonPanel);
 	}
 
 	public void onLoad() {
@@ -359,10 +368,10 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		public void onSuccess(Void result) {
 
 			RootPanel.get("main").clear();
-			
+
 			shoppinglistHeader = new ShoppinglistHeader();
 			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
-			
+
 			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
@@ -393,7 +402,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 			shoppinglistHeader = new ShoppinglistHeader();
 			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
-			
+
 			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
@@ -403,6 +412,20 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			ssf.setSelectedGroup(selectedGroup);
 			ssf.setSelectedRetailer(selectedRetailer);
 
+			RootPanel.get("main").add(ssf);
+
+		}
+
+	}
+
+	private class BackClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel.get("main").clear();
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(selectedGroup);
 			RootPanel.get("main").add(ssf);
 
 		}
@@ -443,7 +466,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 						shoppinglistHeader = new ShoppinglistHeader();
 						shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
-						
+
 						FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 
 						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
