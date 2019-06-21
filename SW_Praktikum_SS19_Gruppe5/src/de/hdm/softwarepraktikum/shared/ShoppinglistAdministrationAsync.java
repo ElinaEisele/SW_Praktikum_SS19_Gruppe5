@@ -147,6 +147,8 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getListitemsNameMapBy(Shoppinglist shoppinglist, AsyncCallback<Map<Listitem, String>> callback) throws IllegalArgumentException;
 	
+	void getListitemsNameMapBy(Shoppinglist shoppinglist, String productName, AsyncCallback<Map<Listitem, ArrayList<String>>> callback) throws IllegalArgumentException;
+	
 	void getRetailerOf(Listitem listitem, AsyncCallback<Retailer> callback) throws IllegalArgumentException;
 
 	void getGroupOf(Shoppinglist shoppinglist, AsyncCallback<Group> callback) throws IllegalArgumentException;
