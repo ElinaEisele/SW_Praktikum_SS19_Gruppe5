@@ -231,7 +231,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		 */
 		table.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
 		table.addColumn(productNameToDisplay, "Produkt");
-		table.addColumn(amountToDisplay, "Mengesdfbdsfbfbd");
+		table.addColumn(amountToDisplay, "Menge");
 		table.addColumn(unitNameToDisplay, "Einheit");
 		table.addColumn(retailerNameToDisplay, "Haendler");
 		table.addColumn(imageColumn, "Edit");
@@ -359,10 +359,18 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		public void onSuccess(Void result) {
 
 			RootPanel.get("main").clear();
+			
+			shoppinglistHeader = new ShoppinglistHeader();
+			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+			
+			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setShoppinglistHeader(shoppinglistHeader);
+			ssf.setFilteredshoppinglistCellTable(fsct);
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(selectedGroup);
+			ssf.setSelectedRetailer(selectedRetailer);
 
 			RootPanel.get("main").add(ssf);
 
@@ -383,9 +391,17 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 			RootPanel.get("main").clear();
 
+			shoppinglistHeader = new ShoppinglistHeader();
+			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+			
+			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setShoppinglistHeader(shoppinglistHeader);
+			ssf.setFilteredshoppinglistCellTable(fsct);
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(selectedGroup);
+			ssf.setSelectedRetailer(selectedRetailer);
 
 			RootPanel.get("main").add(ssf);
 
@@ -425,15 +441,17 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 						RootPanel.get("main").clear();
 
+						shoppinglistHeader = new ShoppinglistHeader();
+						shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+						
+						FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
 						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+						ssf.setShoppinglistHeader(shoppinglistHeader);
+						ssf.setFilteredshoppinglistCellTable(fsct);
 						ssf.setSelected(shoppinglistToDisplay);
 						ssf.setSelectedGroup(selectedGroup);
-//						ssf.setGstvm(gstvm);
-//						gstvm.setSelectedGroup(null);
-//						gstvm.setSelectedShoppinglist(object);
-
-						checkedListitems.clear();
-						selectionModel.clear();
+						ssf.setSelectedRetailer(selectedRetailer);
 
 						RootPanel.get("main").add(ssf);
 
