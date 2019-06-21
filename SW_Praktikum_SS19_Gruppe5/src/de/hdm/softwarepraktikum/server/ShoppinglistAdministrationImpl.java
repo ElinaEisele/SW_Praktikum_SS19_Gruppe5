@@ -553,7 +553,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ArrayList<Listitem> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user)
+	public Map<Listitem, ArrayList<String>> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user)
 			throws IllegalArgumentException {
 		return this.listitemMapper.filterShoppinglistByUser(shoppinglist.getId(), user.getId());
 	}
@@ -797,7 +797,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	/**
 	 * Ausgabe aller schon zugewiesenen Retailer.
 	 */
-	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException{
+	public ArrayList<Retailer> getAssignedRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException{
 		return this.retailerMapper.getAssignedRetailersOf(shoppinglist);
 	}
 	

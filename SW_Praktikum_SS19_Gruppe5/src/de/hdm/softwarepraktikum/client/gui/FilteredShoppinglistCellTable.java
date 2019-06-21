@@ -22,6 +22,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
@@ -33,6 +34,7 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Diese Klasse dient zur Darstellung aller Eintraege einer Einkaufsliste in
@@ -54,11 +56,13 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	private Listitem listitemToDisplay = null;
 	private Group selectedGroup = null;
 	private Retailer selectedRetailer = null;
+	private User selectedUser = null;
 	private CellTable<ArrayList<Object>> table = new CellTable<ArrayList<Object>>();
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
 	private ArrayList<ArrayList<Object>> data = new ArrayList<>();
 
+	private Label contentLabel = new Label();
 	private Button backButton;
 	private Button archiveButton;
 
@@ -74,7 +78,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		backButton.addClickHandler(new BackClickHandler());
 		archiveButton = new Button("Markierte Eintraege archivieren");
 		archiveButton.addClickHandler(new ArchiveClickHandler());
-		
+
 		HorizontalPanel buttonPanel = new HorizontalPanel();
 		buttonPanel.add(archiveButton);
 		buttonPanel.add(backButton);
@@ -246,52 +250,94 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(imageColumn, "Edit");
 		table.addColumn(standardColumn, "Standard");
 
+		mainPanel.add(contentLabel);
 		mainPanel.add(table);
 		mainPanel.add(buttonPanel);
+		
 	}
 
 	public void onLoad() {
 
-		/**
-		 * Get all Listitems of the Shoppinglist to display and get their data in the on
-		 * success method
-		 * 
-		 */
-		shoppinglistAdministration.filterShoppinglistsByRetailer(shoppinglistToDisplay, selectedRetailer,
-				new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
+		if (shoppinglistToDisplay != null && selectedUser != null) {
+			Window.alert("hier");
+			contentLabel.setText("Filter by user");
+			shoppinglistAdministration.filterShoppinglistsByUser(shoppinglistToDisplay, selectedUser,
+					new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onSuccess(Map<Listitem, ArrayList<String>> result) {
-						data.clear();
-						if (data.size() == 0) {
-
-							for (Listitem key : result.keySet()) {
-								ArrayList<Object> listitems = new ArrayList<>();
-
-								listitems.add(key);
-								listitems.add(result.get(key).get(0));
-								listitems.add(result.get(key).get(1));
-								listitems.add(result.get(key).get(2));
-								listitems.add(result.get(key).get(3));
-
-								data.add(listitems);
-							}
-
-							// Set the total row count
-							table.setRowCount(result.size(), true);
-							// Push the data into the widget.
-							table.setRowData(0, data);
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
 
 						}
-					}
 
-				});
+						@Override
+						public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+							data.clear();
+							if (data.size() == 0) {
+
+								for (Listitem key : result.keySet()) {
+									ArrayList<Object> listitems = new ArrayList<>();
+
+									listitems.add(key);
+									listitems.add(result.get(key).get(0));
+									listitems.add(result.get(key).get(1));
+									listitems.add(result.get(key).get(2));
+									listitems.add(result.get(key).get(3));
+
+									data.add(listitems);
+								}
+
+								// Set the total row count
+								table.setRowCount(result.size(), true);
+								// Push the data into the widget.
+								table.setRowData(0, data);
+							}
+						}
+
+					});
+		} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
+			contentLabel.setText("Filter by retailer");
+			/**
+			 * Get all Listitems of the Shoppinglist to display and get their data in the on
+			 * success method
+			 * 
+			 */
+			shoppinglistAdministration.filterShoppinglistsByRetailer(shoppinglistToDisplay, selectedRetailer,
+					new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+							data.clear();
+							if (data.size() == 0) {
+
+								for (Listitem key : result.keySet()) {
+									ArrayList<Object> listitems = new ArrayList<>();
+
+									listitems.add(key);
+									listitems.add(result.get(key).get(0));
+									listitems.add(result.get(key).get(1));
+									listitems.add(result.get(key).get(2));
+									listitems.add(result.get(key).get(3));
+
+									data.add(listitems);
+								}
+
+								// Set the total row count
+								table.setRowCount(result.size(), true);
+								// Push the data into the widget.
+								table.setRowData(0, data);
+
+							}
+						}
+
+					});
+		}
 
 		this.add(mainPanel);
 
@@ -339,6 +385,14 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 	public void setSelectedRetailer(Retailer selectedRetailer) {
 		this.selectedRetailer = selectedRetailer;
+	}
+	
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
 	}
 
 	/**

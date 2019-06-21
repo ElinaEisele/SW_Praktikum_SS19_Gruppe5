@@ -127,10 +127,20 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 				RootPanel.get("main").add(ssf);
 
 			} else if (selectedOption == "Nutzer") {
+				
 				RootPanel.get("main").clear();
+
+				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+				
+				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setShoppinglistHeader(shoppinglistHeader);
+				ssf.setFilteredshoppinglistCellTable(fsct);
 				ssf.setSelected(selectedShoppinglist);
 				ssf.setSelectedGroup(selectedGroup);
+				ssf.setSelectedUser(selectedUser);
+				
 				RootPanel.get("main").add(ssf);
 
 			}
@@ -164,6 +174,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndUserOf(selectedShoppinglist, new UsersCallback());
 			}
+
 		}
 
 	}
@@ -172,8 +183,16 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 		@Override
 		public void onChange(ChangeEvent event) {
-			int item = filterDetailsListBox.getSelectedIndex();
-			selectedRetailer = retailerArrayList.get(item);
+			int item = filterOptionsListBox.getSelectedIndex();
+			if (item == 0) {
+				int item2 = filterDetailsListBox.getSelectedIndex();
+				selectedRetailer = retailerArrayList.get(item2);
+						
+				}else if (item == 1) {
+					int item2 = filterDetailsListBox.getSelectedIndex();
+					selectedUser =  userArrayList.get(item2);
+			}
+			
 		}
 
 	}
