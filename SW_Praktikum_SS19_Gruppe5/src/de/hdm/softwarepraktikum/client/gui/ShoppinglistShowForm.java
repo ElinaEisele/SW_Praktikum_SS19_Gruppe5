@@ -3,6 +3,7 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ProvidesKey;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
@@ -100,7 +101,8 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
-
+		
+		this.clear();
 		
 		if(shoppinglistCellTable != null) {
 			shoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
@@ -122,7 +124,12 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setGroupToDisplay(selectedGroup);
 
+		ShoppinglistSearchBar ssb = new ShoppinglistSearchBar();
+		ssb.setSelectedShoppinglist(selectedShoppinglist);
+		ssb.setShoppinglistHeader(shoppinglistHeader);
+		
 		this.add(shoppinglistHeader);
+		this.add(ssb);
 		this.add(mainPanel);
 
 	}
@@ -185,6 +192,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		filteredshoppinglistCellTable.setSelectedRetailer(selectedRetailer);
 		
 	}
+
 	
 	
 

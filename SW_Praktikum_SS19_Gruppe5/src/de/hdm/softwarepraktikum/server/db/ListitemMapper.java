@@ -449,7 +449,7 @@ public class ListitemMapper {
 	
 
 	/**
- 	 * Methode, um alle Daten von Listitem-Objekten für den CellTable auszugeben.
+ 	 * Methode, um alle Daten von Listitem-Objekten fï¿½r den CellTable auszugeben.
 	 * 
 	 * @param shoppinglist
 	 * @return ArrayList<String>
@@ -555,7 +555,7 @@ public class ListitemMapper {
 					+ "FROM listitems INNER JOIN products "
 					+ "ON listitems.product_id = products.id " 
 					+ "WHERE listitems.shoppinglist_id = " + shoppinglist.getId() 
-					+ " AND products.name = " + productname
+					+ " AND products.name = '" + productname.toString() + "'"
 					+ " AND isArchived = " + false);
 
 			while (rs.next()) {
@@ -579,6 +579,83 @@ public class ListitemMapper {
 		
 		return listitems;
 		
+		
+	}
+	/**
+	 * Holt alle Infos zu einem Listitem
+	 */
+	
+	public ArrayList<String> getListitemDataOf(Shoppinglist shoppinglist, Listitem listitem){
+
+		Connection con = DBConnection.connection();
+		Listitem li = new Listitem();
+		ArrayList<String> listitemData = new ArrayList<String>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM listitems "
+					+ "WHERE shoppinglist_id = " + shoppinglist.getId()
+					+ " AND id = " + listitem.getId()
+					+ " AND isArchived = " + false);
+			
+			if (rs.next()) {
+				li.setId(rs.getInt("id"));
+				li.setCreationDate(rs.getDate("creationDate"));
+				li.setAmount(rs.getFloat("amount"));
+				li.setStandard(rs.getBoolean("isStandard"));
+				li.setProductID(rs.getInt("product_id"));
+				li.setShoppinglistID(rs.getInt("shoppinglist_id"));
+				li.setListitemUnitID(rs.getInt("unit_id"));
+				li.setGroupID(rs.getInt("usergroup_id"));
+				li.setRetailerID(rs.getInt("retailer_id"));
+				li.setArchived(rs.getBoolean("isArchived"));
+								
+				Statement stmt2 = con.createStatement();
+					
+	 				ResultSet rs2 = stmt2.executeQuery("SELECT name FROM products WHERE id = " + li.getProductID());	
+
+	 				if(rs2.next()) {
+	 					
+	 					Product p = new Product();
+						p.setName(rs2.getString("name"));
+						listitemData.add(p.getName());		
+
+	 				}	
+
+	 				ResultSet rs3 = stmt2.executeQuery("SELECT name FROM retailers WHERE id = " + li.getRetailerID());
+
+	 				if(rs3.next()) {
+
+	 				Retailer r = new Retailer();
+					r.setName(rs3.getString("name"));
+					listitemData.add(r.getName());
+
+	 				}
+
+	 				ResultSet rs4 = stmt2.executeQuery("SELECT name FROM units WHERE id = " + li.getListitemUnitID());
+
+	 				if(rs4.next()) {
+	 					
+	 				ListitemUnit u = new ListitemUnit();
+					u.setName(rs4.getString("name"));
+					listitemData.add(u.getName());
+					
+	 				}
+	 				
+	 				ResultSet rs5 = stmt2.executeQuery("SELECT amount FROM listitems WHERE id = " + li.getId());
+
+	 				if(rs5.next()) {
+	 				Float f = rs5.getFloat("amount");
+	 				listitemData.add(f.toString());
+	 				}
+	 				
+	 		}
+	 
+	 				
+		} catch(SQLException e) {
+			e.getStackTrace();
+		}
+		return listitemData;
 	}
 
 	/**
