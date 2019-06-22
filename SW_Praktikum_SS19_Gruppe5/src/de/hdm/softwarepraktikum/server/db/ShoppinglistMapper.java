@@ -310,8 +310,6 @@ public class ShoppinglistMapper {
 	 */
 	
 	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) {
-		System.out.println("GroupId: ");
-		System.out.println(group.getId());
 
 		Connection con = DBConnection.connection();
 		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();
