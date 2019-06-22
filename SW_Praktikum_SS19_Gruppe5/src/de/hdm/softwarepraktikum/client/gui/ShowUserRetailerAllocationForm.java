@@ -106,7 +106,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		groupToDisplay = shoppinglistHeader.getGroupToDisplay();
 
 		shoppinglistAdministration.getUsersOf(groupToDisplay, new GetAllUserCallback());
-		shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
+		shoppinglistAdministration.getRetailersOf(shoppinglistToDisplay, new GetAllRetailersCallback());
 		RootPanel.get("main").add(mainPanel);
 
 	}
@@ -246,7 +246,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 			shoppinglistAdministration.deleteAssignment(selectedRetailer, shoppinglistToDisplay, new DeleteAsssignmentCallback());
 
 			retailerListBox.clear();
-			shoppinglistAdministration.getAllRetailers(new GetAllRetailersCallback());
+			shoppinglistAdministration.getRetailersOf(shoppinglistToDisplay, new GetAllRetailersCallback());
 			
 			for (int i = 0; i < assigndRetailers.size(); i++) {
 				allocationFlexTable.removeAllRows();
