@@ -105,11 +105,14 @@ public class ShoppinglistShowForm extends VerticalPanel {
 			shoppinglistCellTable.setSelectedGroup(selectedGroup);
 			
 		}else if (filteredshoppinglistCellTable != null) {
+
 			filteredshoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
 			filteredshoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 			filteredshoppinglistCellTable.setSelectedGroup(selectedGroup);
 			filteredshoppinglistCellTable.setSelectedUser(selectedUser);
 			filteredshoppinglistCellTable.setSelectedRetailer(selectedRetailer);
+			Window.alert("HIER");
+
 			
 		} else {
 			Window.alert("kein CellTable");
@@ -121,6 +124,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 
 		ShoppinglistSearchBar ssb = new ShoppinglistSearchBar();
 		ssb.setSelectedShoppinglist(selectedShoppinglist);
+		ssb.setSelectedGroup(selectedGroup);
 		ssb.setShoppinglistHeader(shoppinglistHeader);
 		
 		this.add(shoppinglistHeader);

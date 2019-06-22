@@ -17,6 +17,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -165,6 +166,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		Column<ArrayList<Object>, String> imageColumn = new Column<ArrayList<Object>, String>(new ClickableTextCell() {
 			public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
 				sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+
 			}
 
 		})
@@ -178,6 +180,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 			public void onBrowserEvent(Context context, Element elem, ArrayList<Object> object, NativeEvent event) {
 				super.onBrowserEvent(context, elem, object, event);
+
 				if ("click".equals(event.getType())) {
 
 					RootPanel.get("main").clear();
@@ -225,6 +228,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 				if ("click".equals(event.getType())) {
 
 					listitemToDisplay = (Listitem) object.get(0);
+
 
 					if (listitemToDisplay.isStandard() == true) {
 						shoppinglistAdministration.setStandardListitem(listitemToDisplay, selectedGroup, false,
@@ -454,14 +458,16 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			shoppinglistHeader = new ShoppinglistHeader();
 			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
-			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+//			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setShoppinglistHeader(shoppinglistHeader);
-			ssf.setFilteredshoppinglistCellTable(fsct);
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(selectedGroup);
 			ssf.setSelectedRetailer(selectedRetailer);
+			ssf.setSelectedUser(selectedUser);
+			ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+
 
 			RootPanel.get("main").add(ssf);
 
@@ -485,14 +491,16 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			shoppinglistHeader = new ShoppinglistHeader();
 			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
-			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+//			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setShoppinglistHeader(shoppinglistHeader);
-			ssf.setFilteredshoppinglistCellTable(fsct);
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(selectedGroup);
 			ssf.setSelectedRetailer(selectedRetailer);
+			ssf.setSelectedUser(selectedUser);
+			ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+
 
 			RootPanel.get("main").add(ssf);
 
