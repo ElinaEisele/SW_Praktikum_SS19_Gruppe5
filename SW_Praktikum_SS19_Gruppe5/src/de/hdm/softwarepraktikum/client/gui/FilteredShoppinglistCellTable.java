@@ -229,7 +229,6 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 					listitemToDisplay = (Listitem) object.get(0);
 
-
 					if (listitemToDisplay.isStandard() == true) {
 						shoppinglistAdministration.setStandardListitem(listitemToDisplay, selectedGroup, false,
 								new UnselectStandardCallback());
@@ -257,119 +256,117 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		mainPanel.add(contentLabel);
 		mainPanel.add(table);
 		mainPanel.add(buttonPanel);
-		
+
 	}
 
 	public void onLoad() {
-		
+
 		if (listitemData == null) {
-			
-		
 
-		if (shoppinglistToDisplay != null && selectedUser != null) {
-			contentLabel.setText("Filter by user");
-			shoppinglistAdministration.filterShoppinglistsByUser(shoppinglistToDisplay, selectedUser,
-					new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
+			if (shoppinglistToDisplay != null && selectedUser != null) {
+				contentLabel.setText("Filter by user");
+				shoppinglistAdministration.filterShoppinglistsByUser(shoppinglistToDisplay, selectedUser,
+						new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
 
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void onSuccess(Map<Listitem, ArrayList<String>> result) {
-							data.clear();
-							if (data.size() == 0) {
-
-								for (Listitem key : result.keySet()) {
-									ArrayList<Object> listitems = new ArrayList<>();
-
-									listitems.add(key);
-									listitems.add(result.get(key).get(0));
-									listitems.add(result.get(key).get(1));
-									listitems.add(result.get(key).get(2));
-									listitems.add(result.get(key).get(3));
-
-									data.add(listitems);
-								}
-
-								// Set the total row count
-								table.setRowCount(result.size(), true);
-								// Push the data into the widget.
-								table.setRowData(0, data);
-							}
-						}
-
-					});
-		} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
-			contentLabel.setText("Filter by retailer");
-			/**
-			 * Get all Listitems of the Shoppinglist to display and get their data in the on
-			 * success method
-			 * 
-			 */
-			shoppinglistAdministration.filterShoppinglistsByRetailer(shoppinglistToDisplay, selectedRetailer,
-					new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void onSuccess(Map<Listitem, ArrayList<String>> result) {
-							data.clear();
-							if (data.size() == 0) {
-
-								for (Listitem key : result.keySet()) {
-									ArrayList<Object> listitems = new ArrayList<>();
-
-									listitems.add(key);
-									listitems.add(result.get(key).get(0));
-									listitems.add(result.get(key).get(1));
-									listitems.add(result.get(key).get(2));
-									listitems.add(result.get(key).get(3));
-
-									data.add(listitems);
-								}
-
-								// Set the total row count
-								table.setRowCount(result.size(), true);
-								// Push the data into the widget.
-								table.setRowData(0, data);
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
 
 							}
-						}
 
-					});
-		}
+							@Override
+							public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+								data.clear();
+								if (data.size() == 0) {
 
-		this.add(mainPanel);
-		
+									for (Listitem key : result.keySet()) {
+										ArrayList<Object> listitems = new ArrayList<>();
+
+										listitems.add(key);
+										listitems.add(result.get(key).get(0));
+										listitems.add(result.get(key).get(1));
+										listitems.add(result.get(key).get(2));
+										listitems.add(result.get(key).get(3));
+
+										data.add(listitems);
+									}
+
+									// Set the total row count
+									table.setRowCount(result.size(), true);
+									// Push the data into the widget.
+									table.setRowData(0, data);
+								}
+							}
+
+						});
+			} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
+				contentLabel.setText("Filter by retailer");
+				/**
+				 * Get all Listitems of the Shoppinglist to display and get their data in the on
+				 * success method
+				 * 
+				 */
+				shoppinglistAdministration.filterShoppinglistsByRetailer(shoppinglistToDisplay, selectedRetailer,
+						new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+
+							}
+
+							@Override
+							public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+								data.clear();
+								if (data.size() == 0) {
+
+									for (Listitem key : result.keySet()) {
+										ArrayList<Object> listitems = new ArrayList<>();
+
+										listitems.add(key);
+										listitems.add(result.get(key).get(0));
+										listitems.add(result.get(key).get(1));
+										listitems.add(result.get(key).get(2));
+										listitems.add(result.get(key).get(3));
+
+										data.add(listitems);
+									}
+
+									// Set the total row count
+									table.setRowCount(result.size(), true);
+									// Push the data into the widget.
+									table.setRowData(0, data);
+
+								}
+							}
+
+						});
+			}
+
+			this.add(mainPanel);
+
 		} else {
 			data.clear();
 			if (data.size() == 0) {
-			for (Listitem key : listitemData.keySet()) {
-				ArrayList<Object> listitems = new ArrayList<>();
+				for (Listitem key : listitemData.keySet()) {
+					ArrayList<Object> listitems = new ArrayList<>();
 
-				listitems.add(key);
-				listitems.add(listitemData.get(key).get(0));
-				listitems.add(listitemData.get(key).get(1));
-				listitems.add(listitemData.get(key).get(2));
-				listitems.add(listitemData.get(key).get(3));
+					listitems.add(key);
+					listitems.add(listitemData.get(key).get(0));
+					listitems.add(listitemData.get(key).get(1));
+					listitems.add(listitemData.get(key).get(2));
+					listitems.add(listitemData.get(key).get(3));
 
-				data.add(listitems);
+					data.add(listitems);
+
+				}
+
+				// Set the total row count
+				table.setRowCount(listitemData.size(), true);
+				// Push the data into the widget.
+				table.setRowData(0, data);
 
 			}
-			
-			// Set the total row count
-			table.setRowCount(listitemData.size(), true);
-			// Push the data into the widget.
-			table.setRowData(0, data);
-
-		}
 		}
 		this.add(mainPanel);
 
@@ -418,7 +415,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	public void setSelectedRetailer(Retailer selectedRetailer) {
 		this.selectedRetailer = selectedRetailer;
 	}
-	
+
 	public User getSelectedUser() {
 		return selectedUser;
 	}
@@ -454,23 +451,41 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		public void onSuccess(Void result) {
 
 			RootPanel.get("main").clear();
+			
+			if (listitemData == null) {
 
-			shoppinglistHeader = new ShoppinglistHeader();
-			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+				if (shoppinglistToDisplay != null && selectedUser != null) {
+					shoppinglistHeader = new ShoppinglistHeader();
+					shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
-//			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+					ssf.setShoppinglistHeader(shoppinglistHeader);
+					ssf.setSelected(shoppinglistToDisplay);
+					ssf.setSelectedGroup(selectedGroup);
+					ssf.setSelectedUser(selectedUser);
+					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
 
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			ssf.setShoppinglistHeader(shoppinglistHeader);
-			ssf.setSelected(shoppinglistToDisplay);
-			ssf.setSelectedGroup(selectedGroup);
-			ssf.setSelectedRetailer(selectedRetailer);
-			ssf.setSelectedUser(selectedUser);
-			ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+					RootPanel.get("main").add(ssf);
+					
+				} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
+					shoppinglistHeader = new ShoppinglistHeader();
+					shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+					ssf.setShoppinglistHeader(shoppinglistHeader);
+					ssf.setSelected(shoppinglistToDisplay);
+					ssf.setSelectedGroup(selectedGroup);
+					ssf.setSelectedRetailer(selectedRetailer);
+					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+					
+					RootPanel.get("main").add(ssf);
+					
+				}
 
-			RootPanel.get("main").add(ssf);
+			} else {
+				Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte spaeter erneut versuchen");
 
+			}
 		}
 
 	}
@@ -487,22 +502,42 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		public void onSuccess(Void result) {
 
 			RootPanel.get("main").clear();
+			
+			if (listitemData == null) {
 
-			shoppinglistHeader = new ShoppinglistHeader();
-			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+				if (shoppinglistToDisplay != null && selectedUser != null) {
+					shoppinglistHeader = new ShoppinglistHeader();
+					shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
-//			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+					ssf.setShoppinglistHeader(shoppinglistHeader);
+					ssf.setSelected(shoppinglistToDisplay);
+					ssf.setSelectedGroup(selectedGroup);
+					ssf.setSelectedUser(selectedUser);
+					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
 
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			ssf.setShoppinglistHeader(shoppinglistHeader);
-			ssf.setSelected(shoppinglistToDisplay);
-			ssf.setSelectedGroup(selectedGroup);
-			ssf.setSelectedRetailer(selectedRetailer);
-			ssf.setSelectedUser(selectedUser);
-			ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+					RootPanel.get("main").add(ssf);
+					
+				} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
 
+					RootPanel.get("main").clear();
+					shoppinglistHeader = new ShoppinglistHeader();
+					shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
-			RootPanel.get("main").add(ssf);
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+					ssf.setShoppinglistHeader(shoppinglistHeader);
+					ssf.setSelected(shoppinglistToDisplay);
+					ssf.setSelectedGroup(selectedGroup);
+					ssf.setSelectedRetailer(selectedRetailer);
+					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+					
+					RootPanel.get("main").add(ssf);
+					
+				}
+
+			} else {
+				Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte spaeter erneut versuchen");
+			}
 
 		}
 
@@ -575,7 +610,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		}
 
 	}
-	
+
 	public void setListitemData(Map<Listitem, ArrayList<String>> listitemData) {
 		this.listitemData = listitemData;
 		for (Listitem key : listitemData.keySet()) {
@@ -589,7 +624,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 			data.add(listitems);
 		}
-		
+
 		// Set the total row count
 		table.setRowCount(listitemData.size(), true);
 		// Push the data into the widget.
