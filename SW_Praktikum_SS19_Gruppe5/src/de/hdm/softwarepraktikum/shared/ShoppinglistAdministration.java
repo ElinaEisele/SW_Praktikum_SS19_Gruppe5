@@ -164,6 +164,14 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Listitem listitem) throws IllegalArgumentException;
 	
 	/**
+	 * Speichern eines Standard-Listitems in der Datenbank, wobei dieses StandardListitem in allen Shoppinglists der Gruppe angepasst wird.
+	 * @param oldListitem ist das Listitem vor der Bearbeitung
+	 * @param newListitem ist das Listitem nach der Bearbeitung
+	 * @throws IllegalArgumentException
+	 */
+	public void saveStandardListitem(Listitem oldListitem, Listitem newListitem) throws IllegalArgumentException;
+	
+	/**
 	 * Speichern eines Product-Objekts in der Datenbank
 	 * @param product ist das Product-Objekt, welches in der Datenbank gespeichert werden soll.
 	 * @throws IllegalArgumentException

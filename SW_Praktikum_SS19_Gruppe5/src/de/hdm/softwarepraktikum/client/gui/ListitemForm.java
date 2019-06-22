@@ -46,6 +46,8 @@ public class ListitemForm extends VerticalPanel {
 	private Listitem selectedListitem = null;
 	private ListitemShowForm listitemShowForm;
 	private Group groupToDisplay = null;
+	Listitem oldListitem = new Listitem();
+	private String oldProductname = new String();
 
 	private ArrayList<Retailer> retailerArrayList;
 	private ArrayList<ListitemUnit> listitemUnitArrayList;
@@ -420,6 +422,8 @@ public class ListitemForm extends VerticalPanel {
 	 */
 	private class UpdateListitemClickHandler implements ClickHandler {
 
+		
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
@@ -454,11 +458,22 @@ public class ListitemForm extends VerticalPanel {
 				Retailer retailer = selectedRetailer;
 								
 				
+				oldListitem.setAmount(selectedListitem.getAmount());
+				oldListitem.setListitemUnitID(selectedListitem.getListitemUnitID());
+				oldListitem.setRetailerID(selectedListitem.getRetailerID());
+				
+				
 				selectedListitem.setAmount(amount);
 				selectedListitem.setListitemUnitID(listitemUnit.getId());
 				selectedListitem.setRetailerID(retailer.getId());
 
-				shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
+				// Falls das geaenderte Listitem ein Standard-Listitem ist, wird dieses auch in den anderen Shoppinglists angepasst.
+				if(selectedListitem.isStandard()) {
+					shoppinglistAdministration.saveStandardListitem(oldListitem, selectedListitem, new UpdateListitemCallback());
+				}
+				else {
+					shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
+				}
 
 				
 			} else {

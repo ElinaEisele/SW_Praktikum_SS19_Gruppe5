@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.softwarepraktikum.client.gui.ListitemForm;
 import de.hdm.softwarepraktikum.server.db.*;
 import de.hdm.softwarepraktikum.shared.*;
 import de.hdm.softwarepraktikum.shared.bo.*;
@@ -406,6 +407,80 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	public void save(Listitem listitem) throws IllegalArgumentException {
 		this.listitemMapper.update(listitem);
 		
+	}
+	
+	/**
+	 * Speichern eines Standard-Listitems in der Datenbank, wobei dieses StandardListitem in allen Shoppinglists der Gruppe angepasst wird.
+	 * @param oldListitem ist das Listitem vor der Bearbeitung
+	 * @param newListitem ist das Listitem nach der Bearbeitung
+	 * @throws IllegalArgumentException
+	 */
+	public void saveStandardListitem(Listitem oldListitem, Listitem newListitem) throws IllegalArgumentException{
+		this.save(newListitem);
+		
+//		System.out.println("alte Menge: " +oldListitem.getAmount() +", alte RetailerId: " +oldListitem.getRetailerID() +", "
+//				+ "alte ListitemUnitId: " +oldListitem.getListitemUnitID());
+//		System.out.println("neue Menge: " +newListitem.getAmount());
+		
+				
+		//Zwischenspeichern aller Standard-Listitems der Gruppe.
+		ArrayList<Listitem> standardListitems = new ArrayList<Listitem>();
+		standardListitems = this.getStandardListitemsOf(this.getGroupById(newListitem.getGroupID()));
+		
+		if(!standardListitems.isEmpty()) {
+//			System.out.println("StandardListitems vorhanden");
+			for(Listitem l : standardListitems) {
+//				System.out.println();
+//				System.out.println("ueberpruefen:");
+//				
+//				System.out.println("Menge:   l: " +l.getAmount() +"| oldListitem: " +oldListitem.getAmount());
+//				if(l.getAmount() == oldListitem.getAmount()) {
+//					System.out.println(true);
+//				}
+//				else {
+//					System.out.println(false);
+//				}
+//				
+//				System.out.println("RetailerID:   l: " +l.getRetailerID() +"| oldListitem: " +oldListitem.getRetailerID());
+//				if(l.getRetailerID() == oldListitem.getRetailerID()) {
+//					System.out.println(true);
+//				}
+//				else {
+//					System.out.println(false);
+//				}
+//				
+//				System.out.println("ListitemUnitID:   l: " +l.getListitemUnitID() +"| oldListitem: " +oldListitem.getListitemUnitID());
+//				if(l.getListitemUnitID() == oldListitem.getListitemUnitID()) {
+//					System.out.println(true);
+//				}
+//				else {
+//					System.out.println(false);
+//				}
+				
+//				System.out.println("Bezeichnung:   l: " +this.getProductnameOf(l) +"| oldListitem: #" +oldListitem.getProductID() +": "+this.getProductnameOf(oldListitem));
+//				if(this.getProductnameOf(l).equals(this.getProductnameOf(oldListitem))) {
+//					System.out.println(true);
+//				}
+//				else {
+//					System.out.println(false);
+//				}
+				
+				System.out.println();
+				
+				//Pruefung ob ein Listitem die selben Werte wie das eigentliche Listitem hat.
+				if(l.getAmount() == oldListitem.getAmount() && l.getRetailerID() == oldListitem.getRetailerID() 
+						&& l.getListitemUnitID() == oldListitem.getListitemUnitID() 
+//						&& this.getProductnameOf(l).equals(this.getProductnameOf(oldListitem))
+						) {
+//					System.out.println("passendes Listitem gefunden");
+					l.setAmount(newListitem.getAmount());
+					l.setListitemUnitID(newListitem.getListitemUnitID());
+					l.setRetailerID(newListitem.getRetailerID());
+					l.setProductID(newListitem.getProductID());
+					this.save(l);
+				}
+			}
+		}
 	}
 	
 	/**
