@@ -336,7 +336,7 @@ public class ListitemMapper {
  			Statement stmt = con.createStatement();	
 			ResultSet rs = stmt.executeQuery("SELECT * "	
 					+ "FROM shoppinglists INNER JOIN listitems " 	
-					+ "ON shoppinglists.listitem_id = listitems.id "	
+					+ "ON shoppinglists.id = listitems.shoppinglist_id "	
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId()	
 					+ " AND isArchived = " + true);	
 
