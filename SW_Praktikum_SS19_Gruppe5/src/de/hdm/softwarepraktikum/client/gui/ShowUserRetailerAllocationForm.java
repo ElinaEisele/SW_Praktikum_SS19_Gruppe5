@@ -96,7 +96,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 		allocationFlexTable.setText(0, 1, "User");
 		allocationFlexTable.setText(0, 2, "Zuweisung löschen");
 		
-		shoppinglistAdministration.getAssigndRetailersOf(shoppinglistToDisplay, new AssigndRetailerCallback());
+		shoppinglistAdministration.getAssignedRetailersOf(shoppinglistToDisplay, new AssigndRetailerCallback());
 		
 		shoppinglistAdministration.getUserRetailerAllocation(shoppinglistToDisplay, new UserRetailerAllocationCallback());
 				

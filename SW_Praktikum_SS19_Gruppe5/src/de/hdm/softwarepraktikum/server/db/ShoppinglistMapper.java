@@ -221,7 +221,7 @@ public class ShoppinglistMapper {
 	}
 	
 	/**
-	 * Neue Zuständigkeit zuweisen
+	 * Neue Zustï¿½ndigkeit zuweisen
 	 * 
 	 * @param retailerId
 	 * @param userId
@@ -248,7 +248,7 @@ public class ShoppinglistMapper {
 	
 	/**
 	 * 
-	 * Zuweisung löschen.
+	 * Zuweisung lï¿½schen.
 	 * 
 	 * @param shoppinglistId
 	 */
@@ -310,6 +310,8 @@ public class ShoppinglistMapper {
 	 */
 	
 	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) {
+		System.out.println("GroupId: ");
+		System.out.println(group.getId());
 
 		Connection con = DBConnection.connection();
 		ArrayList<Shoppinglist> shoppinglists = new ArrayList<Shoppinglist>();

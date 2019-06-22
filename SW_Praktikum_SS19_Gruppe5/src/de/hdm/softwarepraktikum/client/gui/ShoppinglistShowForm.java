@@ -3,10 +3,12 @@ package de.hdm.softwarepraktikum.client.gui;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ProvidesKey;
 
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Klasse zur Uebersicht einer Shoppingliste mit einem Header und mit der
@@ -23,8 +25,9 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	private VerticalPanel mainPanel = new VerticalPanel();
 
 	private Retailer selectedRetailer = null;
-	private Shoppinglist selectedShoppinglist;
-	private Group selectedGroup;
+	private Shoppinglist selectedShoppinglist = null;
+	private Group selectedGroup = null;
+	private User selectedUser = null;
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
 
 	public ShoppinglistShowForm(ShoppinglistHeader sh, NewListitemForm nlf) {
@@ -53,13 +56,6 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}
-
-//	public ShoppinglistShowForm(ShoppinglistHeader sh, ShoppinglistCellTable slct) {
-//		shoppinglistHeader = sh;
-//		mainPanel.add(slct);
-//		RootPanel.get("main").clear();
-//		RootPanel.get("main").add(mainPanel);
-//	}
 	
 	public ShoppinglistShowForm(ShoppinglistHeader sh, FilteredShoppinglistCellTable fsct) {
 		shoppinglistHeader.setSelected(selectedGroup);
@@ -100,7 +96,8 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
-
+		
+		this.clear();
 		
 		if(shoppinglistCellTable != null) {
 			shoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
@@ -108,21 +105,30 @@ public class ShoppinglistShowForm extends VerticalPanel {
 			shoppinglistCellTable.setSelectedGroup(selectedGroup);
 			
 		}else if (filteredshoppinglistCellTable != null) {
+
 			filteredshoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
 			filteredshoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 			filteredshoppinglistCellTable.setSelectedGroup(selectedGroup);
+			filteredshoppinglistCellTable.setSelectedUser(selectedUser);
+			filteredshoppinglistCellTable.setSelectedRetailer(selectedRetailer);
+			Window.alert("HIER");
+
 			
 		} else {
 			Window.alert("kein CellTable");
 		}
-		
-		
-		
+			
 		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
 		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader.setGroupToDisplay(selectedGroup);
 
+		ShoppinglistSearchBar ssb = new ShoppinglistSearchBar();
+		ssb.setSelectedShoppinglist(selectedShoppinglist);
+		ssb.setSelectedGroup(selectedGroup);
+		ssb.setShoppinglistHeader(shoppinglistHeader);
+		
 		this.add(shoppinglistHeader);
+		this.add(ssb);
 		this.add(mainPanel);
 
 	}
@@ -183,7 +189,19 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	public void setSelectedRetailer(Retailer selectedRetailer) {
 		this.selectedRetailer = selectedRetailer;
 		filteredshoppinglistCellTable.setSelectedRetailer(selectedRetailer);
-		
+		selectedUser = null;
+	}
+
+
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+		filteredshoppinglistCellTable.setSelectedUser(selectedUser);
+		selectedRetailer = null;
+
 	}
 	
 	

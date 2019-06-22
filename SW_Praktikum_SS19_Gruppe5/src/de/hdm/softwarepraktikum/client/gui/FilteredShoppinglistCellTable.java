@@ -21,6 +21,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
@@ -32,6 +34,7 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Diese Klasse dient zur Darstellung aller Eintraege einer Einkaufsliste in
@@ -53,13 +56,18 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	private Listitem listitemToDisplay = null;
 	private Group selectedGroup = null;
 	private Retailer selectedRetailer = null;
+	private User selectedUser = null;
 	private CellTable<ArrayList<Object>> table = new CellTable<ArrayList<Object>>();
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
 	private ArrayList<ArrayList<Object>> data = new ArrayList<>();
 
-	private Button archive;
+	private Label contentLabel = new Label();
+	private Button backButton;
+	private Button archiveButton;
+
 	private final MultiSelectionModel<ArrayList<Object>> selectionModel = new MultiSelectionModel<ArrayList<Object>>();
+	private Map<Listitem, ArrayList<String>> listitemData = null;
 
 	public FilteredShoppinglistCellTable() {
 
@@ -67,8 +75,14 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		table.setSelectionModel(selectionModel,
 				DefaultSelectionEventManager.<ArrayList<Object>>createCheckboxManager());
 
-		archive = new Button("Markierte Eintraege archivieren");
-		archive.addClickHandler(new ArchiveClickHandler());
+		backButton = new Button("Zurueck");
+		backButton.addClickHandler(new BackClickHandler());
+		archiveButton = new Button("Markierte Eintraege archivieren");
+		archiveButton.addClickHandler(new ArchiveClickHandler());
+
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		buttonPanel.add(archiveButton);
+		buttonPanel.add(backButton);
 
 		/**
 		 * Spalte zur Darstellung einer Checkbox.
@@ -152,6 +166,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		Column<ArrayList<Object>, String> imageColumn = new Column<ArrayList<Object>, String>(new ClickableTextCell() {
 			public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
 				sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+
 			}
 
 		})
@@ -165,6 +180,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 			public void onBrowserEvent(Context context, Element elem, ArrayList<Object> object, NativeEvent event) {
 				super.onBrowserEvent(context, elem, object, event);
+
 				if ("click".equals(event.getType())) {
 
 					RootPanel.get("main").clear();
@@ -213,6 +229,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 					listitemToDisplay = (Listitem) object.get(0);
 
+
 					if (listitemToDisplay.isStandard() == true) {
 						shoppinglistAdministration.setStandardListitem(listitemToDisplay, selectedGroup, false,
 								new UnselectStandardCallback());
@@ -231,59 +248,129 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		 */
 		table.addColumn(checkColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
 		table.addColumn(productNameToDisplay, "Produkt");
-		table.addColumn(amountToDisplay, "Mengesdfbdsfbfbd");
+		table.addColumn(amountToDisplay, "Menge");
 		table.addColumn(unitNameToDisplay, "Einheit");
 		table.addColumn(retailerNameToDisplay, "Haendler");
 		table.addColumn(imageColumn, "Edit");
 		table.addColumn(standardColumn, "Standard");
 
+		mainPanel.add(contentLabel);
 		mainPanel.add(table);
-		mainPanel.add(archive);
+		mainPanel.add(buttonPanel);
+		
 	}
 
 	public void onLoad() {
+		
+		if (listitemData == null) {
+			
+		
 
-		/**
-		 * Get all Listitems of the Shoppinglist to display and get their data in the on
-		 * success method
-		 * 
-		 */
-		shoppinglistAdministration.filterShoppinglistsByRetailer(shoppinglistToDisplay, selectedRetailer,
-				new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
+		if (shoppinglistToDisplay != null && selectedUser != null) {
+			contentLabel.setText("Filter by user");
+			shoppinglistAdministration.filterShoppinglistsByUser(shoppinglistToDisplay, selectedUser,
+					new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onSuccess(Map<Listitem, ArrayList<String>> result) {
-						data.clear();
-						if (data.size() == 0) {
-
-							for (Listitem key : result.keySet()) {
-								ArrayList<Object> listitems = new ArrayList<>();
-
-								listitems.add(key);
-								listitems.add(result.get(key).get(0));
-								listitems.add(result.get(key).get(1));
-								listitems.add(result.get(key).get(2));
-								listitems.add(result.get(key).get(3));
-
-								data.add(listitems);
-							}
-
-							// Set the total row count
-							table.setRowCount(result.size(), true);
-							// Push the data into the widget.
-							table.setRowData(0, data);
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
 
 						}
-					}
 
-				});
+						@Override
+						public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+							data.clear();
+							if (data.size() == 0) {
 
+								for (Listitem key : result.keySet()) {
+									ArrayList<Object> listitems = new ArrayList<>();
+
+									listitems.add(key);
+									listitems.add(result.get(key).get(0));
+									listitems.add(result.get(key).get(1));
+									listitems.add(result.get(key).get(2));
+									listitems.add(result.get(key).get(3));
+
+									data.add(listitems);
+								}
+
+								// Set the total row count
+								table.setRowCount(result.size(), true);
+								// Push the data into the widget.
+								table.setRowData(0, data);
+							}
+						}
+
+					});
+		} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
+			contentLabel.setText("Filter by retailer");
+			/**
+			 * Get all Listitems of the Shoppinglist to display and get their data in the on
+			 * success method
+			 * 
+			 */
+			shoppinglistAdministration.filterShoppinglistsByRetailer(shoppinglistToDisplay, selectedRetailer,
+					new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+							data.clear();
+							if (data.size() == 0) {
+
+								for (Listitem key : result.keySet()) {
+									ArrayList<Object> listitems = new ArrayList<>();
+
+									listitems.add(key);
+									listitems.add(result.get(key).get(0));
+									listitems.add(result.get(key).get(1));
+									listitems.add(result.get(key).get(2));
+									listitems.add(result.get(key).get(3));
+
+									data.add(listitems);
+								}
+
+								// Set the total row count
+								table.setRowCount(result.size(), true);
+								// Push the data into the widget.
+								table.setRowData(0, data);
+
+							}
+						}
+
+					});
+		}
+
+		this.add(mainPanel);
+		
+		} else {
+			data.clear();
+			if (data.size() == 0) {
+			for (Listitem key : listitemData.keySet()) {
+				ArrayList<Object> listitems = new ArrayList<>();
+
+				listitems.add(key);
+				listitems.add(listitemData.get(key).get(0));
+				listitems.add(listitemData.get(key).get(1));
+				listitems.add(listitemData.get(key).get(2));
+				listitems.add(listitemData.get(key).get(3));
+
+				data.add(listitems);
+
+			}
+			
+			// Set the total row count
+			table.setRowCount(listitemData.size(), true);
+			// Push the data into the widget.
+			table.setRowData(0, data);
+
+		}
+		}
 		this.add(mainPanel);
 
 	}
@@ -331,6 +418,14 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	public void setSelectedRetailer(Retailer selectedRetailer) {
 		this.selectedRetailer = selectedRetailer;
 	}
+	
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
 
 	/**
 	 * Sobald eine <code>Shoppinglist</code> ausgewaehlt wird das Label mit den
@@ -360,9 +455,19 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 			RootPanel.get("main").clear();
 
+			shoppinglistHeader = new ShoppinglistHeader();
+			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+
+//			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setShoppinglistHeader(shoppinglistHeader);
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(selectedGroup);
+			ssf.setSelectedRetailer(selectedRetailer);
+			ssf.setSelectedUser(selectedUser);
+			ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+
 
 			RootPanel.get("main").add(ssf);
 
@@ -383,10 +488,34 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 			RootPanel.get("main").clear();
 
+			shoppinglistHeader = new ShoppinglistHeader();
+			shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+
+//			FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
+			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+			ssf.setShoppinglistHeader(shoppinglistHeader);
+			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelectedGroup(selectedGroup);
+			ssf.setSelectedRetailer(selectedRetailer);
+			ssf.setSelectedUser(selectedUser);
+			ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+
+
+			RootPanel.get("main").add(ssf);
+
+		}
+
+	}
+
+	private class BackClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel.get("main").clear();
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(selectedGroup);
-
 			RootPanel.get("main").add(ssf);
 
 		}
@@ -409,7 +538,6 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			}
 
 			if (checkedListitems.isEmpty() == true) {
-				Window.alert("Keine Eintraege ausgewaehlt");
 			} else {
 
 				shoppinglistAdministration.archiveListitems(checkedListitems, new AsyncCallback<Void>() {
@@ -425,15 +553,17 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 						RootPanel.get("main").clear();
 
+						shoppinglistHeader = new ShoppinglistHeader();
+						shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
+
+						FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
 						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+						ssf.setShoppinglistHeader(shoppinglistHeader);
+						ssf.setFilteredshoppinglistCellTable(fsct);
 						ssf.setSelected(shoppinglistToDisplay);
 						ssf.setSelectedGroup(selectedGroup);
-//						ssf.setGstvm(gstvm);
-//						gstvm.setSelectedGroup(null);
-//						gstvm.setSelectedShoppinglist(object);
-
-						checkedListitems.clear();
-						selectionModel.clear();
+						ssf.setSelectedRetailer(selectedRetailer);
 
 						RootPanel.get("main").add(ssf);
 
@@ -444,6 +574,26 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 		}
 
+	}
+	
+	public void setListitemData(Map<Listitem, ArrayList<String>> listitemData) {
+		this.listitemData = listitemData;
+		for (Listitem key : listitemData.keySet()) {
+			ArrayList<Object> listitems = new ArrayList<>();
+
+			listitems.add(key);
+			listitems.add(listitemData.get(key).get(0));
+			listitems.add(listitemData.get(key).get(1));
+			listitems.add(listitemData.get(key).get(2));
+			listitems.add(listitemData.get(key).get(3));
+
+			data.add(listitems);
+		}
+		
+		// Set the total row count
+		table.setRowCount(listitemData.size(), true);
+		// Push the data into the widget.
+		table.setRowData(0, data);
 	}
 
 }
