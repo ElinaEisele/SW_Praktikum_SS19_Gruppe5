@@ -186,9 +186,10 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	}
 
 	public void setSelectedRetailer(Retailer selectedRetailer) {
-		this.selectedRetailer = selectedRetailer;
-		filteredshoppinglistCellTable.setSelectedRetailer(selectedRetailer);
 		selectedUser = null;
+		this.selectedRetailer = selectedRetailer;		
+		filteredshoppinglistCellTable.setSelectedRetailer(selectedRetailer);
+		
 	}
 
 
@@ -197,9 +198,9 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	}
 
 	public void setSelectedUser(User selectedUser) {
+		selectedRetailer = null;
 		this.selectedUser = selectedUser;
 		filteredshoppinglistCellTable.setSelectedUser(selectedUser);
-		selectedRetailer = null;
 
 	}
 	

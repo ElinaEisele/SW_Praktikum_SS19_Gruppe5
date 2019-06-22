@@ -186,12 +186,32 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 					RootPanel.get("main").clear();
 					listitemToDisplay = (Listitem) object.get(0);
 
-					ListitemShowForm lsf = new ListitemShowForm();
-					lsf.setSelected(listitemToDisplay);
-					lsf.setSelectedShoppinglist(shoppinglistToDisplay);
-					lsf.setSelectedGroup(selectedGroup);
+					if (listitemData == null) {
 
-					RootPanel.get("main").add(lsf);
+						if (shoppinglistToDisplay != null && selectedUser != null) {
+							ListitemShowForm lsf = new ListitemShowForm();
+							lsf.setSelected(listitemToDisplay);
+							lsf.setSelectedShoppinglist(shoppinglistToDisplay);
+							lsf.setSelectedGroup(selectedGroup);
+							lsf.setSelectedUser(selectedUser);
+						
+							RootPanel.get("main").add(lsf);
+							
+						} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
+							ListitemShowForm lsf = new ListitemShowForm();
+							lsf.setSelected(listitemToDisplay);
+							lsf.setSelectedShoppinglist(shoppinglistToDisplay);
+							lsf.setSelectedGroup(selectedGroup);
+							lsf.setSelectedRetailer(selectedRetailer);
+						
+							RootPanel.get("main").add(lsf);
+							
+						}
+
+					} else {
+						Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte spaeter erneut versuchen");
+
+					}
 				}
 			}
 		};
