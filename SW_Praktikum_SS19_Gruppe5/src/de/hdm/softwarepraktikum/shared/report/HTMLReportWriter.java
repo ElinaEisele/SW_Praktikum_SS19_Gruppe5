@@ -1,7 +1,7 @@
 package de.hdm.softwarepraktikum.shared.report;
 
 import java.util.ArrayList;
-import de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject;
+import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Der HTMLReportWriter formatiert die Reports mittels HTML. Das im richtigen
@@ -109,7 +109,7 @@ public void process(AllListitemsOfGroupReport r) {
      * und dem StringBuffer in HTML-Form angehängt.
      */
     result.append("<H1>" + r.getTitle() + "</H1>");
-    result.append("<H3>" + r.getCreationDateConvertToString() + "</H3>");
+    result.append("<H3>" + r.getCreationDateString()+ "</H3>");
 //    result.append("<table style=\"width:400px;border:1px solid silver\"><tr></table>");
 //    result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData())+ "</b></td>");
 //    result.append("</tr><tr><td></td><td>" + r.getCreationDate().toString() + "</td></tr></table>");
