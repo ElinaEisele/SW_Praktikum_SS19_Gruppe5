@@ -20,7 +20,7 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Klasse zur Darstellung einer Dialogbox, um einer Gruppe einen
+ * Klasse zur Darstellung eines Formulars, um einer Gruppe einen
  * neune User hinzuzufuegen.
  * 
  * @author ElinaEisele, JonasWagenknecht
@@ -65,6 +65,11 @@ public class AddUserToGroupForm extends VerticalPanel{
 		mainPanel.add(buttonPanel);
 	}
 	
+	/**
+	 * Beim Anzeigen werden alle schon in der Gruppe existierende Nutzer
+	 * in die FlexTable geschrieben und die im Konstruktor angeordneten 
+	 * weiteren Widgets geladen.
+	 */
 	public void onLoad() {
 		
 		shoppinglistAdministration.getUsersOf(selectedGroup, new UsersCallback());
@@ -97,6 +102,9 @@ public class AddUserToGroupForm extends VerticalPanel{
 		this.selectedGroup = selectedGroup;
 	}
 
+	/*
+	 * Click handlers und abhängige AsyncCallback Klassen.
+	 */
 
 
 	private class CancelClickHandler implements ClickHandler{
@@ -106,6 +114,8 @@ public class AddUserToGroupForm extends VerticalPanel{
 			RootPanel.get("main").clear();
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(selectedGroup);
+			gsf.setGstvm(gstvm);
+			gstvm.setGroupShowForm(gsf);
 			RootPanel.get("main").add(gsf);
 		}
 		
@@ -116,8 +126,6 @@ public class AddUserToGroupForm extends VerticalPanel{
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				shoppinglistAdministration.getUserByMail(emailTextBox.getValue(), new GetUserCallback());
-				GroupShowForm gsf = new GroupShowForm();
-				gsf.setSelected(selectedGroup);
 				emailTextBox.setText("");
 
 			} else {
