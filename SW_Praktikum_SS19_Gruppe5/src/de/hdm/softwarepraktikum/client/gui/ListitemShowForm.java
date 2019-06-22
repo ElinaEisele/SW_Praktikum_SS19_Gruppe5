@@ -26,10 +26,12 @@ public class ListitemShowForm extends VerticalPanel {
 
 	public ListitemShowForm(ListitemHeader lh, ListitemForm lf) {
 		listitemHeader = lh;
-		lf.setSelectedListitem(selectedListitem);
-		lf.setShoppinglistToDisplay(selectedShoppinglist);
+	//	lf.setSelectedListitem(selectedListitem);
+	//	lf.setShoppinglistToDisplay(selectedShoppinglist);
+		mainPanel.add(listitemHeader);
 		mainPanel.add(lf);
-
+		RootPanel.get("main").clear();
+		RootPanel.get("main").add(mainPanel);
 	}
 
 	public ListitemShowForm(ListitemHeader lh, NewRetailerForm nrf) {
@@ -52,13 +54,13 @@ public class ListitemShowForm extends VerticalPanel {
 
 	public void onLoad() {
 
-		listitemForm.setListitemShowForm(ListitemShowForm.this);
-		listitemForm.setShoppinglistToDisplay(selectedShoppinglist);
-		listitemForm.setSelectedListitem(selectedListitem);
 		listitemHeader.setListitemShowForm(ListitemShowForm.this);
 		listitemHeader.setShoppinglistToDisplay(selectedShoppinglist);
 		listitemHeader.setListitemToDisplay(selectedListitem);
 		listitemHeader.setSelectedGroup(selectedGroup);
+		listitemForm.setListitemShowForm(ListitemShowForm.this);
+		listitemForm.setShoppinglistToDisplay(selectedShoppinglist);
+		listitemForm.setSelectedListitem(selectedListitem);
 
 		this.add(listitemHeader);
 		this.add(mainPanel);

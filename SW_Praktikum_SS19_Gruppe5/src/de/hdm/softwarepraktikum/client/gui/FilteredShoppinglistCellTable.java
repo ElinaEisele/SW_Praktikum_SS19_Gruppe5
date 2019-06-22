@@ -455,11 +455,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			if (listitemData == null) {
 
 				if (shoppinglistToDisplay != null && selectedUser != null) {
-					shoppinglistHeader = new ShoppinglistHeader();
-					shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
 					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-					ssf.setShoppinglistHeader(shoppinglistHeader);
 					ssf.setSelected(shoppinglistToDisplay);
 					ssf.setSelectedGroup(selectedGroup);
 					ssf.setSelectedUser(selectedUser);
@@ -468,11 +465,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 					RootPanel.get("main").add(ssf);
 					
 				} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
-					shoppinglistHeader = new ShoppinglistHeader();
-					shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
 					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-					ssf.setShoppinglistHeader(shoppinglistHeader);
 					ssf.setSelected(shoppinglistToDisplay);
 					ssf.setSelectedGroup(selectedGroup);
 					ssf.setSelectedRetailer(selectedRetailer);
@@ -506,11 +500,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			if (listitemData == null) {
 
 				if (shoppinglistToDisplay != null && selectedUser != null) {
-					shoppinglistHeader = new ShoppinglistHeader();
-					shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
 					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-					ssf.setShoppinglistHeader(shoppinglistHeader);
 					ssf.setSelected(shoppinglistToDisplay);
 					ssf.setSelectedGroup(selectedGroup);
 					ssf.setSelectedUser(selectedUser);
@@ -521,11 +512,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 				} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
 
 					RootPanel.get("main").clear();
-					shoppinglistHeader = new ShoppinglistHeader();
-					shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
 
 					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-					ssf.setShoppinglistHeader(shoppinglistHeader);
 					ssf.setSelected(shoppinglistToDisplay);
 					ssf.setSelectedGroup(selectedGroup);
 					ssf.setSelectedRetailer(selectedRetailer);
@@ -588,18 +576,13 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 						RootPanel.get("main").clear();
 
-						shoppinglistHeader = new ShoppinglistHeader();
-						shoppinglistHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
-
-						FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
-
 						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-						ssf.setShoppinglistHeader(shoppinglistHeader);
-						ssf.setFilteredshoppinglistCellTable(fsct);
 						ssf.setSelected(shoppinglistToDisplay);
 						ssf.setSelectedGroup(selectedGroup);
 						ssf.setSelectedRetailer(selectedRetailer);
 
+						ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+						
 						RootPanel.get("main").add(ssf);
 
 					}

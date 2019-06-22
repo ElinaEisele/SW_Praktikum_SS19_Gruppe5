@@ -135,10 +135,7 @@ public class NewRetailerForm extends VerticalPanel {
 
 			if (selectedGroup != null && selectedShoppinglist != null) {
 
-				shoppinglistHeader = new ShoppinglistHeader();
-				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 				NewListitemForm nlf = new NewListitemForm();
-				nlf.setShoppinglistHeader(shoppinglistHeader);
 				nlf.setShoppinglistToDisplay(selectedShoppinglist);
 				nlf.setGroupToDisplay(selectedGroup);
 
@@ -147,6 +144,7 @@ public class NewRetailerForm extends VerticalPanel {
 				ssf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(nlf);
+				
 			} else if (selectedListitem != null) {
 
 				ListitemShowForm lsf = new ListitemShowForm();

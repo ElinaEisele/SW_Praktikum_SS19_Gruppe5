@@ -58,11 +58,10 @@ public class ShoppinglistShowForm extends VerticalPanel {
 	}
 	
 	public ShoppinglistShowForm(ShoppinglistHeader sh, FilteredShoppinglistCellTable fsct) {
-		shoppinglistHeader.setSelected(selectedGroup);
-		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
 		shoppinglistHeader = sh;
-		filteredshoppinglistCellTable = fsct;
-		
+		shoppinglistHeader.setSelected(selectedGroup);
+		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);		
+		filteredshoppinglistCellTable = fsct;		
 		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(fsct);
 		RootPanel.get("main").clear();
