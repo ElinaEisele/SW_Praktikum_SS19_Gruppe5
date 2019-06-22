@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -24,6 +25,7 @@ import com.google.gwt.view.client.ListDataProvider;
 //import de.hdm.softwarePraktikum.client.gui.Notification;
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
@@ -43,6 +45,7 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 	
 	// muss noch im Navigator gesetzt werden
 	private Shoppinglist selectedShoppinglist = null;
+	private Group selectedGroup = null;
 	private ShoppinglistHeader shoppinglistHeader = null;
 //	private ShoppinglistCellTable shoppinglistCellTable;
 //	private ListDataProvider<Listitem> dataProvider = new ListDataProvider<>();
@@ -72,6 +75,16 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 
 	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
 		this.selectedShoppinglist = selectedShoppinglist;
+	}
+	
+	
+
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
 	}
 
 	public void onLoad() {
@@ -179,6 +192,7 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 				ssf.setShoppinglistHeader(shoppinglistHeader);
 				ssf.setFilteredshoppinglistCellTable(fsct);
 				ssf.setSelected(selectedShoppinglist);
+				ssf.setSelectedGroup(selectedGroup);
 				fsct.setListitemData(result);
 
 
