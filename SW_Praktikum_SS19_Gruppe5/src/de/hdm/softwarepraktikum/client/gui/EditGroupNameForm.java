@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -28,6 +29,7 @@ public class EditGroupNameForm extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
+	
 	private User u = CurrentUser.getUser();
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupHeader groupHeader = new GroupHeader();
@@ -47,9 +49,7 @@ public class EditGroupNameForm extends VerticalPanel {
 
 	public EditGroupNameForm() {
 
-		this.
-
-				grid.setWidget(0, 0, newNameLabel);
+		grid.setWidget(0, 0, newNameLabel);
 		grid.setWidget(0, 1, newNameTextBox);
 
 		saveButton.addClickHandler(new SaveClickHandler());
@@ -100,6 +100,8 @@ public class EditGroupNameForm extends VerticalPanel {
 			RootPanel.get("main").clear();
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(selectedGroup);
+			gsf.setGstvm(gstvm);
+			gstvm.setGroupShowForm(gsf);
 			RootPanel.get("main").add(gsf);
 		}
 
