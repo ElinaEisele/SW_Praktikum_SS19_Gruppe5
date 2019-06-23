@@ -65,6 +65,8 @@ public class EditGroupNameForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
+		
+//		newNameTextBox.setText(selectedGroup.getName());
 
 		RootPanel.get("main").add(mainPanel);
 	}

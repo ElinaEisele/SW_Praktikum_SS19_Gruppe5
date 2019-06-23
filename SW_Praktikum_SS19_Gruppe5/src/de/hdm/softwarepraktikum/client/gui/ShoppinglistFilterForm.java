@@ -232,7 +232,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 			for (int i = 0; i < result.size(); i++) {
 				filterDetailsListBox.addItem(result.get(i).getName());
 				selectedRetailer = result.get(0);
-				selectedOption = "H�ndler";
+				selectedOption = "Händler";
 
 			}
 		}

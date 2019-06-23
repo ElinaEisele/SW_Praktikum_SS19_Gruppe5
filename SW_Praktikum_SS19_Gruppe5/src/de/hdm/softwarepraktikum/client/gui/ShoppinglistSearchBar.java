@@ -128,6 +128,7 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 		@Override
 		public void onClick(ClickEvent event) {
 			shoppinglistAdministration.getListitemsNameMapBy(selectedShoppinglist, searchSuggestBox.getValue(), new ListitemsCallback());
+
 		}
 		
 	}
