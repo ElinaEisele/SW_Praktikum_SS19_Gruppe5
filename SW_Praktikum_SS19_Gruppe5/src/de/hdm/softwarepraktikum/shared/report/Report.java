@@ -130,7 +130,12 @@ public class Report  implements IsSerializable {
      */
     public String getCreationDateString() {
     	
-    	String creationDate = this.creationDate.toString().split("\\.")[0];
+    	String day = this.creationDate.toString().split(" ")[0];
+    	String month = this.creationDate.toString().split(" ")[1];
+    	String daymonth = this.creationDate.toString().split(" ")[2];
+    	String time = this.creationDate.toString().split(" ")[3];
+    	String year = this.creationDate.toString().split(" ")[5];
+    	String creationDate = day + ", " + daymonth + " " + month + " " + year + ", " + time + " Uhr";
     	return creationDate;
 	}
 	
