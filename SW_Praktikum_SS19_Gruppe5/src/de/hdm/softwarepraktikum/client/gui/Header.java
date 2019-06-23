@@ -6,6 +6,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ReportGeneratorEntry;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
@@ -29,6 +31,10 @@ public class Header extends HorizontalPanel {
 	private Button abmeldenButton;
 	private Anchor reportLink;
 	private Anchor editorLink;
+	
+	private VerticalPanel logoutPanel;
+	private Label userMailLabel;
+	
 	private ReportGeneratorEntry reportGenerator;
 
 	public void onLoad() {
@@ -39,6 +45,13 @@ public class Header extends HorizontalPanel {
 		abmeldenButton = new Button("Abmelden");
 		reportLink = new Anchor("Report");
 		editorLink = new Anchor("Editor");
+		
+		logoutPanel = new VerticalPanel();
+		
+		userMailLabel = new Label(user.getGmailAddress());
+		logoutPanel.add(abmeldenButton);
+		logoutPanel.add(userMailLabel);
+		
 
 		editorButton.addClickHandler(new EditorClickHandler());
 		reportButton.addClickHandler(new ReportClickHandler());
@@ -53,7 +66,7 @@ public class Header extends HorizontalPanel {
 		this.add(editorButton);
 		this.add(reportButton);
 		this.add(platzhalterButton);
-		this.add(abmeldenButton);
+		this.add(logoutPanel);
 
 	}
 	
