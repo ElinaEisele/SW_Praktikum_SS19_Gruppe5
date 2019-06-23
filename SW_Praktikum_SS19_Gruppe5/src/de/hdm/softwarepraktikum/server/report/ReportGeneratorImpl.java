@@ -118,7 +118,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
 		if(!shoppinglists.isEmpty()) {
 			for (Shoppinglist s: shoppinglists)	{
-    			listitems.addAll(this.listitemMapper.getListitemsOf(s));
+    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
     		}
 			for (Listitem l : listitems) {
 				if(l.getRetailerID() == r.getId()) {
@@ -182,7 +182,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
 		if(!shoppinglists.isEmpty()) {
 			for (Shoppinglist s: shoppinglists)	{
-    			listitems.addAll(this.listitemMapper.getListitemsOf(s));
+    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
     		}
 			for (Listitem l : listitems) {
 				if(l.getCreationDate().compareTo(startdate) > 0) {
@@ -251,7 +251,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
 		if(!shoppinglists.isEmpty()) {
 			for (Shoppinglist s: shoppinglists)	{
-    			listitems.addAll(this.listitemMapper.getListitemsOf(s));
+    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
     		}
 			for (Listitem l : listitems) {
 				if(l.getCreationDate().compareTo(startdate) > 0) {
