@@ -1092,6 +1092,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.userMapper.findByGMail(mail);
 	}
 	
+	public ArrayList<User> getAllUsers() throws IllegalArgumentException {
+		return this.userMapper.findAll();
+	}
+	
 	/**
 	 * Ein Nutzer wird einem Einzelhaendler als Verantwortlicher zugeordnet.
 	 * @param user ist der Nutzer, welcher einem Eintrag als Verantwortlicher zugeordnet wird

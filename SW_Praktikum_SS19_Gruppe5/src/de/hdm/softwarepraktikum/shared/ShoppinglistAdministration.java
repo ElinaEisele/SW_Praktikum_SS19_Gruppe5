@@ -253,6 +253,8 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public User getUserById(int userId) throws IllegalArgumentException;
 	
+	public ArrayList<User> getAllUsers() throws IllegalArgumentException;
+
 	/**
 	 * Saemtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
 	 * @param name Username
