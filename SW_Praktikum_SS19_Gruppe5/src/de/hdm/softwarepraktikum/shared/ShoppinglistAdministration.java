@@ -576,6 +576,14 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Listitem> getArchivedListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
+	 * Saemtliche archivierte Listitem-Objekte einer bestimmten Gruppe werden ausgegeben.
+	 * @param group ist die Gruppe, aus welcher alle Listitem-Objekte ausgegeben werden sollen.
+	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Gruppe.
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Listitem> getArchivedListitemsOf(Group group) throws IllegalArgumentException;
+	
+	/**
 	 * Eine Zuweisung wird gel�scht.
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param user ist der User, dessen Zuweisung gel�scht werden soll.
