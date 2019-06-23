@@ -22,6 +22,8 @@ public class HTMLReportWriter extends ReportWriter {
    * Textfeld zum speichern des Ergebnisses
    */
   private String reportText = "";
+  
+  private String reportTextHeader = "";
 
   /**
    * Zurücksetzen der Variable reportText.
@@ -90,7 +92,7 @@ public class HTMLReportWriter extends ReportWriter {
   public String getTrailer() {
     return "</body></html>";
   }
-
+  
   /**
    * Erstellen des uebergebenen Reports und speichern im richtigen Format.
    * 
@@ -100,16 +102,28 @@ public class HTMLReportWriter extends ReportWriter {
 public void process(AllListitemsOfGroupReport r) {
     // Zuerst wird das Ergebniss des vorherigen Durchlaufs gelöscht.
     this.resetReportText();
-
-    //In diesem StringBuffer werden die Ergebnisse der Methode abgelegt.
-    StringBuffer result = new StringBuffer();
+    
+  //In diesem StringBuffer werden die Ergebnisse der Methode abgelegt.
+    StringBuffer result1 = new StringBuffer();
 
     /*
      * Die einzelnen Bestandteile des Reports werden nacheinander ausgelesen
      * und dem StringBuffer in HTML-Form angehängt.
      */
-    result.append("<H1>" + r.getTitle() + "</H1>");
-    result.append("<H3>" + r.getCreationDateString()+ "</H3>");
+    result1.append("<H1>" + r.getTitle() + "</H1>");
+    result1.append("<H3>" + r.getCreationDateString()+ "</H3>");
+    
+    this.reportTextHeader = result1.toString();
+
+    //In diesem StringBuffer werden die Ergebnisse der Methode abgelegt.
+    StringBuffer result = new StringBuffer();
+//
+//    /*
+//     * Die einzelnen Bestandteile des Reports werden nacheinander ausgelesen
+//     * und dem StringBuffer in HTML-Form angehängt.
+//     */
+//    result.append("<H1>" + r.getTitle() + "</H1>");
+//    result.append("<H3>" + r.getCreationDateString()+ "</H3>");
 //    result.append("<table style=\"width:400px;border:1px solid silver\"><tr></table>");
 //    result.append("<td valign=\"top\"><b>" + paragraph2HTML(r.getHeaderData())+ "</b></td>");
 //    result.append("</tr><tr><td></td><td>" + r.getCreationDate().toString() + "</td></tr></table>");
@@ -157,6 +171,10 @@ public void process(AllListitemsOfGroupReport r) {
   @Override
   public void process(AllShoppinglistsOfGroupReport r) {
 
+  }
+  
+  public String getReportTextHeader() {
+	  return this.getHeader() + this.reportTextHeader + this.getTrailer();
   }
 
   /**
