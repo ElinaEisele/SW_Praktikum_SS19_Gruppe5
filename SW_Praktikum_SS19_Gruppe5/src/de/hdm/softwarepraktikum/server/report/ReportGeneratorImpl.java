@@ -57,6 +57,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	private RetailerMapper retailerMapper = null;
 	
+	private Float amount = null;
+	
 	 /**
      * <p>
      * GWT benoetigt einen No-Argument Konstruktor und eine Intanziierung 
@@ -144,7 +146,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		r1.addColumn(new Column(String.valueOf(l.getAmount())));
     		r1.addColumn(new Column(this.listitemUnitMapper.getUnitOf(l).getName()));
     		r1.addColumn(new Column(this.retailerMapper.getRetailerOf(l).getName()));
-    		r1.addColumn(new Column(l.getCreationDateConvertToString()));
+    		r1.addColumn(new Column(l.getCreationDateConvertToStringWithStyle()));
     		result.addRow(r1);
     	}
 
@@ -179,6 +181,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Liste mit allen relevanten Eintraegen der Gruppe
 		ArrayList<Listitem> relevantListitems = new ArrayList<Listitem>();
 		
+		//Liste mit allen aufsummierten, relevanten Eintraegen der Gruppe
+		ArrayList<Listitem> sumListitems = new ArrayList<Listitem>();
+		
 		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
 		if(!shoppinglists.isEmpty()) {
 			for (Shoppinglist s: shoppinglists)	{
@@ -200,21 +205,33 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     	tablehead.addColumn(new Column("Bezeichnung"));
     	tablehead.addColumn(new Column("Menge"));
     	tablehead.addColumn(new Column("Einheit"));
-    	tablehead.addColumn(new Column("Haendler"));
     	tablehead.addColumn(new Column("Erstellungsdatum"));
     	result.addRow(tablehead);
     	
     	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
-    	for(Listitem l : relevantListitems) {
+    	for(Listitem rl : relevantListitems) {
+    		sumListitems.add(rl);
+    		
+    		for (Listitem sl : sumListitems) {
+    			if (this.listitemMapper.getProductnameOf(rl.getId()) == this.listitemMapper.getProductnameOf(sl.getId())) {
+    				sumListitems.remove(rl);
+    				this.amount = sl.getAmount() + rl.getAmount();
+    				sl.setAmount(amount);
+    				
+    			}
+    		}
+    		
+    	}
+    	
+    	for (Listitem sl : sumListitems) {
     		Row r2 = new Row();
-    		r2.addColumn(new Column(this.listitemMapper.getProductnameOf(l.getId())));       		
-    		r2.addColumn(new Column(String.valueOf(l.getAmount())));
-    		r2.addColumn(new Column(this.listitemUnitMapper.getUnitOf(l).getName()));
-    		r2.addColumn(new Column(this.retailerMapper.getRetailerOf(l).getName()));
-    		r2.addColumn(new Column(l.getCreationDateConvertToString()));
-    		result.addRow(r2);
-    	}	
-        	
+			r2.addColumn(new Column(this.listitemMapper.getProductnameOf(sl.getId())));       		
+			r2.addColumn(new Column(String.valueOf(sl.getAmount())));
+			r2.addColumn(new Column(this.listitemUnitMapper.getUnitOf(sl).getName()));
+			r2.addColumn(new Column(sl.getCreationDateConvertToStringWithStyle()));
+			result.addRow(r2);
+    	}
+	
         return result;
 
     }
@@ -281,7 +298,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		r3.addColumn(new Column(String.valueOf(l.getAmount())));
     		r3.addColumn(new Column(this.listitemUnitMapper.getUnitOf(l).getName()));
     		r3.addColumn(new Column(this.retailerMapper.getRetailerOf(l).getName()));
-    		r3.addColumn(new Column(l.getCreationDateConvertToString()));
+    		r3.addColumn(new Column(l.getCreationDateConvertToStringWithStyle()));
     		result.addRow(r3);
     	}
         	

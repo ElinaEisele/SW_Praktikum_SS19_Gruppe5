@@ -131,6 +131,15 @@ public abstract class BusinessObject implements IsSerializable{
 		return this.getCreationDate().toString();
 	}
 	
+	public String getCreationDateConvertToStringWithStyle() {
+		String year = this.creationDate.toString().split("-")[0];
+		String month = this.creationDate.toString().split("-")[1];
+		String day = this.creationDate.toString().split("-")[2];
+		
+		String creationDate = day + "." + month + "." + year ;
+		return creationDate;
+	}
+	
 	/*
 	 * Ausgeben der SerialVersionUID
 	 */

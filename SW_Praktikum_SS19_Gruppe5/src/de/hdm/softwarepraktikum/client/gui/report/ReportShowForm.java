@@ -22,6 +22,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
+import de.hdm.softwarepraktikum.client.gui.ShoppinglistSearchBar;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -44,8 +45,10 @@ public class ReportShowForm extends VerticalPanel{
 	 * Benoetigte Panel werden hier instanziiert.
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private HorizontalPanel addPanel = new HorizontalPanel();
+	private HorizontalPanel addPanel1 = new HorizontalPanel();
+	private HorizontalPanel addPanel2 = new HorizontalPanel();
 	private Grid reportGrid;
+	ReportSearchBar rsb = new ReportSearchBar();
 	
 	private User selectedUser = CurrentUser.getUser(); 
 	
@@ -188,6 +191,14 @@ public class ReportShowForm extends VerticalPanel{
 		
 	public void setSelectedUser(User selectedUser) {
 		this.selectedUser = selectedUser;
+	}	
+
+	public Group getGroup() {
+		return selectedGroup;	
+	}
+		
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
 	}
 				
 	private class ShowReportClickHandler implements ClickHandler {
@@ -244,9 +255,7 @@ public class ReportShowForm extends VerticalPanel{
 		}
 		
 	}
-	
 
-	
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
 
 		@Override
@@ -260,9 +269,13 @@ public class ReportShowForm extends VerticalPanel{
 			if(result != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
 				writer.process(result);
+				addPanel1.add(new HTML(writer.getReportTextHeader()));
+				addPanel2.add(new HTML(writer.getReportText()));
+				
 				RootPanel.get("reportMain").clear();
-				RootPanel.get("reportMain").add(addPanel);
-				addPanel.add(new HTML(writer.getReportText()));
+				RootPanel.get("reportMain").add(addPanel1);
+				RootPanel.get("reportMain").add(rsb);
+				RootPanel.get("reportMain").add(addPanel2);
 				RootPanel.get("reportMain").add(getBackButton);
 				getBackButton.addClickHandler(new GetBackClickHandler());
 			}
