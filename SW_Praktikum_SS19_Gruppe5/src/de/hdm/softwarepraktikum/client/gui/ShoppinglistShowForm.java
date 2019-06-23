@@ -110,7 +110,6 @@ public class ShoppinglistShowForm extends VerticalPanel {
 			filteredshoppinglistCellTable.setSelectedGroup(selectedGroup);
 			filteredshoppinglistCellTable.setSelectedUser(selectedUser);
 			filteredshoppinglistCellTable.setSelectedRetailer(selectedRetailer);
-			Window.alert("HIER");
 
 			
 		} else {

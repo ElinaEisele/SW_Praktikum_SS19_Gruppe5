@@ -204,7 +204,7 @@ public class ReportShowForm extends VerticalPanel{
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
 //				Window.alert("Dein Retailer ist: " + selectedRetailer.getName());
 				
-				if(noDate == true & selectedRetailer.getId() == 0) {
+				if(noDate == true && selectedRetailer.getId() == 0) {
 					Window.alert("Du musst mindestens ein Datum oder einen Händler auswählen.");
 					
 				}else {
