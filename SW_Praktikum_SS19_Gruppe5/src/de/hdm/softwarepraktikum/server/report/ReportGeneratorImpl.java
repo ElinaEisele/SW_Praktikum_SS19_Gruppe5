@@ -219,8 +219,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     				sumListitems.remove(rl);
     				this.amount = sl.getAmount() + rl.getAmount();
     				sl.setAmount(amount);
-    				
-    			}
+//       			}else {
+//       				sumListitems.add(rl);
+       			}
     		}
 
     	}
