@@ -49,6 +49,9 @@ public class ListitemForm extends VerticalPanel {
 	private Group groupToDisplay = null;
 	private User selectedUser = null;
 	private Retailer retailerToDisplay = new Retailer();
+	Listitem oldListitem = new Listitem();
+	private String oldProductname = null;;
+
 
 	private ArrayList<Retailer> retailerArrayList;
 	private ArrayList<ListitemUnit> listitemUnitArrayList;
@@ -459,12 +462,14 @@ public class ListitemForm extends VerticalPanel {
 	 */
 	private class UpdateListitemClickHandler implements ClickHandler {
 
+		
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 
 				selectedProduct = new Product();
-
+        
 				shoppinglistAdministration.getProductOf(selectedListitem, new AsyncCallback<Product>() {
 
 					@Override
@@ -476,27 +481,40 @@ public class ListitemForm extends VerticalPanel {
 					@Override
 					public void onSuccess(Product result) {
 						selectedProduct = result;
+						oldProductname = result.getName();
 						selectedProduct.setName(productNameTextBox.getText());
+						
 						shoppinglistAdministration.save(selectedProduct, new UpdateProductCallback());
+						
+						float amount = 0.0F;
+						try {
+							amount = (float) decimalFormatter.parse(amountTextBox.getText());
+						} catch (NumberFormatException nfe) {
+							Window.alert("ungueltiger Wert!");
+							return;
+						}
+						ListitemUnit listitemUnit = selectedListitemUnit;
+						Retailer retailer = selectedRetailer;
+										
+						
+						oldListitem.setAmount(selectedListitem.getAmount());
+						oldListitem.setListitemUnitID(selectedListitem.getListitemUnitID());
+						oldListitem.setRetailerID(selectedListitem.getRetailerID());
+						
+						selectedListitem.setAmount(amount);
+						selectedListitem.setListitemUnitID(listitemUnit.getId());
+						selectedListitem.setRetailerID(retailer.getId());
+
+						// Falls das geaenderte Listitem ein Standard-Listitem ist, wird dieses auch in den anderen Shoppinglists angepasst.
+						if(selectedListitem.isStandard()) {
+							shoppinglistAdministration.saveStandardListitem(oldListitem, selectedListitem, oldProductname, new UpdateListitemCallback());
+						}
+						else {
+							shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
+						}
 					}
 
 				});
-
-				float amount = 0.0F;
-				try {
-					amount = (float) decimalFormatter.parse(amountTextBox.getText());
-				} catch (NumberFormatException nfe) {
-					Window.alert("ungueltiger Wert!");
-					return;
-				}
-				ListitemUnit listitemUnit = selectedListitemUnit;
-				Retailer retailer = retailerToDisplay;
-
-				selectedListitem.setAmount(amount);
-				selectedListitem.setListitemUnitID(listitemUnit.getId());
-				selectedListitem.setRetailerID(retailer.getId());
-
-				shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
 
 			} else {
 				RootPanel.get("main").clear();
