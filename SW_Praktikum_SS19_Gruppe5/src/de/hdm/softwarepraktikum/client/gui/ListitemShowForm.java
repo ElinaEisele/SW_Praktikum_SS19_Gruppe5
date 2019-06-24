@@ -62,6 +62,7 @@ public class ListitemShowForm extends VerticalPanel {
 		listitemHeader.setListitemToDisplay(selectedListitem);
 		listitemHeader.setSelectedGroup(selectedGroup);
 		listitemForm.setListitemShowForm(ListitemShowForm.this);
+		listitemForm.setGroupToDisplay(selectedGroup);
 		listitemForm.setShoppinglistToDisplay(selectedShoppinglist);
 		listitemForm.setSelectedListitem(selectedListitem);
 		if(selectedUser != null) {
