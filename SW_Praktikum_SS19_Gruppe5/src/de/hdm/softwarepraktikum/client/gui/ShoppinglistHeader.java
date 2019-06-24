@@ -239,7 +239,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				ShowUserRetailerAllocationForm suraf = new ShowUserRetailerAllocationForm();
+				UserRetailerAllocationForm suraf = new UserRetailerAllocationForm();
 
 				suraf.setGstvm(ShoppinglistHeader.this.gstvm);
 				suraf.setShoppinglistHeader(ShoppinglistHeader.this);

@@ -27,7 +27,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Klasse zur Darstellung eines Formulars, um einer Gruppe einen
- * neune User hinzuzufuegen.
+ * neune User hinzuzufuegen und um schon hinzugefuegte User anzuzeigen.
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
@@ -48,7 +48,6 @@ public class AddUserToGroupForm extends VerticalPanel{
 	private SuggestBox emailSuggestBox = null;
 	private MultiWordSuggestOracle allUserMails = new MultiWordSuggestOracle();
 
-//	private TextBox emailTextBox = new TextBox();
 	
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button saveButton = new Button("Speichern");
@@ -66,7 +65,7 @@ public class AddUserToGroupForm extends VerticalPanel{
 		buttonPanel.add(emailLabel);
 		buttonPanel.add(emailSuggestBox);
 		buttonPanel.add(saveButton);
-//		buttonPanel.add(cancelButton);
+		buttonPanel.add(cancelButton);
 		
 		mainPanel.add(infoLabel);
 		mainPanel.add(userFlexTable);
@@ -83,12 +82,11 @@ public class AddUserToGroupForm extends VerticalPanel{
 		shoppinglistAdministration.getAllUsers(new AllUsersCallback());
 		
 		emailSuggestBox.addKeyDownHandler(new EnterKeyDownHandler());
-//		emailSuggestBox.getValueBox().addClickHandler(new RefreshClickHandler());
 		emailSuggestBox.getElement().setPropertyString("default", "Suchbegriff eingeben...");
 		emailSuggestBox.setSize("300px", "30px");
 		
 		saveButton.addClickHandler(new SaveClickHandler());
-//		cancelButton.addClickHandler(new CancelClickHandler());
+		cancelButton.addClickHandler(new CancelClickHandler());
 		shoppinglistAdministration.getUsersOf(selectedGroup, new UsersCallback());
 				
 		RootPanel.get("main").add(mainPanel);
@@ -124,19 +122,19 @@ public class AddUserToGroupForm extends VerticalPanel{
 	 */
 
 
-//	private class CancelClickHandler implements ClickHandler{
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			RootPanel.get("main").clear();
-//			GroupShowForm gsf = new GroupShowForm();
-//			gsf.setSelected(selectedGroup);
-//			gsf.setGstvm(gstvm);
-//			gstvm.setGroupShowForm(gsf);
-//			RootPanel.get("main").add(gsf);
-//		}
-//		
-//	}
+	private class CancelClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel.get("main").clear();
+			GroupShowForm gsf = new GroupShowForm();
+			gsf.setSelected(selectedGroup);
+			gsf.setGstvm(gstvm);
+			gstvm.setGroupShowForm(gsf);
+			RootPanel.get("main").add(gsf);
+		}
+		
+	}
 	
 	private class SaveClickHandler implements ClickHandler{
 
