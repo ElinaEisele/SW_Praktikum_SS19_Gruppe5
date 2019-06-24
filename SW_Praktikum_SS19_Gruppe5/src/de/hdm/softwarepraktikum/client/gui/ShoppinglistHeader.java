@@ -75,14 +75,14 @@ public class ShoppinglistHeader extends HorizontalPanel {
 
 		Image allocationImg = new Image();
 		allocationImg.setUrl("images/collaboration.png");
-		allocationImg.setSize("16px", "16px");
+		allocationImg.setSize("30px", "30px");
 		showUserRetailerAllocation.getElement().appendChild(allocationImg.getElement());
 		showUserRetailerAllocation.setStyleName("ShoppinglistHeaderButton");
 		showUserRetailerAllocation.addClickHandler(new ShowUserRetailerAllocationClickHandler());
 
 		Image filterImg = new Image();
 		filterImg.setUrl("images/filter.png");
-		filterImg.setSize("16px", "16px");
+		filterImg.setSize("30px", "30px");
 		filter.getElement().appendChild(filterImg.getElement());
 		filter.addClickHandler(new FilterClickHandler());
 		filter.setStyleName("ShoppinglistHeaderButton");
