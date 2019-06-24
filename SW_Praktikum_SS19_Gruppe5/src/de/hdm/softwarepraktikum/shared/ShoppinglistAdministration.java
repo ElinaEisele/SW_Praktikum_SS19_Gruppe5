@@ -169,7 +169,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @param newListitem ist das Listitem nach der Bearbeitung
 	 * @throws IllegalArgumentException
 	 */
-	public void saveStandardListitem(Listitem oldListitem, Listitem newListitem) throws IllegalArgumentException;
+	public void saveStandardListitem(Listitem oldListitem, Listitem newListitem, String oldProductname) throws IllegalArgumentException;
 	
 	/**
 	 * Speichern eines Product-Objekts in der Datenbank

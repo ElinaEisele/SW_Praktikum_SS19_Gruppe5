@@ -415,12 +415,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @param newListitem ist das Listitem nach der Bearbeitung
 	 * @throws IllegalArgumentException
 	 */
-	public void saveStandardListitem(Listitem oldListitem, Listitem newListitem) throws IllegalArgumentException{
+	public void saveStandardListitem(Listitem oldListitem, Listitem newListitem, String oldProductname) throws IllegalArgumentException{
 		this.save(newListitem);
-		
-//		System.out.println("alte Menge: " +oldListitem.getAmount() +", alte RetailerId: " +oldListitem.getRetailerID() +", "
-//				+ "alte ListitemUnitId: " +oldListitem.getListitemUnitID());
-//		System.out.println("neue Menge: " +newListitem.getAmount());
 		
 				
 		//Zwischenspeichern aller Standard-Listitems der Gruppe.
@@ -428,8 +424,8 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		standardListitems = this.getStandardListitemsOf(this.getGroupById(newListitem.getGroupID()));
 		
 		if(!standardListitems.isEmpty()) {
-//			System.out.println("StandardListitems vorhanden");
 			for(Listitem l : standardListitems) {
+				
 //				System.out.println();
 //				System.out.println("ueberpruefen:");
 //				
@@ -456,28 +452,34 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 //				else {
 //					System.out.println(false);
 //				}
-				
-//				System.out.println("Bezeichnung:   l: " +this.getProductnameOf(l) +"| oldListitem: #" +oldListitem.getProductID() +": "+this.getProductnameOf(oldListitem));
-//				if(this.getProductnameOf(l).equals(this.getProductnameOf(oldListitem))) {
+//				
+//				System.out.println("Bezeichnung:   l: " +this.getProductnameOf(l) +"| oldListitem: " +oldProductname);
+//				if(this.getProductnameOf(l).equals(oldProductname)) {
 //					System.out.println(true);
 //				}
 //				else {
 //					System.out.println(false);
 //				}
-				
-				System.out.println();
+//				
+//				System.out.println();
 				
 				//Pruefung ob ein Listitem die selben Werte wie das eigentliche Listitem hat.
 				if(l.getAmount() == oldListitem.getAmount() && l.getRetailerID() == oldListitem.getRetailerID() 
 						&& l.getListitemUnitID() == oldListitem.getListitemUnitID() 
-//						&& this.getProductnameOf(l).equals(this.getProductnameOf(oldListitem))
+						&& this.getProductnameOf(l).equals(oldProductname) && !l.isArchived()
 						) {
-//					System.out.println("passendes Listitem gefunden");
+					
+					Product p = this.getProductOf(l);
+					p.setName(this.getProductnameOf(newListitem));
+					this.save(p);
+					
 					l.setAmount(newListitem.getAmount());
 					l.setListitemUnitID(newListitem.getListitemUnitID());
 					l.setRetailerID(newListitem.getRetailerID());
 					l.setProductID(newListitem.getProductID());
 					this.save(l);
+					
+					
 				}
 			}
 		}
