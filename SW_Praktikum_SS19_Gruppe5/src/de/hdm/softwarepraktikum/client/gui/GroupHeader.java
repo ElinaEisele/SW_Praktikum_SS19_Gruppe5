@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -148,6 +149,8 @@ public class GroupHeader extends HorizontalPanel {
 
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
 				gsf.setSelected(groupToDisplay);
+				gsf.setGstvm(gstvm);
+				gstvm.setGroupShowForm(gsf);
 				
 
 
@@ -163,13 +166,19 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
+
 				AddUserToGroupForm autgf = new AddUserToGroupForm();
+
 				autgf.setGstvm(GroupHeader.this.gstvm);
 				autgf.setGroupHeader(GroupHeader.this);
 				autgf.setSelectedGroup(groupToDisplay);
 
+
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, autgf);
 				gsf.setSelected(groupToDisplay);
+				gsf.setGstvm(gstvm);
+				gstvm.setGroupShowForm(gsf);
+
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -212,7 +221,9 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
+
 			if (groupToDisplay != null) {
+
 				EditGroupNameForm egnf = new EditGroupNameForm();
 				egnf.setGstvm(GroupHeader.this.gstvm);
 				egnf.setGroupHeader(GroupHeader.this);
@@ -220,6 +231,8 @@ public class GroupHeader extends HorizontalPanel {
 				
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
 				gsf.setSelected(groupToDisplay);
+				gsf.setGstvm(gstvm);
+				gstvm.setGroupShowForm(gsf);
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -235,8 +248,11 @@ public class GroupHeader extends HorizontalPanel {
 			if (groupToDisplay != null) {
 				ShowRetailersForm srdb = new ShowRetailersForm();
 				srdb.setSelectedGroup(groupToDisplay);
+				srdb.setGstvm(GroupHeader.this.gstvm);
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, srdb);
 				gsf.setSelected(groupToDisplay);
+				gsf.setGstvm(gstvm);
+				gstvm.setGroupShowForm(gsf);
 				
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");

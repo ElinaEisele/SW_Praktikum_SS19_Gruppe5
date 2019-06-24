@@ -22,6 +22,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
+import de.hdm.softwarepraktikum.client.gui.ShoppinglistSearchBar;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -44,8 +45,14 @@ public class ReportShowForm extends VerticalPanel{
 	 * Benoetigte Panel werden hier instanziiert.
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private HorizontalPanel addPanel = new HorizontalPanel();
+
+	private HorizontalPanel addPanel1 = new HorizontalPanel();
+	private HorizontalPanel addPanel2 = new HorizontalPanel();
+
+
+
 	private Grid reportGrid;
+	ReportSearchBar rsb = new ReportSearchBar();
 	
 	private User selectedUser = CurrentUser.getUser(); 
 	
@@ -95,7 +102,7 @@ public class ReportShowForm extends VerticalPanel{
 	private Date sqlEndDate = null;
 	
 	/**
-	 * Speicher für Filteroption kein Datum
+	 * Speicher fÃ¼r Filteroption kein Datum
 	 */
 	private Boolean noDate = false;
 	
@@ -123,11 +130,11 @@ public class ReportShowForm extends VerticalPanel{
 	
 	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
-	 */
+	 */	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
 	/**
-	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportAdministrationImpl zuzugreifen.
+	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportGeneratorImpl zuzugreifen.
 	 */
 	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	
@@ -172,12 +179,10 @@ public class ReportShowForm extends VerticalPanel{
 		
 		reportGenerator.getAllGroupsOf(selectedUser, new GetAllGroupsOfCallback());
 		
-		reportGenerator.getAllRetailers(new GetAllRetailersCallback());
-			
+		reportGenerator.getAllRetailers(new GetAllRetailersCallback());			
 	}
 	
 	public void onLoad() {	
-		
 		RootPanel.get("reportMain").add(mainPanel);
 	}
 	
@@ -188,7 +193,21 @@ public class ReportShowForm extends VerticalPanel{
 		
 	public void setSelectedUser(User selectedUser) {
 		this.selectedUser = selectedUser;
+	}	
+
+	public Group getGroup() {
+		return selectedGroup;	
 	}
+		
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+	
+	/**
+	 * 
+	 *ClickHandler
+	 *
+	 */
 				
 	private class ShowReportClickHandler implements ClickHandler {
 		
@@ -203,9 +222,10 @@ public class ReportShowForm extends VerticalPanel{
 				
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
 //				Window.alert("Dein Retailer ist: " + selectedRetailer.getName());
+
 				
-				if(noDate == true & selectedRetailer.getId() == 0) {
-					Window.alert("Du musst mindestens ein Datum oder einen Händler auswählen.");
+				if(noDate == true && selectedRetailer.getId() == 0) {
+					Window.alert("Du musst mindestens ein Datum oder einen Hï¿½ndler auswï¿½hlen.");
 					
 				}else {
 					if (noDate == true) {
@@ -233,6 +253,7 @@ public class ReportShowForm extends VerticalPanel{
 		
 	}
 	
+
 	private class GetBackClickHandler implements ClickHandler{
 
 		@Override
@@ -244,9 +265,15 @@ public class ReportShowForm extends VerticalPanel{
 		}
 		
 	}
-	
 
-	
+	/**
+	 * 
+	 * Callback
+	 *
+	 */
+
+
+
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
 
 		@Override
@@ -260,15 +287,19 @@ public class ReportShowForm extends VerticalPanel{
 			if(result != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
 				writer.process(result);
+				addPanel1.add(new HTML(writer.getReportTextHeader()));
+				addPanel2.add(new HTML(writer.getReportText()));
+				
 				RootPanel.get("reportMain").clear();
-				RootPanel.get("reportMain").add(addPanel);
-				addPanel.add(new HTML(writer.getReportText()));
+				RootPanel.get("reportMain").add(addPanel1);
+				RootPanel.get("reportMain").add(rsb);
+				RootPanel.get("reportMain").add(addPanel2);
 				RootPanel.get("reportMain").add(getBackButton);
 				getBackButton.addClickHandler(new GetBackClickHandler());
 			}
 		}
+		
 	}
-
 	
 	private class GetAllGroupsOfCallback implements AsyncCallback<ArrayList<Group>> {
 		

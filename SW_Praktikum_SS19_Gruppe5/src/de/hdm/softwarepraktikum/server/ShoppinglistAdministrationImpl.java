@@ -724,6 +724,28 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return archivedListitems;
 	}
 	
+	@Override
+	public ArrayList<Listitem> getArchivedListitemsOf(Group group) throws IllegalArgumentException {
+		ArrayList<Listitem> list = new ArrayList<Listitem>();
+		if(group == null) {
+			return list;
+		}
+		
+		//Ausgeben aller Einkauslisten der Gruppe
+		ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(group);
+		
+		//Liste mit allen Eintraegen der Gruppe
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+		
+		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
+		if(!shoppinglists.isEmpty()) {
+			for (Shoppinglist s: shoppinglists)	{
+    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
+    		}    			
+		}	
+		return listitems;
+	}
+	
 	/**
 	 * Ausgabe aller Listitem Eigenschaften als String zur Bef�llung des <code>ShoppinglistCellTable</code>.
 	 * @param Shoppinglist object
@@ -1145,6 +1167,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	@Override
 	public User getUserByMail(String mail) throws IllegalArgumentException {
 		return this.userMapper.findByGMail(mail);
+	}
+	
+	public ArrayList<User> getAllUsers() throws IllegalArgumentException {
+		return this.userMapper.findAll();
 	}
 	
 	/**

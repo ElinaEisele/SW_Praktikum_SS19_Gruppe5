@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -24,6 +25,7 @@ import com.google.gwt.view.client.ListDataProvider;
 //import de.hdm.softwarePraktikum.client.gui.Notification;
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
@@ -37,12 +39,13 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 		
 	private Grid searchGrid = new Grid(1, 3);
 	private MultiWordSuggestOracle searchbar = new MultiWordSuggestOracle();
-	private SuggestBox searchSuggestBox = new SuggestBox(searchbar);
-	private Label searchLabel = new Label("Suche");
+	private SuggestBox searchSuggestBox = null;
+	private Button searchButton = new Button("Suche");
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
 	// muss noch im Navigator gesetzt werden
 	private Shoppinglist selectedShoppinglist = null;
+	private Group selectedGroup = null;
 	private ShoppinglistHeader shoppinglistHeader = null;
 //	private ShoppinglistCellTable shoppinglistCellTable;
 //	private ListDataProvider<Listitem> dataProvider = new ListDataProvider<>();
@@ -73,19 +76,32 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
 		this.selectedShoppinglist = selectedShoppinglist;
 	}
+	
+	
+
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
 
 	public void onLoad() {
+			
+		shoppinglistAdministration.getListitemsNameMapBy(selectedShoppinglist, new AllListitemsCallback());
 		
+		searchSuggestBox = new SuggestBox(searchbar);
 		searchSuggestBox.addKeyDownHandler(new EnterKeyDownHandler());
-//		searchSuggestBox.getValueBox().addClickHandler(new RefreshClickHandler());
-		
-		searchSuggestBox.setSize("450px",  "30px");
+		searchSuggestBox.getValueBox().addClickHandler(new RefreshClickHandler());
 		searchSuggestBox.getElement().setPropertyString("default", "Suchbegriff eingeben...");
+		searchSuggestBox.setSize("450px", "30px");
 		
-		searchGrid.setWidget(0, 0, searchLabel);
-		searchGrid.setWidget(0, 1, searchSuggestBox);
+		searchButton.addClickHandler(new SearchClickHandler());
 		
-	//	shoppinglistAdministration.getListitemsNameMapBy(selectedShoppinglist, new AllListitemsCallback());
+		searchGrid.setWidget(0, 0, searchSuggestBox);
+		searchGrid.setWidget(0, 1, searchButton);
+		
 		
 		this.add(searchGrid);
 	}
@@ -94,28 +110,28 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 	 * Implementierung des RefreshClickHandler.In diesem wird die SearchBar aktualisiert, 
 	 * sobald  in das Textfeld geklickt wird.
 	 */
-//	private class RefreshClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			shoppinglistAdministration.getListitemsNameMapBy(selectedShoppinglist, new AllListitemsCallback());
-//		}
-//
-//		
-//	}
+	private class RefreshClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			shoppinglistAdministration.getListitemsNameMapBy(selectedShoppinglist, new AllListitemsCallback());
+		}
+
+		
+	}
 	
 	/**
 	 * Implementierung des CancleClickHandlers.
 	 */
-//	private class CancelClickHandler implements ClickHandler {
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			searchSuggestBox.setValue("");
-////			shoppinglistCellTable.refresh();
-//		}
-//		
-//	}
+	private class SearchClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			shoppinglistAdministration.getListitemsNameMapBy(selectedShoppinglist, searchSuggestBox.getValue(), new ListitemsCallback());
+
+		}
+		
+	}
 	
 	/**
 	 * Implementierung des KeyDownHandler Events. In diesem wird nach dem Betätigen der ENTER Taste 
@@ -179,6 +195,7 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 				ssf.setShoppinglistHeader(shoppinglistHeader);
 				ssf.setFilteredshoppinglistCellTable(fsct);
 				ssf.setSelected(selectedShoppinglist);
+				ssf.setSelectedGroup(selectedGroup);
 				fsct.setListitemData(result);
 
 
@@ -188,21 +205,22 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 		
 	}
 	
-//	private class AllListitemsCallback implements AsyncCallback<Map<Listitem, String>>{
-//
-//		@Override
-//		public void onFailure(Throwable caught) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//
-//		@Override
-//		public void onSuccess(Map<Listitem, String> result) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//		
-//	}
+	private class AllListitemsCallback implements AsyncCallback<Map<Listitem, String>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Map<Listitem, String> result) {
+			for (Listitem key : result.keySet()) {
+				searchbar.add(result.get(key));
+			}
+		}
+		
+	}
 
 
 }

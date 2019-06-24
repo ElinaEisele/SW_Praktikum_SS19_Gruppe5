@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -336,7 +337,7 @@ public class ListitemMapper {
  			Statement stmt = con.createStatement();	
 			ResultSet rs = stmt.executeQuery("SELECT * "	
 					+ "FROM shoppinglists INNER JOIN listitems " 	
-					+ "ON shoppinglists.listitem_id = listitems.id "	
+					+ "ON shoppinglists.id = listitems.shoppinglist_id "	
 					+ "WHERE shoppinglists.id = " + shoppinglist.getId()	
 					+ " AND isArchived = " + true);	
 
@@ -743,12 +744,14 @@ public class ListitemMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					+ "FROM responsibilities INNER JOIN listitems "
+					+ "FROM responsibilities "
+					+ "INNER JOIN listitems "
 					+ "ON responsibilities.retailer_id = listitems.retailer_id "
 					+ "WHERE listitems.shoppinglist_id = " + shoppinglistId 
 					+ " AND responsibilities.shoppinglist_id = " + shoppinglistId
 					+ " AND responsibilities.user_id = " + userId
-					+ " AND listitems.isArchived = " + false);
+					+ " AND listitems.isArchived = " + false
+					+ " ORDER BY responsibilities.retailer_id DESC");
 
 			while (rs.next()){
 			        Listitem li = new Listitem();
@@ -808,7 +811,7 @@ public class ListitemMapper {
  				stringArrayList.add(f.toString());
  
  				}
- 				
+
  				listitemMap.put(l, stringArrayList);
  			}				
 			

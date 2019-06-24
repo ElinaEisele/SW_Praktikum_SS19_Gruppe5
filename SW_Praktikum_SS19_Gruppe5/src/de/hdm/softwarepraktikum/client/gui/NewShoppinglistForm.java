@@ -121,6 +121,8 @@ public class NewShoppinglistForm extends VerticalPanel {
 				RootPanel.get("main").clear();
 				GroupShowForm gsf = new GroupShowForm();
 				gsf.setSelected(selectedGroup);
+				gsf.setGstvm(gstvm);
+				gstvm.setGroupShowForm(gsf);
 				RootPanel.get("main").add(gsf);
 			}
 		}
@@ -140,7 +142,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 			selectedShoppinglist = result;
 					
 			shoppinglistShowForm.setSelected(result);
-			
+			shoppinglistShowForm.setSelectedGroup(selectedGroup);
 			RootPanel.get("main").clear();
 			RootPanel.get("main").add(shoppinglistShowForm);
 
