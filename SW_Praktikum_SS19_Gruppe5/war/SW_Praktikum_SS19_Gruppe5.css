@@ -79,9 +79,11 @@ div#main {
 	text-align: left;
 	background: lightgrey;
 	min-width: 800px;
+	min-height: 300px;
 }
 
 div#aside {
+	min-height: 300px;
 	background: lightgrey;
 }
 

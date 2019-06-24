@@ -45,21 +45,21 @@ public class GroupHeader extends HorizontalPanel {
 		Image newShoppinglistImg = new Image();
 		newShoppinglistImg.setUrl("images/clipboard.png");
 		newShoppinglistImg.setSize("32px", "32px");
-		newShoppinglistImg.setStyleName("GroupHeaderButton");
+		newShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		newShoppinglist.getElement().appendChild(newShoppinglistImg.getElement());
 		newShoppinglist.addClickHandler(new NewShoppinglistClickHandler());
 
 		Image addUserImg = new Image();
 		addUserImg.setUrl("images/add-user.png");
 		addUserImg.setSize("32px", "32px");
-		newShoppinglistImg.setStyleName("GroupHeaderButton");
+		addUser.setStyleName("GroupHeaderButton");
 		addUser.getElement().appendChild(addUserImg.getElement());
 		addUser.addClickHandler(new AddUserClickHandler());
 
 		Image leaveGroupImg = new Image();
 		leaveGroupImg.setUrl("images/logout.png");
 		leaveGroupImg.setSize("32px", "32px");
-		newShoppinglistImg.setStyleName("GroupHeaderButton");
+		leaveGroup.setStyleName("GroupHeaderButton");
 		leaveGroup.getElement().appendChild(leaveGroupImg.getElement());
 		leaveGroup.addClickHandler(new LeaveGroupClickHandler());
 		// leaveGroup.setStyleName("leaveGroupButton");
@@ -67,21 +67,21 @@ public class GroupHeader extends HorizontalPanel {
 		Image editGroupImg = new Image();
 		editGroupImg.setUrl("images/edit.png");
 		editGroupImg.setSize("32px", "32px");
-		newShoppinglistImg.setStyleName("GroupHeaderButton");
+		editGroupName.setStyleName("GroupHeaderButton");
 		editGroupName.getElement().appendChild(editGroupImg.getElement());
 		editGroupName.addClickHandler(new EditClickHandler());
 
 		Image deleteImg = new Image();
 		deleteImg.setUrl("images/delete.png");
 		deleteImg.setSize("32px", "32px");
-		newShoppinglistImg.setStyleName("GroupHeaderButton");
+		deleteGroup.setStyleName("GroupHeaderButton");
 		deleteGroup.getElement().appendChild(deleteImg.getElement());
 		deleteGroup.addClickHandler(new DeleteGroupClickHandler());
 
 		Image showRetailersImg = new Image();
 		showRetailersImg.setUrl("images/shop.png");
 		showRetailersImg.setSize("32px", "32px");
-		newShoppinglistImg.setStyleName("GroupHeaderButton");
+		showRetailers.setStyleName("GroupHeaderButton");
 		showRetailers.getElement().appendChild(showRetailersImg.getElement());
 		showRetailers.addClickHandler(new ShowRetailersClickHandler());
 
