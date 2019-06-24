@@ -49,7 +49,7 @@ public class ShoppinglistShowForm extends VerticalPanel {
 		RootPanel.get("main").add(mainPanel);
 	}
 
-	public ShoppinglistShowForm(ShoppinglistHeader sh, ShowUserRetailerAllocationForm suraf) {
+	public ShoppinglistShowForm(ShoppinglistHeader sh, UserRetailerAllocationForm suraf) {
 		shoppinglistHeader = sh;
 		mainPanel.add(shoppinglistHeader);
 		mainPanel.add(suraf);

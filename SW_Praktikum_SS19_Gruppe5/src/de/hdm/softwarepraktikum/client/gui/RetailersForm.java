@@ -25,7 +25,7 @@ import de.hdm.softwarepraktikum.shared.bo.Retailer;
  * @author ElinaEisele, JonasWagenknecht, LeoniFriedrich
  *
  */
-public class ShowRetailersForm extends VerticalPanel {
+public class RetailersForm extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 
@@ -41,7 +41,7 @@ public class ShowRetailersForm extends VerticalPanel {
 	private Group selectedGroup = null;
 	private ArrayList<String> retailers = new ArrayList<String>();
 
-	public ShowRetailersForm() {
+	public RetailersForm() {
 				
 		cancelButton.setStylePrimaryName("cancelButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
