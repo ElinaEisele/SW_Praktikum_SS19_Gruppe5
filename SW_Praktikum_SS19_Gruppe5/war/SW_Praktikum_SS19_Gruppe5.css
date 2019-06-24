@@ -2,7 +2,7 @@
 div#header {
 	list-style: none;
 	margin: 0;
-	background: teal;
+	background: steelblue;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -70,7 +70,7 @@ div#wrapper>* {
 }
 
 div#trailer {
-	background: teal;
+	background: steelblue;
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 
@@ -78,16 +78,16 @@ div#trailer {
 
 div#main {
 	text-align: left;
-	background: powderblue;
+	background: skyblue;
 	min-width: 800px;
 	min-height: 300px;
 }
 
 div#aside {
-	background: powderblue;
-	border-color: white;
-	border-width: 2px;
-	border-style: solid;
+	background: skyblue;
+	border-right-color: white;
+	border-right-width: 2px;
+	border-right-style: solid;
 	min-height: 300px;
 
 }
