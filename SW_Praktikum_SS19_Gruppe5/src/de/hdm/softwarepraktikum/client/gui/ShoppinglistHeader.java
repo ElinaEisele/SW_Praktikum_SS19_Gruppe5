@@ -44,29 +44,29 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		}
 
 		shoppinglistHeaderLabel.setStyleName("ListLabel");
-		newListitem = new Button("Eintrag hinzufuegen");
-		deleteShoppinglist = new Button("Einkaufsliste loeschen");
-		editShoppinglistName = new Button("Editieren");
-		showUserRetailerAllocation = new Button("Nutzer Einzelhaendler zuweisung anzeigen");
+		newListitem = new Button("");
+		deleteShoppinglist = new Button("");
+		editShoppinglistName = new Button("");
+		showUserRetailerAllocation = new Button("Zuweisung");
 		filter = new Button("Filtern");
 
 		Image newListitemImg = new Image();
 		newListitemImg.setUrl("images/shopping-cart.png");
-		newListitemImg.setSize("16px", "16px");
+		newListitemImg.setSize("30px", "30px");
 		newListitem.getElement().appendChild(newListitemImg.getElement());
 		newListitem.setStyleName("ShoppinglistHeaderButton");
 		newListitem.addClickHandler(new NewListitemClickHandler());
 
 		Image deleteShoppinglistImg = new Image();
 		deleteShoppinglistImg.setUrl("images/delete.png");
-		deleteShoppinglistImg.setSize("16px", "16px");
+		deleteShoppinglistImg.setSize("30px", "30px");
 		deleteShoppinglist.getElement().appendChild(deleteShoppinglistImg.getElement());
 		deleteShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		deleteShoppinglist.addClickHandler(new DeleteShoppinglistClickHandler());
 
 		Image editShoppinglistNameImg = new Image();
 		editShoppinglistNameImg.setUrl("images/edit.png");
-		editShoppinglistNameImg.setSize("16px", "16px");
+		editShoppinglistNameImg.setSize("30px", "30px");
 		editShoppinglistName.getElement().appendChild(editShoppinglistNameImg.getElement());
 		editShoppinglistName.setStyleName("ShoppinglistHeaderButton");
 		editShoppinglistName.addClickHandler(new EditShoppinglistNameClickHandler());
