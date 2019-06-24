@@ -18,6 +18,7 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Klasse zur Darstellung eines Formulars, um einen neuen Haendler anzulegen.
@@ -33,6 +34,8 @@ public class NewRetailerForm extends VerticalPanel {
 	private Shoppinglist selectedShoppinglist = null;
 	private Listitem selectedListitem = null;
 	private Group selectedGroup = null;
+	private Retailer selectedRetailer = null;
+	private User selectedUser = null;
 	private ShoppinglistHeader shoppinglistHeader;
 	private ListitemHeader listitemHeader;
 	private VerticalPanel mainPanel = new VerticalPanel();
@@ -123,6 +126,22 @@ public class NewRetailerForm extends VerticalPanel {
 		this.selectedListitem = selectedListitem;
 	}
 
+	public Retailer getSelectedRetailer() {
+		return selectedRetailer;
+	}
+
+	public void setSelectedRetailer(Retailer selectedRetailer) {
+		this.selectedRetailer = selectedRetailer;
+	}
+
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
 	/**
 	 * ClickHandler zum schliessen der DialogBox.
 	 */
@@ -133,12 +152,27 @@ public class NewRetailerForm extends VerticalPanel {
 			retailerNameTextBox.setText("");
 			RootPanel.get("main").clear();
 
-			if (selectedGroup != null && selectedShoppinglist != null) {
+			if (selectedShoppinglist != null && selectedUser != null) {
 
-				shoppinglistHeader = new ShoppinglistHeader();
-				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+				ListitemShowForm lsf = new ListitemShowForm();
+				lsf.setSelected(selectedListitem);
+				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedUser(selectedUser);
+				lsf.setSelectedGroup(selectedGroup);
+				RootPanel.get("main").add(lsf);
+
+			} else if (selectedShoppinglist != null && selectedRetailer != null) {
+				ListitemShowForm lsf = new ListitemShowForm();
+				lsf.setSelected(selectedListitem);
+				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedRetailer(selectedRetailer);
+				lsf.setSelectedGroup(selectedGroup);
+				RootPanel.get("main").add(lsf);
+
+			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
+					&& selectedUser == null) {
+
 				NewListitemForm nlf = new NewListitemForm();
-				nlf.setShoppinglistHeader(shoppinglistHeader);
 				nlf.setShoppinglistToDisplay(selectedShoppinglist);
 				nlf.setGroupToDisplay(selectedGroup);
 
@@ -147,14 +181,15 @@ public class NewRetailerForm extends VerticalPanel {
 				ssf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(nlf);
-			} else if (selectedListitem != null) {
 
+			} else if (selectedListitem != null) {
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(lsf);
-				
+
 			}
 		}
 	}
@@ -196,12 +231,27 @@ public class NewRetailerForm extends VerticalPanel {
 			retailerNameTextBox.setText("");
 			RootPanel.get("main").clear();
 
-			if (selectedGroup != null && selectedShoppinglist != null) {
-				
-				shoppinglistHeader = new ShoppinglistHeader();
-				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+			if (selectedShoppinglist != null && selectedUser != null) {
+
+				ListitemShowForm lsf = new ListitemShowForm();
+				lsf.setSelected(selectedListitem);
+				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedUser(selectedUser);
+				lsf.setSelectedGroup(selectedGroup);
+				RootPanel.get("main").add(lsf);
+
+			} else if (selectedShoppinglist != null && selectedRetailer != null) {
+				ListitemShowForm lsf = new ListitemShowForm();
+				lsf.setSelected(selectedListitem);
+				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedRetailer(selectedRetailer);
+				lsf.setSelectedGroup(selectedGroup);
+				RootPanel.get("main").add(lsf);
+
+			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
+					&& selectedUser == null) {
+
 				NewListitemForm nlf = new NewListitemForm();
-				nlf.setShoppinglistHeader(shoppinglistHeader);
 				nlf.setShoppinglistToDisplay(selectedShoppinglist);
 				nlf.setGroupToDisplay(selectedGroup);
 
@@ -210,16 +260,16 @@ public class NewRetailerForm extends VerticalPanel {
 				ssf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(nlf);
-			} else if (selectedListitem != null) {
 
+			} else if (selectedListitem != null) {
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(lsf);
 
 			}
-
 		}
 
 	}
