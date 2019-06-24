@@ -176,8 +176,7 @@ public class GroupHeader extends HorizontalPanel {
 
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, autgf);
 				gsf.setSelected(groupToDisplay);
-				gsf.setGstvm(gstvm);
-				gstvm.setGroupShowForm(gsf);
+
 
 
 			} else {
@@ -231,8 +230,7 @@ public class GroupHeader extends HorizontalPanel {
 				
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
 				gsf.setSelected(groupToDisplay);
-				gsf.setGstvm(gstvm);
-				gstvm.setGroupShowForm(gsf);
+
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -246,13 +244,12 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
-				ShowRetailersForm srdb = new ShowRetailersForm();
+				RetailersForm srdb = new RetailersForm();
 				srdb.setSelectedGroup(groupToDisplay);
 				srdb.setGstvm(GroupHeader.this.gstvm);
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, srdb);
 				gsf.setSelected(groupToDisplay);
-				gsf.setGstvm(gstvm);
-				gstvm.setGroupShowForm(gsf);
+
 				
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
