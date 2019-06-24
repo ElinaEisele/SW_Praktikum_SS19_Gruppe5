@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -65,9 +66,9 @@ public class ListitemForm extends VerticalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button("Neu");
-	private Button saveButton = new Button("Speichern");
-	private Button discardButton = new Button("verwerfen und zurueck");
+	private Button newRetailerButton = new Button();
+	private Button saveButton = new Button();
+	private Button discardButton = new Button();
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
@@ -98,16 +99,31 @@ public class ListitemForm extends VerticalPanel {
 		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
 		shoppinglistGrid.setWidget(4, 2, newRetailerButton);
+		Image NewRetailerImg = new Image();
+		NewRetailerImg.setUrl("images/add.png");
+		NewRetailerImg.setSize("16px", "16px");
+		newRetailerButton.getElement().appendChild(NewRetailerImg.getElement());
+		newRetailerButton.setStyleName("ShoppinglistHeaderButton");
 		newRetailerButton.addClickHandler(new NewRetailerClickhandler());
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
 		shoppinglistGrid.setWidget(5, 1, actionButtonsPanel);
 
+		Image ConfirmImg = new Image();
+		ConfirmImg.setUrl("images/check-mark.png");
+		ConfirmImg.setSize("16px", "16px");
+		saveButton.getElement().appendChild(ConfirmImg.getElement());
+		saveButton.setStyleName("ShoppinglistHeaderButton");
 		saveButton.addClickHandler(new UpdateListitemClickHandler());
 		saveButton.setEnabled(true);
 		actionButtonsPanel.add(saveButton);
 
+		Image CancelImg = new Image();
+		CancelImg.setUrl("images/cancel.png");
+		CancelImg.setSize("16px", "16px");
+		discardButton.getElement().appendChild(CancelImg.getElement());
+		discardButton.setStyleName("ShoppinglistHeaderButton");
 		discardButton.addClickHandler(new DiscardClickhandler());
 		discardButton.setEnabled(true);
 		actionButtonsPanel.add(discardButton);
