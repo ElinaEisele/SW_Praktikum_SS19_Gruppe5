@@ -31,7 +31,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  *
  */
 
-public class ShowUserRetailerAllocationForm extends VerticalPanel {
+public class UserRetailerAllocationForm extends VerticalPanel {
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
@@ -69,7 +69,7 @@ public class ShowUserRetailerAllocationForm extends VerticalPanel {
 	 * angeordnet, dessen Gr��e sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
-	public ShowUserRetailerAllocationForm() {
+	public UserRetailerAllocationForm() {
 		
 		addAllocationPanel.add(retailerListBox);
 		addAllocationPanel.add(userListBox);

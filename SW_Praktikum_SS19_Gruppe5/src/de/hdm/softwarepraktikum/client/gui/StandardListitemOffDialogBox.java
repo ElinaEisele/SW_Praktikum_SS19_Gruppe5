@@ -62,6 +62,18 @@ public class StandardListitemOffDialogBox extends DialogBox {
 	public void setSelectedListitem(Listitem selectedListitem) {
 		this.selectedListitem = selectedListitem;
 	}
+	
+	
+
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+
+
 
 	private class CancelClickHandler implements ClickHandler {
 

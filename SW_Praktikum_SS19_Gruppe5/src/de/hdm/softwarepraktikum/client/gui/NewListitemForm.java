@@ -331,6 +331,7 @@ public class NewListitemForm extends HorizontalPanel {
 				ssf.setSelected(shoppinglistToDisplay);
 				ssf.setSelectedGroup(groupToDisplay);
 				RootPanel.get("main").add(ssf);
+				Notification.show("Neuer Eintrag in der Einkaufsliste "+shoppinglistToDisplay.getName()+"!");
 
 			}else {
 				Notification.show("Das Anlegen eines neuen Eintrags ist fehlgeschlagen!");

@@ -70,7 +70,7 @@ public class GroupShowForm extends VerticalPanel {
 		RootPanel.get("main").add(mainPanel);
 	}
 	
-	public GroupShowForm(GroupHeader gh, ShowRetailersForm srf) {
+	public GroupShowForm(GroupHeader gh, RetailersForm srf) {
 		groupHeader = gh;
 		mainPanel.add(srf);
 		mainPanel.add(groupHeader);
