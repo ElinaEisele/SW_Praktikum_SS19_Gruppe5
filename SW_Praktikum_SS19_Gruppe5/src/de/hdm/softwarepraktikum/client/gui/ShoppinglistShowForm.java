@@ -102,6 +102,17 @@ public class ShoppinglistShowForm extends VerticalPanel {
 			shoppinglistCellTable.setShoppinglistShowForm(ShoppinglistShowForm.this);
 			shoppinglistCellTable.setShoppinglistToDisplay(selectedShoppinglist);
 			shoppinglistCellTable.setSelectedGroup(selectedGroup);
+			shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
+			shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+			shoppinglistHeader.setGroupToDisplay(selectedGroup);
+
+			ShoppinglistSearchBar ssb = new ShoppinglistSearchBar();
+			ssb.setSelectedShoppinglist(selectedShoppinglist);
+			ssb.setSelectedGroup(selectedGroup);
+			ssb.setShoppinglistHeader(shoppinglistHeader);
+			
+			this.add(shoppinglistHeader);
+			this.add(ssb);
 			
 		}else if (filteredshoppinglistCellTable != null) {
 
@@ -110,30 +121,14 @@ public class ShoppinglistShowForm extends VerticalPanel {
 			filteredshoppinglistCellTable.setSelectedGroup(selectedGroup);
 			filteredshoppinglistCellTable.setSelectedUser(selectedUser);
 			filteredshoppinglistCellTable.setSelectedRetailer(selectedRetailer);
-
 			
 		} else {
 			Window.alert("kein CellTable");
 		}
-			
-		shoppinglistHeader.setShoppinglistShowForm(ShoppinglistShowForm.this);
-		shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
-		shoppinglistHeader.setGroupToDisplay(selectedGroup);
 
-		ShoppinglistSearchBar ssb = new ShoppinglistSearchBar();
-		ssb.setSelectedShoppinglist(selectedShoppinglist);
-		ssb.setSelectedGroup(selectedGroup);
-		ssb.setShoppinglistHeader(shoppinglistHeader);
-		
-		this.add(shoppinglistHeader);
-		this.add(ssb);
 		this.add(mainPanel);
 
 	}
-	
-	
-
-	
 
 	public ShoppinglistHeader getShoppinglistHeader() {
 		return shoppinglistHeader;
