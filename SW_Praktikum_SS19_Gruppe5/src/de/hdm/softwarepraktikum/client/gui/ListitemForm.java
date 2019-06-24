@@ -26,6 +26,7 @@ import de.hdm.softwarepraktikum.shared.bo.ListitemUnit;
 import de.hdm.softwarepraktikum.shared.bo.Product;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
+import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Formular zur Darstellung des zu aendernden Listitem
@@ -42,10 +43,15 @@ public class ListitemForm extends VerticalPanel {
 	private ListitemHeader listitemHeader = null;
 	private Shoppinglist shoppinglistToDisplay = null;
 	private ListitemUnit selectedListitemUnit = new ListitemUnit();
-	private Retailer selectedRetailer = new Retailer();
+	private Retailer selectedRetailer = null;
 	private Listitem selectedListitem = null;
 	private ListitemShowForm listitemShowForm;
 	private Group groupToDisplay = null;
+	private User selectedUser = null;
+	private Retailer retailerToDisplay = new Retailer();
+	Listitem oldListitem = new Listitem();
+	private String oldProductname = null;;
+
 
 	private ArrayList<Retailer> retailerArrayList;
 	private ArrayList<ListitemUnit> listitemUnitArrayList;
@@ -143,8 +149,6 @@ public class ListitemForm extends VerticalPanel {
 		 */
 		shoppinglistAdministration.getRetailerOf(selectedListitem, new GetRetailerCallback());
 
-		
-
 		RootPanel.get("main").add(mainPanel);
 	}
 
@@ -204,6 +208,24 @@ public class ListitemForm extends VerticalPanel {
 		this.listitemShowForm = listitemShowForm;
 	}
 
+	public Retailer getSelectedRetailer() {
+		return selectedRetailer;
+	}
+
+	public void setSelectedRetailer(Retailer selectedRetailer) {
+		this.selectedRetailer = selectedRetailer;
+		selectedUser = null;
+	}
+
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+		selectedRetailer = null;
+	}
+
 	/**
 	 * Zum Bef�llen der Dropdown-Liste mit <code>Unit</code>.
 	 */
@@ -221,7 +243,7 @@ public class ListitemForm extends VerticalPanel {
 			for (int i = 0; i < result.size(); i++) {
 				unitNameListBox.addItem(result.get(i).getName());
 				selectedListitemUnit = result.get(0);
-				
+
 			}
 		}
 
@@ -243,21 +265,21 @@ public class ListitemForm extends VerticalPanel {
 			retailerArrayList = result;
 			for (int i = 0; i < result.size(); i++) {
 				retailerNameListBox.addItem(result.get(i).getName());
-				selectedRetailer = result.get(0);
+				retailerToDisplay = result.get(0);
 			}
 		}
 	}
-	
+
 	/**
 	 * ChangeHandler zum erkennen welches <code>Unit</code> Objekt der
 	 * Dropdown-Liste ausgew�hlt wurde und dieses selectedListitemUnit zuordnen .
 	 */
 	private class UnitNameListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
-			
-			int item = unitNameListBox.getSelectedIndex();			
+
+			int item = unitNameListBox.getSelectedIndex();
 			selectedListitemUnit = listitemUnitArrayList.get(item);
-			
+
 		}
 	}
 
@@ -267,13 +289,13 @@ public class ListitemForm extends VerticalPanel {
 	 */
 	private class RetailerNameListBoxChangeHandler implements ChangeHandler {
 		public void onChange(ChangeEvent event) {
-			
+
 			int item = retailerNameListBox.getSelectedIndex();
-			selectedRetailer = retailerArrayList.get(item);
-			
+			retailerToDisplay = retailerArrayList.get(item);
+
 		}
 	}
-	
+
 	/**
 	 * Zum Befuellen der TextBox mit dem Produktname.
 	 */
@@ -328,7 +350,7 @@ public class ListitemForm extends VerticalPanel {
 			for (int i = 0; i < listitemUnitArrayList.size(); i++) {
 				if (listitemUnitArrayList.get(i).getName() == result.getName()) {
 					unitNameListBox.setItemSelected(i, true);
-					selectedListitemUnit =listitemUnitArrayList.get(i);
+					selectedListitemUnit = listitemUnitArrayList.get(i);
 				}
 			}
 
@@ -352,17 +374,13 @@ public class ListitemForm extends VerticalPanel {
 			for (int i = 0; i < retailerArrayList.size(); i++) {
 				if (retailerArrayList.get(i).getName() == result.getName()) {
 					retailerNameListBox.setItemSelected(i, true);
-					selectedRetailer = retailerArrayList.get(i);
-					
+					retailerToDisplay = retailerArrayList.get(i);
+
 				}
 			}
 		}
 
 	}
-
-	
-
-	
 
 	private class NewRetailerClickhandler implements ClickHandler {
 
@@ -371,13 +389,13 @@ public class ListitemForm extends VerticalPanel {
 			if (shoppinglistToDisplay != null) {
 				RootPanel.get("main").clear();
 
-				listitemHeader = new ListitemHeader();
-				listitemHeader.setShoppinglistToDisplay(shoppinglistToDisplay);
-				listitemHeader.setListitemToDisplay(selectedListitem);
 				NewRetailerForm nrf = new NewRetailerForm();
 				nrf.setSelectedShoppinglist(shoppinglistToDisplay);
 				nrf.setListitemHeader(listitemHeader);
 				nrf.setSelectedListitem(selectedListitem);
+				nrf.setSelectedRetailer(selectedRetailer);
+				nrf.setSelectedUser(selectedUser);
+				nrf.setSelectedGroup(groupToDisplay);
 
 				ListitemShowForm lsf = new ListitemShowForm(listitemHeader, nrf);
 				lsf.setSelected(selectedListitem);
@@ -400,16 +418,40 @@ public class ListitemForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (shoppinglistToDisplay != null) {
+
+			RootPanel.get("main").clear();
+
+			if (shoppinglistToDisplay != null && selectedUser != null) {
+
+				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setFilteredshoppinglistCellTable(fsct);
+				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
+				ssf.setSelectedUser(selectedUser);
+
+				RootPanel.get("main").add(ssf);
+
+			} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
+				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setFilteredshoppinglistCellTable(fsct);
+				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
+				ssf.setSelectedRetailer(selectedRetailer);
+
+				RootPanel.get("main").add(ssf);
+				
+			} else {
 				RootPanel.get("main").clear();
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 				ssf.setSelected(shoppinglistToDisplay);
 				ssf.setSelectedGroup(groupToDisplay);
 				RootPanel.get("main").add(ssf);
-			} else {
-				Notification.show("Keine Einkaufsliste ausgewaehlt");
-
 			}
+
 		}
 
 	}
@@ -420,47 +462,60 @@ public class ListitemForm extends VerticalPanel {
 	 */
 	private class UpdateListitemClickHandler implements ClickHandler {
 
+		
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
-				
+
 				selectedProduct = new Product();
-				
+        
 				shoppinglistAdministration.getProductOf(selectedListitem, new AsyncCallback<Product>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
 						// TODO Auto-generated method stub
-						
+
 					}
 
 					@Override
 					public void onSuccess(Product result) {
 						selectedProduct = result;
+						oldProductname = result.getName();
 						selectedProduct.setName(productNameTextBox.getText());
+						
 						shoppinglistAdministration.save(selectedProduct, new UpdateProductCallback());
+						
+						float amount = 0.0F;
+						try {
+							amount = (float) decimalFormatter.parse(amountTextBox.getText());
+						} catch (NumberFormatException nfe) {
+							Window.alert("ungueltiger Wert!");
+							return;
+						}
+						ListitemUnit listitemUnit = selectedListitemUnit;
+						Retailer retailer = selectedRetailer;
+										
+						
+						oldListitem.setAmount(selectedListitem.getAmount());
+						oldListitem.setListitemUnitID(selectedListitem.getListitemUnitID());
+						oldListitem.setRetailerID(selectedListitem.getRetailerID());
+						
+						selectedListitem.setAmount(amount);
+						selectedListitem.setListitemUnitID(listitemUnit.getId());
+						selectedListitem.setRetailerID(retailer.getId());
+
+						// Falls das geaenderte Listitem ein Standard-Listitem ist, wird dieses auch in den anderen Shoppinglists angepasst.
+						if(selectedListitem.isStandard()) {
+							shoppinglistAdministration.saveStandardListitem(oldListitem, selectedListitem, oldProductname, new UpdateListitemCallback());
+						}
+						else {
+							shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
+						}
 					}
-	
+
 				});
-				
-				float amount = 0.0F;
-				try {
-					amount = (float) decimalFormatter.parse(amountTextBox.getText());
-				} catch (NumberFormatException nfe) {
-					Window.alert("ungueltiger Wert!");
-					return;
-				}
-				ListitemUnit listitemUnit = selectedListitemUnit;
-				Retailer retailer = selectedRetailer;
-								
-				
-				selectedListitem.setAmount(amount);
-				selectedListitem.setListitemUnitID(listitemUnit.getId());
-				selectedListitem.setRetailerID(retailer.getId());
 
-				shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
-
-				
 			} else {
 				RootPanel.get("main").clear();
 
@@ -473,22 +528,16 @@ public class ListitemForm extends VerticalPanel {
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onSuccess(Void result) {
-//			RootPanel.get("main").clear();
-//			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-//			ssf.setSelected(shoppinglistToDisplay);
-//			ssf.setSelectedGroup(groupToDisplay);
-//			RootPanel.get("main").add(ssf);
-//			Notification.show("Keine Shoppinglist ausgewaehlt");
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * Nach dem erfolgreichen Erstellen wird das Formular geschlossen und die
 	 * aktuell ausgew�hlte Shoppinglist erneut ge�ffnet.
@@ -505,11 +554,39 @@ public class ListitemForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Void result) {
 			RootPanel.get("main").clear();
-			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			ssf.setSelected(shoppinglistToDisplay);
-			ssf.setSelectedGroup(groupToDisplay);
-			RootPanel.get("main").add(ssf);
+
+			if (shoppinglistToDisplay != null && selectedUser != null) {
+
+				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setFilteredshoppinglistCellTable(fsct);
+				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
+				ssf.setSelectedUser(selectedUser);
+
+				RootPanel.get("main").add(ssf);
+
+			} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
+				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
+				
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setFilteredshoppinglistCellTable(fsct);
+				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
+				ssf.setSelectedRetailer(selectedRetailer);
+
+				RootPanel.get("main").add(ssf);
+				
+			} else {
 			
+				RootPanel.get("main").clear();
+				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
+				RootPanel.get("main").add(ssf);
+			}
+
 		}
 
 	}

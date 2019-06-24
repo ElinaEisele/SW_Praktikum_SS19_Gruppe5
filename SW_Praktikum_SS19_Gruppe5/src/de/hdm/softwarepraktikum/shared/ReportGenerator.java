@@ -1,7 +1,6 @@
 package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.RemoteService;

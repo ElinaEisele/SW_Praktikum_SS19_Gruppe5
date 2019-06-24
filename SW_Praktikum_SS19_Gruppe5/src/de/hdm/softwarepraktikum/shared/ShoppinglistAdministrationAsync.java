@@ -61,6 +61,8 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void save(Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
+	void saveStandardListitem(Listitem oldListitem, Listitem newListitem, String oldProductname, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
 	void save(Product product, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void delete(Product product, AsyncCallback<Void> callback) throws IllegalArgumentException;
