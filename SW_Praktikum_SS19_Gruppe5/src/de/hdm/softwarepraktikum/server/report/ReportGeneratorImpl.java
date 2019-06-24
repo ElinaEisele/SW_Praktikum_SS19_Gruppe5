@@ -74,12 +74,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * Initialsierungsmethode.
      */
     public void init() throws IllegalArgumentException{
-    	    	
+
     	this.groupMapper = GroupMapper.groupMapper();
-		this.listitemMapper = ListitemMapper.listitemMapper();
-		this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
-		this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
-		this.retailerMapper = RetailerMapper.retailerMapper();
+      this.listitemMapper = ListitemMapper.listitemMapper();
+      this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
+      this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
+      this.retailerMapper = RetailerMapper.retailerMapper();
     }
     
     /**
@@ -98,6 +98,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * @throws IllegalArgumentException
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Retailer r) throws IllegalArgumentException{
+
     	
     	//Anlegen eines leeren Reports
     	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
@@ -122,6 +123,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			for (Shoppinglist s: shoppinglists)	{
     			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
     		}
+
 			for (Listitem l : listitems) {
 				if(l.getRetailerID() == r.getId()) {
 					relevantListitems.add(l);	
@@ -165,7 +167,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     
     	//Anlegen eines leeren Reports
     	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
-    	
+
     	//Setzen des Titels
     	result.setTitle("Report der Gruppe: " + g.getName());
     	
@@ -220,7 +222,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     				
     			}
     		}
-    		
+
     	}
     	
     	for (Listitem sl : sumListitems) {
@@ -247,6 +249,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, Retailer r) throws IllegalArgumentException {
 
+
     	//Anlegen eines leeren Reports
     	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
     	
@@ -255,6 +258,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     	
     	//Zeitpunkt der Erstellung speichern
     	result.setCreationDate(new Date());	
+
     		
 		//Ausgeben aller Einkauslisten der Gruppe
 		ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
@@ -301,8 +305,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     		r3.addColumn(new Column(l.getCreationDateConvertToStringWithStyle()));
     		result.addRow(r3);
     	}
-        	
+
     	return result;
+
 
     }
 

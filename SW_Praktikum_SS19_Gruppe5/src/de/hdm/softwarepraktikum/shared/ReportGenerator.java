@@ -1,7 +1,6 @@
 package de.hdm.softwarepraktikum.shared;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -15,7 +14,7 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 import de.hdm.softwarepraktikum.shared.report.AllListitemsOfGroupReport;
 
-@RemoteServiceRelativePath("report")
+@RemoteServiceRelativePath("reportgenerator")
 public interface ReportGenerator extends RemoteService {
 	
     /**
