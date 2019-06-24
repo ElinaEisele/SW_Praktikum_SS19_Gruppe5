@@ -2,17 +2,20 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
  * Klasse zur Darstellung einer Dialogbox, wenn ein User ein Listitem als
@@ -28,6 +31,7 @@ public class StandardListitemOffDialogBox extends DialogBox {
 
 	private Listitem selectedListitem = null;
 	private Group selectedGroup = null;
+	private Shoppinglist selectedShoppinglist = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmLabel = new Label("Dieses Listitem als Standardlistitem entfernen?");
@@ -62,8 +66,14 @@ public class StandardListitemOffDialogBox extends DialogBox {
 	public void setSelectedListitem(Listitem selectedListitem) {
 		this.selectedListitem = selectedListitem;
 	}
-	
-	
+
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
+	}
+
+	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
+		this.selectedShoppinglist = selectedShoppinglist;
+	}
 
 	public Group getSelectedGroup() {
 		return selectedGroup;
@@ -92,6 +102,17 @@ public class StandardListitemOffDialogBox extends DialogBox {
 			if (selectedListitem != null) {
 				shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, false, new RemoveStandardCallback());
 				Notification.show("Eintrag nicht mehr als Standard gesetzt");
+				
+				RootPanel.get("main").clear();
+
+				ListitemShowForm lsf = new ListitemShowForm();
+				selectedListitem.setStandard(false);
+				lsf.setSelected(selectedListitem);
+				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedGroup(selectedGroup);
+
+				RootPanel.get("main").add(lsf);
+				
 				StandardListitemOffDialogBox.this.hide();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
