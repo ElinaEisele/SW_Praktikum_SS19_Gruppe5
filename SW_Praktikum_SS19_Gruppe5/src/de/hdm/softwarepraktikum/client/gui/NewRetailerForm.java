@@ -153,7 +153,7 @@ public class NewRetailerForm extends VerticalPanel {
 			RootPanel.get("main").clear();
 
 			if (selectedShoppinglist != null && selectedUser != null) {
-
+				
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
@@ -162,6 +162,7 @@ public class NewRetailerForm extends VerticalPanel {
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedShoppinglist != null && selectedRetailer != null) {
+				
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
@@ -170,8 +171,8 @@ public class NewRetailerForm extends VerticalPanel {
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
-					&& selectedUser == null) {
-
+					&& selectedUser == null && selectedListitem == null) {
+				
 				NewListitemForm nlf = new NewListitemForm();
 				nlf.setShoppinglistToDisplay(selectedShoppinglist);
 				nlf.setGroupToDisplay(selectedGroup);
@@ -183,11 +184,11 @@ public class NewRetailerForm extends VerticalPanel {
 				RootPanel.get("main").add(nlf);
 
 			} else if (selectedListitem != null) {
+				
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
 				lsf.setSelectedGroup(selectedGroup);
-
 				RootPanel.get("main").add(lsf);
 
 			}
@@ -249,7 +250,7 @@ public class NewRetailerForm extends VerticalPanel {
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
-					&& selectedUser == null) {
+					&& selectedUser == null && selectedListitem == null) {
 
 				NewListitemForm nlf = new NewListitemForm();
 				nlf.setShoppinglistToDisplay(selectedShoppinglist);
