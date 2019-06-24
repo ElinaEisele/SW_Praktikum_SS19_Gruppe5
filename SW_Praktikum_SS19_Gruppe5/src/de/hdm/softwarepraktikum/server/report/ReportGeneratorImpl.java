@@ -74,7 +74,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * Initialsierungsmethode.
      */
     public void init() throws IllegalArgumentException{
-
+    	
     	this.groupMapper = GroupMapper.groupMapper();
       this.listitemMapper = ListitemMapper.listitemMapper();
       this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
