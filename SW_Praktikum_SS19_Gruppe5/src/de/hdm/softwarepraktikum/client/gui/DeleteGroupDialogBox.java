@@ -111,8 +111,10 @@ public class DeleteGroupDialogBox extends DialogBox{
 				setSelectedGroup(null);
 				gstvm.removeGroup(group);
 				RootPanel.get("main").clear();
+				RootPanel.get("aside").clear();
+				NavigatorPanel np = new NavigatorPanel();
+				RootPanel.get("aside").add(np);
 		
-				
 			}
 		}
 

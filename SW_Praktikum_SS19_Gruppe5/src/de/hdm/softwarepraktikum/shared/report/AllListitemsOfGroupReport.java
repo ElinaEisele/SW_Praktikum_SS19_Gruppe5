@@ -1,5 +1,9 @@
 package de.hdm.softwarepraktikum.shared.report;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Report, welcher alle Listitems einer Gruppe darstellt.
  * In der Klasse <code>AllListitemsOfGroupReport</code> werden keine weiteren Attribute und Methoden

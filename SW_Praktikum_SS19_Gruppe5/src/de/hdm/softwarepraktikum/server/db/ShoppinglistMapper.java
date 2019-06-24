@@ -221,7 +221,7 @@ public class ShoppinglistMapper {
 	}
 	
 	/**
-	 * Neue Zuständigkeit zuweisen
+	 * Neue Zustï¿½ndigkeit zuweisen
 	 * 
 	 * @param retailerId
 	 * @param userId
@@ -248,7 +248,7 @@ public class ShoppinglistMapper {
 	
 	/**
 	 * 
-	 * Zuweisung löschen.
+	 * Zuweisung lï¿½schen.
 	 * 
 	 * @param shoppinglistId
 	 */

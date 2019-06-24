@@ -161,6 +161,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 			public void onBrowserEvent(Context context, Element elem, ArrayList<Object> object, NativeEvent event) {
 				super.onBrowserEvent(context, elem, object, event);
+
 				if ("click".equals(event.getType())) {
 
 					RootPanel.get("main").clear();

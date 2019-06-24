@@ -3,11 +3,13 @@ package de.hdm.softwarepraktikum.shared.report;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * <p>
  * Diese Klasse ist die Basis aller Reports. Alle Reports sind Serializable,
- * sodass diese vom Server an den Client gesendet werden können. Der Zugriff
- * auf die Reports erfolgt lokal über den Client.
+ * sodass diese vom Server an den Client gesendet werden kï¿½nnen. Der Zugriff
+ * auf die Reports erfolgt lokal ï¿½ber den Client.
  * </p>
  * <p>
  * Jeder Report besitzt einige Standardelemente, welche in dieser Klasse
@@ -17,7 +19,7 @@ import java.util.Date;
  * @author TimBeutelspacher
  *
  */
-public class Report  implements Serializable {
+public class Report  implements IsSerializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -122,13 +124,18 @@ public class Report  implements Serializable {
 	}
 	
 	/**
-     * Hier wird das Erstellungsdatum in einen String gespeichert und gekürzt.
+     * Hier wird das Erstellungsdatum in einen String gespeichert und gekï¿½rzt.
      *
-     * @return Das zum Anzeigen formatierte Creationdate wird zurückgegeben.
+     * @return Das zum Anzeigen formatierte Creationdate wird zurï¿½ckgegeben.
      */
     public String getCreationDateString() {
     	
-    	String creationDate = this.creationDate.toString().split("\\.")[0];
+    	String day = this.creationDate.toString().split(" ")[0];
+    	String month = this.creationDate.toString().split(" ")[1];
+    	String daymonth = this.creationDate.toString().split(" ")[2];
+    	String time = this.creationDate.toString().split(" ")[3];
+    	String year = this.creationDate.toString().split(" ")[5];
+    	String creationDate = day + ", " + daymonth + " " + month + " " + year + ", " + time + " Uhr";
     	return creationDate;
 	}
 	

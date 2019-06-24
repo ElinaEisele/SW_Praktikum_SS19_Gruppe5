@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.softwarepraktikum.server.db.*;
@@ -420,7 +419,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Bevor das Product-Objekt geloescht wird kann das Listitem-Objekt geloescht werden.
 		this.listitemMapper.delete(listitem);
 		
-		//Das dazugehörige Product-Objekt wird gelöscht.
+		//Das dazugehï¿½rige Product-Objekt wird gelï¿½scht.
 		this.delete(this.getProductOf(listitem));
 	}	
 	
@@ -554,7 +553,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ArrayList<Listitem> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user)
+	public Map<Listitem, ArrayList<String>> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user)
 			throws IllegalArgumentException {
 		return this.listitemMapper.filterShoppinglistByUser(shoppinglist.getId(), user.getId());
 	}
@@ -567,7 +566,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public ArrayList<Listitem> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer)
+	public Map<Listitem, ArrayList<String>> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer)
 			throws IllegalArgumentException {
 		return this.listitemMapper.filterShoppinglistByRetailer(shoppinglist.getId(), retailer.getId());
 	}
@@ -646,6 +645,28 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		
 		return archivedListitems;
+	}
+	
+	@Override
+	public ArrayList<Listitem> getArchivedListitemsOf(Group group) throws IllegalArgumentException {
+		ArrayList<Listitem> list = new ArrayList<Listitem>();
+		if(group == null) {
+			return list;
+		}
+		
+		//Ausgeben aller Einkauslisten der Gruppe
+		ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(group);
+		
+		//Liste mit allen Eintraegen der Gruppe
+		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+		
+		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
+		if(!shoppinglists.isEmpty()) {
+			for (Shoppinglist s: shoppinglists)	{
+    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
+    		}    			
+		}	
+		return listitems;
 	}
 	
 	/**
@@ -798,7 +819,7 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 	/**
 	 * Ausgabe aller schon zugewiesenen Retailer.
 	 */
-	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException{
+	public ArrayList<Retailer> getAssignedRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException{
 		return this.retailerMapper.getAssignedRetailersOf(shoppinglist);
 	}
 	
@@ -1071,6 +1092,10 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.userMapper.findByGMail(mail);
 	}
 	
+	public ArrayList<User> getAllUsers() throws IllegalArgumentException {
+		return this.userMapper.findAll();
+	}
+	
 	/**
 	 * Ein Nutzer wird einem Einzelhaendler als Verantwortlicher zugeordnet.
 	 * @param user ist der Nutzer, welcher einem Eintrag als Verantwortlicher zugeordnet wird
@@ -1229,12 +1254,19 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return null;
 	}
-
-
 	
-
-
-	
+	public Map<Listitem, ArrayList<String>> getListitemsNameMapBy(Shoppinglist shoppinglist, String productName) throws IllegalArgumentException {
+		if (shoppinglist != null){
+			HashMap<Listitem, ArrayList<String>> listitemNameMap = new LinkedHashMap<Listitem, ArrayList<String>>();
+			ArrayList<Listitem> listitems = this.getListitemsByNameOf(shoppinglist, productName);
+			for (Listitem l : listitems) {
+				ArrayList<String> data = this.listitemMapper.getListitemDataOf(shoppinglist, l);
+				listitemNameMap.put(l, data);
+			}
+			return listitemNameMap;
+		}
+		return null;
+	}
 
 
 }
