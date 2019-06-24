@@ -158,6 +158,7 @@ public class NewRetailerForm extends VerticalPanel {
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
 				lsf.setSelectedUser(selectedUser);
+				lsf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedShoppinglist != null && selectedRetailer != null) {
@@ -165,6 +166,7 @@ public class NewRetailerForm extends VerticalPanel {
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
 				lsf.setSelectedRetailer(selectedRetailer);
+				lsf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
@@ -184,6 +186,7 @@ public class NewRetailerForm extends VerticalPanel {
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(lsf);
 
@@ -234,6 +237,7 @@ public class NewRetailerForm extends VerticalPanel {
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
 				lsf.setSelectedUser(selectedUser);
+				lsf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedShoppinglist != null && selectedRetailer != null) {
@@ -241,6 +245,7 @@ public class NewRetailerForm extends VerticalPanel {
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
 				lsf.setSelectedRetailer(selectedRetailer);
+				lsf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
@@ -260,6 +265,7 @@ public class NewRetailerForm extends VerticalPanel {
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(lsf);
 

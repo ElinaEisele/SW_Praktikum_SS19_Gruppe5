@@ -392,6 +392,7 @@ public class ListitemForm extends VerticalPanel {
 				nrf.setSelectedListitem(selectedListitem);
 				nrf.setSelectedRetailer(selectedRetailer);
 				nrf.setSelectedUser(selectedUser);
+				nrf.setSelectedGroup(groupToDisplay);
 
 				ListitemShowForm lsf = new ListitemShowForm(listitemHeader, nrf);
 				lsf.setSelected(selectedListitem);
