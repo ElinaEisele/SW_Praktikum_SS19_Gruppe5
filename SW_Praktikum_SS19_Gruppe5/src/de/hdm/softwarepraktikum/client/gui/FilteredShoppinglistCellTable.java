@@ -1,8 +1,12 @@
 package de.hdm.softwarepraktikum.client.gui;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -296,10 +300,12 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 							@Override
 							public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+								
 								data.clear();
 								if (data.size() == 0) {
 
 									for (Listitem key : result.keySet()) {
+										
 										ArrayList<Object> listitems = new ArrayList<>();
 
 										listitems.add(key);
@@ -310,6 +316,14 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 										data.add(listitems);
 									}
+
+									Collections.sort(data, new Comparator<List<Object>> () {
+
+										@Override
+										public int compare(List<Object> o1, List<Object> o2) {
+											return ((String) o1.get(1)).compareTo((String)o2.get(1));
+										}
+									});
 
 									// Set the total row count
 									table.setRowCount(result.size(), true);
