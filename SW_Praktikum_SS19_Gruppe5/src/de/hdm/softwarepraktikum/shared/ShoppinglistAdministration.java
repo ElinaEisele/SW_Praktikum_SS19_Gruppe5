@@ -171,6 +171,13 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public void save(Product product) throws IllegalArgumentException;
 	
 	/**
+	 * Loeschen des uebergebenen Product-Objekts
+	 * @param product Product-Objekt, welches in der Datenbank geloescht werden soll
+	 * @throws IllegalArgumentException
+	 */
+	public void delete(Product product) throws IllegalArgumentException;
+	
+	/**
 	 * Loeschen des uebergebenen User-Objekts
 	 * @param user User-Objekt, welches in der Datenbank geloescht werden soll
 	 * @throws IllegalArgumentException
@@ -246,6 +253,8 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public User getUserById(int userId) throws IllegalArgumentException;
 	
+	public ArrayList<User> getAllUsers() throws IllegalArgumentException;
+
 	/**
 	 * Saemtliche User-Objekte mit einem bestimmten Namen werden ausgegeben
 	 * @param name Username
@@ -362,7 +371,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	/**
 	 * Ausgabe aller schon zugewiesenen Retailer.
 	 */
-	public ArrayList<Retailer> getAssigndRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
+	public ArrayList<Retailer> getAssignedRetailersOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
 	 * Ausgabe aller Händler-Nutzer Zuweisungen in einer <code>Shoppinglist</code>
@@ -425,7 +434,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekten, welche im Verantwortungbereichc eines Nutzers liegen
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
+	public Map<Listitem, ArrayList<String>> filterShoppinglistsByUser(Shoppinglist shoppinglist, User user) throws IllegalArgumentException;
 	
 	/**
 	 * Filtern einer Einkaufsliste nach Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
@@ -434,7 +443,7 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @return ArrayList mit Listitem-Objekten, welche einem bestimmten Einzelhaendler zugeordnet sind
 	 * @throws IllegalArgumentException
 	 */
-	public ArrayList<Listitem> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
+	public Map<Listitem, ArrayList<String>> filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer) throws IllegalArgumentException;
 	
 	/**
 	 * Ein User-Objekt einer Gruppe hinzufuegen
@@ -525,6 +534,9 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 */
 	public Map<Listitem, String> getListitemsNameMapBy(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
+	public Map<Listitem, ArrayList<String>> getListitemsNameMapBy(Shoppinglist shoppinglist, String productName) throws IllegalArgumentException;
+
+	
 	/**
 	 * Ausgabe des zugewiesenen Retailers eines Listitems.
 	 * @param listitem ist das Listitem, dessen zugewiesenes Retailer-Objekt zur�ckgegeben werden soll.
@@ -566,6 +578,14 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Listitem> getArchivedListitemsOf(Shoppinglist shoppinglist) throws IllegalArgumentException;
 	
 	/**
+	 * Saemtliche archivierte Listitem-Objekte einer bestimmten Gruppe werden ausgegeben.
+	 * @param group ist die Gruppe, aus welcher alle Listitem-Objekte ausgegeben werden sollen.
+	 * @return ArrayList mit allen Listitem-Objekten aus einer bestimmten Gruppe.
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Listitem> getArchivedListitemsOf(Group group) throws IllegalArgumentException;
+	
+	/**
 	 * Eine Zuweisung wird gel�scht.
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param user ist der User, dessen Zuweisung gel�scht werden soll.
@@ -573,4 +593,5 @@ public interface ShoppinglistAdministration extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
+
 }

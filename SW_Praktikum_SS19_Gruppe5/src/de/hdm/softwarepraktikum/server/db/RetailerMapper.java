@@ -335,15 +335,15 @@ public class RetailerMapper {
 
 			while (rs.next()) {
 				Retailer r = new Retailer();
-				r.setId(rs.getInt("id"));
+				r.setId(rs.getInt("id"));;
 				r.setCreationDate(rs.getDate("creationDate"));
 				r.setName(rs.getString("name"));
-				
-				if (!retailers.contains(r)) {
 
+				if (!retailers.contains(r)) {
 					retailers.add(r);
 				}
-							}	
+			}	
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -491,13 +491,11 @@ public class RetailerMapper {
 					allocations.put(r.getName(), u.getName());
 				}
 			}
-
 			
 		} catch (SQLException e) {
 			e.getStackTrace();
 		}
-		
-		
+	
 		return allocations;
 	}
 	

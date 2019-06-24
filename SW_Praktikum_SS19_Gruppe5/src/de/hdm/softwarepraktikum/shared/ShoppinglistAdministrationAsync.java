@@ -47,6 +47,8 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getUsersByName(String name, AsyncCallback<ArrayList<User>>callback) throws IllegalArgumentException;
   
+	void getAllUsers(AsyncCallback<ArrayList<User>> callback) throws IllegalArgumentException;
+	
 	void createListitem(Group group, Shoppinglist shoppinglist, String productname, float amount, ListitemUnit listitemUnit, Retailer retailer, AsyncCallback<Listitem> callback) throws IllegalArgumentException;
 	
 	void createRetailer(String name, AsyncCallback<Retailer> callback) throws IllegalArgumentException; 
@@ -60,6 +62,8 @@ public interface ShoppinglistAdministrationAsync {
 	void save(Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void save(Product product, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void delete(Product product, AsyncCallback<Void> callback) throws IllegalArgumentException;
 
 	void delete(User user, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
@@ -103,7 +107,7 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getAssigndUserOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<User>> callback) throws IllegalArgumentException;
 	
-	void getAssigndRetailersOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
+	void getAssignedRetailersOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Retailer>> callback) throws IllegalArgumentException;
 	
 	void assignRetailer(Retailer retailer, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
@@ -115,9 +119,9 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getStandardListitemsOf(Group group, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
 	
-	void filterShoppinglistsByUser(Shoppinglist shoppinglist, User user, AsyncCallback<ArrayList<Listitem>> callback)throws IllegalArgumentException;
+	void filterShoppinglistsByUser(Shoppinglist shoppinglist, User user, AsyncCallback<Map<Listitem, ArrayList<String>>> callback)throws IllegalArgumentException;
 	
-	void filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer, AsyncCallback<ArrayList<Listitem>>callback) throws IllegalArgumentException;
+	void filterShoppinglistsByRetailer(Shoppinglist shoppinglist, Retailer retailer, AsyncCallback<Map<Listitem, ArrayList<String>>> callback) throws IllegalArgumentException;
 	
 	void addUserToGroup(User user, Group group, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
@@ -145,6 +149,8 @@ public interface ShoppinglistAdministrationAsync {
 	
 	void getListitemsNameMapBy(Shoppinglist shoppinglist, AsyncCallback<Map<Listitem, String>> callback) throws IllegalArgumentException;
 	
+	void getListitemsNameMapBy(Shoppinglist shoppinglist, String productName, AsyncCallback<Map<Listitem, ArrayList<String>>> callback) throws IllegalArgumentException;
+	
 	void getRetailerOf(Listitem listitem, AsyncCallback<Retailer> callback) throws IllegalArgumentException;
 
 	void getGroupOf(Shoppinglist shoppinglist, AsyncCallback<Group> callback) throws IllegalArgumentException;
@@ -154,6 +160,8 @@ public interface ShoppinglistAdministrationAsync {
 	void archiveListitems(ArrayList<Listitem> listitems, AsyncCallback<Void> callback) throws IllegalArgumentException;
 	
 	void getArchivedListitemsOf(Shoppinglist shoppinglist, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
+	
+	void getArchivedListitemsOf(Group group, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
 	
 	void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
 }

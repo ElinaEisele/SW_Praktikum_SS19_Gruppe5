@@ -29,6 +29,7 @@ public class ShowRetailersForm extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 
+	private GroupShoppinglistTreeViewModel gstvm = null;
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label();
 	private FlexTable retailersFlexTable = new FlexTable();
@@ -66,6 +67,15 @@ public class ShowRetailersForm extends VerticalPanel {
 		
 	}
 	
+	
+	public GroupShoppinglistTreeViewModel getGstvm() {
+		return gstvm;
+	}
+
+	public void setGstvm(GroupShoppinglistTreeViewModel gstvm) {
+		this.gstvm = gstvm;
+	}
+
 	public Group getSelectedGroup() {
 		return selectedGroup;
 	}
@@ -83,6 +93,8 @@ public class ShowRetailersForm extends VerticalPanel {
 			RootPanel.get("main").clear();
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(selectedGroup);
+			gsf.setGstvm(gstvm);
+			gstvm.setGroupShowForm(gsf);
 			RootPanel.get("main").add(gsf);
 		}
 
