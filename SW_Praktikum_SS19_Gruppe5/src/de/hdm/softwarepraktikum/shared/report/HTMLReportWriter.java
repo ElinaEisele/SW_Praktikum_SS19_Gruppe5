@@ -176,7 +176,6 @@ public void process(AllShoppinglistsOfGroupReport r) {
 	
 }
 
-  }
   
   public String getReportTextHeader() {
 	  return this.getHeader() + this.reportTextHeader + this.getTrailer();

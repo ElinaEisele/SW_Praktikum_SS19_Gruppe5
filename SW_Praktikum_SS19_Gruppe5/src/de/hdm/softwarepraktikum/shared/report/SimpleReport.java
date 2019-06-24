@@ -19,14 +19,7 @@ public class SimpleReport extends Report{
 	private static final long serialVersionUID = 1L;
 	
 	/**
-     * Default Konstruktor.
-     */
-    public SimpleReport() {
-        // TODO implement here
-    }
-
-	/**
-	 * Default Konnstruktor 
+	 * Default Konstruktor 
 	 */
 	public SimpleReport() {
 		
