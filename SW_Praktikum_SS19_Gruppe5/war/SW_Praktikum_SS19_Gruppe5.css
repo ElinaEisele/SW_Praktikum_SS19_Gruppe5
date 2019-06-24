@@ -306,9 +306,9 @@ div#trailer {
 }
 
 .GroupHeaderButton:hover {
-	/*background: lightgrey;*/
+	background: white;
 	border-color: transparent;
-	color: white;
+	color: black;
 	border: 1px solid black;
 	border-radius: 5px;
 }
