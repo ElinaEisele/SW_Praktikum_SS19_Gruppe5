@@ -17,9 +17,9 @@ import java.util.ArrayList;
 public class SimpleReport extends Report{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
-	 * Default Konnstruktor 
+	 * Default Konstruktor 
 	 */
 	public SimpleReport() {
 		

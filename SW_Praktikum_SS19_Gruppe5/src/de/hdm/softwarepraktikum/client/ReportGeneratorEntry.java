@@ -70,7 +70,6 @@ public class ReportGeneratorEntry implements EntryPoint{
 					reportGeneratorLink.setHref(GWT.getHostPageBaseURL());
 					
 					RootPanel.get("ReportHeader").setVisible(false);
-					RootPanel.get("ReportAside").setVisible(false);
 //					RootPanel.get("ReportMain").add(new RegistrationForm(reportGeneratorLink, u));
 				} else {
 					ReportMain report = new ReportMain();
@@ -99,7 +98,6 @@ public class ReportGeneratorEntry implements EntryPoint{
 		loginButton.addClickHandler(new LoginClickHandler());
 
 		RootPanel.get("ReportHeader").setVisible(false);
-		RootPanel.get("ReportAside").setVisible(false);
 
 	}
 

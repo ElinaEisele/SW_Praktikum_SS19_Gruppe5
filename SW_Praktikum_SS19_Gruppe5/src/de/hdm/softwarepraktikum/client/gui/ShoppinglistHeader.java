@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -44,11 +45,12 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		}
 
 		shoppinglistHeaderLabel.setStyleName("ListLabel");
-		newListitem = new Button("");
-		deleteShoppinglist = new Button("");
-		editShoppinglistName = new Button("");
-		showUserRetailerAllocation = new Button("Zuweisung");
-		filter = new Button("Filtern");
+    
+		newListitem = new Button();
+		deleteShoppinglist = new Button();
+		editShoppinglistName = new Button();
+		showUserRetailerAllocation = new Button();
+		filter = new Button();
 
 		Image newListitemImg = new Image();
 		newListitemImg.setUrl("images/shopping-cart.png");
@@ -71,14 +73,17 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		editShoppinglistName.setStyleName("ShoppinglistHeaderButton");
 		editShoppinglistName.addClickHandler(new EditShoppinglistNameClickHandler());
 
-//		Image showUserRetailerAllocationImg = new Image();
-//		showUserRetailerAllocationImg.setUrl("images/showUserRetailerAllocation.png");
-//		showUserRetailerAllocationImg.setSize("16px", "16px");
-//		showUserRetailerAllocation.getElement().appendChild(showUserRetailerAllocationImg.getElement());
+		Image allocationImg = new Image();
+		allocationImg.setUrl("images/collaboration.png");
+		allocationImg.setSize("16px", "16px");
+		showUserRetailerAllocation.getElement().appendChild(allocationImg.getElement());
 		showUserRetailerAllocation.setStyleName("ShoppinglistHeaderButton");
 		showUserRetailerAllocation.addClickHandler(new ShowUserRetailerAllocationClickHandler());
-		
-		
+
+		Image filterImg = new Image();
+		filterImg.setUrl("images/filter.png");
+		filterImg.setSize("16px", "16px");
+		filter.getElement().appendChild(filterImg.getElement());
 		filter.addClickHandler(new FilterClickHandler());
 		filter.setStyleName("ShoppinglistHeaderButton");
 
@@ -94,8 +99,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		this.add(filter);
 
 	}
-	
-	
 
 	public Group getGroupToDisplay() {
 		return groupToDisplay;
@@ -177,6 +180,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				nlf.setGroupToDisplay(groupToDisplay);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, nlf);
 				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelectedGroup(groupToDisplay);
 
 			} else {
 				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
@@ -184,7 +188,6 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		}
 
 	}
-
 
 	/**
 	 * ClickHandler dient dem Erzeugen einer <code>EditShoppinglistNameForm</code>
@@ -250,8 +253,8 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		}
 
 	}
-	
-	private class FilterClickHandler implements ClickHandler{
+
+	private class FilterClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -262,9 +265,9 @@ public class ShoppinglistHeader extends HorizontalPanel {
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, sff);
 			ssf.setSelected(shoppinglistToDisplay);
 			ssf.setSelectedGroup(groupToDisplay);
-			
+
 		}
-		
+
 	}
 
 }

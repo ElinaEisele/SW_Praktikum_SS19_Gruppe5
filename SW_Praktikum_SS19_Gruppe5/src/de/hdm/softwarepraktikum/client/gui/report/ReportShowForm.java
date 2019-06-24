@@ -45,8 +45,12 @@ public class ReportShowForm extends VerticalPanel{
 	 * Benoetigte Panel werden hier instanziiert.
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
+
 	private HorizontalPanel addPanel1 = new HorizontalPanel();
 	private HorizontalPanel addPanel2 = new HorizontalPanel();
+
+
+
 	private Grid reportGrid;
 	ReportSearchBar rsb = new ReportSearchBar();
 	
@@ -98,7 +102,7 @@ public class ReportShowForm extends VerticalPanel{
 	private Date sqlEndDate = null;
 	
 	/**
-	 * Speicher für Filteroption kein Datum
+	 * Speicher fÃ¼r Filteroption kein Datum
 	 */
 	private Boolean noDate = false;
 	
@@ -126,11 +130,11 @@ public class ReportShowForm extends VerticalPanel{
 	
 	/**
 	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
-	 */
+	 */	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
 	/**
-	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportAdministrationImpl zuzugreifen.
+	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportGeneratorImpl zuzugreifen.
 	 */
 	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	
@@ -175,12 +179,10 @@ public class ReportShowForm extends VerticalPanel{
 		
 		reportGenerator.getAllGroupsOf(selectedUser, new GetAllGroupsOfCallback());
 		
-		reportGenerator.getAllRetailers(new GetAllRetailersCallback());
-			
+		reportGenerator.getAllRetailers(new GetAllRetailersCallback());			
 	}
 	
 	public void onLoad() {	
-		
 		RootPanel.get("reportMain").add(mainPanel);
 	}
 	
@@ -200,6 +202,12 @@ public class ReportShowForm extends VerticalPanel{
 	public void setSelectedGroup(Group selectedGroup) {
 		this.selectedGroup = selectedGroup;
 	}
+	
+	/**
+	 * 
+	 *ClickHandler
+	 *
+	 */
 				
 	private class ShowReportClickHandler implements ClickHandler {
 		
@@ -214,9 +222,10 @@ public class ReportShowForm extends VerticalPanel{
 				
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
 //				Window.alert("Dein Retailer ist: " + selectedRetailer.getName());
+
 				
 				if(noDate == true && selectedRetailer.getId() == 0) {
-					Window.alert("Du musst mindestens ein Datum oder einen Händler auswählen.");
+					Window.alert("Du musst mindestens ein Datum oder einen Hï¿½ndler auswï¿½hlen.");
 					
 				}else {
 					if (noDate == true) {
@@ -244,6 +253,7 @@ public class ReportShowForm extends VerticalPanel{
 		
 	}
 	
+
 	private class GetBackClickHandler implements ClickHandler{
 
 		@Override
@@ -255,6 +265,14 @@ public class ReportShowForm extends VerticalPanel{
 		}
 		
 	}
+
+	/**
+	 * 
+	 * Callback
+	 *
+	 */
+
+
 
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
 
@@ -280,8 +298,8 @@ public class ReportShowForm extends VerticalPanel{
 				getBackButton.addClickHandler(new GetBackClickHandler());
 			}
 		}
+		
 	}
-
 	
 	private class GetAllGroupsOfCallback implements AsyncCallback<ArrayList<Group>> {
 		
