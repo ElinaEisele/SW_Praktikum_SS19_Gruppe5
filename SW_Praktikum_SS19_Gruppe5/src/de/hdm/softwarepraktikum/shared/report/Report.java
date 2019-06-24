@@ -1,6 +1,5 @@
 package de.hdm.softwarepraktikum.shared.report;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -8,8 +7,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * <p>
  * Diese Klasse ist die Basis aller Reports. Alle Reports sind Serializable,
- * sodass diese vom Server an den Client gesendet werden k�nnen. Der Zugriff
- * auf die Reports erfolgt lokal �ber den Client.
+ * sodass diese vom Server an den Client gesendet werden können. Der Zugriff
+ * auf die Reports erfolgt lokal über den Client.
  * </p>
  * <p>
  * Jeder Report besitzt einige Standardelemente, welche in dieser Klasse
@@ -24,22 +23,23 @@ public class Report  implements IsSerializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Default Konstruktor
-	 */
-	public Report() {
-		
-	}
+   * Default Konstruktor.
+   */
+  public Report(){
+
+  }
+
 	
 	/**
 	 * Impressum der MaulTasche GmbH. Hierbei werden Informationen wie Firmenname,
 	 * Adresse, Logo, etc. 
 	 */
-	private Paragraph imprint = null;
+	private Paragraph imprint;
 	
 	/**
 	 * Kopfdaten den Berichts.
 	 */
-	private Paragraph headerData = null;
+	private Paragraph headerData;
 	
 	/**
 	 * Jeder Bericht kann einen individuellen Titel besitzen.
@@ -56,7 +56,7 @@ public class Report  implements IsSerializable {
 	 * @return Text des Impressums
 	 */
 	public Paragraph getImprint() {
-		return imprint;
+		return this.imprint;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class Report  implements IsSerializable {
 	 * @return Paragraph-Objekt, welches die Kopfdaten wiedergibt.
 	 */
 	public Paragraph getHeaderData() {
-		return headerData;
+		return this.headerData;
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Report  implements IsSerializable {
 	 * @return Date-Objekt, welches das Erstellungsdatum wiederspiegelt.
 	 */
 	public Date getCreationDate() {
-		return creationDate;
+		return this.creationDate;
 	}
 
 	/**
@@ -113,6 +113,17 @@ public class Report  implements IsSerializable {
 	 */
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+	
+	/**
+     * Hier wird das Erstellungsdatum in einen String gespeichert und gekürzt.
+     *
+     * @return Das zum Anzeigen formatierte Creationdate wird zurückgegeben.
+     */
+    public String getCreationDateString() {
+    	
+    	String creationDate = this.creationDate.toString().split("\\.")[0];
+    	return creationDate;
 	}
 
 	/**
@@ -124,9 +135,9 @@ public class Report  implements IsSerializable {
 	}
 	
 	/**
-     * Hier wird das Erstellungsdatum in einen String gespeichert und gek�rzt.
+     * Hier wird das Erstellungsdatum in einen String gespeichert und gekürzt.
      *
-     * @return Das zum Anzeigen formatierte Creationdate wird zur�ckgegeben.
+     * @return Das zum Anzeigen formatierte Creationdate wird zurückgegeben.
      */
     public String getCreationDateString() {
     	
