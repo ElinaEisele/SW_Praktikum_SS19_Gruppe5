@@ -10,6 +10,8 @@ div#header {
 	display: flex;
 	-webkit-flex-flow: row wrap;
 	justify-content: flex-end;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
 
 .HeaderButton {
@@ -69,12 +71,16 @@ div#wrapper>* {
 
 div#trailer {
 	background: teal;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+
 }
 
 div#main {
 	text-align: left;
 	background: powderblue;
 	min-width: 800px;
+	min-height: 300px;
 }
 
 div#aside {
@@ -82,6 +88,8 @@ div#aside {
 	border-color: white;
 	border-width: 2px;
 	border-style: solid;
+	min-height: 300px;
+
 }
 
 @media all and (min-width: 600px) {
@@ -114,7 +122,7 @@ div#trailer {
 	padding: 20px;
 }
 
-/* ShoppinglistEditorEntry.java: */
+/* Um die Buttons im Header zu stylen. */
 .HeaderButton {
 	color: white;
 	font-weight: bold;
@@ -133,9 +141,9 @@ div#trailer {
 }
 
 .HeaderButton:hover {
-	background: skyblue;
-	border-color: transparent;
-	border: 1px solid white;
+	background-color: lightgrey;
+	color: black;
+	border: 1px solid black;
 	border-radius: 5px;
 }
 /* .HeaderButton3 {
@@ -165,7 +173,9 @@ div#trailer {
 	border: 0px solid white;
 	border-radius: 5px;
 } */
-/* Trailer.java: */
+
+
+/* Um die Buttons im Trailer zu stylen. */
 .TrailerButton {
 	color: white;
 	font-weight: bold;
@@ -185,19 +195,20 @@ div#trailer {
 }
 
 .TrailerButton:hover {
-	background: skyblue;
-	border-color: transparent;
-	border: 1px solid white;
+	background: white;
+	color: black;
+	background-color: lightgrey;
+	border: 1px solid black;
 	border-radius: 5px;
 }
 
 /* ShoppinglistHeader.java: */
 .ShoppinglistHeaderButton {
-	color: white;
+	color: black;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
-	border: 1px solid white;
+	border: 1px solid black;
 	border-radius: 5px;
 	margin-right: 5px;
 	margin-left: 5px;
@@ -207,24 +218,25 @@ div#trailer {
 .ShoppinglistHeaderButton:active {
 	background: transparent;
 	border: 1px solid white;
-	border-radius: 10px;
+	border-radius: 5px;
 }
 
 .ShoppinglistHeaderButton:hover {
-	background: skyblue;
+	background: white;
 	border-color: transparent;
-	border: 1px solid white;
+	color: black;
+	border: 1px solid black;
 	border-radius: 5px;
 }
 
+/* Name der Shoppingliste */
 .ListLabel {
-	color: white;
+	color: black;
 	font-weight: bold;
-	font-size: 150%;
+	font-size: 175%;
 	background: transparent;
-	border: 0px solid white;
-	border-radius: 5px;
-	padding: 5px 10px;
+	border-bottom: 3px solid black;
+	margin-right: 5px;
 }
 
 /* ShoppinglistContent.java */
@@ -242,12 +254,13 @@ div#trailer {
 /* ShoppinglistShowForm.java */
 .shoppinglistContent {
 	width: 90%;
-	border: 2px solid white;
+	border: 2px solid black;
 	margin: 10px 10px;
 }
 
 .shoppinglistHeader {
-	border: 1px solid white;
+	border: 0px solid black;
+	color: black;
 	margin: 10px 10px;
 	padding: 5px;
 }
@@ -255,14 +268,53 @@ div#trailer {
 /* GroupShowForm.java */
 .groupContent{
 	width: 90%;
-	border: 2px solid white;
+	border: 2px solid black;
 	margin: 10px 1opx;
 }
 
 .groupHeader {
-	border: 1px solid white;
-	margin: 10px 10px;
-	padding: 5px;
+	border: 0px solid black;
+	margin-right: 5px;
+}
+
+.GroupLabel{
+	color: black;
+	font-weight: bold;
+	font-size: 175%;
+	background: transparent;
+	border-bottom: 3px solid black;
+	margin-right: 5px;
+}
+
+/* ShoppinglistHeader.java: */
+.GroupHeaderButton {
+	color: black;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
+	border: 1px solid black;
+	border-radius: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
+	padding: 5px 10px;
+}
+
+.GroupHeaderButton:active {
+	background: transparent;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.GroupHeaderButton:hover {
+	/*background: lightgrey;*/
+	border-color: transparent;
+	color: white;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+img{
+	-webkit-filter: invert(100%);
 }
 
 /* platzhalter.java */
