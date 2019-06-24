@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -49,9 +50,6 @@ public class ListitemForm extends VerticalPanel {
 	private Group groupToDisplay = null;
 	private User selectedUser = null;
 	private Retailer retailerToDisplay = new Retailer();
-	Listitem oldListitem = new Listitem();
-	private String oldProductname = null;;
-
 
 	private ArrayList<Retailer> retailerArrayList;
 	private ArrayList<ListitemUnit> listitemUnitArrayList;
@@ -68,9 +66,9 @@ public class ListitemForm extends VerticalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button("Neu");
-	private Button saveButton = new Button("Speichern");
-	private Button discardButton = new Button("verwerfen und zurueck");
+	private Button newRetailerButton = new Button();
+	private Button saveButton = new Button();
+	private Button discardButton = new Button();
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
@@ -101,16 +99,31 @@ public class ListitemForm extends VerticalPanel {
 		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
 		shoppinglistGrid.setWidget(4, 2, newRetailerButton);
+		Image NewRetailerImg = new Image();
+		NewRetailerImg.setUrl("images/add.png");
+		NewRetailerImg.setSize("16px", "16px");
+		newRetailerButton.getElement().appendChild(NewRetailerImg.getElement());
+		newRetailerButton.setStyleName("ShoppinglistHeaderButton");
 		newRetailerButton.addClickHandler(new NewRetailerClickhandler());
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
 		shoppinglistGrid.setWidget(5, 1, actionButtonsPanel);
 
+		Image ConfirmImg = new Image();
+		ConfirmImg.setUrl("images/check-mark.png");
+		ConfirmImg.setSize("16px", "16px");
+		saveButton.getElement().appendChild(ConfirmImg.getElement());
+		saveButton.setStyleName("ShoppinglistHeaderButton");
 		saveButton.addClickHandler(new UpdateListitemClickHandler());
 		saveButton.setEnabled(true);
 		actionButtonsPanel.add(saveButton);
 
+		Image CancelImg = new Image();
+		CancelImg.setUrl("images/cancel.png");
+		CancelImg.setSize("16px", "16px");
+		discardButton.getElement().appendChild(CancelImg.getElement());
+		discardButton.setStyleName("ShoppinglistHeaderButton");
 		discardButton.addClickHandler(new DiscardClickhandler());
 		discardButton.setEnabled(true);
 		actionButtonsPanel.add(discardButton);
@@ -462,14 +475,12 @@ public class ListitemForm extends VerticalPanel {
 	 */
 	private class UpdateListitemClickHandler implements ClickHandler {
 
-		
-		
 		@Override
 		public void onClick(ClickEvent event) {
 			if (shoppinglistToDisplay != null) {
 
 				selectedProduct = new Product();
-        
+
 				shoppinglistAdministration.getProductOf(selectedListitem, new AsyncCallback<Product>() {
 
 					@Override
@@ -481,40 +492,27 @@ public class ListitemForm extends VerticalPanel {
 					@Override
 					public void onSuccess(Product result) {
 						selectedProduct = result;
-						oldProductname = result.getName();
 						selectedProduct.setName(productNameTextBox.getText());
-						
 						shoppinglistAdministration.save(selectedProduct, new UpdateProductCallback());
-						
-						float amount = 0.0F;
-						try {
-							amount = (float) decimalFormatter.parse(amountTextBox.getText());
-						} catch (NumberFormatException nfe) {
-							Window.alert("ungueltiger Wert!");
-							return;
-						}
-						ListitemUnit listitemUnit = selectedListitemUnit;
-						Retailer retailer = selectedRetailer;
-										
-						
-						oldListitem.setAmount(selectedListitem.getAmount());
-						oldListitem.setListitemUnitID(selectedListitem.getListitemUnitID());
-						oldListitem.setRetailerID(selectedListitem.getRetailerID());
-						
-						selectedListitem.setAmount(amount);
-						selectedListitem.setListitemUnitID(listitemUnit.getId());
-						selectedListitem.setRetailerID(retailer.getId());
-
-						// Falls das geaenderte Listitem ein Standard-Listitem ist, wird dieses auch in den anderen Shoppinglists angepasst.
-						if(selectedListitem.isStandard()) {
-							shoppinglistAdministration.saveStandardListitem(oldListitem, selectedListitem, oldProductname, new UpdateListitemCallback());
-						}
-						else {
-							shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
-						}
 					}
 
 				});
+
+				float amount = 0.0F;
+				try {
+					amount = (float) decimalFormatter.parse(amountTextBox.getText());
+				} catch (NumberFormatException nfe) {
+					Window.alert("ungueltiger Wert!");
+					return;
+				}
+				ListitemUnit listitemUnit = selectedListitemUnit;
+				Retailer retailer = retailerToDisplay;
+
+				selectedListitem.setAmount(amount);
+				selectedListitem.setListitemUnitID(listitemUnit.getId());
+				selectedListitem.setRetailerID(retailer.getId());
+
+				shoppinglistAdministration.save(selectedListitem, new UpdateListitemCallback());
 
 			} else {
 				RootPanel.get("main").clear();
