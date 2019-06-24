@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -74,10 +75,10 @@ public class ListitemHeader extends HorizontalPanel {
 		shoppinglistAdministration.getProductnameOf(listitemToDisplay, new ProductNameAsyncCallback());
 
 		if (listitemToDisplay.isStandard() == true) {
-		removeStandard.setEnabled(false);
 		removeStandard.setEnabled(true);
+		setStandard.setEnabled(false);
 	} else {
-		removeStandard.setEnabled(true);
+		setStandard.setEnabled(true);
 		removeStandard.setEnabled(false);
 	}
 		
@@ -165,7 +166,9 @@ public class ListitemHeader extends HorizontalPanel {
 			if (listitemToDisplay != null) {
 				StandardListitemOnDialogBox slondb = new StandardListitemOnDialogBox();
 				slondb.setSelectedListitem(listitemToDisplay);
+				slondb.setSelectedGroup(selectedGroup);
 				slondb.show();
+				slondb.center();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
 			}
@@ -183,7 +186,9 @@ public class ListitemHeader extends HorizontalPanel {
 			if (listitemToDisplay != null) {
 				StandardListitemOffDialogBox sloffdb = new StandardListitemOffDialogBox();
 				sloffdb.setSelectedListitem(listitemToDisplay);
+				sloffdb.setSelectedGroup(selectedGroup);
 				sloffdb.show();
+				sloffdb.center();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
 			}
