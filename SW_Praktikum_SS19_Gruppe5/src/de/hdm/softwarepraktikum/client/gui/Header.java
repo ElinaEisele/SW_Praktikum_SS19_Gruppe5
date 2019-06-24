@@ -48,7 +48,7 @@ public class Header extends HorizontalPanel {
 		
 		logoutPanel = new VerticalPanel();
 		
-		userMailLabel = new Label(user.getGmailAddress());
+		userMailLabel = new Label(user.getName());
 		logoutPanel.add(abmeldenButton);
 		logoutPanel.add(userMailLabel);
 		

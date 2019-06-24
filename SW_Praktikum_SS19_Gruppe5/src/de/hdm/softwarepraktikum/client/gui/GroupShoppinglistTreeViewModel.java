@@ -37,7 +37,6 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	private GroupShowForm groupShowForm;
 	private ShoppinglistShowForm shoppinglistShowForm;
 
-	private ShoppinglistContent shoppinglistContent;
 	private ShoppinglistCellTable shoppinglistCellTable;
 	private NavigatorPanel navigatorPanel = new NavigatorPanel();
 
