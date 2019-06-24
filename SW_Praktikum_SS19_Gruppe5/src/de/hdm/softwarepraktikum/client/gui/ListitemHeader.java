@@ -41,28 +41,28 @@ public class ListitemHeader extends HorizontalPanel {
 		listitemHeaderLabel = new Label("Listitem Header");
 		listitemHeaderLabel.setText("Listitem  Tets");
 		listitemHeaderLabel.setStyleName("ListLabel");
-		deleteListitem = new Button("Eintrag loeschen");
+		deleteListitem = new Button();
 
-		setStandard = new Button("Standardartikel");
-		removeStandard = new Button("Nicht mehr Standardartikel");
+		setStandard = new Button();
+		removeStandard = new Button();
 
 		Image deleteListitemImg = new Image();
-		deleteListitemImg.setUrl("images/deleteListitemImg.png");
-		deleteListitemImg.setSize("16px", "16px");
+		deleteListitemImg.setUrl("images/delete.png");
+		deleteListitemImg.setSize("30px", "30px");
 		deleteListitem.getElement().appendChild(deleteListitemImg.getElement());
 		deleteListitem.setStyleName("ShoppinglistHeaderButton");
 		deleteListitem.addClickHandler(new DeleteListitemClickHandler());
 
 		Image setStandardImg = new Image();
-		setStandardImg.setUrl("images/setStandardImg.png");
-		setStandardImg.setSize("16px", "16px");
+		setStandardImg.setUrl("images/like (1).png");
+		setStandardImg.setSize("30px", "30px");
 		setStandard.getElement().appendChild(setStandardImg.getElement());
 		setStandard.setStyleName("ShoppinglistHeaderButton");
 		setStandard.addClickHandler(new SetStandardClickHandler());
 
 		Image removeStandardImg = new Image();
-		removeStandardImg.setUrl("images/man-pushing-a-shopping-cart.png");
-		removeStandardImg.setSize("16px", "16px");
+		removeStandardImg.setUrl("images/like.png");
+		removeStandardImg.setSize("30px", "30px");
 		removeStandard.getElement().appendChild(removeStandardImg.getElement());
 		removeStandard.setStyleName("ShoppinglistHeaderButton");
 		removeStandard.addClickHandler(new RemoveStandardClickHandler());
