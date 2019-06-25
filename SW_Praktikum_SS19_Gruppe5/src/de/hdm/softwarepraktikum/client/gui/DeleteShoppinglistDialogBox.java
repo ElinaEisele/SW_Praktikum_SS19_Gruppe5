@@ -35,7 +35,7 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmationLabel = new Label("Möchtest du die ausgewählte Einkaufsliste löschen?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Löschen");
+	private Button confirmButton = new Button("Bestätigen");
 	private Button cancelButton = new Button("Abbrechen");
 
 	public DeleteShoppinglistDialogBox() {

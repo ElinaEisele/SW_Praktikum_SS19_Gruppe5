@@ -72,7 +72,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 		backButton.addClickHandler(new CancelClickHandler());
 
 		Image SaveImg = new Image();
-		SaveImg.setUrl("images/add.png");
+		SaveImg.setUrl("images/tick.png");
 		SaveImg.setSize("16px", "16px");
 		saveButton.getElement().appendChild(SaveImg.getElement());
 		saveButton.setStyleName("ShoppinglistHeaderButton");
