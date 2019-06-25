@@ -34,7 +34,7 @@ public class DeleteListitemDialogBox extends DialogBox {
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmationLabel = new Label("Möchtest du den ausgewählten Eintrag löschen?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Löschen");
+	private Button confirmButton = new Button("Bestätigen");
 	private Button cancelButton = new Button("Abbrechen");
 
 	/**
