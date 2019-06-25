@@ -43,7 +43,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	private GroupShoppinglistTreeViewModel gstvm = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufügen");
+	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufï¿½gen");
 	private SuggestBox emailSuggestBox = null;
 	private MultiWordSuggestOracle allUserMails = new MultiWordSuggestOracle();
 
@@ -51,7 +51,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	private HorizontalPanel searchPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button saveButton = new Button("Speichern");
-	private Button backButton = new Button("Zurück");
+	private Button backButton = new Button("ZurÃ¼ck");
 
 	private FlexTable userFlexTable = new FlexTable();
 
@@ -132,7 +132,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	 */
 
 	/**
-	 * Bei Betätigen der Abbrechen-Schaltfläche wird die Gruppenansicht wieder
+	 * Bei Betï¿½tigen der Abbrechen-Schaltflï¿½che wird die Gruppenansicht wieder
 	 * geladen.
 	 */
 	private class CancelClickHandler implements ClickHandler {
@@ -150,9 +150,9 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Bei Betätigen der Speichern-Schaltfläche wird das <code>User</code>-Objekt
-	 * mit zugehöriger Email als neues Gruppenmitglied gespeichert und in die
-	 * darüberliegende <code>FlexTable</code> geschrieben.
+	 * Bei Betï¿½tigen der Speichern-Schaltflï¿½che wird das <code>User</code>-Objekt
+	 * mit zugehï¿½riger Email als neues Gruppenmitglied gespeichert und in die
+	 * darï¿½berliegende <code>FlexTable</code> geschrieben.
 	 */
 	private class SaveClickHandler implements ClickHandler {
 
@@ -165,9 +165,9 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Bei Eingabe der Email werden Vorschläge der schon in der Datenbank
-	 * existierenden Emails gemacht. Mit Betätigen von Enter wird der aktuell
-	 * selektierte Vorschlag ausgewählt und ein weiterer Enter-Klick startet die
+	 * Bei Eingabe der Email werden Vorschlï¿½ge der schon in der Datenbank
+	 * existierenden Emails gemacht. Mit Betï¿½tigen von Enter wird der aktuell
+	 * selektierte Vorschlag ausgewï¿½hlt und ein weiterer Enter-Klick startet die
 	 * Suche nach dem Nutzer.
 	 *
 	 */
@@ -222,7 +222,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Befüllen der <code>FlexTable</code> mit Namen und Email des
+	 * Zum Befï¿½llen der <code>FlexTable</code> mit Namen und Email des
 	 * <code>User</code>-Objekts.
 	 *
 	 */
@@ -245,8 +245,8 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Befüllen des <code>MultiWordSuggestOracle</code>-Objekts für die
-	 * Vorschläge in <code>SuggestBox</code>.
+	 * Zum Befï¿½llen des <code>MultiWordSuggestOracle</code>-Objekts fï¿½r die
+	 * Vorschlï¿½ge in <code>SuggestBox</code>.
 	 */
 	private class AllUsersCallback implements AsyncCallback<ArrayList<User>> {
 
@@ -266,7 +266,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Befüllt die <code>FlexTable</code> mit dem hinzuzufügenden
+	 * Befï¿½llt die <code>FlexTable</code> mit dem hinzuzufï¿½genden
 	 * <code>User</code>-Objekt.
 	 *
 	 */
