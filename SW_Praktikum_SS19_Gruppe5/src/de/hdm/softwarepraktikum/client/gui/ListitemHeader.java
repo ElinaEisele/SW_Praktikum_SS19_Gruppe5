@@ -55,14 +55,14 @@ public class ListitemHeader extends HorizontalPanel {
 		deleteListitem.addClickHandler(new DeleteListitemClickHandler());
 
 		Image setStandardImg = new Image();
-		setStandardImg.setUrl("images/like (1).png");
+		setStandardImg.setUrl("images/like.png");
 		setStandardImg.setSize("30px", "30px");
 		setStandard.getElement().appendChild(setStandardImg.getElement());
 		setStandard.setStyleName("ShoppinglistHeaderButton");
 		setStandard.addClickHandler(new SetStandardClickHandler());
 
 		Image removeStandardImg = new Image();
-		removeStandardImg.setUrl("images/like.png");
+		removeStandardImg.setUrl("images/like (1).png");
 		removeStandardImg.setSize("30px", "30px");
 		removeStandard.getElement().appendChild(removeStandardImg.getElement());
 		removeStandard.setStyleName("ShoppinglistHeaderButton");
@@ -73,19 +73,15 @@ public class ListitemHeader extends HorizontalPanel {
 	public void onLoad() {
 		
 		shoppinglistAdministration.getProductnameOf(listitemToDisplay, new ProductNameAsyncCallback());
-
-		if (listitemToDisplay.isStandard() == true) {
-		removeStandard.setEnabled(true);
-		setStandard.setEnabled(false);
-	} else {
-		setStandard.setEnabled(true);
-		removeStandard.setEnabled(false);
-	}
 		
 		this.add(listitemHeaderLabel);
 		this.add(deleteListitem);
-		this.add(setStandard);
-		this.add(removeStandard);
+		if (listitemToDisplay.isStandard() == true) {
+			this.add(removeStandard);
+		}else {
+			this.add(setStandard);
+		}
+		
 
 	}
 
@@ -167,6 +163,7 @@ public class ListitemHeader extends HorizontalPanel {
 				StandardListitemOnDialogBox slondb = new StandardListitemOnDialogBox();
 				slondb.setSelectedListitem(listitemToDisplay);
 				slondb.setSelectedGroup(selectedGroup);
+				slondb.setSelectedShoppinglist(shoppinglistToDisplay);
 				slondb.show();
 				slondb.center();
 			} else {
@@ -187,6 +184,7 @@ public class ListitemHeader extends HorizontalPanel {
 				StandardListitemOffDialogBox sloffdb = new StandardListitemOffDialogBox();
 				sloffdb.setSelectedListitem(listitemToDisplay);
 				sloffdb.setSelectedGroup(selectedGroup);
+				sloffdb.setSelectedShoppinglist(shoppinglistToDisplay);
 				sloffdb.show();
 				sloffdb.center();
 			} else {
