@@ -46,7 +46,7 @@ public class NewGroupForm extends VerticalPanel {
 	private Button cancelButten = new Button("Abbrechen");
 
 	public NewGroupForm() {
-		
+
 		nameTextBox.setFocus(true);
 
 		grid.setWidget(0, 0, nameLabel);
@@ -92,9 +92,11 @@ public class NewGroupForm extends VerticalPanel {
 			if (u != null) {
 				if (nameTextBox.getValue() == "") {
 					Window.alert("Niemand hat die Absicht eine Gruppe ohne Namen anzulegen");
-				}else {
-				groupShowForm = new GroupShowForm();
-				shoppinglistAdministration.createGroupFor(u, nameTextBox.getValue(), new NewGroupAsyncCallback());
+				} else if (nameTextBox.getValue().length() <= 20) {
+					groupShowForm = new GroupShowForm();
+					shoppinglistAdministration.createGroupFor(u, nameTextBox.getValue(), new NewGroupAsyncCallback());
+				} else {
+					Window.alert("Bitte gib eine kürzeren Namen ein");
 				}
 			}
 		}
@@ -107,10 +109,10 @@ public class NewGroupForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 
 			RootPanel.get("main").clear();
-			if (oldSelectedGroup!= null) {
-			GroupShowForm gsf = new GroupShowForm();
-			gsf.setSelected(oldSelectedGroup);
-			RootPanel.get("main").add(gsf);
+			if (oldSelectedGroup != null) {
+				GroupShowForm gsf = new GroupShowForm();
+				gsf.setSelected(oldSelectedGroup);
+				RootPanel.get("main").add(gsf);
 			}
 
 		}
