@@ -61,8 +61,8 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 	private ListBox retailerListBox = new ListBox();
 	private ListBox userListBox = new ListBox();
 
-	private Button backButton = new Button("zurueck");
-	private Button saveButton = new Button("Hinzufügen");
+	private Button backButton = new Button();
+	private Button saveButton = new Button();
 	private Button removeButton = null;
 
 	/*
@@ -75,17 +75,18 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		addAllocationPanel.add(retailerListBox);
 		addAllocationPanel.add(userListBox);
 		addAllocationPanel.add(saveButton);
-		addAllocationPanel.add(backButton);
+
 
 		mainPanel.add(userRetailerAllocationLabel);
 		mainPanel.add(allocationFlexTable);
 		mainPanel.add(addAllocationPanel);
+		mainPanel.add(backButton);
 
 		userListBox.addChangeHandler(new UserListBoxChangeHandler());
 		retailerListBox.addChangeHandler(new RetailerListBoxChangeHandler());
 
 		Image DiscardImg = new Image();
-		DiscardImg.setUrl("images/cancel.png");
+		DiscardImg.setUrl("images/left-arrow.png");
 		DiscardImg.setSize("16px", "16px");
 		backButton.getElement().appendChild(DiscardImg.getElement());
 		backButton.setStyleName("ShoppinglistHeaderButton");
@@ -104,7 +105,7 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 
 		allocationFlexTable.setText(0, 0, "Händler");
 		allocationFlexTable.setText(0, 1, "User");
-		allocationFlexTable.setText(0, 2, "Zuweisung löschen");
+		allocationFlexTable.setText(0, 2, "");
 
 		shoppinglistAdministration.getAssignedRetailersOf(selectedShoppinglist, new AssignedRetailerCallback());
 
@@ -386,7 +387,12 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		public void onSuccess(Map<String, String> result) {
 
 			for (String key : result.keySet()) {
-				removeButton = new Button("löschen");
+				removeButton = new Button();
+				Image RemoveImg = new Image();
+				RemoveImg.setUrl("images/cancel.png");
+				RemoveImg.setSize("16px", "16px");
+				removeButton.getElement().appendChild(RemoveImg.getElement());
+				removeButton.setStyleName("ShoppinglistHeaderButton");
 				removeButton.addClickHandler(new RemoveClickHandler());
 
 				int row = allocationFlexTable.getRowCount();

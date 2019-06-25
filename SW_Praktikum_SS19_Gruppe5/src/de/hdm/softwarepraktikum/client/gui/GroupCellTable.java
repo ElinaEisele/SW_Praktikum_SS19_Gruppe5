@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -28,6 +30,20 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
  */
 public class GroupCellTable extends VerticalPanel {
 
+	/**
+	 * Interface um den CellTable mit der <code>CellTable</code> CSS Datei zu
+	 * verknüpfen
+	 * 
+	 */
+	static interface TableRes extends CellTable.Resources {
+
+		@Source({ CellTable.Style.DEFAULT_CSS, "CellTable.css" })
+		TableStyle cellTableStyle();
+
+		interface TableStyle extends CellTable.Style {
+		}
+	}
+
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
@@ -35,9 +51,13 @@ public class GroupCellTable extends VerticalPanel {
 	private GroupShowForm groupShowForm = null;
 	private Group selectedGroup = null;
 
-	private CellTable<Shoppinglist> table = new CellTable<Shoppinglist>();
+	private CellTable<Shoppinglist> table = null;
 
 	public GroupCellTable() {
+
+		// CellTable custom UI resource
+		CellTable.Resources tableRes = GWT.create(TableRes.class);
+		table = new CellTable<Shoppinglist>(50, tableRes);
 
 		/**
 		 * Spalte zur Darstellung des Namen einer <code>Shoppinglist</code>

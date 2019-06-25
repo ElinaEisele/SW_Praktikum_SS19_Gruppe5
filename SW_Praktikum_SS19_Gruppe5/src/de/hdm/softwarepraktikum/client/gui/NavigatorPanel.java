@@ -20,6 +20,14 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
+/**
+ * 
+ * Mit der Klasse <code>NavigatorPanel</code> wird die Navigation mit
+ * {@link de.hdm.softwarepraktikum.GroupShoppinglistTreeViewModel} und in einem
+ * <code>VerticalPanel</code> zusammengesetzt.
+ * 
+ * @author ElinaEisele, JonasWagenknecht
+ */
 public class NavigatorPanel extends VerticalPanel {
 
 	static interface ShoppinglistTreeResources extends CellTree.Resources {
@@ -43,10 +51,15 @@ public class NavigatorPanel extends VerticalPanel {
 	private GroupShoppinglistTreeViewModel gstvm;
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Button newGroupButton = new Button("Neue Gruppe erstellen");
+	private Label groupsLabel = new Label("Meine Gruppen");
 
 	private CellTree cellTree;
 	private Label refreshInfoLabel = new Label();
 
+	/**
+	 * Beim Anzeigen werden die Widgets geladen und angeordnet und mit
+	 * {@link de.hdm.softwarepraktikum.GroupShoppinglistTreeViewModel} verbunden.
+	 */
 	public void onLoad() {
 
 		final Timer timer = new Timer() {
@@ -79,7 +92,7 @@ public class NavigatorPanel extends VerticalPanel {
 		newGroupButton.setStyleName("NavButton");
 		
 		cellTree.setStyleName("cellTree");
-		
+
 		mainPanel.add(newGroupButton);
 		mainPanel.add(cellTree);
 
@@ -123,26 +136,16 @@ public class NavigatorPanel extends VerticalPanel {
 		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroups(), u, new RefreshDataCallback());
 	}
 
-	private class RefreshDataCallback implements AsyncCallback<Boolean> {
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Click-/EventHandler
+	 * ***************************************************************************
+	 */
 
-		@Override
-		public void onFailure(Throwable caught) {
-//			Notification.show(caught.toString());	
-		}
-
-		@Override
-		public void onSuccess(Boolean result) {
-			if (result == true) {
-//				refreshInfoLabel.setText("Es gibt Änderungen Ihrer Shoppingliste, bitte Seite aktualisieren!");
-				refreshInfoLabel.setStyleName("refreshInfoLabel");
-				RootPanel.get("header").add(refreshInfoLabel);
-
-			} else {
-				refreshInfoLabel.setText("");
-			}
-		}
-	}
-
+	/**
+	 * Bei Betätigen der Schaltfläche um eine neue Gruppe anzulegen, wird das
+	 * Formular dazu geladen.
+	 */
 	private class NewGroupClickHandler implements ClickHandler {
 
 		@Override
@@ -157,13 +160,40 @@ public class NavigatorPanel extends VerticalPanel {
 				GroupShowForm gsf = new GroupShowForm(ngf);
 				if (selectedGroup != null) {
 					gsf.setSelected(selectedGroup);
-}
-
+				}
 
 			}
 		}
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Zum
+	 *
+	 */
+	private class RefreshDataCallback implements AsyncCallback<Boolean> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Notification.show(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Boolean result) {
+			if (result == true) {
+				refreshInfoLabel.setStyleName("refreshInfoLabel");
+				RootPanel.get("header").add(refreshInfoLabel);
+
+			} else {
+				refreshInfoLabel.setText("");
+			}
+		}
+	}
 
 }
