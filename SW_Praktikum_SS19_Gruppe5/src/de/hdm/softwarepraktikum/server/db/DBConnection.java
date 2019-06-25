@@ -25,7 +25,10 @@ public class DBConnection {
 	
     private static Connection con = null;
     
-    private static String googleUrl = "jdbc:google:mysql://swpraktikum:main-mechanism-242607:europe-west3:swpraktikum/swpraktikum?user=root&password=swpraktikum";
+    private static String googleUrl = "jdbc:google:mysql://main-mechanism-242607:europe-west3:swpraktikum/swpraktikum?user=root&password=swpraktikum";
+    //private static String googleUrl = "jdbc:google:mysql://bankproject-154007:bankproject/bankproject?user=demo&password=demo";
+    
+    //private static String googleUrl = "jdbc:mysql://google/swpraktikum?cloudSqlInstance=main-mechanism-242607:europe-west3:swpraktikum&socketFactory=com.google.cloud.sql.mysql.SocketFactory&user=root&password=swpraktikum&useSSL=false";
     private static String localUrl = "jdbc:mysql://localhost:3306/swpraktikum?user=root&password=&serverTimezone=UTC";
     
     /**

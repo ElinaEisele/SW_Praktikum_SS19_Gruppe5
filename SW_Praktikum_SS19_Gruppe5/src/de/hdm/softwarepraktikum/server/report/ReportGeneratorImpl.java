@@ -128,7 +128,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				if(l.getRetailerID() == r.getId()) {
 					relevantListitems.add(l);	
 				}
-			}    			
+			}
 		}	
         	
     	//Erstellen eines Tabellenkopfs
