@@ -37,8 +37,6 @@ public class NewGroupForm extends VerticalPanel {
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Gruppe erstellen");
-	private Grid grid = new Grid(1, 2);
-	private Label nameLabel = new Label("Name");
 	private TextBox nameTextBox = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
@@ -46,11 +44,9 @@ public class NewGroupForm extends VerticalPanel {
 	private Button cancelButten = new Button("Abbrechen");
 
 	public NewGroupForm() {
-
-		nameTextBox.setFocus(true);
-
-		grid.setWidget(0, 0, nameLabel);
-		grid.setWidget(0, 1, nameTextBox);
+		
+		nameTextBox.setText("Name eingeben...");
+		nameTextBox.addClickHandler(new NameTextBoxClickHandler());
 
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButten.addClickHandler(new CancelClickHandler());
@@ -59,11 +55,15 @@ public class NewGroupForm extends VerticalPanel {
 		buttonPanel.add(cancelButten);
 
 		mainPanel.add(infoLabel);
-		mainPanel.add(grid);
+		mainPanel.add(nameTextBox);
 		mainPanel.add(buttonPanel);
+	
 
 	}
 
+	/**
+	 * Beim Anzeigen werden die Widgets geladen und angeordnet.
+	 */
 	public void onLoad() {
 
 		RootPanel.get("main").add(mainPanel);
@@ -85,12 +85,24 @@ public class NewGroupForm extends VerticalPanel {
 		this.oldSelectedGroup = oldSelectedGroup;
 	}
 
+	
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Click-/EventHandler
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Beim Betätigen der Speichern-Schalfläche wird das neue <code>Group</code>-Objekt gespeichert.
+	 *
+	 */
 	private class SaveClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (u != null) {
 				if (nameTextBox.getValue() == "") {
+
 					Window.alert("Niemand hat die Absicht eine Gruppe ohne Namen anzulegen");
 				} else if (nameTextBox.getValue().length() <= 20) {
 					groupShowForm = new GroupShowForm();
@@ -103,6 +115,12 @@ public class NewGroupForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * Bei Betätigen der Abbrechen-Schaltfläche wird die Gruppenansicht der alten 
+	 * Gruppe anzuzeigen.
+	 * @author elina
+	 *
+	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -118,12 +136,34 @@ public class NewGroupForm extends VerticalPanel {
 		}
 
 	}
+	
+	/**
+	 * Beim Klick in das Text Feld wird dieses geleert.
+	 *
+	 */
+	private class NameTextBoxClickHandler implements ClickHandler{
 
+		@Override
+		public void onClick(ClickEvent event) {
+			nameTextBox.setText("");
+		}
+		
+	}
+
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Callbacks
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Die neue Gruppe wird dem <code>CellTree</code> hinzugefügt.
+	 */
 	private class NewGroupAsyncCallback implements AsyncCallback<Group> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Die Gruppenerstellung ist fehlgeschlagen.");
+			Notification.show(caught.toString());
 		}
 
 		@Override
@@ -135,7 +175,7 @@ public class NewGroupForm extends VerticalPanel {
 
 			newGroup = result;
 			groupShowForm.setSelected(newGroup);
-			groupShowForm.getGroupHeader().setSelected(newGroup);
+			groupShowForm.getGroupHeader().setSelectedGroup(newGroup);
 			RootPanel.get("main").add(groupShowForm);
 			gstvm.addGroup(newGroup);
 

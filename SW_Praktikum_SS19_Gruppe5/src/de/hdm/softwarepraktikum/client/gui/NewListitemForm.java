@@ -63,9 +63,9 @@ public class NewListitemForm extends HorizontalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button();
-	private Button saveButton = new Button();
-	private Button discardButton = new Button();
+	private Button newRetailerButton = new Button("Händler hinzufügen");
+	private Button saveButton = new Button("Speichern");
+	private Button discardButton = new Button("Abbrechen");
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
@@ -99,10 +99,6 @@ public class NewListitemForm extends HorizontalPanel {
 		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
 		shoppinglistGrid.setWidget(4, 2, newRetailerButton);
-		Image NewRetailerImg = new Image();
-		NewRetailerImg.setUrl("images/add.png");
-		NewRetailerImg.setSize("16px", "16px");
-		newRetailerButton.getElement().appendChild(NewRetailerImg.getElement());
 		newRetailerButton.setStyleName("ShoppinglistHeaderButton");
 		newRetailerButton.addClickHandler(new NewRetailerClickhandler());
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
@@ -110,19 +106,11 @@ public class NewListitemForm extends HorizontalPanel {
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
 		shoppinglistGrid.setWidget(5, 1, actionButtonsPanel);
 
-		Image SaveImg = new Image();
-		SaveImg.setUrl("images/tick.png");
-		SaveImg.setSize("16px", "16px");
-		saveButton.getElement().appendChild(SaveImg.getElement());
 		saveButton.setStyleName("ShoppinglistHeaderButton");
 		saveButton.addClickHandler(new NewListitemClickHandler());
 		saveButton.setEnabled(true);
 		actionButtonsPanel.add(saveButton);
 
-		Image DiscardImg = new Image();
-		DiscardImg.setUrl("images/cancel.png");
-		DiscardImg.setSize("16px", "16px");
-		discardButton.getElement().appendChild(DiscardImg.getElement());
 		discardButton.setStyleName("ShoppinglistHeaderButton");
 		discardButton.addClickHandler(new DiscardClickhandler());
 		discardButton.setEnabled(true);

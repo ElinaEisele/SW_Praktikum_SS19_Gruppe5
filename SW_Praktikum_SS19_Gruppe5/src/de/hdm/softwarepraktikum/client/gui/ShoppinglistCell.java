@@ -6,7 +6,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Klasse zur Darstellung von Shoppinglist-Objekte. Erweiterungen von
+ * Klasse zur Darstellung von <code>Shoppinglist</code>-Objekte. Erweiterungen von
  * <code>AbstractCell<T></code> dienen zur Erzeugung von HTML-Code fuer
  * benutzerdefinierte Objekte.
  * 

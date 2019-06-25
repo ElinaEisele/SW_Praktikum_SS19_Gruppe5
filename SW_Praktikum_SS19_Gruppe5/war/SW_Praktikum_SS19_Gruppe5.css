@@ -84,7 +84,7 @@ div#aside {
 	padding: 5px 10px;
 }
 
-.NavButton{
+.NewGroupButton{
 	font-family: 'Open Sans', sans-serif;
 	color: black;
 	font-weight: bold;
@@ -95,10 +95,28 @@ div#aside {
 	padding: 5px 10px;
 }
 
-.NavButton:hover {
+.NewGroupButton:hover{
 	color: black;
 	border: 1px solid black;
 	border-radius: 5px;
+	background-color: white;
+}
+
+.NavButton{
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-weight: bold;
+	font-size: 100%;
+	background: transparent;
+	border: 1px solid black;
+	border-radius: 4px;
+	padding: 4px 8px;
+}
+
+.NavButton:hover {
+	color: black;
+	border: 1px solid black;
+	border-radius: 4px;
 	background-color: white;
 	
 }
@@ -160,6 +178,8 @@ div#container {
 div#trailer {
 	padding: 20px;
 }
+
+
 
 /* Um die Buttons im Header zu stylen. */
 .HeaderButton {
@@ -389,6 +409,25 @@ div#trailer {
 	color: black;
 	border: 1px solid black;
 	border-radius: 5px;
+}
+
+
+.Header{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 120%;
+	margin-top: 15px;	
+}
+
+.FlexTable{
+	background:transparent; 
+	color: black;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 100%;
+	margin-top: 10px;
+	margin-bottom: 15px;
+	
 }
 
 img{
