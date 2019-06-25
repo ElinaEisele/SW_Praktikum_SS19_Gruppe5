@@ -89,7 +89,7 @@ public class NavigatorPanel extends VerticalPanel {
 		ssf.setGstvm(gstvm);
 
 		newGroupButton.addClickHandler(new NewGroupClickHandler());
-		newGroupButton.setStyleName("NavButton");
+		newGroupButton.setStyleName("NewGroupButton");
 		
 		cellTree.setStyleName("cellTree");
 
