@@ -24,7 +24,7 @@ public class GroupHeader extends HorizontalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-	private Group groupToDisplay = null;
+	private Group selectedGroup = null;
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
 
@@ -39,7 +39,7 @@ public class GroupHeader extends HorizontalPanel {
 	private Button showRetailers = new Button();
 
 	public GroupHeader() {
-		
+
 		groupHeaderLabel.setStyleName("GroupLabel");
 
 		Image newShoppinglistImg = new Image();
@@ -62,7 +62,6 @@ public class GroupHeader extends HorizontalPanel {
 		leaveGroup.setStyleName("GroupHeaderButton");
 		leaveGroup.getElement().appendChild(leaveGroupImg.getElement());
 		leaveGroup.addClickHandler(new LeaveGroupClickHandler());
-		// leaveGroup.setStyleName("leaveGroupButton");
 
 		Image editGroupImg = new Image();
 		editGroupImg.setUrl("images/edit.png");
@@ -87,6 +86,9 @@ public class GroupHeader extends HorizontalPanel {
 
 	}
 
+	/**
+	 * Beim Anzeigen werden alle Widgets geladen und angeordnet.
+	 */
 	public void onLoad() {
 
 		this.add(groupHeaderLabel);
@@ -121,18 +123,18 @@ public class GroupHeader extends HorizontalPanel {
 	 * 
 	 * @param g das zu setzende <code>Group</code> Objekt.
 	 */
-	public void setSelected(Group g) {
+	public void setSelectedGroup(Group g) {
 		if (g != null) {
-			groupToDisplay = g;
-			groupHeaderLabel.setText(groupToDisplay.getName());
+			selectedGroup = g;
+			groupHeaderLabel.setText(selectedGroup.getName());
 
 		} else {
 			this.clear();
 		}
 	}
 
-	public Group getSelected() {
-		return groupToDisplay;
+	public Group getSelectedGroup() {
+		return selectedGroup;
 	}
 
 	/**
@@ -140,52 +142,54 @@ public class GroupHeader extends HorizontalPanel {
 	 * ABSCHNITT der ClickHandler
 	 * ***************************************************************************
 	 */
+
+	/**
+	 * Bei Betätigen der Schaltfläche, um einen neues
+	 * <code>Shoppinglist</code>-Objekt anzulegen, wird das Formular zum Anlegen
+	 * eines neuen <code>Shoppinglist</code>-Objekts geladem.
+	 *
+	 */
 	private class NewShoppinglistClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
-				
-				NavigatorPanel np = new NavigatorPanel();
-				RootPanel.get("aside").clear();
-				RootPanel.get("aside").add(np);
+			NavigatorPanel np = new NavigatorPanel();
+			RootPanel.get("aside").clear();
+			RootPanel.get("aside").add(np);
 
-				NewShoppinglistForm nsf = new NewShoppinglistForm();
-				nsf.setGstvm(GroupHeader.this.gstvm);
-				nsf.setGroupHeader(GroupHeader.this);
-				nsf.setSelectedGroup(groupToDisplay);
+			NewShoppinglistForm nsf = new NewShoppinglistForm();
+			nsf.setGstvm(GroupHeader.this.gstvm);
+			nsf.setGroupHeader(GroupHeader.this);
+			nsf.setSelectedGroup(selectedGroup);
 
-				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
-				gsf.setSelected(groupToDisplay);
-				gsf.setGstvm(gstvm);
-				gstvm.setGroupShowForm(gsf);
-				
+			GroupShowForm gsf = new GroupShowForm(GroupHeader.this, nsf);
+			gsf.setSelected(selectedGroup);
+			gsf.setGstvm(gstvm);
+			gstvm.setGroupShowForm(gsf);
 
-
-			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
-			}
 		}
 
 	}
 
+	/**
+	 * Bei Betätigen der Schaltfläche, um eine <code>User</code>-Objekt einem
+	 * <code>Group</code>-Objekt zuzuordnen, wird das Formular dazu gelade.
+	 *
+	 */
 	private class AddUserClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
+			if (selectedGroup != null) {
 
 				AddUserToGroupForm autgf = new AddUserToGroupForm();
 
 				autgf.setGstvm(GroupHeader.this.gstvm);
 				autgf.setGroupHeader(GroupHeader.this);
-				autgf.setSelectedGroup(groupToDisplay);
-
+				autgf.setSelectedGroup(selectedGroup);
 
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, autgf);
-				gsf.setSelected(groupToDisplay);
-
-
+				gsf.setSelected(selectedGroup);
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -193,14 +197,19 @@ public class GroupHeader extends HorizontalPanel {
 		}
 	}
 
+	/**
+	 * Bei Betätigen der Schaltfläche, um eine Gruppe zu verlassen, wird ein
+	 * <code>DialogBox</code>-Objekt geladen.
+	 *
+	 */
 	private class LeaveGroupClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
+			if (selectedGroup != null) {
 				LeaveGroupDialogBox ldb = new LeaveGroupDialogBox();
 				ldb.setGstvm(GroupHeader.this.gstvm);
-				ldb.setSelectedGroup(groupToDisplay);
+				ldb.setSelectedGroup(selectedGroup);
 				ldb.show();
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -218,59 +227,60 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			DeleteGroupDialogBox ddb = new DeleteGroupDialogBox();
-			ddb.setSelectedGroup(groupToDisplay);
+			ddb.setSelectedGroup(selectedGroup);
 			ddb.show();
 		}
 
 	}
 
+	/**
+	 * Bei Betätigen der Schaltfläche, um den Namen eines <code>Group</code>-Objekts
+	 * zu ändern wird das Formular dafür geladen.
+	 *
+	 */
 	private class EditClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 
-			if (groupToDisplay != null) {
+			if (selectedGroup != null) {
 
 				EditGroupNameForm egnf = new EditGroupNameForm();
 				egnf.setGstvm(GroupHeader.this.gstvm);
 				egnf.setGroupHeader(GroupHeader.this);
-				egnf.setSelectedGroup(groupToDisplay);
-				
+				egnf.setSelectedGroup(selectedGroup);
+
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
-				gsf.setSelected(groupToDisplay);
-
+				gsf.setSelected(selectedGroup);
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
 			}
-		}
-
-	}
-
-	private class ShowRetailersClickHandler implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			if (groupToDisplay != null) {
-				RetailersForm srdb = new RetailersForm();
-				srdb.setSelectedGroup(groupToDisplay);
-				srdb.setGstvm(GroupHeader.this.gstvm);
-				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, srdb);
-				gsf.setSelected(groupToDisplay);
-
-				
-			} else {
-				Notification.show("Es wurde keine Gruppe ausgewählt.");
-			}
-
 		}
 
 	}
 
 	/**
-	 * ***************************************************************************
-	 * ABSCHNITT der Callbacks
-	 * ***************************************************************************
+	 * ClickHandler zum Anzeigen des Händeler Formulars.
+	 *
 	 */
+	private class ShowRetailersClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (selectedGroup != null) {
+				RetailersForm srdb = new RetailersForm();
+				srdb.setSelectedGroup(selectedGroup);
+				srdb.setGstvm(GroupHeader.this.gstvm);
+				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, srdb);
+				gsf.setSelected(selectedGroup);
+
+			} else {
+				Notification.show("Es wurde keine Gruppe ausgewählt.");
+			}
+
+		}
+
+	}
 
 }

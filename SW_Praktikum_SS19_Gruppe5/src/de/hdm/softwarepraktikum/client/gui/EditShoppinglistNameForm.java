@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -55,10 +56,18 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		editShoppinglistNameGrid.setWidget(1, 0, newShoppinglistNameLabel);
 		editShoppinglistNameGrid.setWidget(1, 1, newShoppinglistNameTextBox);
 
-		cancelButton.setStylePrimaryName("cancelButton");
-		confirmButton.setStylePrimaryName("confirmButton");
-
+		Image DiscardImg = new Image();
+		DiscardImg.setUrl("images/cancel.png");
+		DiscardImg.setSize("16px", "16px");
+		cancelButton.getElement().appendChild(DiscardImg.getElement());
+		cancelButton.setStyleName("ShoppinglistHeaderButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
+
+		Image SaveImg = new Image();
+		SaveImg.setUrl("images/tick.png");
+		SaveImg.setSize("16px", "16px");
+		confirmButton.getElement().appendChild(SaveImg.getElement());
+		confirmButton.setStyleName("ShoppinglistHeaderButton");
 		confirmButton.addClickHandler(new ConfirmClickHandler());
 
 		buttonPanel.add(confirmButton);
