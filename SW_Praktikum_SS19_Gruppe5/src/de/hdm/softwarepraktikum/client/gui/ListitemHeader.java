@@ -15,8 +15,8 @@ import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Klasse zur Darstellung des Headers eines Listitems zum Setzen une Entfernen
- * des Listitems als Standarditems und zum Loeschen des Listitems.
+ * Klasse zur Darstellung des Headers eines Listitems zum Setzen und Entfernen
+ * des Listitems als Standarditems und zum Löeschen des Listitems.
  * 
  * @author ElinaEisele, JonasWagenknecht
  */
@@ -25,21 +25,22 @@ public class ListitemHeader extends HorizontalPanel {
 			.getShoppinglistAdministration();
 
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
-	private ListitemShowForm listitemShowForm;
+	private ListitemShowForm listitemShowForm = null;
+
 	private Listitem listitemToDisplay = null;
-	private Shoppinglist shoppinglistToDisplay;
+	private Shoppinglist selectedShoppinglist = null;
 	private Group selectedGroup = null;
 
-	private Label listitemHeaderLabel;
+	private Label listitemHeaderLabel = null;
 
-	private Button deleteListitem;
-	private Button setStandard;
-	private Button removeStandard;
+	private Button deleteListitem = null;
+	private Button setStandard = null;
+	private Button removeStandard = null;
 
 	public ListitemHeader() {
 
 		listitemHeaderLabel = new Label("Listitem Header");
-		listitemHeaderLabel.setText("Listitem  Tets");
+		listitemHeaderLabel.setText("Kein Eintrag ausgewählt");
 		listitemHeaderLabel.setStyleName("ListLabel");
 		deleteListitem = new Button();
 
@@ -54,14 +55,14 @@ public class ListitemHeader extends HorizontalPanel {
 		deleteListitem.addClickHandler(new DeleteListitemClickHandler());
 
 		Image setStandardImg = new Image();
-		setStandardImg.setUrl("images/like (1).png");
+		setStandardImg.setUrl("images/like.png");
 		setStandardImg.setSize("30px", "30px");
 		setStandard.getElement().appendChild(setStandardImg.getElement());
 		setStandard.setStyleName("ShoppinglistHeaderButton");
 		setStandard.addClickHandler(new SetStandardClickHandler());
 
 		Image removeStandardImg = new Image();
-		removeStandardImg.setUrl("images/like.png");
+		removeStandardImg.setUrl("images/like (1).png");
 		removeStandardImg.setSize("30px", "30px");
 		removeStandard.getElement().appendChild(removeStandardImg.getElement());
 		removeStandard.setStyleName("ShoppinglistHeaderButton");
@@ -69,22 +70,21 @@ public class ListitemHeader extends HorizontalPanel {
 
 	}
 
+	/**
+	 * In dieser Methode werden die Widgets der Form hinzugefügt.
+	 * 
+	 */
 	public void onLoad() {
-		
+
 		shoppinglistAdministration.getProductnameOf(listitemToDisplay, new ProductNameAsyncCallback());
 
-		if (listitemToDisplay.isStandard() == true) {
-		removeStandard.setEnabled(false);
-		removeStandard.setEnabled(true);
-	} else {
-		removeStandard.setEnabled(true);
-		removeStandard.setEnabled(false);
-	}
-		
 		this.add(listitemHeaderLabel);
 		this.add(deleteListitem);
-		this.add(setStandard);
-		this.add(removeStandard);
+		if (listitemToDisplay.isStandard() == true) {
+			this.add(removeStandard);
+		} else {
+			this.add(setStandard);
+		}
 
 	}
 
@@ -119,13 +119,13 @@ public class ListitemHeader extends HorizontalPanel {
 	public void setListitemToDisplay(Listitem listitemToDisplay) {
 		this.listitemToDisplay = listitemToDisplay;
 	}
-	
-	public Shoppinglist getShoppinglistToDisplay() {
-		return shoppinglistToDisplay;
+
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
 	}
 
-	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
-		this.shoppinglistToDisplay = shoppinglistToDisplay;
+	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
+		this.selectedShoppinglist = selectedShoppinglist;
 	}
 
 	/**
@@ -133,7 +133,6 @@ public class ListitemHeader extends HorizontalPanel {
 	 * Abschnitt der ClickHandler
 	 * ***************************************************************************
 	 */
-
 
 	/**
 	 * ClickHandler dient dem Aufruf der <code>DeleteListitemDialogBox</code>.
@@ -145,11 +144,11 @@ public class ListitemHeader extends HorizontalPanel {
 			if (listitemToDisplay != null) {
 				DeleteListitemDialogBox dldb = new DeleteListitemDialogBox();
 				dldb.setSelectedListitem(listitemToDisplay);
-				dldb.setSelectedShoppinglist(shoppinglistToDisplay);
+				dldb.setSelectedShoppinglist(selectedShoppinglist);
 				dldb.setSelectedGroup(selectedGroup);
 				dldb.show();
 			} else {
-				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
+				Notification.show("Es wurde kein Eintrag ausgewählt.");
 			}
 		}
 
@@ -165,9 +164,12 @@ public class ListitemHeader extends HorizontalPanel {
 			if (listitemToDisplay != null) {
 				StandardListitemOnDialogBox slondb = new StandardListitemOnDialogBox();
 				slondb.setSelectedListitem(listitemToDisplay);
+				slondb.setSelectedGroup(selectedGroup);
+				slondb.setSelectedShoppinglist(selectedShoppinglist);
 				slondb.show();
+				slondb.center();
 			} else {
-				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
+				Notification.show("Es wurde kein Eintrag ausgewählt.");
 			}
 		}
 
@@ -183,28 +185,39 @@ public class ListitemHeader extends HorizontalPanel {
 			if (listitemToDisplay != null) {
 				StandardListitemOffDialogBox sloffdb = new StandardListitemOffDialogBox();
 				sloffdb.setSelectedListitem(listitemToDisplay);
+				sloffdb.setSelectedGroup(selectedGroup);
+				sloffdb.setSelectedShoppinglist(selectedShoppinglist);
 				sloffdb.show();
+				sloffdb.center();
 			} else {
-				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
+				Notification.show("Es wurde kein Eintrag ausgewählt.");
 			}
 		}
 
 	}
+
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
 	
-	private class ProductNameAsyncCallback implements AsyncCallback<String>{
+	/**
+	 * Nach erfolgreichem Laden wird der Name des Produkts gesetzt
+	 */
+	private class ProductNameAsyncCallback implements AsyncCallback<String> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
+			Notification.show(caught.toString());
 		}
 
 		@Override
 		public void onSuccess(String result) {
 			listitemHeaderLabel.setText(result);
-			
+
 		}
-		
+
 	}
 
 }

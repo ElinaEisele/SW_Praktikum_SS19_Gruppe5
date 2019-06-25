@@ -7,12 +7,14 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
+import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
  * Klasse zur Darstellung einer Dialogbox, wenn ein User ein Listitem als
@@ -28,11 +30,12 @@ public class StandardListitemOnDialogBox extends DialogBox {
 
 	private Listitem selectedListitem = null;
 	private Group selectedGroup = null;
+	private Shoppinglist selectedShoppinglist = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmLabel = new Label("Dieses Listitem als Standardlistitem setzen?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Bestaetigen");
+	private Button confirmButton = new Button("Bestätigen");
 	private Button cancelButton = new Button("Abbrechen");
 
 	public StandardListitemOnDialogBox() {
@@ -49,6 +52,10 @@ public class StandardListitemOnDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * In dieser Methode werden die Widgets der Dialog Box hinzugefügt
+	 * 
+	 */
 	public void onLoad() {
 		this.setGlassEnabled(true);
 		this.add(mainPanel);
@@ -63,6 +70,31 @@ public class StandardListitemOnDialogBox extends DialogBox {
 		this.selectedListitem = selectedListitem;
 	}
 
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
+	}
+
+	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
+		this.selectedShoppinglist = selectedShoppinglist;
+	}
+
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Schließen der Dialog Box.
+	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -73,13 +105,27 @@ public class StandardListitemOnDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * Schließen der Dialog Box und Standard setzen des ausgewählten
+	 * <code>Listitem</code>-Objekts.
+	 */
 	private class ConfirmClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedListitem != null) {
-				shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, true, new SetStandardCallback());
-				Notification.show("Eintrag als Standard gesetzt");
+				shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, true,
+						new SetStandardCallback());
+				RootPanel.get("main").clear();
+
+				ListitemShowForm lsf = new ListitemShowForm();
+				selectedListitem.setStandard(true);
+				lsf.setSelected(selectedListitem);
+				lsf.setSelectedShoppinglist(selectedShoppinglist);
+				lsf.setSelectedGroup(selectedGroup);
+
+				RootPanel.get("main").add(lsf);
+
 				StandardListitemOnDialogBox.this.hide();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
@@ -88,11 +134,20 @@ public class StandardListitemOnDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Keine Rückgabe bei erfolgreichem setzen von der Eigenschaft Standard.
+	 */
 	private class SetStandardCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Folgender Fehler ist aufgetreten: /n" + caught.toString());
+			Notification.show(caught.toString());
 		}
 
 		@Override

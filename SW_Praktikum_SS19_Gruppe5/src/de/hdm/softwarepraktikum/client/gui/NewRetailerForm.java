@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -21,7 +22,7 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Klasse zur Darstellung eines Formulars, um einen neuen Haendler anzulegen.
+ * Klasse zur Darstellung eines Formulars, um einen neuen Händler anzulegen.
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
@@ -31,21 +32,22 @@ public class NewRetailerForm extends VerticalPanel {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
+	private ShoppinglistHeader shoppinglistHeader = null;
+	private ListitemHeader listitemHeader = null;
+	private GroupShoppinglistTreeViewModel gstvm = null;
+
 	private Shoppinglist selectedShoppinglist = null;
 	private Listitem selectedListitem = null;
 	private Group selectedGroup = null;
 	private Retailer selectedRetailer = null;
 	private User selectedUser = null;
-	private ShoppinglistHeader shoppinglistHeader;
-	private ListitemHeader listitemHeader;
+
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private GroupShoppinglistTreeViewModel gstvm;
 	private TextBox retailerNameTextBox = new TextBox();
+	private Button confirmButton = new Button();
+	private Button cancelButton = new Button();
 
-	private Button confirmButton = new Button("Anlegen");
-	private Button cancelButton = new Button("Abbrechen");
-
-	private Grid newRetailerGrid;
+	private Grid newRetailerGrid = null;
 
 	public NewRetailerForm() {
 
@@ -65,15 +67,28 @@ public class NewRetailerForm extends VerticalPanel {
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
 		newRetailerGrid.setWidget(2, 1, actionButtonsPanel);
 
+		Image DiscardImg = new Image();
+		DiscardImg.setUrl("images/cancel.png");
+		DiscardImg.setSize("16px", "16px");
+		cancelButton.getElement().appendChild(DiscardImg.getElement());
+		cancelButton.setStyleName("ShoppinglistHeaderButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
+
+		Image SaveImg = new Image();
+		SaveImg.setUrl("images/tick.png");
+		SaveImg.setSize("16px", "16px");
+		confirmButton.getElement().appendChild(SaveImg.getElement());
+		confirmButton.setStyleName("ShoppinglistHeaderButton");
 		confirmButton.addClickHandler(new ConfirmClickHandler());
-		cancelButton.setStylePrimaryName("cancelButton");
-		confirmButton.setStylePrimaryName("confirmButton");
 		actionButtonsPanel.add(confirmButton);
 		actionButtonsPanel.add(cancelButton);
 
 	}
 
+	/**
+	 * In dieser Methode werden die Widgets der Form hinzugefügt.
+	 * 
+	 */
 	public void onLoad() {
 		this.add(mainPanel);
 	}
@@ -143,7 +158,13 @@ public class NewRetailerForm extends VerticalPanel {
 	}
 
 	/**
-	 * ClickHandler zum schliessen der DialogBox.
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * ClickHandler zum schließen der DialogBox.
 	 */
 	private class CancelClickHandler implements ClickHandler {
 
@@ -162,6 +183,7 @@ public class NewRetailerForm extends VerticalPanel {
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedShoppinglist != null && selectedRetailer != null) {
+
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
@@ -170,11 +192,11 @@ public class NewRetailerForm extends VerticalPanel {
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
-					&& selectedUser == null) {
+					&& selectedUser == null && selectedListitem == null) {
 
 				NewListitemForm nlf = new NewListitemForm();
-				nlf.setShoppinglistToDisplay(selectedShoppinglist);
-				nlf.setGroupToDisplay(selectedGroup);
+				nlf.setSelectedShoppinglist(getSelectedShoppinglist());
+				nlf.setSelectedShoppinglist(selectedShoppinglist);
 
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
 				ssf.setSelected(selectedShoppinglist);
@@ -183,11 +205,11 @@ public class NewRetailerForm extends VerticalPanel {
 				RootPanel.get("main").add(nlf);
 
 			} else if (selectedListitem != null) {
+
 				ListitemShowForm lsf = new ListitemShowForm();
 				lsf.setSelected(selectedListitem);
 				lsf.setSelectedShoppinglist(selectedShoppinglist);
 				lsf.setSelectedGroup(selectedGroup);
-
 				RootPanel.get("main").add(lsf);
 
 			}
@@ -206,14 +228,20 @@ public class NewRetailerForm extends VerticalPanel {
 					shoppinglistAdministration.createRetailer(retailerNameTextBox.getText(),
 							new CreateRetailerCallback());
 				} else {
-					Window.alert("Besser keinen Einzelhaendler anlegen als einen ohne Name anlegen");
+					Window.alert("Besser keinen Einzelhändler anlegen als einen ohne Name anlegen");
 				}
 
 			} else {
-				Notification.show("Es wurde keine Shoppinglist ausgewaehlt.");
+				Notification.show("Es wurde keine Shoppinglist ausgewählt.");
 			}
 		}
 	}
+
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
 
 	/**
 	 * Textbox inhalt zuruecksetzen und ShoppinglistShowForm aktualisieren
@@ -222,7 +250,7 @@ public class NewRetailerForm extends VerticalPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Folgender Fehler ist aufgetreten: /n" + caught.toString());
+			Notification.show(caught.toString());
 		}
 
 		@Override
@@ -249,11 +277,11 @@ public class NewRetailerForm extends VerticalPanel {
 				RootPanel.get("main").add(lsf);
 
 			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
-					&& selectedUser == null) {
+					&& selectedUser == null && selectedListitem == null) {
 
 				NewListitemForm nlf = new NewListitemForm();
-				nlf.setShoppinglistToDisplay(selectedShoppinglist);
-				nlf.setGroupToDisplay(selectedGroup);
+				nlf.setSelectedGroup(selectedGroup);
+				nlf.setSelectedShoppinglist(selectedShoppinglist);
 
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
 				ssf.setSelected(selectedShoppinglist);
