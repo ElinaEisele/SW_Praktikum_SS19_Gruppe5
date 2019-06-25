@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -28,16 +30,34 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
  */
 public class GroupCellTable extends VerticalPanel {
 
+	/**
+	 * Interface um den CellTable mit der <code>CellTable</code> CSS Datei zu
+	 * verknüpfen
+	 * 
+	 */
+	static interface TableRes extends CellTable.Resources {
+
+		@Source({ CellTable.Style.DEFAULT_CSS, "CellTable.css" })
+		TableStyle cellTableStyle();
+
+		interface TableStyle extends CellTable.Style {
+		}
+	}
+
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
-	private Group groupToDisplay = null;
+	private Group selectedGroup = null;
 
-	private CellTable<Shoppinglist> table = new CellTable<Shoppinglist>();
+	private CellTable<Shoppinglist> table = null;
 
 	public GroupCellTable() {
+
+		// CellTable custom UI resource
+		CellTable.Resources tableRes = GWT.create(TableRes.class);
+		table = new CellTable<Shoppinglist>(10, tableRes);
 
 		/**
 		 * Spalte zur Darstellung des Namen einer <code>Shoppinglist</code>
@@ -53,7 +73,7 @@ public class GroupCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Spalte, die ein klickbares Bild enth�lt, das die Einkaufsliste bei Klick in
+		 * Spalte, die ein klickbares Bild enthält, das die Einkaufsliste bei Klick in
 		 * einer neuen <code>ShoppinglistShowForm</code> darstellt.
 		 * 
 		 */
@@ -90,7 +110,7 @@ public class GroupCellTable extends VerticalPanel {
 
 		/**
 		 * AsyncCallback der eine ArrayList mit <code>Shoppinglist</code>-Objekten der
-		 * entsprechenden Gruppe zurueckgeben soll.
+		 * entsprechenden Gruppe zurückgeben soll.
 		 * 
 		 */
 		shoppinglistAdministration.getShoppinglistsOf(groupShowForm.getSelected(), new GetShoppinglistsOfCallback());
@@ -123,7 +143,7 @@ public class GroupCellTable extends VerticalPanel {
 	 */
 	public void setSelected(Group g) {
 		if (g != null) {
-			groupToDisplay = g;
+			selectedGroup = g;
 
 		} else {
 			this.clear();
@@ -131,19 +151,25 @@ public class GroupCellTable extends VerticalPanel {
 	}
 
 	public Group getSelected() {
-		return groupToDisplay;
+		return selectedGroup;
 	}
 
 	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
 	 * AsyncCallback der eine ArrayList mit <code>Shoppinglist</code>-Objekten der
-	 * entsprechenden Gruppe zur�ckgeben soll.
+	 * entsprechenden Gruppe zurückgeben soll.
 	 * 
 	 */
 	private class GetShoppinglistsOfCallback implements AsyncCallback<ArrayList<Shoppinglist>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Das Laden der Einkaufslisten ist fehlgeschlagen");
+			Notification.show(caught.toString());
 
 		}
 

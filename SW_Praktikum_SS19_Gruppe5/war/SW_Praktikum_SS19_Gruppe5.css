@@ -23,37 +23,13 @@ div#header {
 
 .HeaderPlatzhalterButton {
 	padding: 5px;
-	margin: 10px 10px;
+	margin: 5px 10px;
 	color: white;
-	font-weight: bold;
-	font-size: 150%;
+	font-weight: normal;
+	font-size: 350%;
 	background: transparent;
 	border: 0px solid white;
 	border-radius: 5px;
-}
-
-@media all and (max-width: 800px) {
-	div#header {
-		justify-content: space-around;
-	}
-}
-
-@media all and (max-width: 600px) {
-	div#header {
-		justify-content: space-around;
-		webkit-flex-flow: column wrap;
-		flex-flow: column wrap;
-		padding: 0;
-	}
-	.HeaderButton {
-		-webkit-flex-flow: column wrap;
-		flex-flow: column wrap;
-		padding: 0;
-		text-align: center;
-		padding: 10px;
-		border-top: 1px solid rgba(255, 255, 255, 0.3);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	}
 }
 
 /* SW_Praktikum_SS19_Gruppe5.html: Elemente in wrapper (footer, main, aside) */
@@ -79,22 +55,72 @@ div#trailer {
 div#main {
 	text-align: left;
 	background: skyblue;
-	min-width: 800px;
 	min-height: 300px;
+	min-width: 500px;
 }
 
 div#aside {
 	background: skyblue;
-	border-right-color: white;
+	
 	border-right-width: 2px;
-	border-right-style: solid;
-	min-height: 300px;
+			
+	border-bottom-style: solid;
+	border-bottom-color: white;
+	border-bottom-width: 2px;
+	
+	border-top-style: solid;
+	border-top-color:white; 
+	border-top-width: 2px;
 
 }
 
+.NormalButton{
+	color: black;
+	font-weight: bold;
+	font-size: 50%;
+	background: transparent;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+.NavButton{
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-weight: bold;
+	font-size: 130%;
+	background: transparent;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+.NavButton:hover {
+	color: black;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: white;
+	
+}
+
+.cellTree{
+	color: black;
+	font-weight: normal;
+	font-size: 120%;
+	font-family: 'Open Sans', sans-serif;
+	
+}
 @media all and (min-width: 600px) {
 	div#aside {
 		flex: 1 auto;
+	max-width: 100%;		
+	border-bottom-style: solid;
+	border-bottom-color: white;
+	border-bottom-width: 2px;
+	
+	border-top-style: solid;
+	border-top-color:white; 
+	border-top-width: 2px;
 	}
 }
 
@@ -104,6 +130,19 @@ div#aside {
 	}
 	div#aside {
 		order: 1;
+		max-width: 220px;
+		border-right-style: solid;
+		border-right-color: white;
+		border-right-width: 2px;
+		
+			
+	border-bottom-style: solid;
+	border-bottom-color: white;
+	border-bottom-width: 0px;
+	
+	border-top-style: solid;
+	border-top-color:white; 
+	border-top-width: 0px;
 	}
 	div#main {
 		order: 2;
@@ -125,12 +164,14 @@ div#trailer {
 /* Um die Buttons im Header zu stylen. */
 .HeaderButton {
 	color: white;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
 	border: 1px solid white;
 	border-radius: 5px;
-	padding: 5px 10px;
+	padding: 10px 20px;
+	min-height:60px;
 }
 
 .HeaderButton:active {
@@ -141,10 +182,34 @@ div#trailer {
 }
 
 .HeaderButton:hover {
-	color: black;
-	border: 1px solid black;
+	color: white;
+	border: 1px solid white;
 	border-radius: 5px;
 	background-color: powderblue;
+	
+}
+
+.LogoutButton{
+	color:white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold; 
+	font-size: 150%;
+	background:transparent;
+	border: 0px solid powderblue; 
+}
+
+.LogoutButton:active {
+	background: transparent;
+}
+
+.LogoutButton:hover {
+	color: white;
+}
+
+.CurrentUser{
+	color: white; 
+	font-size: 100%;
+	padding: 0px 10px;
 }
 /* .HeaderButton3 {
 	color: white;
@@ -178,6 +243,7 @@ div#trailer {
 /* Um die Buttons im Trailer zu stylen. */
 .TrailerButton {
 	color: white;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
@@ -196,8 +262,8 @@ div#trailer {
 
 .TrailerButton:hover {
 	background-color: powderblue;
-	color: black;
-	border: 1px solid black;
+	color: white;
+	border: 1px solid white;
 	border-radius: 5px;
 }
 
@@ -206,11 +272,14 @@ div#trailer {
 	color: black;
 	font-weight: bold;
 	font-size: 150%;
+	font-family: 'Open Sans', sans-serif;
 	background: transparent;
 	border: 1px solid black;
 	border-radius: 5px;
 	margin-right: 5px;
 	margin-left: 5px;
+	margin-top: 14px;
+	margin-bottom: 14px;
 	padding: 5px 10px;
 }
 
@@ -234,8 +303,11 @@ div#trailer {
 	font-weight: bold;
 	font-size: 175%;
 	background: transparent;
-	border-bottom: 3px solid black;
-	margin-right: 5px;
+	font-family: 'Open Sans', sans-serif;
+	margin-right: 10px;
+	padding-right: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 /* ShoppinglistContent.java */
@@ -282,8 +354,11 @@ div#trailer {
 	font-weight: bold;
 	font-size: 175%;
 	background: transparent;
-	border-bottom: 3px solid black;
-	margin-right: 5px;
+	font-family: 'Open Sans', sans-serif;
+	margin-right: 10px;
+	padding-right: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 /* ShoppinglistHeader.java: */
@@ -297,6 +372,8 @@ div#trailer {
 	margin-right: 5px;
 	margin-left: 5px;
 	padding: 5px 10px;
+	margin-top: 14px;
+	margin-bottom: 14px;
 }
 
 .GroupHeaderButton:active {
