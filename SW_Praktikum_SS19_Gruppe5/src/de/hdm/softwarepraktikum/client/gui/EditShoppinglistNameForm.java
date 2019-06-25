@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -24,7 +25,7 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 public class EditShoppinglistNameForm extends VerticalPanel {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-	
+
 	private ShoppinglistHeader shoppinglistHeader = null;
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private Shoppinglist selectedShoppinglist = null;
@@ -67,7 +68,8 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	}
 
 	/**
-	 * In dieser Methode werden die Widgets dem entsprechenden div-Element hinzugefügt.
+	 * In dieser Methode werden die Widgets dem entsprechenden div-Element
+	 * hinzugefügt.
 	 * 
 	 */
 	public void onLoad() {
@@ -132,10 +134,14 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedShoppinglist != null) {
-				selectedShoppinglist.setName(newShoppinglistNameTextBox.getText());
+				if (newShoppinglistNameTextBox.getText().length() <= 23) {
+					selectedShoppinglist.setName(newShoppinglistNameTextBox.getText());
 
-				shoppinglistAdministration.save(selectedShoppinglist, new EditNameCallback());
+					shoppinglistAdministration.save(selectedShoppinglist, new EditNameCallback());
+				} else {
+					Window.alert("Bitte gib eine kürzeren Namen ein");
 
+				}
 			} else {
 				Notification.show("Keine Einkaufsliste ausgewählt");
 			}
@@ -149,8 +155,8 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	 */
 
 	/**
-	 * Nach dem erfolgreichen Ändern des Namen wird das Formular geschlossen und
-	 * die aktuell ausgewählte Einkaufsliste erneut geöffnet.
+	 * Nach dem erfolgreichen Ändern des Namen wird das Formular geschlossen und die
+	 * aktuell ausgewählte Einkaufsliste erneut geöffnet.
 	 * 
 	 */
 	private class EditNameCallback implements AsyncCallback<Void> {
