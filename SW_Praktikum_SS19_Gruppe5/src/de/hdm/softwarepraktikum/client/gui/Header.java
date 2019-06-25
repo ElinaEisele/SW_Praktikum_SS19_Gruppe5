@@ -62,6 +62,7 @@ public class Header extends HorizontalPanel {
 		platzhalterButton.setStyleName("HeaderPlatzhalterButton");
 		platzhalterButton.getElement().setAttribute("disabled", "disabled");
 		abmeldenButton.setStyleName("HeaderButton");
+		userMailLabel.setStyleName("CurrentUser");
 
 		this.add(editorButton);
 		this.add(reportButton);
