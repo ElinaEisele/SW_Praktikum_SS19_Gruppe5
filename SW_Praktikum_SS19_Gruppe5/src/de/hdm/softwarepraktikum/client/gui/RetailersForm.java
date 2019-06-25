@@ -39,25 +39,17 @@ public class RetailersForm extends VerticalPanel {
 	private Label infoLabel = new Label();
 	private FlexTable retailersFlexTable = new FlexTable();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button cancelButton = new Button();
-	private Button saveButton = new Button();
+	private Button cancelButton = new Button("Abbrechen");
+	private Button saveButton = new Button("Speichern");
 	private TextBox retailerTextBox = new TextBox();
 	private ArrayList<String> retailers = new ArrayList<String>();
 
 	public RetailersForm() {
 
-		Image DiscardImg = new Image();
-		DiscardImg.setUrl("images/left-arrow.png");
-		DiscardImg.setSize("16px", "16px");
-		cancelButton.getElement().appendChild(DiscardImg.getElement());
-		cancelButton.setStyleName("ShoppinglistHeaderButton");
+		cancelButton.setStyleName("NavButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
 
-		Image SaveImg = new Image();
-		SaveImg.setUrl("images/tick.png");
-		SaveImg.setSize("16px", "16px");
-		saveButton.getElement().appendChild(SaveImg.getElement());
-		saveButton.setStyleName("ShoppinglistHeaderButton");
+		saveButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
 		infoLabel.setText("Alle Händler im System: ");
