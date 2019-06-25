@@ -141,8 +141,8 @@ div#trailer {
 }
 
 .HeaderButton:hover {
-	color: black;
-	border: 1px solid black;
+	color: white;
+	border: 1px solid white;
 	border-radius: 5px;
 	background-color: powderblue;
 }
@@ -196,8 +196,8 @@ div#trailer {
 
 .TrailerButton:hover {
 	background-color: powderblue;
-	color: black;
-	border: 1px solid black;
+	color: white;
+	border: 1px solid white;
 	border-radius: 5px;
 }
 
