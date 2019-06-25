@@ -62,7 +62,9 @@ public class RetailersForm extends VerticalPanel {
 
 		infoLabel.setText("Alle Händler im System");
 
+		retailerTextBox.setText("Händlername eingeben");
 		buttonPanel.add(retailerTextBox);
+		retailerTextBox.addClickHandler(new ClearClickHandler());
 		buttonPanel.add(saveButton);
 
 		mainPanel.add(infoLabel);
@@ -121,6 +123,20 @@ public class RetailersForm extends VerticalPanel {
 			gsf.setGstvm(gstvm);
 			gstvm.setGroupShowForm(gsf);
 			RootPanel.get("main").add(gsf);
+		}
+
+	}
+
+	/**
+	 * Bei Klick in das Textfeld wird der Text darin geleert, damit der Nutzer den
+	 * Namen des neuen Retailers eingeben kann
+	 */
+	private class ClearClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			retailerTextBox.setText("");
+
 		}
 
 	}

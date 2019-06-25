@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.gwt.cell.client.Cell.Context;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.TextCell;
@@ -12,6 +13,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
@@ -27,6 +29,8 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.client.gui.GroupCellTable.TableRes;
+import de.hdm.softwarepraktikum.client.gui.GroupCellTable.TableRes.TableStyle;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
@@ -40,6 +44,20 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
  */
 
 public class ShoppinglistCellTable extends VerticalPanel {
+
+	/**
+	 * Interface um den CellTable mit der <code>CellTable</code> CSS Datei zu
+	 * verknüpfen
+	 * 
+	 */
+	static interface TableRes extends CellTable.Resources {
+
+		@Source({ CellTable.Style.DEFAULT_CSS, "CellTable.css" })
+		TableStyle cellTableStyle();
+
+		interface TableStyle extends CellTable.Style {
+		}
+	}
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
@@ -56,9 +74,13 @@ public class ShoppinglistCellTable extends VerticalPanel {
 	private ArrayList<ArrayList<Object>> data = new ArrayList<>();
 
 	private final MultiSelectionModel<ArrayList<Object>> selectionModel = new MultiSelectionModel<ArrayList<Object>>();
-	private CellTable<ArrayList<Object>> table = new CellTable<ArrayList<Object>>();
+	private CellTable<ArrayList<Object>> table;
 
 	public ShoppinglistCellTable() {
+
+		// CellTable custom UI resource
+		CellTable.Resources tableRes = GWT.create(TableRes.class);
+		table = new CellTable<ArrayList<Object>>(10, tableRes);
 
 		// SelectionModel um die klicks der Checkboxen zu regeln
 		table.setSelectionModel(selectionModel,
