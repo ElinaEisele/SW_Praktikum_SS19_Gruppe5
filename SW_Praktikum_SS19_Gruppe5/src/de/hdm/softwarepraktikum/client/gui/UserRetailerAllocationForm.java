@@ -61,8 +61,8 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 	private ListBox retailerListBox = new ListBox();
 	private ListBox userListBox = new ListBox();
 
-	private Button backButton = new Button();
-	private Button saveButton = new Button();
+	private Button backButton = new Button("Zurück");
+	private Button saveButton = new Button("Speichern");
 	private Button removeButton = null;
 
 	/*
@@ -85,18 +85,12 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		userListBox.addChangeHandler(new UserListBoxChangeHandler());
 		retailerListBox.addChangeHandler(new RetailerListBoxChangeHandler());
 
-		Image DiscardImg = new Image();
-		DiscardImg.setUrl("images/left-arrow.png");
-		DiscardImg.setSize("16px", "16px");
-		backButton.getElement().appendChild(DiscardImg.getElement());
-		backButton.setStyleName("ShoppinglistHeaderButton");
+		
+		backButton.setStyleName("NavButton");
 		backButton.addClickHandler(new BackClickhandler());
 
-		Image SaveImg = new Image();
-		SaveImg.setUrl("images/tick.png");
-		SaveImg.setSize("16px", "16px");
-		saveButton.getElement().appendChild(SaveImg.getElement());
-		saveButton.setStyleName("ShoppinglistHeaderButton");
+		
+		saveButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
 	}

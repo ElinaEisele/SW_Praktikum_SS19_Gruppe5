@@ -35,8 +35,8 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private TextBox newShoppinglistNameTextBox = new TextBox();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button();
-	private Button cancelButton = new Button();
+	private Button confirmButton = new Button("Speichern");
+	private Button cancelButton = new Button("Abbrechen");
 	private Grid editShoppinglistNameGrid = null;
 
 	/**
@@ -56,18 +56,12 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		editShoppinglistNameGrid.setWidget(1, 0, newShoppinglistNameLabel);
 		editShoppinglistNameGrid.setWidget(1, 1, newShoppinglistNameTextBox);
 
-		Image DiscardImg = new Image();
-		DiscardImg.setUrl("images/cancel.png");
-		DiscardImg.setSize("16px", "16px");
-		cancelButton.getElement().appendChild(DiscardImg.getElement());
-		cancelButton.setStyleName("ShoppinglistHeaderButton");
+		
+		cancelButton.setStyleName("NavButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
 
-		Image SaveImg = new Image();
-		SaveImg.setUrl("images/tick.png");
-		SaveImg.setSize("16px", "16px");
-		confirmButton.getElement().appendChild(SaveImg.getElement());
-		confirmButton.setStyleName("ShoppinglistHeaderButton");
+		
+		confirmButton.setStyleName("NavButton");
 		confirmButton.addClickHandler(new ConfirmClickHandler());
 
 		buttonPanel.add(confirmButton);
