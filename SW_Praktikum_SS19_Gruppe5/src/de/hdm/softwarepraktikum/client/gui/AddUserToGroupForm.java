@@ -92,6 +92,9 @@ public class AddUserToGroupForm extends VerticalPanel {
 	 */
 	public void onLoad() {
 
+		infoLabel.setStyleName("Header");
+		userFlexTable.setStyleName("FlexTable");
+		
 		shoppinglistAdministration.getAllUsers(new AllUsersCallback());
 
 		emailSuggestBox.addKeyDownHandler(new EnterKeyDownHandler());
