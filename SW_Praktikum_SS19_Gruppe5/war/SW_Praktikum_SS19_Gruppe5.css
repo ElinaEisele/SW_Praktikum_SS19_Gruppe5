@@ -187,6 +187,22 @@ div#trailer {
 	
 }
 
+.LogoutButton{
+	color:white;
+	font-weight: bold; 
+	font-size: 150%;
+	background:transparent;
+	border: 0px solid powderblue; 
+}
+
+.LogoutButton:active {
+	background: transparent;
+}
+
+.LogoutButton:hover {
+	color: white;
+}
+
 .CurrentUser{
 	color: white; 
 	font-size: 100%;
