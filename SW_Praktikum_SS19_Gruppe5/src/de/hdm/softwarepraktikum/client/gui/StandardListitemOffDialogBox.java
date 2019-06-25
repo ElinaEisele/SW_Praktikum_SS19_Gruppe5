@@ -2,7 +2,6 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -36,7 +35,7 @@ public class StandardListitemOffDialogBox extends DialogBox {
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label confirmLabel = new Label("Dieses Listitem als Standardlistitem entfernen?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Bestaetigen");
+	private Button confirmButton = new Button("Bestätigen");
 	private Button cancelButton = new Button("Abbrechen");
 
 	public StandardListitemOffDialogBox() {
@@ -53,6 +52,10 @@ public class StandardListitemOffDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * In dieser Methode werden die Widgets der Dialog Box hinzugefügt
+	 * 
+	 */
 	public void onLoad() {
 		this.setGlassEnabled(true);
 		this.add(mainPanel);
@@ -83,8 +86,15 @@ public class StandardListitemOffDialogBox extends DialogBox {
 		this.selectedGroup = selectedGroup;
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
+	 */
 
-
+	/**
+	 * Schließen der Dialog Box.
+	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -95,14 +105,17 @@ public class StandardListitemOffDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * Schließen der Dialog Box und nicht Standard setzen des ausgewählten
+	 * <code>Listitem</code>-Objekts.
+	 */
 	private class ConfirmClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedListitem != null) {
-				shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, false, new RemoveStandardCallback());
-				Notification.show("Eintrag nicht mehr als Standard gesetzt");
-				
+				shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, false,
+						new RemoveStandardCallback());
 				RootPanel.get("main").clear();
 
 				ListitemShowForm lsf = new ListitemShowForm();
@@ -112,7 +125,7 @@ public class StandardListitemOffDialogBox extends DialogBox {
 				lsf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(lsf);
-				
+
 				StandardListitemOffDialogBox.this.hide();
 			} else {
 				Notification.show("Es wurde kein Eintrag ausgewaehlt.");
@@ -121,11 +134,20 @@ public class StandardListitemOffDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Keine Rückgabe bei erfolgreichem entfernen von der Eigenschaft Standard.
+	 */
 	private class RemoveStandardCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Folgender Fehler ist aufgetreten: /n" + caught.toString());
+			Notification.show(caught.toString());
 		}
 
 		@Override
