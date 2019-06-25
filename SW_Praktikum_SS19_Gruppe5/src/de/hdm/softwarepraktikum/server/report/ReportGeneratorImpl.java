@@ -74,12 +74,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * Initialsierungsmethode.
      */
     public void init() throws IllegalArgumentException{
-    	
     	this.groupMapper = GroupMapper.groupMapper();
-      this.listitemMapper = ListitemMapper.listitemMapper();
-      this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
-      this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
-      this.retailerMapper = RetailerMapper.retailerMapper();
+    	this.listitemMapper = ListitemMapper.listitemMapper();
+    	this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
+    	this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
+      	this.retailerMapper = RetailerMapper.retailerMapper();
     }
     
     /**
@@ -110,6 +109,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     	result.setCreationDate(new Date());
     		
 		//Ausgeben aller Einkauslisten der Gruppe
+    	System.out.println("Gruppe: " +g.getName());
 		ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
 		
 		//Liste mit allen Eintraegen der Gruppe
@@ -120,15 +120,62 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
 		if(!shoppinglists.isEmpty()) {
+			System.out.println("Einkaufslisten sind vorhanden");
 			for (Shoppinglist s: shoppinglists)	{
-    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
+				
+				ArrayList<Listitem> sl = this.listitemMapper.getArchivedListitemsOf(s);
+				
+				for(Listitem listi : sl) {
+					listitems.add(listi);
+				}
+//    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
     		}
 
 			for (Listitem l : listitems) {
 				if(l.getRetailerID() == r.getId()) {
-					relevantListitems.add(l);	
+					
+					/*
+					 * Die Listitems sollen zusammengefasst werden. Dies geschieht durch folgende Kriterien:
+					 * selbe RetailerId & selber Produktname & selbe UnitId
+					 * Menge soll summiert werden
+					 */
+					if(!relevantListitems.isEmpty()) {
+						// Es wird nach selben, bereits hinzugefuegten Listitems gesucht. Die Menge wird addiert.
+						
+						for(Listitem rl : relevantListitems) {
+							if(l.getRetailerID() == rl.getRetailerID() && l.getListitemUnitID() == rl.getListitemUnitID()
+//									&& this.shoppinglistAdministration.getProductnameOf(l).equals(this.shoppinglistAdministration.getProductnameOf(rl))
+									){
+							
+								System.out.println(this.shoppinglistAdministration.getProductnameOf(rl));
+								// Das bereits bestehende Listitem wird geloescht und anschließend wird ein neues, summiertes hinzugefuegt.
+								relevantListitems.remove(rl);
+								
+								// Menge wird aufsummiert.
+								float newAmount = 0;
+								newAmount = rl.getAmount() + l.getAmount();
+								
+								// Neues zusammengesetztes Listitem wird erstellt und befuellt.
+								Listitem newListitem = new Listitem();
+								newListitem.setAmount(newAmount);
+								newListitem.setArchived(true);
+								newListitem.setGroupID(rl.getGroupID());
+								newListitem.setProductID(rl.getProductID());
+								newListitem.setRetailerID(rl.getRetailerID());
+								newListitem.setCreationDate(rl.getCreationDate());
+								newListitem.setShoppinglistID(rl.getShoppinglistID());
+								
+								relevantListitems.add(newListitem);
+								
+
+							}
+						}
+					}
+					else {
+						relevantListitems.add(l);
+					}
 				}
-			}    			
+			}
 		}	
         	
     	//Erstellen eines Tabellenkopfs
