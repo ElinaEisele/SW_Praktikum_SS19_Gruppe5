@@ -85,6 +85,7 @@ div#aside {
 }
 
 .NavButton{
+	font-family: 'Open Sans', sans-serif;
 	color: black;
 	font-weight: bold;
 	font-size: 130%;
@@ -106,7 +107,7 @@ div#aside {
 	color: black;
 	font-weight: normal;
 	font-size: 120%;
-	font-family: 'Oleo Script', cursive;
+	font-family: 'Open Sans', sans-serif;
 	
 }
 @media all and (min-width: 600px) {
@@ -163,6 +164,7 @@ div#trailer {
 /* Um die Buttons im Header zu stylen. */
 .HeaderButton {
 	color: white;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
@@ -189,6 +191,7 @@ div#trailer {
 
 .LogoutButton{
 	color:white;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold; 
 	font-size: 150%;
 	background:transparent;
@@ -240,6 +243,7 @@ div#trailer {
 /* Um die Buttons im Trailer zu stylen. */
 .TrailerButton {
 	color: white;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
@@ -268,6 +272,7 @@ div#trailer {
 	color: black;
 	font-weight: bold;
 	font-size: 150%;
+	font-family: 'Open Sans', sans-serif;
 	background: transparent;
 	border: 1px solid black;
 	border-radius: 5px;
@@ -298,7 +303,7 @@ div#trailer {
 	font-weight: bold;
 	font-size: 175%;
 	background: transparent;
-	font-family: 'Oleo Script', cursive;
+	font-family: 'Open Sans', sans-serif;
 	border-right: 3px solid steelblue;
 	margin-right: 10px;
 	padding-right: 10px;
@@ -350,7 +355,7 @@ div#trailer {
 	font-weight: bold;
 	font-size: 175%;
 	background: transparent;
-	font-family: 'Oleo Script', cursive;
+	font-family: 'Open Sans', sans-serif;
 	border-right: 3px solid steelblue;
 	margin-right: 10px;
 	padding-right: 10px;
