@@ -32,30 +32,6 @@ div#header {
 	border-radius: 5px;
 }
 
-@media all and (max-width: 800px) {
-	div#header {
-		justify-content: space-around;
-	}
-}
-
-@media all and (max-width: 600px) {
-	div#header {
-		justify-content: space-around;
-		webkit-flex-flow: column wrap;
-		flex-flow: column wrap;
-		padding: 0;
-	}
-	.HeaderButton {
-		-webkit-flex-flow: column wrap;
-		flex-flow: column wrap;
-		padding: 0;
-		text-align: center;
-		padding: 10px;
-		border-top: 1px solid rgba(255, 255, 255, 0.3);
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	}
-}
-
 /* SW_Praktikum_SS19_Gruppe5.html: Elemente in wrapper (footer, main, aside) */
 div#wrapper {
 	display: flex;
@@ -79,17 +55,33 @@ div#trailer {
 div#main {
 	text-align: left;
 	background: skyblue;
-	min-width: 800px;
 	min-height: 300px;
+	min-width: 500px;
 }
 
 div#aside {
 	background: skyblue;
-	border-right-color: white;
+	
 	border-right-width: 2px;
-	border-right-style: solid;
-	min-height: 300px;
+			
+	border-bottom-style: solid;
+	border-bottom-color: white;
+	border-bottom-width: 2px;
+	
+	border-top-style: solid;
+	border-top-color:white; 
+	border-top-width: 2px;
 
+}
+
+.NormalButton{
+	color: black;
+	font-weight: bold;
+	font-size: 50%;
+	background: transparent;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 5px 10px;
 }
 
 .NavButton{
@@ -106,12 +98,28 @@ div#aside {
 	color: black;
 	border: 1px solid black;
 	border-radius: 5px;
-	background-color: powderblue;
+	background-color: white;
+	
+}
+
+.cellTree{
+	color: black;
+	font-weight: normal;
+	font-size: 120%;
+	font-family: 'Oleo Script', cursive;
 	
 }
 @media all and (min-width: 600px) {
 	div#aside {
 		flex: 1 auto;
+	max-width: 100%;		
+	border-bottom-style: solid;
+	border-bottom-color: white;
+	border-bottom-width: 2px;
+	
+	border-top-style: solid;
+	border-top-color:white; 
+	border-top-width: 2px;
 	}
 }
 
@@ -121,6 +129,19 @@ div#aside {
 	}
 	div#aside {
 		order: 1;
+		max-width: 220px;
+		border-right-style: solid;
+		border-right-color: white;
+		border-right-width: 2px;
+		
+			
+	border-bottom-style: solid;
+	border-bottom-color: white;
+	border-bottom-width: 0px;
+	
+	border-top-style: solid;
+	border-top-color:white; 
+	border-top-width: 0px;
 	}
 	div#main {
 		order: 2;
@@ -258,7 +279,7 @@ div#trailer {
 	font-weight: bold;
 	font-size: 175%;
 	background: transparent;
-	border-bottom: 3px solid black;
+	font-family: 'Oleo Script', cursive;
 	margin-right: 5px;
 }
 
