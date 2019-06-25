@@ -5,12 +5,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.softwarepraktikum.server.ShoppinglistAdministrationImpl;
 import de.hdm.softwarepraktikum.shared.ReportGenerator;
-import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.NamedBusinessObject;
@@ -26,7 +24,6 @@ import de.hdm.softwarepraktikum.server.db.ListitemUnitMapper;
 import de.hdm.softwarepraktikum.server.db.ProductMapper;
 import de.hdm.softwarepraktikum.server.db.RetailerMapper;
 import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
-import de.hdm.softwarepraktikum.server.db.UserMapper;
 
 /**
  * Die Klasse stellt die vollstaendige Applikationslogik des ReportGenerators dar.
@@ -47,8 +44,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * da er diese ausgeben muss.
 	 */
 	private ShoppinglistAdministrationImpl shoppinglistAdministration = null;
-	
-//	private ReportGenerator report = null;
 	
 	private GroupMapper groupMapper = null;
 	
@@ -88,14 +83,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     }
     
     /**
-     * Ausgeben der Einkauslisten Verwaltung
-     * @return ShoppinglistAdministrationImpl 
-     */
-//    protected ReportGenerator getReportGenerator() throws IllegalArgumentException {
-//    	return this.report;
-//    }
-    
-    /**
      * 
      * @param g
      * @param r
@@ -104,107 +91,62 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Retailer r) throws IllegalArgumentException{
 
-    	
-    	//Anlegen eines leeren Reports
     	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
-    	
-    	//Setzen des Titels
+        
     	result.setTitle("Report der Gruppe: " + g.getName());
-    	
-    	//Zeitpunkt der Erstellung speichern
-    	result.setCreationDate(new Date());
-    		
-		//Ausgeben aller Einkauslisten der Gruppe
-    	System.out.println("Gruppe: " +g.getName());
+    	result.setCreationDate(new Date());	
+
 		ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
-		
-		//Liste mit allen Eintraegen der Gruppe
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
-		
-		//Liste mit allen relevanten Eintraegen der Gruppe
-		ArrayList<Listitem> relevantListitems = new ArrayList<Listitem>();
-		
-		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
+
 		if(!shoppinglists.isEmpty()) {
-			System.out.println("Einkaufslisten sind vorhanden");
 			for (Shoppinglist s: shoppinglists)	{
-				
-				ArrayList<Listitem> sl = this.listitemMapper.getArchivedListitemsOf(s);
-				
-				for(Listitem listi : sl) {
-					listitems.add(listi);
-				}
-//    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
-    		}
-
-			for (Listitem l : listitems) {
-				if(l.getRetailerID() == r.getId()) {
-					
-					/*
-					 * Die Listitems sollen zusammengefasst werden. Dies geschieht durch folgende Kriterien:
-					 * selbe RetailerId & selber Produktname & selbe UnitId
-					 * Menge soll summiert werden
-					 */
-					if(!relevantListitems.isEmpty()) {
-						// Es wird nach selben, bereits hinzugefuegten Listitems gesucht. Die Menge wird addiert.
-						
-						for(Listitem rl : relevantListitems) {
-							if(l.getRetailerID() == rl.getRetailerID() && l.getListitemUnitID() == rl.getListitemUnitID()
-//									&& this.shoppinglistAdministration.getProductnameOf(l).equals(this.shoppinglistAdministration.getProductnameOf(rl))
-									){
-							
-								
-								// Das bereits bestehende Listitem wird geloescht und anschließend wird ein neues, summiertes hinzugefuegt.
-								relevantListitems.remove(rl);
-								
-								// Menge wird aufsummiert.
-								float newAmount = 0;
-								newAmount = rl.getAmount() + l.getAmount();
-								
-								// Neues zusammengesetztes Listitem wird erstellt und befuellt.
-								Listitem newListitem = new Listitem();
-								newListitem.setAmount(newAmount);
-								newListitem.setArchived(true);
-								newListitem.setGroupID(rl.getGroupID());
-								newListitem.setRetailerID(rl.getRetailerID());
-								newListitem.setCreationDate(rl.getCreationDate());
-								newListitem.setShoppinglistID(rl.getShoppinglistID());
-								
-								relevantListitems.add(newListitem);
-								
-
-							}
-						}
-					}
-					else {
-						relevantListitems.add(l);
-					}
+				ArrayList<Listitem>  listit = this.listitemMapper.getArchivedListitemsOf(s);
+				for(Listitem rw : listit) {
+					listitems.add(rw);
 				}
 			}
-		}	
-        	
-    	//Erstellen eines Tabellenkopfs
+		}
+
+		Map<String, Float> map = new HashMap<String, Float>();
+		for (Listitem l : listitems) {
+			if(l.getRetailerID() == r.getId()) {
+				
+				String key = l.getRetailerID() + ";" +l.getListitemUnitID() + ";" +this.productMapper.findById(l.getProductID()).getName();
+				
+				if(map.containsKey(key)) {
+					float tmp = map.get(key);
+					map.put(key, l.getAmount() +tmp);
+				}else {
+					map.put(key, l.getAmount());
+				}
+			}   			
+		}
+		
     	Row tablehead = new Row();
     	
     	tablehead.addColumn(new Column("Bezeichnung"));
     	tablehead.addColumn(new Column("Menge"));
     	tablehead.addColumn(new Column("Einheit"));
     	tablehead.addColumn(new Column("Haendler"));
-    	tablehead.addColumn(new Column("Erstellungsdatum"));
     	result.addRow(tablehead);
     	
-    	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
-    	for(Listitem l : relevantListitems) {
+		map.forEach((k, v) -> {
+			String[] tmp = k.split(";");
+			int retailId = Integer.parseInt(tmp[0].toString());
+			int unitId = Integer.parseInt(tmp[1].toString());
+			String name = tmp[2];
+			
     		Row r1 = new Row();
-    		r1.addColumn(new Column(this.listitemMapper.getProductnameOf(l.getId())));       		
-    		r1.addColumn(new Column(String.valueOf(l.getAmount())));
-    		r1.addColumn(new Column(this.listitemUnitMapper.getUnitOf(l).getName()));
-    		r1.addColumn(new Column(this.retailerMapper.getRetailerOf(l).getName()));
-    		r1.addColumn(new Column(l.getCreationDateConvertToStringWithStyle()));
+    		r1.addColumn(new Column(name.toString()));       		
+    		r1.addColumn(new Column(v.toString()));
+    		r1.addColumn(new Column(this.listitemUnitMapper.findById(unitId).getName()));
+    		r1.addColumn(new Column(this.retailerMapper.findById(retailId).getName()));
     		result.addRow(r1);
-    	}
+	    	
+		});
 
-        return result;
+    	return result;
 
     }
     
@@ -217,78 +159,64 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate) throws IllegalArgumentException {
     
-    	//Anlegen eines leeren Reports
     	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
-
-    	//Setzen des Titels
+        
     	result.setTitle("Report der Gruppe: " + g.getName());
-    	
-    	//Zeitpunkt der Erstellung speichern
     	result.setCreationDate(new Date());	
-	
-    	//Ausgeben aller Einkauslisten der Gruppe
+
 		ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
-		
-		//Liste mit allen Eintraegen der Gruppe
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
-		
-		//Liste mit allen relevanten Eintraegen der Gruppe
-		ArrayList<Listitem> relevantListitems = new ArrayList<Listitem>();
-		
-		//Liste mit allen aufsummierten, relevanten Eintraegen der Gruppe
-		ArrayList<Listitem> sumListitems = new ArrayList<Listitem>();
-		
-		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
+
 		if(!shoppinglists.isEmpty()) {
 			for (Shoppinglist s: shoppinglists)	{
-    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
-    		}
-			
-			for (Listitem l : listitems) {
-				if(l.getCreationDate().compareTo(startdate) > 0) {
-					if(l.getCreationDate().compareTo(enddate) < 0) {
-							relevantListitems.add(l);
-					
-    				}
+				ArrayList<Listitem>  listit = this.listitemMapper.getArchivedListitemsOf(s);
+				for(Listitem rw : listit) {
+					listitems.add(rw);
 				}
-			}      			
+			}
 		}
-    	
-    	//Erstellen eines Tabellenkopfs
+
+		Map<String, Float> map = new HashMap<String, Float>();
+		for (Listitem l : listitems) {
+			if(l.getCreationDate().compareTo(startdate) > 0) {
+				if(l.getCreationDate().compareTo(enddate) < 0) {
+						
+					String key = l.getRetailerID() + ";" +l.getListitemUnitID() + ";" +this.productMapper.findById(l.getProductID()).getName();
+					
+					if(map.containsKey(key)) {
+						float tmp = map.get(key);
+						map.put(key, l.getAmount() +tmp);
+					}else {
+						map.put(key, l.getAmount());
+					}
+				}
+			}    			
+		}
+		
     	Row tablehead = new Row();
     	
     	tablehead.addColumn(new Column("Bezeichnung"));
     	tablehead.addColumn(new Column("Menge"));
     	tablehead.addColumn(new Column("Einheit"));
-    	tablehead.addColumn(new Column("Erstellungsdatum"));
+    	tablehead.addColumn(new Column("Haendler"));
     	result.addRow(tablehead);
     	
-    	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
-    	for(Listitem rl : relevantListitems) {
-    		sumListitems.add(rl);
-    		
-    		for (Listitem sl : sumListitems) {
-    			if (this.listitemMapper.getProductnameOf(rl.getId()) == this.listitemMapper.getProductnameOf(sl.getId())) {
-    				sumListitems.remove(rl);
-    				this.amount = sl.getAmount() + rl.getAmount();
-    				sl.setAmount(amount);
-//       			}else {
-//       				sumListitems.add(rl);
-       			}
-    		}
-
-    	}
-    	
-    	for (Listitem sl : sumListitems) {
+		map.forEach((k, v) -> {
+			String[] tmp = k.split(";");
+			int retailId = Integer.parseInt(tmp[0].toString());
+			int unitId = Integer.parseInt(tmp[1].toString());
+			String name = tmp[2];
+			
     		Row r2 = new Row();
-			r2.addColumn(new Column(this.listitemMapper.getProductnameOf(sl.getId())));       		
-			r2.addColumn(new Column(String.valueOf(sl.getAmount())));
-			r2.addColumn(new Column(this.listitemUnitMapper.getUnitOf(sl).getName()));
-			r2.addColumn(new Column(sl.getCreationDateConvertToStringWithStyle()));
-			result.addRow(r2);
-    	}
-	
-        return result;
+    		r2.addColumn(new Column(name.toString()));       		
+    		r2.addColumn(new Column(v.toString()));
+    		r2.addColumn(new Column(this.listitemUnitMapper.findById(unitId).getName()));
+    		r2.addColumn(new Column(this.retailerMapper.findById(retailId).getName()));
+    		result.addRow(r2);
+	    	
+		});
+
+    	return result;
 
     }
     
@@ -303,27 +231,14 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, Retailer r) throws IllegalArgumentException {
 
-
-    	//Anlegen eines leeren Reports
     	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
-    	
-    	//Setzen des Titels
+    
     	result.setTitle("Report der Gruppe: " + g.getName());
-    	
-    	//Zeitpunkt der Erstellung speichern
     	result.setCreationDate(new Date());	
 
-    		
-		//Ausgeben aller Einkauslisten der Gruppe
 		ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
-		
-		//Liste mit allen Eintraegen der Gruppe
 		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
-		
-		//Liste mit allen relevanten Eintraegen der Gruppe
-		ArrayList<Listitem> relevantListitems = new ArrayList<Listitem>();
-		
-		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
+
 		if(!shoppinglists.isEmpty()) {
 			for (Shoppinglist s: shoppinglists)	{
 				ArrayList<Listitem>  listit = this.listitemMapper.getArchivedListitemsOf(s);
@@ -332,36 +247,26 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				}
 			}
 		}
-		for (Listitem lit : listitems) {
-		System.out.println(this.productMapper.findById(lit.getProductID()).getName());
-		}
-		
-		
 
 		Map<String, Float> map = new HashMap<String, Float>();
 		for (Listitem l : listitems) {
-			// Erstellungsdatum ueberpruefen
 			if(l.getCreationDate().compareTo(startdate) > 0) {
 				if(l.getCreationDate().compareTo(enddate) < 0) {
-					// Retailer ueberpruefen
 					if(l.getRetailerID() == r.getId()) {
 						
-						String key = l.getRetailerID() +";" +l.getListitemUnitID() +";"+this.productMapper.findById(l.getProductID()).getName();
+						String key = l.getRetailerID() + ";" +l.getListitemUnitID() + ";" +this.productMapper.findById(l.getProductID()).getName();
 						
 						if(map.containsKey(key)) {
 							float tmp = map.get(key);
 							map.put(key, l.getAmount() +tmp);
-						}
-						else {
+						}else {
 							map.put(key, l.getAmount());
-
 						}
 					}
 				}
 			}    			
 		}
 		
-		//Erstellen eines Tabellenkopfs
     	Row tablehead = new Row();
     	
     	tablehead.addColumn(new Column("Bezeichnung"));
@@ -375,15 +280,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			int retailId = Integer.parseInt(tmp[0].toString());
 			int unitId = Integer.parseInt(tmp[1].toString());
 			String name = tmp[2];
-
-			for(String s : tmp) {
-				System.out.println("das ist s: " + s);
-			}
-			System.out.println("das ist der value: " +v);
 			
-		
-	    	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
-	   
     		Row r3 = new Row();
     		r3.addColumn(new Column(name.toString()));       		
     		r3.addColumn(new Column(v.toString()));
@@ -394,7 +291,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		});
 
     	return result;
-
 
     }
 
