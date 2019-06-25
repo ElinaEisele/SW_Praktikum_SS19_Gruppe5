@@ -2,6 +2,8 @@ package de.hdm.softwarepraktikum.server.report;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -21,6 +23,7 @@ import de.hdm.softwarepraktikum.shared.report.Row;
 import de.hdm.softwarepraktikum.server.db.GroupMapper;
 import de.hdm.softwarepraktikum.server.db.ListitemMapper;
 import de.hdm.softwarepraktikum.server.db.ListitemUnitMapper;
+import de.hdm.softwarepraktikum.server.db.ProductMapper;
 import de.hdm.softwarepraktikum.server.db.RetailerMapper;
 import de.hdm.softwarepraktikum.server.db.ShoppinglistMapper;
 import de.hdm.softwarepraktikum.server.db.UserMapper;
@@ -57,6 +60,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	private RetailerMapper retailerMapper = null;
 	
+	private ProductMapper productMapper = null;
+	
 	private Float amount = null;
 	
 	 /**
@@ -74,12 +79,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      * Initialsierungsmethode.
      */
     public void init() throws IllegalArgumentException{
-    	
     	this.groupMapper = GroupMapper.groupMapper();
-      this.listitemMapper = ListitemMapper.listitemMapper();
-      this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
-      this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
-      this.retailerMapper = RetailerMapper.retailerMapper();
+    	this.listitemMapper = ListitemMapper.listitemMapper();
+    	this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
+    	this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
+      	this.retailerMapper = RetailerMapper.retailerMapper();
+      	this.productMapper = ProductMapper.productMapper();
     }
     
     /**
@@ -110,6 +115,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     	result.setCreationDate(new Date());
     		
 		//Ausgeben aller Einkauslisten der Gruppe
+    	System.out.println("Gruppe: " +g.getName());
 		ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
 		
 		//Liste mit allen Eintraegen der Gruppe
@@ -120,15 +126,61 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
 		if(!shoppinglists.isEmpty()) {
+			System.out.println("Einkaufslisten sind vorhanden");
 			for (Shoppinglist s: shoppinglists)	{
-    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
+				
+				ArrayList<Listitem> sl = this.listitemMapper.getArchivedListitemsOf(s);
+				
+				for(Listitem listi : sl) {
+					listitems.add(listi);
+				}
+//    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
     		}
 
 			for (Listitem l : listitems) {
 				if(l.getRetailerID() == r.getId()) {
-					relevantListitems.add(l);	
+					
+					/*
+					 * Die Listitems sollen zusammengefasst werden. Dies geschieht durch folgende Kriterien:
+					 * selbe RetailerId & selber Produktname & selbe UnitId
+					 * Menge soll summiert werden
+					 */
+					if(!relevantListitems.isEmpty()) {
+						// Es wird nach selben, bereits hinzugefuegten Listitems gesucht. Die Menge wird addiert.
+						
+						for(Listitem rl : relevantListitems) {
+							if(l.getRetailerID() == rl.getRetailerID() && l.getListitemUnitID() == rl.getListitemUnitID()
+//									&& this.shoppinglistAdministration.getProductnameOf(l).equals(this.shoppinglistAdministration.getProductnameOf(rl))
+									){
+							
+								
+								// Das bereits bestehende Listitem wird geloescht und anschließend wird ein neues, summiertes hinzugefuegt.
+								relevantListitems.remove(rl);
+								
+								// Menge wird aufsummiert.
+								float newAmount = 0;
+								newAmount = rl.getAmount() + l.getAmount();
+								
+								// Neues zusammengesetztes Listitem wird erstellt und befuellt.
+								Listitem newListitem = new Listitem();
+								newListitem.setAmount(newAmount);
+								newListitem.setArchived(true);
+								newListitem.setGroupID(rl.getGroupID());
+								newListitem.setRetailerID(rl.getRetailerID());
+								newListitem.setCreationDate(rl.getCreationDate());
+								newListitem.setShoppinglistID(rl.getShoppinglistID());
+								
+								relevantListitems.add(newListitem);
+								
+
+							}
+						}
+					}
+					else {
+						relevantListitems.add(l);
+					}
 				}
-			}    			
+			}
 		}	
         	
     	//Erstellen eines Tabellenkopfs
@@ -191,6 +243,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			for (Shoppinglist s: shoppinglists)	{
     			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
     		}
+			
 			for (Listitem l : listitems) {
 				if(l.getCreationDate().compareTo(startdate) > 0) {
 					if(l.getCreationDate().compareTo(enddate) < 0) {
@@ -273,39 +326,72 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Erstellen einer Liste mit allen Eintraegen aus allen Listen
 		if(!shoppinglists.isEmpty()) {
 			for (Shoppinglist s: shoppinglists)	{
-    			listitems.addAll(this.listitemMapper.getArchivedListitemsOf(s));
-    		}
-			for (Listitem l : listitems) {
-				if(l.getCreationDate().compareTo(startdate) > 0) {
-					if(l.getCreationDate().compareTo(enddate) < 0) {
-						if(l.getRetailerID() == r.getId()) {
-							relevantListitems.add(l);
+				ArrayList<Listitem>  listit = this.listitemMapper.getArchivedListitemsOf(s);
+				for(Listitem rw : listit) {
+					listitems.add(rw);
+				}
+			}
+		}
+		for (Listitem lit : listitems) {
+		System.out.println(this.productMapper.findById(lit.getProductID()).getName());
+		}
+		
+		
+
+		Map<String, Float> map = new HashMap<String, Float>();
+		for (Listitem l : listitems) {
+			// Erstellungsdatum ueberpruefen
+			if(l.getCreationDate().compareTo(startdate) > 0) {
+				if(l.getCreationDate().compareTo(enddate) < 0) {
+					// Retailer ueberpruefen
+					if(l.getRetailerID() == r.getId()) {
+						
+						String key = l.getRetailerID() +";" +l.getListitemUnitID() +";"+this.productMapper.findById(l.getProductID()).getName();
+						
+						if(map.containsKey(key)) {
+							float tmp = map.get(key);
+							map.put(key, l.getAmount() +tmp);
 						}
-    				}
+						else {
+							map.put(key, l.getAmount());
+
+						}
+					}
 				}
 			}    			
 		}
 		
-    	//Erstellen eines Tabellenkopfs
+		//Erstellen eines Tabellenkopfs
     	Row tablehead = new Row();
     	
     	tablehead.addColumn(new Column("Bezeichnung"));
     	tablehead.addColumn(new Column("Menge"));
     	tablehead.addColumn(new Column("Einheit"));
     	tablehead.addColumn(new Column("Haendler"));
-    	tablehead.addColumn(new Column("Erstellungsdatum"));
     	result.addRow(tablehead);
     	
-    	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
-    	for(Listitem l : relevantListitems) {
+		map.forEach((k, v) -> {
+			String[] tmp = k.split(";");
+			int retailId = Integer.parseInt(tmp[0].toString());
+			int unitId = Integer.parseInt(tmp[1].toString());
+			String name = tmp[2];
+
+			for(String s : tmp) {
+				System.out.println("das ist s: " + s);
+			}
+			System.out.println("das ist der value: " +v);
+			
+		
+	    	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
+	   
     		Row r3 = new Row();
-    		r3.addColumn(new Column(this.listitemMapper.getProductnameOf(l.getId())));       		
-    		r3.addColumn(new Column(String.valueOf(l.getAmount())));
-    		r3.addColumn(new Column(this.listitemUnitMapper.getUnitOf(l).getName()));
-    		r3.addColumn(new Column(this.retailerMapper.getRetailerOf(l).getName()));
-    		r3.addColumn(new Column(l.getCreationDateConvertToStringWithStyle()));
+    		r3.addColumn(new Column(name.toString()));       		
+    		r3.addColumn(new Column(v.toString()));
+    		r3.addColumn(new Column(this.listitemUnitMapper.findById(unitId).getName()));
+    		r3.addColumn(new Column(this.retailerMapper.findById(retailId).getName()));
     		result.addRow(r3);
-    	}
+	    	
+		});
 
     	return result;
 

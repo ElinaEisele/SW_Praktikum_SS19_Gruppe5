@@ -80,7 +80,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		// CellTable custom UI resource
 		CellTable.Resources tableRes = GWT.create(TableRes.class);
-		table = new CellTable<ArrayList<Object>>(10, tableRes);
+		table = new CellTable<ArrayList<Object>>(50, tableRes);
 
 		// SelectionModel um die klicks der Checkboxen zu regeln
 		table.setSelectionModel(selectionModel,

@@ -39,8 +39,6 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Neue Einkaufsliste erstellen");
-	private Grid grid = new Grid(1, 2);
-	private Label nameLabel = new Label("Name");
 	private TextBox nameTextBox = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
@@ -49,8 +47,8 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 	public NewShoppinglistForm() {
 
-		grid.setWidget(0, 0, nameLabel);
-		grid.setWidget(0, 1, nameTextBox);
+		nameTextBox.setText("Name eingeben...");
+		nameTextBox.addClickHandler(new NameTextBoxClickHandler());
 
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
@@ -59,11 +57,14 @@ public class NewShoppinglistForm extends VerticalPanel {
 		buttonPanel.add(cancelButton);
 
 		mainPanel.add(infoLabel);
-		mainPanel.add(grid);
+		mainPanel.add(nameTextBox);
 		mainPanel.add(buttonPanel);
 
 	}
 
+	/**
+	 * Laden und Anordnen der Widgets.
+	 */
 	public void onLoad() {
 
 		RootPanel.get("main").add(mainPanel);
@@ -94,6 +95,17 @@ public class NewShoppinglistForm extends VerticalPanel {
 		this.selectedGroup = selectedGroup;
 	}
 
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Click-/EventHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Bei Betätigen der Speichern-Schaltfläche wird das neue
+	 * <code>Shoppinglist</code>-Objekt angelegt.
+	 *
+	 */
 	private class SaveClickHandler implements ClickHandler {
 
 		@Override
@@ -102,6 +114,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 				if (nameTextBox.getValue() == "") {
 					Window.alert("Niemand hat die Absicht eine Einkaufsliste ohne Namen anzulegen");
 				} else if (nameTextBox.getValue().length() <= 23) {
+
 					shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
 							new NewShoppinglistAsyncCallback());
 
@@ -113,6 +126,11 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * Bei Betätigen der Abbrechen-Schaltfläche wird die Gruppenansicht wieder
+	 * geladen.
+	 *
+	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -129,11 +147,34 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * Beim Klick in das Text Feld wird dieses geleert.
+	 *
+	 */
+	private class NameTextBoxClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			nameTextBox.setText("");
+		}
+
+	}
+
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Die neue Gruppe wird im <code>CellTree</code> hinzugefügt.
+	 *
+	 */
 	private class NewShoppinglistAsyncCallback implements AsyncCallback<Shoppinglist> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Die Einkaufslistenerstellung ist fehlgeschlagen.");
+			Notification.show(caught.toString());
 		}
 
 		@Override
