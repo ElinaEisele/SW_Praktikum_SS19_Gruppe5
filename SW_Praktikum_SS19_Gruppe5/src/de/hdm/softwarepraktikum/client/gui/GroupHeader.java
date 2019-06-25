@@ -39,22 +39,27 @@ public class GroupHeader extends HorizontalPanel {
 	private Button showRetailers = new Button();
 
 	public GroupHeader() {
+		
+		groupHeaderLabel.setStyleName("GroupLabel");
 
 		Image newShoppinglistImg = new Image();
 		newShoppinglistImg.setUrl("images/clipboard.png");
 		newShoppinglistImg.setSize("32px", "32px");
+		newShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		newShoppinglist.getElement().appendChild(newShoppinglistImg.getElement());
 		newShoppinglist.addClickHandler(new NewShoppinglistClickHandler());
 
 		Image addUserImg = new Image();
 		addUserImg.setUrl("images/add-user.png");
 		addUserImg.setSize("32px", "32px");
+		addUser.setStyleName("GroupHeaderButton");
 		addUser.getElement().appendChild(addUserImg.getElement());
 		addUser.addClickHandler(new AddUserClickHandler());
 
 		Image leaveGroupImg = new Image();
 		leaveGroupImg.setUrl("images/logout.png");
 		leaveGroupImg.setSize("32px", "32px");
+		leaveGroup.setStyleName("GroupHeaderButton");
 		leaveGroup.getElement().appendChild(leaveGroupImg.getElement());
 		leaveGroup.addClickHandler(new LeaveGroupClickHandler());
 		// leaveGroup.setStyleName("leaveGroupButton");
@@ -62,18 +67,21 @@ public class GroupHeader extends HorizontalPanel {
 		Image editGroupImg = new Image();
 		editGroupImg.setUrl("images/edit.png");
 		editGroupImg.setSize("32px", "32px");
+		editGroupName.setStyleName("GroupHeaderButton");
 		editGroupName.getElement().appendChild(editGroupImg.getElement());
 		editGroupName.addClickHandler(new EditClickHandler());
 
 		Image deleteImg = new Image();
 		deleteImg.setUrl("images/delete.png");
 		deleteImg.setSize("32px", "32px");
+		deleteGroup.setStyleName("GroupHeaderButton");
 		deleteGroup.getElement().appendChild(deleteImg.getElement());
 		deleteGroup.addClickHandler(new DeleteGroupClickHandler());
 
 		Image showRetailersImg = new Image();
 		showRetailersImg.setUrl("images/shop.png");
 		showRetailersImg.setSize("32px", "32px");
+		showRetailers.setStyleName("GroupHeaderButton");
 		showRetailers.getElement().appendChild(showRetailersImg.getElement());
 		showRetailers.addClickHandler(new ShowRetailersClickHandler());
 
@@ -176,8 +184,7 @@ public class GroupHeader extends HorizontalPanel {
 
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, autgf);
 				gsf.setSelected(groupToDisplay);
-				gsf.setGstvm(gstvm);
-				gstvm.setGroupShowForm(gsf);
+
 
 
 			} else {
@@ -231,8 +238,7 @@ public class GroupHeader extends HorizontalPanel {
 				
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, egnf);
 				gsf.setSelected(groupToDisplay);
-				gsf.setGstvm(gstvm);
-				gstvm.setGroupShowForm(gsf);
+
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -246,13 +252,12 @@ public class GroupHeader extends HorizontalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (groupToDisplay != null) {
-				ShowRetailersForm srdb = new ShowRetailersForm();
+				RetailersForm srdb = new RetailersForm();
 				srdb.setSelectedGroup(groupToDisplay);
 				srdb.setGstvm(GroupHeader.this.gstvm);
 				GroupShowForm gsf = new GroupShowForm(GroupHeader.this, srdb);
 				gsf.setSelected(groupToDisplay);
-				gsf.setGstvm(gstvm);
-				gstvm.setGroupShowForm(gsf);
+
 				
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
