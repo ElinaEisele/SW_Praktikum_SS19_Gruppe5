@@ -33,7 +33,7 @@ public class GroupCellTable extends VerticalPanel {
 
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupShowForm groupShowForm = null;
-	private Group groupToDisplay = null;
+	private Group selectedGroup = null;
 
 	private CellTable<Shoppinglist> table = new CellTable<Shoppinglist>();
 
@@ -53,7 +53,7 @@ public class GroupCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Spalte, die ein klickbares Bild enth�lt, das die Einkaufsliste bei Klick in
+		 * Spalte, die ein klickbares Bild enthält, das die Einkaufsliste bei Klick in
 		 * einer neuen <code>ShoppinglistShowForm</code> darstellt.
 		 * 
 		 */
@@ -90,7 +90,7 @@ public class GroupCellTable extends VerticalPanel {
 
 		/**
 		 * AsyncCallback der eine ArrayList mit <code>Shoppinglist</code>-Objekten der
-		 * entsprechenden Gruppe zurueckgeben soll.
+		 * entsprechenden Gruppe zurückgeben soll.
 		 * 
 		 */
 		shoppinglistAdministration.getShoppinglistsOf(groupShowForm.getSelected(), new GetShoppinglistsOfCallback());
@@ -123,7 +123,7 @@ public class GroupCellTable extends VerticalPanel {
 	 */
 	public void setSelected(Group g) {
 		if (g != null) {
-			groupToDisplay = g;
+			selectedGroup = g;
 
 		} else {
 			this.clear();
@@ -131,19 +131,25 @@ public class GroupCellTable extends VerticalPanel {
 	}
 
 	public Group getSelected() {
-		return groupToDisplay;
+		return selectedGroup;
 	}
 
 	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
 	 * AsyncCallback der eine ArrayList mit <code>Shoppinglist</code>-Objekten der
-	 * entsprechenden Gruppe zur�ckgeben soll.
+	 * entsprechenden Gruppe zurückgeben soll.
 	 * 
 	 */
 	private class GetShoppinglistsOfCallback implements AsyncCallback<ArrayList<Shoppinglist>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Das Laden der Einkaufslisten ist fehlgeschlagen");
+			Notification.show(caught.toString());
 
 		}
 

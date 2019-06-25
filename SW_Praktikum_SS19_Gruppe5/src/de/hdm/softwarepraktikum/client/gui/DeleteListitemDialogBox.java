@@ -17,9 +17,9 @@ import de.hdm.softwarepraktikum.shared.bo.Listitem;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Klasse zum Anzeigen eines Dialogs, wenn ein Listitem geloescht werden soll.
+ * Klasse zum Anzeigen einer Dialog Box, wenn ein Eintrag gelöscht werden soll.
  * 
- * @author ElinaEisele, JonasWagenknecht, Leoni Friedrich
+ * @author ElinaEisele, JonasWagenknecht, LeoniFriedrich
  *
  */
 public class DeleteListitemDialogBox extends DialogBox {
@@ -32,12 +32,16 @@ public class DeleteListitemDialogBox extends DialogBox {
 	private Group selectedGroup = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label confirmationLabel = new Label(
-			"Sind Sie sicher, dass Sie das ausgwaehlte Listitem loeschen moechten?");
+	private Label confirmationLabel = new Label("Möchtest du den ausgewählten Eintrag löschen?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Loeschen");
+	private Button confirmButton = new Button("Löschen");
 	private Button cancelButton = new Button("Abbrechen");
 
+	/**
+	 * In diesem Konstruktor werden die Button-Widgets sowie das beschreibende Label
+	 * der Dialog Box hinzugefügt.
+	 * 
+	 */
 	public DeleteListitemDialogBox() {
 
 		this.setGlassEnabled(true);
@@ -65,7 +69,7 @@ public class DeleteListitemDialogBox extends DialogBox {
 	public void setSelectedListitem(Listitem selectedListitem) {
 		this.selectedListitem = selectedListitem;
 	}
-	
+
 	public Shoppinglist getSelectedShoppinglist() {
 		return selectedShoppinglist;
 	}
@@ -82,8 +86,15 @@ public class DeleteListitemDialogBox extends DialogBox {
 		this.selectedGroup = selectedGroup;
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
+	 */
 
-
+	/**
+	 * Schließen der Dialog Box.
+	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -94,6 +105,10 @@ public class DeleteListitemDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * Schließen der Dialog Box und löschen des ausgewählten
+	 * <code>Listitem</code>-Objekts.
+	 */
 	private class ConfirmClickHandler implements ClickHandler {
 
 		@Override
@@ -102,12 +117,22 @@ public class DeleteListitemDialogBox extends DialogBox {
 				shoppinglistAdministration.delete(selectedListitem, new DeleteListitemCallback(selectedListitem));
 				DeleteListitemDialogBox.this.hide();
 			} else {
-				Notification.show("Es wurde kein Listitem ausgew�hlt.");
+				Notification.show("Es wurde kein Eintrag ausgewählt.");
 			}
 		}
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Das selektierte <code>Listitem</code>-Objekt wird null gesetzt und die
+	 * <code>ShoppinglistShowForm</code> aufgerufen.
+	 */
 	private class DeleteListitemCallback implements AsyncCallback<Void> {
 
 		Listitem listitem = null;
@@ -118,7 +143,7 @@ public class DeleteListitemDialogBox extends DialogBox {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Folgender Fehler ist aufgetreten: /n" + caught.toString());
+			Notification.show(caught.toString());
 		}
 
 		@Override
@@ -130,15 +155,10 @@ public class DeleteListitemDialogBox extends DialogBox {
 				RootPanel.get("main").clear();
 
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-//				ssf.setGstvm(gstvm);
-//				gstvm.setSelectedGroup(null);
-//				gstvm.setSelectedShoppinglist(object);
-
 				ssf.setSelected(selectedShoppinglist);
 				ssf.setSelectedGroup(selectedGroup);
 
 				RootPanel.get("main").add(ssf);
-				
 
 			}
 		}
