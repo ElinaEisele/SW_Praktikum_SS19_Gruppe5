@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -16,7 +17,7 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Klasse um bei einer Shoppinglist den Namen zu aendern.
+ * Klasse um bei einem <code>Shoppinglist</code>-Objekt den Namen zu ändern.
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
@@ -24,26 +25,30 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 public class EditShoppinglistNameForm extends VerticalPanel {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-	private ShoppinglistHeader shoppinglistHeader;
+
+	private ShoppinglistHeader shoppinglistHeader = null;
 	private GroupShoppinglistTreeViewModel gstvm = null;
-	private Shoppinglist shoppinglistToDisplay = null;
-	private NavigatorPanel navigatorPanel;
+	private Shoppinglist selectedShoppinglist = null;
+	private NavigatorPanel navigatorPanel = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private TextBox newShoppinglistNameTextBox = new TextBox();
-
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Aendern");
-	private Button cancelButton = new Button("Abbrechen");
+	private Button confirmButton = new Button();
+	private Button cancelButton = new Button();
+	private Grid editShoppinglistNameGrid = null;
 
-	private Grid editShoppinglistNameGrid;
-
+	/**
+	 * In diesem Konstruktor werden die Button-Widgets sowie das beschreibende Label
+	 * der Form hinzugefügt.
+	 * 
+	 */
 	public EditShoppinglistNameForm() {
 
 		editShoppinglistNameGrid = new Grid(3, 2);
 		mainPanel.add(editShoppinglistNameGrid);
 
-		Label headerLabel = new Label("Shoppinglist Name aendern");
+		Label headerLabel = new Label("Shoppinglist Name ändern");
 		editShoppinglistNameGrid.setWidget(0, 0, headerLabel);
 
 		Label newShoppinglistNameLabel = new Label("Neuer Name: ");
@@ -62,6 +67,11 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * In dieser Methode werden die Widgets dem entsprechenden div-Element
+	 * hinzugefügt.
+	 * 
+	 */
 	public void onLoad() {
 		RootPanel.get("main").add(mainPanel);
 	}
@@ -82,16 +92,22 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		this.gstvm = gstvm;
 	}
 
-	public Shoppinglist getShoppinglistToDisplay() {
-		return shoppinglistToDisplay;
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
 	}
 
-	public void setShoppinglistToDisplay(Shoppinglist shoppinglistToDisplay) {
-		this.shoppinglistToDisplay = shoppinglistToDisplay;
+	public void setSelectedShoppinglist(Shoppinglist selectedShoppinglist) {
+		this.selectedShoppinglist = selectedShoppinglist;
 	}
 
 	/**
-	 * Clickhandler zum verwerfen der Eingaben und zur R�ckkehr zur
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Clickhandler zum verwerfen der Eingaben und zur Rückkehr zur
 	 * ShoppinglistShowForm.
 	 * 
 	 */
@@ -99,10 +115,10 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (shoppinglistToDisplay != null) {
+			if (selectedShoppinglist != null) {
 				RootPanel.get("main").clear();
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-				ssf.setSelected(shoppinglistToDisplay);
+				ssf.setSelected(selectedShoppinglist);
 				RootPanel.get("main").add(ssf);
 			}
 		}
@@ -110,34 +126,44 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	}
 
 	/**
-	 * Clickhandler zum aendern des Name.
+	 * Clickhandler zum ändern des Namens.
 	 * 
 	 */
 	private class ConfirmClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (shoppinglistToDisplay != null) {
-				shoppinglistToDisplay.setName(newShoppinglistNameTextBox.getText());
+			if (selectedShoppinglist != null) {
+				if (newShoppinglistNameTextBox.getText().length() <= 23) {
+					selectedShoppinglist.setName(newShoppinglistNameTextBox.getText());
 
-				shoppinglistAdministration.save(shoppinglistToDisplay, new EditNameCallback());
+					shoppinglistAdministration.save(selectedShoppinglist, new EditNameCallback());
+				} else {
+					Window.alert("Bitte gib eine kürzeren Namen ein");
 
+				}
 			} else {
-				Notification.show("Keine Shoppinglist ausgewaehlt");
+				Notification.show("Keine Einkaufsliste ausgewählt");
 			}
 		}
 	}
 
 	/**
-	 * Nach dem erfolgreichen aendern des Namen wird das Formular geschlossen und
-	 * die aktuell ausgew�hlte Shoppinglist erneut ge�ffnet.
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Nach dem erfolgreichen Ändern des Namen wird das Formular geschlossen und die
+	 * aktuell ausgewählte Einkaufsliste erneut geöffnet.
 	 * 
 	 */
 	private class EditNameCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Das Anlegen eines neuen Eintrags ist fehlgeschlagen!");
+			Notification.show(caught.toString());
 		}
 
 		@Override
@@ -147,7 +173,7 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 			RootPanel.get("aside").clear();
 			navigatorPanel = new NavigatorPanel();
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelected(selectedShoppinglist);
 			RootPanel.get("aside").add(navigatorPanel);
 
 			RootPanel.get("main").add(ssf);

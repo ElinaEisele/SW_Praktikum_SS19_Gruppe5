@@ -1,7 +1,10 @@
 package de.hdm.softwarepraktikum.client.gui;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -26,6 +29,15 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * @author ElinaEisele, JonasWagenknecht
  */
 public class NavigatorPanel extends VerticalPanel {
+
+	static interface ShoppinglistTreeResources extends CellTree.Resources {
+		
+		@Source("selectedObjectBackground.png")
+	    ImageResource selectedObjectBackground();
+	    @Override
+		@Source("ShoppinglistCellTree.css")
+	    CellTree.Style cellTreeStyle(); 
+	}
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
@@ -65,7 +77,10 @@ public class NavigatorPanel extends VerticalPanel {
 		gsf = new GroupShowForm();
 		ssf = new ShoppinglistShowForm();
 		gstvm = new GroupShoppinglistTreeViewModel();
-		cellTree = new CellTree(gstvm, "Root");
+		
+		CellTree.Resources shoppinglistTreeResource = GWT.create(ShoppinglistTreeResources.class);
+		cellTree = new CellTree(gstvm, "Root", shoppinglistTreeResource);
+		cellTree.setAnimationEnabled(true);
 
 		gstvm.setGroupShowForm(gsf);
 		gsf.setGstvm(gstvm);
@@ -73,10 +88,10 @@ public class NavigatorPanel extends VerticalPanel {
 		gstvm.setShoppinglistShowForm(ssf);
 		ssf.setGstvm(gstvm);
 
-		cellTree.setAnimationEnabled(true);
-
 		newGroupButton.addClickHandler(new NewGroupClickHandler());
 		newGroupButton.setStyleName("NavButton");
+		
+		cellTree.setStyleName("cellTree");
 
 		mainPanel.add(newGroupButton);
 		mainPanel.add(cellTree);

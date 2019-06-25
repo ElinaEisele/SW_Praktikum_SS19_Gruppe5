@@ -164,7 +164,7 @@ public class ShoppinglistSearchBar extends VerticalPanel {
 			if (!result.isEmpty()) {
 				RootPanel.get("main").clear();
 
-				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
+				shoppinglistHeader.setSelectedShoppinglist(selectedShoppinglist);
 
 				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 

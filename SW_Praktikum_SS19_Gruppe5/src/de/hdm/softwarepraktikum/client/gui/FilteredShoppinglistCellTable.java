@@ -6,9 +6,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import com.google.gwt.cell.client.Cell.Context;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.TextCell;
@@ -16,16 +16,17 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -33,6 +34,8 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
+import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable.TableRes;
+import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable.TableRes.TableStyle;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
@@ -41,7 +44,7 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Diese Klasse dient zur Darstellung aller Eintraege einer Einkaufsliste in
+ * Diese Klasse dient zur Darstellung aller Einträge einer Einkaufsliste in
  * einem <code>CellTable</code> Widget.
  * 
  * @author JonasWagenknecht, ElinaEisele
@@ -49,37 +52,60 @@ import de.hdm.softwarepraktikum.shared.bo.User;
 
 public class FilteredShoppinglistCellTable extends VerticalPanel {
 
+	/**
+	 * Interface um den CellTable mit der <code>CellTable</code> CSS Datei zu
+	 * verknüpfen
+	 * 
+	 */
+	static interface TableRes extends CellTable.Resources {
+
+		@Source({ CellTable.Style.DEFAULT_CSS, "CellTable.css" })
+		TableStyle cellTableStyle();
+
+		interface TableStyle extends CellTable.Style {
+		}
+	}
+
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-	private GroupShoppinglistTreeViewModel gstvm;
-	private ShoppinglistShowForm shoppinglistShowForm;
-	private ShoppinglistHeader shoppinglistHeader;
+
+	private ShoppinglistShowForm shoppinglistShowForm = null;
+	private ShoppinglistHeader shoppinglistHeader = null;
 	private VerticalPanel mainPanel = new VerticalPanel();
 
-	private Shoppinglist shoppinglistToDisplay = null;
-	private Listitem listitemToDisplay = null;
+	private Shoppinglist selectedShoppinglist = null;
+	private Listitem selectedListitem = null;
 	private Group selectedGroup = null;
 	private Retailer selectedRetailer = null;
 	private User selectedUser = null;
-	private CellTable<ArrayList<Object>> table = new CellTable<ArrayList<Object>>();
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
 	private ArrayList<ArrayList<Object>> data = new ArrayList<>();
+	private Map<Listitem, ArrayList<String>> listitemData = null;
 
 	private Label contentLabel = new Label();
-	private Button backButton;
-	private Button archiveButton;
+	private Button backButton = null;
+	private Button archiveButton = null;
 
 	private final MultiSelectionModel<ArrayList<Object>> selectionModel = new MultiSelectionModel<ArrayList<Object>>();
-	private Map<Listitem, ArrayList<String>> listitemData = null;
+	private CellTable<ArrayList<Object>> table;
 
 	public FilteredShoppinglistCellTable() {
 
-		// Add a selection model so we can select cells.
+		// CellTable custom UI resource
+		CellTable.Resources tableRes = GWT.create(TableRes.class);
+		table = new CellTable<ArrayList<Object>>(10, tableRes);
+
+		// SelectionModel um die klicks der Checkboxen zu regeln
 		table.setSelectionModel(selectionModel,
 				DefaultSelectionEventManager.<ArrayList<Object>>createCheckboxManager());
 
-		backButton = new Button("Zurueck");
+		backButton = new Button();
+		Image backButtonImg = new Image();
+		backButtonImg.setUrl("images/left-arrow.png");
+		backButtonImg.setSize("16px", "16px");
+		backButton.getElement().appendChild(backButtonImg.getElement());
+		backButton.setStyleName("ShoppinglistHeaderButton");
 		backButton.addClickHandler(new BackClickHandler());
 		archiveButton = new Button("Markierte Eintraege archivieren");
 		archiveButton.addClickHandler(new ArchiveClickHandler());
@@ -89,7 +115,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		buttonPanel.add(backButton);
 
 		/**
-		 * Spalte zur Darstellung einer Checkbox.
+		 * Spalte zur Darstellung einer Checkbox
 		 * 
 		 */
 		Column<ArrayList<Object>, Boolean> checkColumn = new Column<ArrayList<Object>, Boolean>(
@@ -105,10 +131,9 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 		checkColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		checkColumn.setCellStyleNames("columncheck");
-		// table.setColumnWidth(checkColumn, 40, Unit.PX);
 
 		/**
-		 * Spalte zur Darstellung des Namen eines <code>Product</code>
+		 * Spalte zur Darstellung des Namen eines <code>Product</code>-Objekts
 		 * 
 		 */
 		Column<ArrayList<Object>, String> productNameToDisplay = new Column<ArrayList<Object>, String>(new TextCell()) {
@@ -123,7 +148,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Column containing the amount of a product
+		 * Spalte zur Darstellung der zu einkaufenden Menge
 		 * 
 		 */
 		Column<ArrayList<Object>, String> amountToDisplay = new Column<ArrayList<Object>, String>(new TextCell()) {
@@ -136,7 +161,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Column containing the unit name of a listitem
+		 * Spalte zur Darstellung der Name der verwendeten Einheit
 		 * 
 		 */
 		Column<ArrayList<Object>, String> unitNameToDisplay = new Column<ArrayList<Object>, String>(new TextCell()) {
@@ -149,7 +174,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Column containing the retailer name of a listitem
+		 * Spalte zur Darstellung der Händlernamen
 		 * 
 		 */
 		Column<ArrayList<Object>, String> retailerNameToDisplay = new Column<ArrayList<Object>, String>(
@@ -163,7 +188,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
+		 * Spalte, die ein klickbares Bild enthält, das die Klasse zur Bearbeitung des
 		 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
 		 * 
 		 */
@@ -188,32 +213,32 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 				if ("click".equals(event.getType())) {
 
 					RootPanel.get("main").clear();
-					listitemToDisplay = (Listitem) object.get(0);
+					selectedListitem = (Listitem) object.get(0);
 
 					if (listitemData == null) {
 
-						if (shoppinglistToDisplay != null && selectedUser != null) {
+						if (selectedShoppinglist != null && selectedUser != null) {
 							ListitemShowForm lsf = new ListitemShowForm();
-							lsf.setSelected(listitemToDisplay);
-							lsf.setSelectedShoppinglist(shoppinglistToDisplay);
+							lsf.setSelected(selectedListitem);
+							lsf.setSelectedShoppinglist(selectedShoppinglist);
 							lsf.setSelectedGroup(selectedGroup);
 							lsf.setSelectedUser(selectedUser);
-						
+
 							RootPanel.get("main").add(lsf);
-							
-						} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
+
+						} else if (selectedShoppinglist != null && selectedRetailer != null) {
 							ListitemShowForm lsf = new ListitemShowForm();
-							lsf.setSelected(listitemToDisplay);
-							lsf.setSelectedShoppinglist(shoppinglistToDisplay);
+							lsf.setSelected(selectedListitem);
+							lsf.setSelectedShoppinglist(selectedShoppinglist);
 							lsf.setSelectedGroup(selectedGroup);
 							lsf.setSelectedRetailer(selectedRetailer);
-						
+
 							RootPanel.get("main").add(lsf);
-							
+
 						}
 
 					} else {
-						Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte spaeter erneut versuchen");
+						Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte später erneut versuchen");
 
 					}
 				}
@@ -221,8 +246,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
-		 * Spalte, die ein klickbares Bild enth�lt, das die Klasse zur Bearbeitung des
-		 * Eintrags bei Klick in einer neuen <code>ListitemShowForm</code> darstellt.
+		 * Spalte, die ein klickbares Bild enthält, das die Eigenschaft isStandard bei
+		 * einem <code>Listitem</code>-Objekt setzt und enfernt.
 		 * 
 		 */
 		Column<ArrayList<Object>, String> standardColumn = new Column<ArrayList<Object>, String>(
@@ -238,8 +263,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			@Override
 			public String getValue(ArrayList<Object> object) {
 
-				listitemToDisplay = (Listitem) object.get(0);
-				if (listitemToDisplay.isStandard() == true) {
+				selectedListitem = (Listitem) object.get(0);
+				if (selectedListitem.isStandard() == true) {
 					return "like (1).png";
 				} else {
 					return "like.png";
@@ -251,13 +276,13 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 				super.onBrowserEvent(context, elem, object, event);
 				if ("click".equals(event.getType())) {
 
-					listitemToDisplay = (Listitem) object.get(0);
+					selectedListitem = (Listitem) object.get(0);
 
-					if (listitemToDisplay.isStandard() == true) {
-						shoppinglistAdministration.setStandardListitem(listitemToDisplay, selectedGroup, false,
+					if (selectedListitem.isStandard() == true) {
+						shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, false,
 								new UnselectStandardCallback());
-					} else if (listitemToDisplay.isStandard() != true) {
-						shoppinglistAdministration.setStandardListitem(listitemToDisplay, selectedGroup, true,
+					} else if (selectedListitem.isStandard() != true) {
+						shoppinglistAdministration.setStandardListitem(selectedListitem, selectedGroup, true,
 								new SetStandardCallback());
 					}
 				}
@@ -273,7 +298,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(productNameToDisplay, "Produkt");
 		table.addColumn(amountToDisplay, "Menge");
 		table.addColumn(unitNameToDisplay, "Einheit");
-		table.addColumn(retailerNameToDisplay, "Haendler");
+		table.addColumn(retailerNameToDisplay, "Händler");
 		table.addColumn(imageColumn, "Edit");
 		table.addColumn(standardColumn, "Standard");
 
@@ -283,103 +308,39 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 	}
 
+	/**
+	 * In dieser Methode werden die Widgets der Form hinzugefügt und der CellTable
+	 * mit Daten befüllt.
+	 * 
+	 */
 	public void onLoad() {
 
 		if (listitemData == null) {
 
-			if (shoppinglistToDisplay != null && selectedUser != null) {
-				contentLabel.setText("Filter by user");
-				shoppinglistAdministration.filterShoppinglistsByUser(shoppinglistToDisplay, selectedUser,
-						new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
+			/**
+			 * Holen der Daten bei Filtern nach User
+			 */
+			if (selectedListitem != null && selectedUser != null) {
+				contentLabel.setText("Nach Nutzer Filtern");
+				shoppinglistAdministration.filterShoppinglistsByUser(selectedShoppinglist, selectedUser,
+						new FilterShoppinglistByUserCallback());
 
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onSuccess(Map<Listitem, ArrayList<String>> result) {
-								
-								data.clear();
-								if (data.size() == 0) {
-
-									for (Listitem key : result.keySet()) {
-										
-										ArrayList<Object> listitems = new ArrayList<>();
-
-										listitems.add(key);
-										listitems.add(result.get(key).get(0));
-										listitems.add(result.get(key).get(1));
-										listitems.add(result.get(key).get(2));
-										listitems.add(result.get(key).get(3));
-
-										data.add(listitems);
-									}
-
-									Collections.sort(data, new Comparator<List<Object>> () {
-
-										@Override
-										public int compare(List<Object> o1, List<Object> o2) {
-											return ((String) o1.get(1)).compareTo((String)o2.get(1));
-										}
-									});
-
-									// Set the total row count
-									table.setRowCount(result.size(), true);
-									// Push the data into the widget.
-									table.setRowData(0, data);
-								}
-							}
-
-						});
-			} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
-				contentLabel.setText("Filter by retailer");
 				/**
-				 * Get all Listitems of the Shoppinglist to display and get their data in the on
-				 * success method
-				 * 
+				 * Holen der Daten bei Filtern nach Retailer
 				 */
-				shoppinglistAdministration.filterShoppinglistsByRetailer(shoppinglistToDisplay, selectedRetailer,
-						new AsyncCallback<Map<Listitem, ArrayList<String>>>() {
+			} else if (selectedShoppinglist != null && selectedRetailer != null) {
+				contentLabel.setText("Nach Händler Filtern");
 
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-
-							}
-
-							@Override
-							public void onSuccess(Map<Listitem, ArrayList<String>> result) {
-								data.clear();
-								if (data.size() == 0) {
-
-									for (Listitem key : result.keySet()) {
-										ArrayList<Object> listitems = new ArrayList<>();
-
-										listitems.add(key);
-										listitems.add(result.get(key).get(0));
-										listitems.add(result.get(key).get(1));
-										listitems.add(result.get(key).get(2));
-										listitems.add(result.get(key).get(3));
-
-										data.add(listitems);
-									}
-
-									// Set the total row count
-									table.setRowCount(result.size(), true);
-									// Push the data into the widget.
-									table.setRowData(0, data);
-
-								}
-							}
-
-						});
+				shoppinglistAdministration.filterShoppinglistsByRetailer(selectedShoppinglist, selectedRetailer,
+						new FilterShoppinglistsByRetailerCallback());
 			}
 
 			this.add(mainPanel);
 
 		} else {
+			/**
+			 * Holen der Daten ohne Filter
+			 */
 			data.clear();
 			if (data.size() == 0) {
 				for (Listitem key : listitemData.keySet()) {
@@ -395,9 +356,9 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 				}
 
-				// Set the total row count
+				// Setzen des aktuelle Row Counts
 				table.setRowCount(listitemData.size(), true);
-				// Push the data into the widget.
+				// Widget mit der ArrayList befüllen
 				table.setRowData(0, data);
 
 			}
@@ -414,16 +375,16 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		this.shoppinglistShowForm = shoppinglistShowForm;
 	}
 
-	public Listitem getListitemToDisplay() {
-		return listitemToDisplay;
+	public Listitem getSelectedListitem() {
+		return selectedListitem;
 	}
 
-	public void setListitemToDisplay(Listitem listitemToDisplay) {
-		this.listitemToDisplay = listitemToDisplay;
+	public void setSelectedListitem(Listitem selectedListitem) {
+		this.selectedListitem = selectedListitem;
 	}
 
-	public Shoppinglist getShoppinglistToDisplay() {
-		return shoppinglistToDisplay;
+	public Shoppinglist getSelectedShoppinglist() {
+		return selectedShoppinglist;
 	}
 
 	public Group getSelectedGroup() {
@@ -459,119 +420,58 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	}
 
 	/**
-	 * Sobald eine <code>Shoppinglist</code> ausgewaehlt wird das Label mit den
+	 * Sobald eine <code>Shoppinglist</code> ausgewählt wird, wird das Label mit den
 	 * entsprechenden Informationen bef�llt.
 	 * 
 	 * @param s, das zu setzende <code>Shoppinglist</code> Objekt.
 	 */
-	public void setShoppinglistToDisplay(Shoppinglist s) {
+	public void setSelectedShoppinglist(Shoppinglist s) {
 		if (s != null) {
-			shoppinglistToDisplay = s;
+			selectedShoppinglist = s;
 
 		} else {
 			this.clear();
 		}
 	}
 
-	private class UnselectStandardCallback implements AsyncCallback<Void> {
+	public void setListitemData(Map<Listitem, ArrayList<String>> listitemData) {
+		this.listitemData = listitemData;
+		for (Listitem key : listitemData.keySet()) {
+			ArrayList<Object> listitems = new ArrayList<>();
 
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
+			listitems.add(key);
+			listitems.add(listitemData.get(key).get(0));
+			listitems.add(listitemData.get(key).get(1));
+			listitems.add(listitemData.get(key).get(2));
+			listitems.add(listitemData.get(key).get(3));
 
+			data.add(listitems);
 		}
 
-		@Override
-		public void onSuccess(Void result) {
-
-			RootPanel.get("main").clear();
-			
-			if (listitemData == null) {
-
-				if (shoppinglistToDisplay != null && selectedUser != null) {
-
-					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-					ssf.setSelected(shoppinglistToDisplay);
-					ssf.setSelectedGroup(selectedGroup);
-					ssf.setSelectedUser(selectedUser);
-					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
-
-					RootPanel.get("main").add(ssf);
-					
-				} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
-
-					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-					ssf.setSelected(shoppinglistToDisplay);
-					ssf.setSelectedGroup(selectedGroup);
-					ssf.setSelectedRetailer(selectedRetailer);
-					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
-					
-					RootPanel.get("main").add(ssf);
-					
-				}
-
-			} else {
-				Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte spaeter erneut versuchen");
-
-			}
-		}
-
+		// Setzen des aktuelle Row Counts
+		table.setRowCount(listitemData.size(), true);
+		// Widget mit der ArrayList befüllen
+		table.setRowData(0, data);
 	}
 
-	private class SetStandardCallback implements AsyncCallback<Void> {
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
+	 */
 
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-
-			RootPanel.get("main").clear();
-			
-			if (listitemData == null) {
-
-				if (shoppinglistToDisplay != null && selectedUser != null) {
-
-					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-					ssf.setSelected(shoppinglistToDisplay);
-					ssf.setSelectedGroup(selectedGroup);
-					ssf.setSelectedUser(selectedUser);
-					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
-
-					RootPanel.get("main").add(ssf);
-					
-				} else if (shoppinglistToDisplay != null && selectedRetailer != null) {
-
-					RootPanel.get("main").clear();
-
-					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-					ssf.setSelected(shoppinglistToDisplay);
-					ssf.setSelectedGroup(selectedGroup);
-					ssf.setSelectedRetailer(selectedRetailer);
-					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
-					
-					RootPanel.get("main").add(ssf);
-					
-				}
-
-			} else {
-				Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte spaeter erneut versuchen");
-			}
-
-		}
-
-	}
-
+	/**
+	 * Das Formular wird geschlossen und die aktuell ausgewählte Einkaufsliste
+	 * erneut geöffnet.
+	 * 
+	 */
 	private class BackClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			RootPanel.get("main").clear();
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-			ssf.setSelected(shoppinglistToDisplay);
+			ssf.setSelected(selectedShoppinglist);
 			ssf.setSelectedGroup(selectedGroup);
 			RootPanel.get("main").add(ssf);
 
@@ -579,6 +479,9 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 	}
 
+	/**
+	 * Archivieren der ausgewählten <code>Listitem</code>-Objekten.
+	 */
 	private class ArchiveClickHandler implements ClickHandler {
 
 		@Override
@@ -601,8 +504,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
+						Notification.show(caught.toString());
 					}
 
 					@Override
@@ -611,12 +513,12 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 						RootPanel.get("main").clear();
 
 						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
-						ssf.setSelected(shoppinglistToDisplay);
+						ssf.setSelected(selectedShoppinglist);
 						ssf.setSelectedGroup(selectedGroup);
 						ssf.setSelectedRetailer(selectedRetailer);
 
 						ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
-						
+
 						RootPanel.get("main").add(ssf);
 
 					}
@@ -628,24 +530,191 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 	}
 
-	public void setListitemData(Map<Listitem, ArrayList<String>> listitemData) {
-		this.listitemData = listitemData;
-		for (Listitem key : listitemData.keySet()) {
-			ArrayList<Object> listitems = new ArrayList<>();
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
 
-			listitems.add(key);
-			listitems.add(listitemData.get(key).get(0));
-			listitems.add(listitemData.get(key).get(1));
-			listitems.add(listitemData.get(key).get(2));
-			listitems.add(listitemData.get(key).get(3));
+	/**
+	 * Das selektierte <code>Listitem</code>-Objekt wird nicht Standard gesetzt und
+	 * die <code>ShoppinglistShowForm</code> erneut aufgerufen.
+	 */
+	private class UnselectStandardCallback implements AsyncCallback<Void> {
 
-			data.add(listitems);
+		@Override
+		public void onFailure(Throwable caught) {
+			Notification.show(caught.toString());
 		}
 
-		// Set the total row count
-		table.setRowCount(listitemData.size(), true);
-		// Push the data into the widget.
-		table.setRowData(0, data);
+		@Override
+		public void onSuccess(Void result) {
+
+			RootPanel.get("main").clear();
+
+			if (listitemData == null) {
+
+				if (selectedShoppinglist != null && selectedUser != null) {
+
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+					ssf.setSelected(selectedShoppinglist);
+					ssf.setSelectedGroup(selectedGroup);
+					ssf.setSelectedUser(selectedUser);
+					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+
+					RootPanel.get("main").add(ssf);
+
+				} else if (selectedShoppinglist != null && selectedRetailer != null) {
+
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+					ssf.setSelected(selectedShoppinglist);
+					ssf.setSelectedGroup(selectedGroup);
+					ssf.setSelectedRetailer(selectedRetailer);
+					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+
+					RootPanel.get("main").add(ssf);
+
+				}
+
+			} else {
+				Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte spaeter erneut versuchen");
+
+			}
+		}
+
 	}
+
+	/**
+	 * Das selektierte <code>Listitem</code>-Objekt wird Standard gesetzt und die
+	 * <code>ShoppinglistShowForm</code> erneut aufgerufen.
+	 */
+	private class SetStandardCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Notification.show(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+
+			RootPanel.get("main").clear();
+
+			if (listitemData == null) {
+
+				if (selectedShoppinglist != null && selectedUser != null) {
+
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+					ssf.setSelected(selectedShoppinglist);
+					ssf.setSelectedGroup(selectedGroup);
+					ssf.setSelectedUser(selectedUser);
+					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+
+					RootPanel.get("main").add(ssf);
+
+				} else if (selectedShoppinglist != null && selectedRetailer != null) {
+
+					RootPanel.get("main").clear();
+
+					ShoppinglistShowForm ssf = new ShoppinglistShowForm();
+					ssf.setSelected(selectedShoppinglist);
+					ssf.setSelectedGroup(selectedGroup);
+					ssf.setSelectedRetailer(selectedRetailer);
+					ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
+
+					RootPanel.get("main").add(ssf);
+
+				}
+
+			} else {
+				Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte spaeter erneut versuchen");
+			}
+
+		}
+
+	}
+
+	/**
+	 * Der CellTable wird mit den gefilterten Daten befüllt
+	 */
+	private class FilterShoppinglistsByRetailerCallback implements AsyncCallback<Map<Listitem, ArrayList<String>>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Notification.show(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+			data.clear();
+			if (data.size() == 0) {
+
+				for (Listitem key : result.keySet()) {
+					ArrayList<Object> listitems = new ArrayList<>();
+
+					listitems.add(key);
+					listitems.add(result.get(key).get(0));
+					listitems.add(result.get(key).get(1));
+					listitems.add(result.get(key).get(2));
+					listitems.add(result.get(key).get(3));
+
+					data.add(listitems);
+				}
+
+				// Setzen des aktuelle Row Counts
+				table.setRowCount(result.size(), true);
+				// Widget mit der ArrayList befüllen
+				table.setRowData(0, data);
+
+			}
+		}
+
+	};
+
+	/**
+	 * Der CellTable wird mit den gefilterten Daten befüllt
+	 */
+	private class FilterShoppinglistByUserCallback implements AsyncCallback<Map<Listitem, ArrayList<String>>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Notification.show(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Map<Listitem, ArrayList<String>> result) {
+
+			data.clear();
+			if (data.size() == 0) {
+
+				for (Listitem key : result.keySet()) {
+
+					ArrayList<Object> listitems = new ArrayList<>();
+
+					listitems.add(key);
+					listitems.add(result.get(key).get(0));
+					listitems.add(result.get(key).get(1));
+					listitems.add(result.get(key).get(2));
+					listitems.add(result.get(key).get(3));
+
+					data.add(listitems);
+				}
+
+				Collections.sort(data, new Comparator<List<Object>>() {
+
+					@Override
+					public int compare(List<Object> o1, List<Object> o2) {
+						return ((String) o1.get(1)).compareTo((String) o2.get(1));
+					}
+				});
+
+				// Setzen des aktuelle Row Counts
+				table.setRowCount(result.size(), true);
+				// Widget mit der ArrayList befüllen
+				table.setRowData(0, data);
+			}
+		}
+
+	};
 
 }

@@ -54,14 +54,18 @@ public class Header extends HorizontalPanel {
 
 		editorButton.addClickHandler(new EditorClickHandler());
 		reportButton.addClickHandler(new ReportClickHandler());
+
+		userMailLabel.addClickHandler(new LogoutClickHandler());
 		logoutButton.addClickHandler(new LogoutClickHandler());
 
 		editorButton.setStyleName("HeaderButton");
 		reportButton.setStyleName("HeaderButton");
 		platzhalterButton.setStyleName("HeaderPlatzhalterButton");
 		platzhalterButton.getElement().setAttribute("disabled", "disabled");
-		logoutButton.setStyleName("HeaderButton");
+
+		logoutButton.setStyleName("LogoutButton");
 		userMailLabel.setStyleName("CurrentUser");
+		logoutPanel.setStyleName("HeaderButton");
 
 		this.add(editorButton);
 		this.add(reportButton);

@@ -112,14 +112,15 @@ public class NewShoppinglistForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				if (nameTextBox.getValue() == "") {
-					Window.alert("Eine Einkaufsliste braucht einen Namen.");
-				} else {
+					Window.alert("Niemand hat die Absicht eine Einkaufsliste ohne Namen anzulegen");
+				} else if (nameTextBox.getValue().length() <= 23) {
+
 					shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
 							new NewShoppinglistAsyncCallback());
 
 				}
 			} else {
-				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
+				Window.alert("Bitte gib eine kürzeren Namen ein");
 			}
 		}
 
