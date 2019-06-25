@@ -64,6 +64,7 @@ public class NewListitemForm extends HorizontalPanel {
 	private ListBox retailerNameListBox = new ListBox();
 
 	private Button newRetailerButton = new Button("Einzelhändler hinzufügen");
+
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("Abbrechen");
 
@@ -99,22 +100,23 @@ public class NewListitemForm extends HorizontalPanel {
 		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
 		shoppinglistGrid.setWidget(4, 2, newRetailerButton);
-		
+
 		newRetailerButton.setStyleName("NavButton");
+
 		newRetailerButton.addClickHandler(new NewRetailerClickhandler());
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
 		shoppinglistGrid.setWidget(5, 1, actionButtonsPanel);
 
-		
 		saveButton.setStyleName("NavButton");
+
 		saveButton.addClickHandler(new NewListitemClickHandler());
 		saveButton.setEnabled(true);
 		actionButtonsPanel.add(saveButton);
-
 		
 		discardButton.setStyleName("NavButton");
+    
 		discardButton.addClickHandler(new DiscardClickhandler());
 		discardButton.setEnabled(true);
 		actionButtonsPanel.add(discardButton);

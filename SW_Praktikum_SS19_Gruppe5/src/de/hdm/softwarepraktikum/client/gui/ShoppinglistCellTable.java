@@ -88,6 +88,8 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		archive = new Button("Markierte Eintraege archivieren");
 		archive.addClickHandler(new ArchiveClickHandler());
+		
+		archive.setStyleName("NavButton");
 
 		/**
 		 * Spalte zur Darstellung einer Checkbox

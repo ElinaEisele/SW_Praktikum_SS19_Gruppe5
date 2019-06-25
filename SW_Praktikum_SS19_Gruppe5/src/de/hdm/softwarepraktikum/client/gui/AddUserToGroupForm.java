@@ -43,15 +43,15 @@ public class AddUserToGroupForm extends VerticalPanel {
 	private GroupShoppinglistTreeViewModel gstvm = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufÃ¼gen");
+	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufügen");
 	private SuggestBox emailSuggestBox = null;
 	private MultiWordSuggestOracle allUserMails = new MultiWordSuggestOracle();
 
 	private VerticalPanel interactionPanel = new VerticalPanel();
 	private HorizontalPanel searchPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button saveButton = new Button();
-	private Button backButton = new Button();
+	private Button saveButton = new Button("Speichern");
+	private Button backButton = new Button("Zurück");
 
 	private FlexTable userFlexTable = new FlexTable();
 
@@ -62,17 +62,8 @@ public class AddUserToGroupForm extends VerticalPanel {
 		userFlexTable.setText(0, 0, "Name");
 		userFlexTable.setText(0, 1, "G-Mail-Adresse");
 
-		Image backImage = new Image();
-		backImage.setUrl("images/left-arrow.png");
-		backImage.setSize("32px", "32px");
-		backButton.setStyleName("ShoppinglistHeaderButton");
-		backButton.getElement().appendChild(backImage.getElement());
-
-		Image saveImage = new Image();
-		saveImage.setUrl("images/check-mark.png");
-		saveImage.setSize("32px", "32px");
-		saveButton.setStyleName("ShoppinglistHeaderButton");
-		saveButton.getElement().appendChild(saveImage.getElement());
+		backButton.setStyleName("NavButton");
+		saveButton.setStyleName("NavButton");
 
 		searchPanel.add(emailSuggestBox);
 		searchPanel.add(saveButton);
@@ -141,7 +132,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	 */
 
 	/**
-	 * Bei BetÃ¤tigen der Abbrechen-SchaltflÃ¤che wird die Gruppenansicht wieder
+	 * Bei Betätigen der Abbrechen-Schaltfläche wird die Gruppenansicht wieder
 	 * geladen.
 	 */
 	private class CancelClickHandler implements ClickHandler {
@@ -159,9 +150,9 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Bei BetÃ¤tigen der Speichern-SchaltflÃ¤che wird das <code>User</code>-Objekt
-	 * mit zugehÃ¶riger Email als neues Gruppenmitglied gespeichert und in die
-	 * darÃ¼berliegende <code>FlexTable</code> geschrieben.
+	 * Bei Betätigen der Speichern-Schaltfläche wird das <code>User</code>-Objekt
+	 * mit zugehöriger Email als neues Gruppenmitglied gespeichert und in die
+	 * darüberliegende <code>FlexTable</code> geschrieben.
 	 */
 	private class SaveClickHandler implements ClickHandler {
 
@@ -174,9 +165,9 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Bei Eingabe der Email werden VorschlÃ¤ge der schon in der Datenbank
-	 * existierenden Emails gemacht. Mit BetÃ¤tigen von Enter wird der aktuell
-	 * selektierte Vorschlag ausgewÃ¤hlt und ein weiterer Enter-Klick startet die
+	 * Bei Eingabe der Email werden Vorschläge der schon in der Datenbank
+	 * existierenden Emails gemacht. Mit Betätigen von Enter wird der aktuell
+	 * selektierte Vorschlag ausgewählt und ein weiterer Enter-Klick startet die
 	 * Suche nach dem Nutzer.
 	 *
 	 */
@@ -231,7 +222,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum BefÃ¼llen der <code>FlexTable</code> mit Namen und Email des
+	 * Zum Befüllen der <code>FlexTable</code> mit Namen und Email des
 	 * <code>User</code>-Objekts.
 	 *
 	 */
@@ -254,8 +245,8 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum BefÃ¼llen des <code>MultiWordSuggestOracle</code>-Objekts fÃ¼r die
-	 * VorschlÃ¤ge in <code>SuggestBox</code>.
+	 * Zum Befüllen des <code>MultiWordSuggestOracle</code>-Objekts für die
+	 * Vorschläge in <code>SuggestBox</code>.
 	 */
 	private class AllUsersCallback implements AsyncCallback<ArrayList<User>> {
 
@@ -275,7 +266,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * BefÃ¼llt die <code>FlexTable</code> mit dem hinzuzufÃ¼genden
+	 * Befüllt die <code>FlexTable</code> mit dem hinzuzufügenden
 	 * <code>User</code>-Objekt.
 	 *
 	 */

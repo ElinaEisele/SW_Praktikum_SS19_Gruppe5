@@ -113,6 +113,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		HorizontalPanel buttonPanel = new HorizontalPanel();
 		buttonPanel.add(archiveButton);
 		buttonPanel.add(backButton);
+		
+		archiveButton.setStyleName("NavButton");
 
 		/**
 		 * Spalte zur Darstellung einer Checkbox
