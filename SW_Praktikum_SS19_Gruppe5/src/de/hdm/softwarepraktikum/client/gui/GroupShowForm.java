@@ -51,7 +51,6 @@ public class GroupShowForm extends VerticalPanel {
 
 	public GroupShowForm(GroupHeader gh) {
 		groupHeader = gh;
-		mainPanel.add(new GroupContent());
 
 	}
 
@@ -69,8 +68,8 @@ public class GroupShowForm extends VerticalPanel {
 		RootPanel.get("main").clear();
 		RootPanel.get("main").add(mainPanel);
 	}
-	
-	public GroupShowForm(GroupHeader gh, ShowRetailersForm srf) {
+
+	public GroupShowForm(GroupHeader gh, RetailersForm srf) {
 		groupHeader = gh;
 		mainPanel.add(srf);
 		mainPanel.add(groupHeader);
@@ -91,19 +90,24 @@ public class GroupShowForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * Beim Anzeigen werden die Widgets geladen und angeordnet. Unter einer
+	 * Buttonleiste mit dem entsprechenden Gruppennamen wird eine Tabelle mit
+	 * dazugehörigen Einkaufslisten angezeigt.
+	 */
 	public void onLoad() {
 
 		groupCellTable.setSelected(selectedGroup);
 		groupCellTable.setGstvm(gstvm);
 		groupCellTable.setGroupShowForm(GroupShowForm.this);
 
-		groupHeader.setSelected(selectedGroup);
+		groupHeader.setSelectedGroup(selectedGroup);
 		groupHeader.setGstvm(gstvm);
 		groupHeader.setGroupShowForm(GroupShowForm.this);
 
 		this.add(groupHeader);
 		this.add(mainPanel);
-		
+
 	}
 
 	public void setSelected(Group g) {
