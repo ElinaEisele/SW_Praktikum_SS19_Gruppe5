@@ -293,12 +293,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     }
     
     /**
-     * 
-     * @param g
-     * @param startdate
-     * @param enddate
-     * @param r
-     * @return
+     * Es wird ein Report mit Zeitspanne und mit Einzelhaendler erstellt.
+     * @param g ist die Gruppe, für welche ein Report erstellt werden soll.
+     * @param startdate ist das Startdatum.
+     * @param enddate ist das Enddatum.
+     * @param r ist der Einzelhaendler.
+     * @return Ein AllListitemsOfGroupReport, welcher den Suchkriterien entspricht.
      * @throws IllegalArgumentException
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Date startdate, Date enddate, Retailer r) throws IllegalArgumentException {
@@ -338,7 +338,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		
 
+		// Map um kuenstlichen Primaerschluessel zu nutzen und um Menge anzupassen
 		Map<String, Float> map = new HashMap<String, Float>();
+		
 		for (Listitem l : listitems) {
 			// Erstellungsdatum ueberpruefen
 			if(l.getCreationDate().compareTo(startdate) > 0) {
@@ -346,12 +348,28 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 					// Retailer ueberpruefen
 					if(l.getRetailerID() == r.getId()) {
 						
+						/*
+						 * Wenn die bisherige Kriterien uebereinstimmen, dann wird der kuenstliche 
+						 * Primaerschluessel für das aktuelle Listitem-Objekt gesetzt.
+						 */
 						String key = l.getRetailerID() +";" +l.getListitemUnitID() +";"+this.productMapper.findById(l.getProductID()).getName();
 						
+						/*
+						 * Hier wird unterucht, ob in der Map bereits ein Eintrag mit den Werten 
+						 * des aktuellen Listitems enthaelt.
+						 * 
+						 * Falls ein solches Listitem-Objekt in der Map exisitiert, wird die Menge des bereits in 
+						 * der Map befindlichen Listitems aktualisiert.
+						 */
 						if(map.containsKey(key)) {
 							float tmp = map.get(key);
 							map.put(key, l.getAmount() +tmp);
 						}
+						
+						/*
+						 * Falls kein solches Listitem-Objekt in der Map exisitiert, wird ein neuer Eintrag in 
+						 * der Map angelegt.
+						 */
 						else {
 							map.put(key, l.getAmount());
 
@@ -370,20 +388,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     	tablehead.addColumn(new Column("Haendler"));
     	result.addRow(tablehead);
     	
+    	
 		map.forEach((k, v) -> {
+			/*
+			 * Der kuenstliche Primaerschluessel wird aufgesplittet, um die einzelnen Attribute herauszulesen.
+			 * Anschließend werden die Werte in den Spalten innerhalb einer Zeile gesetzt. 
+			 */
 			String[] tmp = k.split(";");
 			int retailId = Integer.parseInt(tmp[0].toString());
 			int unitId = Integer.parseInt(tmp[1].toString());
 			String name = tmp[2];
-
-			for(String s : tmp) {
-				System.out.println("das ist s: " + s);
-			}
-			System.out.println("das ist der value: " +v);
 			
-		
-	    	//Fuer jedes Listitem wird eine Reihe mit Spalten erstellt
-	   
+	    	//Fuer jeden Eintrag in der Map wird eine Reihe mit Spalten erstellt, welche die Werte enthalten.
     		Row r3 = new Row();
     		r3.addColumn(new Column(name.toString()));       		
     		r3.addColumn(new Column(v.toString()));
