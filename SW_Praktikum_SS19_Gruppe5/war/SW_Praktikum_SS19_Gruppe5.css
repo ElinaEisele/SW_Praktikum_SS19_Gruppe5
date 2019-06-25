@@ -23,10 +23,10 @@ div#header {
 
 .HeaderPlatzhalterButton {
 	padding: 5px;
-	margin: 25px 10px;
+	margin: 5px 10px;
 	color: white;
-	font-weight: bold;
-	font-size: 150%;
+	font-weight: normal;
+	font-size: 350%;
 	background: transparent;
 	border: 0px solid white;
 	border-radius: 5px;
@@ -304,7 +304,6 @@ div#trailer {
 	font-size: 175%;
 	background: transparent;
 	font-family: 'Open Sans', sans-serif;
-	border-right: 3px solid steelblue;
 	margin-right: 10px;
 	padding-right: 10px;
 	padding-top: 20px;
@@ -356,7 +355,6 @@ div#trailer {
 	font-size: 175%;
 	background: transparent;
 	font-family: 'Open Sans', sans-serif;
-	border-right: 3px solid steelblue;
 	margin-right: 10px;
 	padding-right: 10px;
 	padding-top: 20px;
