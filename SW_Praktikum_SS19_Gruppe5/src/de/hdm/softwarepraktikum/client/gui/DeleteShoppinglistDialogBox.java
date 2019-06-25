@@ -40,8 +40,8 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 
 	public DeleteShoppinglistDialogBox() {
 
-		cancelButton.setStylePrimaryName("cancelButton");
-		confirmButton.setStylePrimaryName("confirmButton");
+		cancelButton.setStylePrimaryName("NavButton");
+		confirmButton.setStylePrimaryName("NavButton");
 
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
