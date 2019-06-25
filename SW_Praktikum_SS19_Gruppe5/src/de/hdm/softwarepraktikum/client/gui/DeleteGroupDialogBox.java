@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -24,15 +25,13 @@ public class DeleteGroupDialogBox extends DialogBox{
 	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
-	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
-	
-	
+	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();	
 	private Group selectedGroup = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label confirmationLabel = new Label("Sind Sie sicher, dass Sie die ausgewählte Gruppe löschen möchten?");
+	private Label confirmationLabel = new Label("Möchtest du diese Gruppe wirklich löschen?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Löschen");
+	private Button confirmButton = new Button("Bestätigen");
 	private Button cancelButton = new Button("Abbrechen");
 	
 	
@@ -45,7 +44,7 @@ public class DeleteGroupDialogBox extends DialogBox{
 		
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
-		
+
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
 		
@@ -74,6 +73,15 @@ public class DeleteGroupDialogBox extends DialogBox{
 		
 	}
 	
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Click-/EventHandler
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Bei Bestätigen der Speichern-Schaltfläche wird das <code>Group</code>-Objekt gelöscht.
+	 */
 	private class ConfirmClickHandler implements ClickHandler{
 
 		@Override
@@ -93,6 +101,15 @@ public class DeleteGroupDialogBox extends DialogBox{
 		
 	}
 	
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Callbacks
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Zum löschen der Gruppe im <code>CellTree</code>.
+	 */
 	private class DeleteGroupCallback implements AsyncCallback<Void>{
 		
 		Group group = null;
@@ -102,7 +119,7 @@ public class DeleteGroupDialogBox extends DialogBox{
 		}
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Folgender Fehler ist aufgetreten: /n" + caught.toString());
+			Notification.show(caught.toString());
 		}
 
 		@Override
