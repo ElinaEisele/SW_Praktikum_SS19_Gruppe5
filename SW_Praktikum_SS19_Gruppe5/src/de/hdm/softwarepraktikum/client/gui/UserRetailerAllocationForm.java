@@ -11,6 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -83,8 +84,18 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		userListBox.addChangeHandler(new UserListBoxChangeHandler());
 		retailerListBox.addChangeHandler(new RetailerListBoxChangeHandler());
 
+		Image DiscardImg = new Image();
+		DiscardImg.setUrl("images/cancel.png");
+		DiscardImg.setSize("16px", "16px");
+		backButton.getElement().appendChild(DiscardImg.getElement());
+		backButton.setStyleName("ShoppinglistHeaderButton");
 		backButton.addClickHandler(new BackClickhandler());
-		backButton.setEnabled(true);
+
+		Image SaveImg = new Image();
+		SaveImg.setUrl("images/tick.png");
+		SaveImg.setSize("16px", "16px");
+		saveButton.getElement().appendChild(SaveImg.getElement());
+		saveButton.setStyleName("ShoppinglistHeaderButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
 	}
@@ -220,7 +231,7 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 				}
 
 			} else {
-				Notification.show("Keine Shoppinglist ausgewaehlt");
+				Notification.show("Keine Einkaufsliste ausgewählt");
 			}
 		}
 
