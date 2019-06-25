@@ -5,7 +5,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
  * Der HTMLReportWriter formatiert die Reports mittels HTML. Das im richtigen
- * Format vorliegende Ergebnis wird anschließend in der String Variable 
+ * Format vorliegende Ergebnis wird anschlieï¿½end in der String Variable 
  * reportText abgespeichert.
  * 
  * @author FelixRapp, TimBeutelspacher
@@ -22,11 +22,9 @@ public class HTMLReportWriter extends ReportWriter {
    * Textfeld zum speichern des Ergebnisses
    */
   private String reportText = "";
-  
-  private String reportTextHeader = "";
 
   /**
-   * Zurücksetzen der Variable reportText.
+   * Zurï¿½cksetzen der Variable reportText.
    */
   public void resetReportText() {
     this.reportText = "";
@@ -100,27 +98,22 @@ public class HTMLReportWriter extends ReportWriter {
    */
   @Override
 public void process(AllListitemsOfGroupReport r) {
-    // Zuerst wird das Ergebniss des vorherigen Durchlaufs gelöscht.
+    // Zuerst wird das Ergebniss des vorherigen Durchlaufs gelï¿½scht.
     this.resetReportText();
     
-  //In diesem StringBuffer werden die Ergebnisse der Methode abgelegt.
-    StringBuffer result1 = new StringBuffer();
+    //In diesem StringBuffer werden die Ergebnisse der Methode abgelegt.
+    StringBuffer result = new StringBuffer();
 
     /*
      * Die einzelnen Bestandteile des Reports werden nacheinander ausgelesen
-     * und dem StringBuffer in HTML-Form angehängt.
+     * und dem StringBuffer in HTML-Form angehï¿½ngt.
      */
-    result1.append("<H1>" + r.getTitle() + "</H1>");
-    result1.append("<H3>" + r.getCreationDateString()+ "</H3>");
-    
-    this.reportTextHeader = result1.toString();
-
-    //In diesem StringBuffer werden die Ergebnisse der Methode abgelegt.
-    StringBuffer result = new StringBuffer();
+    result.append("<H1>" + r.getTitle() + "</H1>");
+    result.append("<H3>" + r.getCreationDateString()+ "</H3>");
 //
 //    /*
 //     * Die einzelnen Bestandteile des Reports werden nacheinander ausgelesen
-//     * und dem StringBuffer in HTML-Form angehängt.
+//     * und dem StringBuffer in HTML-Form angehï¿½ngt.
 //     */
 //    result.append("<H1>" + r.getTitle() + "</H1>");
 //    result.append("<H3>" + r.getCreationDateString()+ "</H3>");
@@ -157,24 +150,20 @@ public void process(AllListitemsOfGroupReport r) {
     result.append("</table>");
 
     /*
-     * Der String Buffer wird in einen String umgewandelt, damit es anschließend
+     * Der String Buffer wird in einen String umgewandelt, damit es anschlieï¿½end
      * moeglich ist das Ergebnis mit der Methode getReportText() aufzurufen.
      */
     this.reportText = result.toString();
   }
 
   /**
-   * Erstellen des übergebenen Reports und speichern im richtigen Format.
+   * Erstellen des ï¿½bergebenen Reports und speichern im richtigen Format.
    * 
    * @param r der zu erstellende Report
    */
   @Override
   public void process(AllShoppinglistsOfGroupReport r) {
 
-  }
-  
-  public String getReportTextHeader() {
-	  return this.getHeader() + this.reportTextHeader + this.getTrailer();
   }
 
   /**

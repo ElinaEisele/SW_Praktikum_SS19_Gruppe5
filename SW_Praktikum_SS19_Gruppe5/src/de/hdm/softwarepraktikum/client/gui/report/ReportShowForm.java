@@ -3,8 +3,6 @@ package de.hdm.softwarepraktikum.client.gui.report;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -22,9 +20,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
-import de.hdm.softwarepraktikum.client.gui.ShoppinglistSearchBar;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
-import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
@@ -46,13 +42,9 @@ public class ReportShowForm extends VerticalPanel{
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
 
-	private HorizontalPanel addPanel1 = new HorizontalPanel();
-	private HorizontalPanel addPanel2 = new HorizontalPanel();
-
-
+	private HorizontalPanel addPanel = new HorizontalPanel();
 
 	private Grid reportGrid;
-	ReportSearchBar rsb = new ReportSearchBar();
 	
 	private User selectedUser = CurrentUser.getUser(); 
 	
@@ -225,7 +217,7 @@ public class ReportShowForm extends VerticalPanel{
 
 				
 				if(noDate == true && selectedRetailer.getId() == 0) {
-					Window.alert("Du musst mindestens ein Datum oder einen H�ndler ausw�hlen.");
+					Window.alert("Du musst mindestens ein Datum oder einen Händler auswählen.");
 					
 				}else {
 					if (noDate == true) {
@@ -261,7 +253,6 @@ public class ReportShowForm extends VerticalPanel{
 			ReportShowForm rsf = new ReportShowForm();
 			RootPanel.get("reportMain").clear();
 			RootPanel.get("reportMain").add(rsf);
-			
 		}
 		
 	}
@@ -287,13 +278,10 @@ public class ReportShowForm extends VerticalPanel{
 			if(result != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
 				writer.process(result);
-				addPanel1.add(new HTML(writer.getReportTextHeader()));
-				addPanel2.add(new HTML(writer.getReportText()));
+				addPanel.add(new HTML(writer.getReportText()));
 				
 				RootPanel.get("reportMain").clear();
-				RootPanel.get("reportMain").add(addPanel1);
-				RootPanel.get("reportMain").add(rsb);
-				RootPanel.get("reportMain").add(addPanel2);
+				RootPanel.get("reportMain").add(addPanel);
 				RootPanel.get("reportMain").add(getBackButton);
 				getBackButton.addClickHandler(new GetBackClickHandler());
 			}
