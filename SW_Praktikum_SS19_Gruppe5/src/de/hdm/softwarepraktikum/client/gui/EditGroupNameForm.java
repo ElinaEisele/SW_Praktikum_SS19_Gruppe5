@@ -29,7 +29,7 @@ public class EditGroupNameForm extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-	
+
 	private User u = CurrentUser.getUser();
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupHeader groupHeader = new GroupHeader();
@@ -65,7 +65,7 @@ public class EditGroupNameForm extends VerticalPanel {
 	}
 
 	public void onLoad() {
-		
+
 //		newNameTextBox.setText(selectedGroup.getName());
 
 		RootPanel.get("main").add(mainPanel);
@@ -112,10 +112,13 @@ public class EditGroupNameForm extends VerticalPanel {
 	private class SaveClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			if (selectedGroup != null) {
+			if (selectedGroup != null && newNameTextBox.getValue().length() <= 18) {
+
 				shoppinglistAdministration.changeNameOf(selectedGroup, newNameTextBox.getValue(),
 						new ChangeNameCallback());
 
+			} else {
+				Window.alert("Bitte gib eine kürzeren Namen ein");
 			}
 		}
 	}
