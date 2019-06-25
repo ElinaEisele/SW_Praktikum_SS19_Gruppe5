@@ -60,7 +60,7 @@ public class RetailersForm extends VerticalPanel {
 		saveButton.setStyleName("ShoppinglistHeaderButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
-		infoLabel.setText("Alle Händler im System");
+		infoLabel.setText("Alle Händler im System: ");
 
 		buttonPanel.add(retailerTextBox);
 		buttonPanel.add(saveButton);
@@ -79,8 +79,13 @@ public class RetailersForm extends VerticalPanel {
 	 */
 	public void onLoad() {
 
+		infoLabel.setStyleName("Header");
+		retailersFlexTable.setStyleName("FlexTable");
+		
 		shoppinglistAdministration.getAllRetailers(new ShowRetailersCallback());
-
+		
+		
+		
 		RootPanel.get("main").add(mainPanel);
 
 	}

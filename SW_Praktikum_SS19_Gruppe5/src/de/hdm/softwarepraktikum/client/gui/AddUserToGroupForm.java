@@ -43,7 +43,7 @@ public class AddUserToGroupForm extends VerticalPanel{
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufügen.");
+	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufügen:");
 	private Label emailLabel = new Label("Gmail-Adresse: ");
 	private SuggestBox emailSuggestBox = null;
 	private MultiWordSuggestOracle allUserMails = new MultiWordSuggestOracle();
@@ -79,6 +79,9 @@ public class AddUserToGroupForm extends VerticalPanel{
 	 */
 	public void onLoad() {
 
+		infoLabel.setStyleName("Header");
+		userFlexTable.setStyleName("FlexTable");
+		
 		shoppinglistAdministration.getAllUsers(new AllUsersCallback());
 		
 		emailSuggestBox.addKeyDownHandler(new EnterKeyDownHandler());
