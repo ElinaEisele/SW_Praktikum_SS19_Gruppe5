@@ -214,7 +214,7 @@ public class ReportShowForm extends VerticalPanel{
 			public void onClick(ClickEvent event) {
 				
 				selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
-//				Window.alert(selectedGroup.getName());
+				Window.alert(selectedGroup.getName());
 				
 				sqlStartDate = new java.sql.Date(startDateBox.getValue().getTime());
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
@@ -230,14 +230,14 @@ public class ReportShowForm extends VerticalPanel{
 				}else {
 					if (noDate == true) {
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
-//						Window.alert("if: noDate == true" );
+						Window.alert("if: noDate == true" );
 					
 					}else if (selectedRetailer.getId() == 0){
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
-//						Window.alert("else if: selectedRetailer.getId() == 0");
+						Window.alert("else if: selectedRetailer.getId() == 0");
 					}else {
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, selectedRetailer, new CreateAllListitemsOfGroupReport());
-//						Window.alert("else:");
+						Window.alert("else:");
 					}
 				}
 			
