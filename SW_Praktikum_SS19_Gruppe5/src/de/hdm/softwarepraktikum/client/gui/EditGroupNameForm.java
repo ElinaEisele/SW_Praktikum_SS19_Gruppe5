@@ -43,8 +43,8 @@ public class EditGroupNameForm extends VerticalPanel {
 	private TextBox newNameTextBox = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button saveButton = new Button();
-	private Button cancelButton = new Button();
+	private Button saveButton = new Button("Speichern");
+	private Button cancelButton = new Button("Abbrechen");
 
 	public EditGroupNameForm() {
 		
@@ -52,23 +52,17 @@ public class EditGroupNameForm extends VerticalPanel {
 		newNameTextBox.addClickHandler(new NameTextBoxClickHandler());
 
 		cancelButton.addClickHandler(new CancelClickHandler());
-		Image backImage = new Image();
-		backImage.setUrl("images/cancel.png");
-		backImage.setSize("32px", "32px");
-		cancelButton.getElement().appendChild(backImage.getElement());
-
+		cancelButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
-		Image saveImage = new Image();
-		saveImage.setUrl("images/check-mark.png");
-		saveImage.setSize("32px", "32px");
-		saveButton.getElement().appendChild(saveImage.getElement());
-
+		saveButton.setStyleName("NavButton");
+		
+		buttonPanel.add(newNameTextBox);
 		buttonPanel.add(saveButton);
-		buttonPanel.add(cancelButton);
-
+		
+		
 		mainPanel.add(infoLabel);
-		mainPanel.add(newNameTextBox);
 		mainPanel.add(buttonPanel);
+		mainPanel.add(cancelButton);
 
 	}
 
