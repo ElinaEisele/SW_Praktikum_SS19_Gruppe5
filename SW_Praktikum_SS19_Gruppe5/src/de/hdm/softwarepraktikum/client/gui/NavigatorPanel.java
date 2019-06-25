@@ -78,6 +78,8 @@ public class NavigatorPanel extends VerticalPanel {
 		newGroupButton.addClickHandler(new NewGroupClickHandler());
 		newGroupButton.setStyleName("NavButton");
 		
+		cellTree.setStyleName("cellTree");
+		
 		mainPanel.add(newGroupButton);
 		mainPanel.add(cellTree);
 
