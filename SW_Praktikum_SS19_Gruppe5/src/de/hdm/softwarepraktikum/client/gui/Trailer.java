@@ -17,8 +17,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class Trailer extends VerticalPanel{
 	
-	private ImpressumDialogBox impressumDialogBox;
-	private CreditsDialogBox creditsDialogBox;
+	private ImpressumDialogBox impressumDialogBox = null;
+	private CreditsDialogBox creditsDialogBox = null;
 	private HorizontalPanel buttonsPanel = new HorizontalPanel();
 	private Button impressumButton = new Button("Impressum");
 	private Button creditsButton = new Button("Credits");
@@ -110,6 +110,11 @@ public class Trailer extends VerticalPanel{
 		}
 	}
 	
+	/**
+	 * Innere Klasse zur Darstellung einer DialogBox mit den Credits als Inhalt, 
+	 * wenn der Button <code>creditsButton</code> aktiviert wird.
+	 *
+	 */
 	public class CreditsDialogBox extends DialogBox{
 		
 		private Button closeButton = new Button("Schließen");
