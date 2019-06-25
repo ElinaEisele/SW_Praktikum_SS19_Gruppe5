@@ -101,13 +101,13 @@ public class NewShoppinglistForm extends VerticalPanel {
 			if (selectedGroup != null) {
 				if (nameTextBox.getValue() == "") {
 					Window.alert("Niemand hat die Absicht eine Einkaufsliste ohne Namen anzulegen");
-				}else {
-				shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
-						new NewShoppinglistAsyncCallback());
+				} else if (nameTextBox.getValue().length() <= 23) {
+					shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
+							new NewShoppinglistAsyncCallback());
 
 				}
 			} else {
-				Notification.show("Es wurde keine Gruppe ausgewaehlt.");
+				Window.alert("Bitte gib eine kürzeren Namen ein");
 			}
 		}
 
@@ -138,9 +138,9 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Shoppinglist result) {
-			
+
 			selectedShoppinglist = result;
-					
+
 			shoppinglistShowForm.setSelected(result);
 			shoppinglistShowForm.setSelectedGroup(selectedGroup);
 			RootPanel.get("main").clear();
@@ -148,9 +148,6 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 			gstvm.setSelectedShoppinglist(selectedShoppinglist);
 			gstvm.getSelectionModel().setSelected(selectedShoppinglist, true);
-			
-			
-			
 
 		}
 
