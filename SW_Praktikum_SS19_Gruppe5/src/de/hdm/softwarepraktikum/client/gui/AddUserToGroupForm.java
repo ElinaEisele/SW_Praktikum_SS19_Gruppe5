@@ -65,11 +65,14 @@ public class AddUserToGroupForm extends VerticalPanel{
 		buttonPanel.add(emailLabel);
 		buttonPanel.add(emailSuggestBox);
 		buttonPanel.add(saveButton);
-		buttonPanel.add(cancelButton);
+		
+		saveButton.setStyleName("NavButton");
+		cancelButton.setStyleName("NavButton");
 		
 		mainPanel.add(infoLabel);
 		mainPanel.add(userFlexTable);
 		mainPanel.add(buttonPanel);
+		mainPanel.add(cancelButton);
 	}
 	
 	/**

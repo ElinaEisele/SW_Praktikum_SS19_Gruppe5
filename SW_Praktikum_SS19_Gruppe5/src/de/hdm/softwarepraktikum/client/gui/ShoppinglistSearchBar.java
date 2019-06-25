@@ -99,6 +99,8 @@ public class ShoppinglistSearchBar extends VerticalPanel{
 		
 		searchButton.addClickHandler(new SearchClickHandler());
 		
+		searchButton.setStyleName("NavButton");
+		
 		searchGrid.setWidget(0, 0, searchSuggestBox);
 		searchGrid.setWidget(0, 1, searchButton);
 		
