@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -19,8 +20,8 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Klasse zur Darstellung einer Dialogbox, um bei einer Gruppe den Gruppennamen
- * zu aendern.
+ * Klasse zur Darstellung einer Dialogbox, um bei einem
+ * <code>Group</code>-Objekt den Namen zu aendern.
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
@@ -29,7 +30,7 @@ public class EditGroupNameForm extends VerticalPanel {
 
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
-	
+
 	private User u = CurrentUser.getUser();
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private GroupHeader groupHeader = new GroupHeader();
@@ -39,34 +40,42 @@ public class EditGroupNameForm extends VerticalPanel {
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label infoLabel = new Label("Gruppenname ändern");
-	private Grid grid = new Grid(1, 2);
-	private Label newNameLabel = new Label("Neuer Gruppenname: ");
 	private TextBox newNameTextBox = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button saveButton = new Button("Änderung speichern");
-	private Button cancelButton = new Button("Abbrechen");
+	private Button saveButton = new Button();
+	private Button cancelButton = new Button();
 
 	public EditGroupNameForm() {
+		
+		newNameTextBox.setText("Neuen Namen eingeben...");
+		newNameTextBox.addClickHandler(new NameTextBoxClickHandler());
 
-		grid.setWidget(0, 0, newNameLabel);
-		grid.setWidget(0, 1, newNameTextBox);
+		cancelButton.addClickHandler(new CancelClickHandler());
+		Image backImage = new Image();
+		backImage.setUrl("images/cancel.png");
+		backImage.setSize("32px", "32px");
+		cancelButton.getElement().appendChild(backImage.getElement());
 
 		saveButton.addClickHandler(new SaveClickHandler());
-		cancelButton.addClickHandler(new CancelClickHandler());
+		Image saveImage = new Image();
+		saveImage.setUrl("images/check-mark.png");
+		saveImage.setSize("32px", "32px");
+		saveButton.getElement().appendChild(saveImage.getElement());
 
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
 
 		mainPanel.add(infoLabel);
-		mainPanel.add(grid);
+		mainPanel.add(newNameTextBox);
 		mainPanel.add(buttonPanel);
 
 	}
 
+	/**
+	 * Beim Anzeigen werden alle Widgets geladen und angeordnet.
+	 */
 	public void onLoad() {
-		
-//		newNameTextBox.setText(selectedGroup.getName());
 
 		RootPanel.get("main").add(mainPanel);
 	}
@@ -95,6 +104,16 @@ public class EditGroupNameForm extends VerticalPanel {
 		this.selectedGroup = selectedGroup;
 	}
 
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Click-/EventHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Bei Betätigen der Abbrechen-Schaltfläche wird die Gruppenansicht wieder
+	 * geladen.
+	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -103,37 +122,67 @@ public class EditGroupNameForm extends VerticalPanel {
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(selectedGroup);
 			gsf.setGstvm(gstvm);
-			gstvm.setGroupShowForm(gsf);
 			RootPanel.get("main").add(gsf);
+
 		}
 
 	}
 
+	/**
+	 * Bei Betätigen der Speichern-Schaltfläche wird der neue Namen des
+	 * <code>Group</code>-Objekts gespeichert.
+	 *
+	 */
 	private class SaveClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			if (selectedGroup != null) {
+			if (newNameTextBox.getValue() != "") {
 				shoppinglistAdministration.changeNameOf(selectedGroup, newNameTextBox.getValue(),
 						new ChangeNameCallback());
-
+			} else {
+				Window.alert("Bitte gebe einen Namen an.");
 			}
 		}
 	}
+	
+	/**
+	 * Beim Klick in das Text Feld wird dieses geleert.
+	 *
+	 */
+	private class NameTextBoxClickHandler implements ClickHandler{
 
+		@Override
+		public void onClick(ClickEvent event) {
+			newNameTextBox.setText("");
+		}
+		
+	}
+
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Zum Ändern des Gruppennamens in der Gruppenansicht und im
+	 * <code>CellTree</code> und anschließendem Laden der Gruppenansicht.
+	 */
 	private class ChangeNameCallback implements AsyncCallback<Group> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Die Namensänderung der Gruppe ist fehlgeschlagen.");
+			Notification.show(caught.toString());
 		}
 
 		@Override
 		public void onSuccess(Group result) {
-			RootPanel.get("aside").clear();
-			RootPanel.get("main").clear();
 			selectedGroup = result;
+			RootPanel.get("main").clear();
+			RootPanel.get("aside").clear();
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(selectedGroup);
+			gsf.setGstvm(gstvm);
 			RootPanel.get("main").add(gsf);
 			NavigatorPanel np = new NavigatorPanel();
 			RootPanel.get("aside").add(np);

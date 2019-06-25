@@ -29,13 +29,12 @@ public class LeaveGroupDialogBox extends DialogBox {
 			.getShoppinglistAdministration();
 	private User u = CurrentUser.getUser();
 	private Group selectedGroup = null;
-
 	private GroupShoppinglistTreeViewModel gstvm = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label confirmationLabel = new Label("Sind Sie sicher, dass Sie diese Gruppe verlassen möchten?");
+	private Label confirmationLabel = new Label("Möchtest du wirklich die Gruppe verlassen?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Gruppe verlassen");
+	private Button confirmButton = new Button("Bestätigen");
 	private Button cancelButton = new Button("Abbrechen");
 
 	public LeaveGroupDialogBox() {
@@ -83,6 +82,16 @@ public class LeaveGroupDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Click-/EventHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Durch Betätigen der Bestätigen-Schaltfläche wird das <code>User</code>-Objekt
+	 * aus dem <code>Group</code>-Objekt entfernt.
+	 */
 	private class ConfirmClickHandler implements ClickHandler {
 
 		@Override
@@ -103,11 +112,20 @@ public class LeaveGroupDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der Callbacks
+	 * ***************************************************************************
+	 */
+	/**
+	 * Zum Entfernen der Gruppe aus dem <code>CellTree</code>.
+	 *
+	 */
 	private class RemoveUserCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Folgender Fehler ist aufgetreten: " + caught.toString());
+			Notification.show(caught.toString());
 		}
 
 		@Override

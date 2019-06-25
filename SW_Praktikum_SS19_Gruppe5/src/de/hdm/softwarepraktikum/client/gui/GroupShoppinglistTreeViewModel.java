@@ -22,10 +22,10 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Diese Implementierung des TreeViewModels sorgt f�r die Verwaltung des
+ * Diese Implementierung des TreeViewModels sorgt für die Verwaltung des
  * Gruppen- und Shoppinglistenbaums.
  * 
- * @author ElinaEisele, JonasWagenknecht
+ * @author Elina Eisele, JonasWagenknecht
  * 
  */
 
@@ -54,7 +54,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 
 	/**
 	 * Nested Class, welche BusinessObjects auf eindeutige Zahlenobjekte abbildet,
-	 * die als Schl�ssel f�r Baumknoten dienen.
+	 * die als Schlüssel für Baumknoten dienen.
 	 *
 	 */
 	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject> {
@@ -140,7 +140,6 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		groupShowForm.setSelected(g);
 		navigatorPanel.setSelectedGroup(selectedGroup);
 
-
 		selectedShoppinglist = null;
 		shoppinglistShowForm.setSelected(null);
 		RootPanel.get("main").add(groupShowForm);
@@ -156,8 +155,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		selectedShoppinglist = s;
 		shoppinglistShowForm.setSelected(s);
 		navigatorPanel.setSelectedShoppinglist(s);
-		
-		
+
 		if (s != null) {
 
 			shoppinglistAdministration.getGroupOf(selectedShoppinglist, new AsyncCallback<Group>() {

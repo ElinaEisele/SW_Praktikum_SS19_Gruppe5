@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * Die Klasse <code>Notification</code>, instanziiert neue Objekte einer Notification, welche während der 
  * Laufzeit im Header angezeigt werden. Diese Klasse kann störende Window-alerts ersetzen.
  * 
- * @author ElinaEisele
+ * @author ElinaEisele, JonasWagenknecht
  *
  */
 public class Notification {
