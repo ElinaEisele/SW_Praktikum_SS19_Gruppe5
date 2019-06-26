@@ -6,7 +6,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 
 /**
- * Klasse zur Darstellung von Group-Objekten im Navigator. Erweiterungen von
+ * Klasse zur Darstellung von <code>Group</code>-Objekten im Navigator. Erweiterungen von
  * <code>AbstractCell<T></code> dienen zur Erzeugung von HTML-Code fuer
  * benutzerdefinierte Objekte.
  * 

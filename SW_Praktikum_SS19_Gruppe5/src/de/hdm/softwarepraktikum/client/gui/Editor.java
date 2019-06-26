@@ -7,7 +7,6 @@ import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
-
 /**
  * Diese Klasse stellt den Startpunkt des Editor-Clients dar. Alle dazu
  * relevanten HTML-Elemente werden in dieser Klasse zusammgefügt.
@@ -16,60 +15,36 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  *
  */
 public class Editor {
-	
-	private String s;
-	
-	private User u = CurrentUser.getUser();
-	
-	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
+			.getShoppinglistAdministration();
+	private User u = CurrentUser.getUser();
+
+	private String s;
 	private Header header = null;
 	private NavigatorPanel navigatorPanel = null;
 	private GroupShowForm groupShowForm = null;
-//	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private Trailer trailer = null;
-	
+
+	/**
+	 * Methode, um die Startseite zu laden.
+	 */
 	public void loadForms() {
-				
-//		shoppinglistAdministration.save(u, new AsyncCallback<Void>() {
-//
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				Notification.show("Fail");
-//			}
-//
-//			@Override
-//			public void onSuccess(Void result) {
-//				Notification.show("Success");
-//			}
-//			
-//		});
-		
-//		TreeViewModel model = new GroupShoppinglistTreeViewModel();
-//		CellTree tree = new CellTree(model, null);
 
 		header = new Header();
 		navigatorPanel = new NavigatorPanel();
-//		groupShowForm = new GroupShowForm();
 		trailer = new Trailer();
-		
+
 		RootPanel.get("main").clear();
 		RootPanel.get("aside").clear();
 
 		RootPanel.get("main").setVisible(true);
 		RootPanel.get("aside").setVisible(true);
 
-
 		RootPanel.get("trailer").add(trailer);
 		RootPanel.get("aside").add(navigatorPanel);
-
-	//	RootPanel.get("main").add(shoppinglistShowForm);
-//		RootPanel.get("main").add(groupShowForm);
 		RootPanel.get("header").add(header);
-		
 
-				
-		
 	}
 
 }

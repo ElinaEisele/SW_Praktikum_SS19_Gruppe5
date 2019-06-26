@@ -16,32 +16,32 @@ import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
- * Klasse zur Darstellung einer DialogBox, wenn man eine Shoppingliste loeschen
- * will.
+ * Klasse zur Darstellung einer Dialog Box, wenn eine Einkaufsliste gelöscht
+ * werden soll.
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
  */
 public class DeleteShoppinglistDialogBox extends DialogBox {
+
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
-	private NavigatorPanel navigatorPanel;
 	private GroupShoppinglistTreeViewModel gstvm = new GroupShoppinglistTreeViewModel();
+	private NavigatorPanel navigatorPanel = null;
 	private Shoppinglist selectedShoppinglist = null;
 	private Group selectedGroup = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label confirmationLabel = new Label(
-			"Sind Sie sicher, dass Sie die ausgewaehlte Shoppinglist loeschen moechten?");
+	private Label confirmationLabel = new Label("Möchtest du die ausgewählte Einkaufsliste löschen?");
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button("Loeschen");
+	private Button confirmButton = new Button("Bestätigen");
 	private Button cancelButton = new Button("Abbrechen");
 
 	public DeleteShoppinglistDialogBox() {
 
-		cancelButton.setStylePrimaryName("cancelButton");
-		confirmButton.setStylePrimaryName("confirmButton");
+		cancelButton.setStyleName("NavButton");
+		confirmButton.setStyleName("NavButton");
 
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
@@ -54,6 +54,10 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * In dieser Methode werden die Widgets Dialog Box hinzugefügt.
+	 * 
+	 */
 	public void onLoad() {
 		this.setGlassEnabled(true);
 		this.add(mainPanel);
@@ -84,6 +88,15 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 		this.gstvm = gstvm;
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Schließen der Dialog Box.
+	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -94,6 +107,10 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 
 	}
 
+	/**
+	 * Schließen der Dialog Box und löschen des ausgewählten
+	 * <code>Shoppinglist</code>-Objekts.
+	 */
 	private class ConfirmClickHandler implements ClickHandler {
 
 		@Override
@@ -103,12 +120,22 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 						new DeleteShoppinglistCallback(selectedShoppinglist));
 				DeleteShoppinglistDialogBox.this.hide();
 			} else {
-				Notification.show("Es wurde keine Einkaufsliste ausgewaehlt.");
+				Notification.show("Es wurde keine Einkaufsliste ausgewählt.");
 			}
 		}
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * Das selektierte <code>Shoppinglist</code>-Objekt wird null, aus dem CellTree
+	 * im <code>NavigatorPanel</code> entfernt.
+	 */
 	private class DeleteShoppinglistCallback implements AsyncCallback<Void> {
 
 		Shoppinglist shoppinglist = null;
@@ -119,7 +146,7 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Folgender Fehler ist aufgetreten: /n" + caught.toString());
+			Notification.show(caught.toString());
 		}
 
 		@Override

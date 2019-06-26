@@ -6,10 +6,10 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -23,16 +23,18 @@ import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
+ * Klasse zur Darstellung eines Formulars, um Einträge nach Nutzer oder Händler
+ * zu filtern
  * 
  * @author ElinaEisele, JonasWagenknecht
  *
  */
-
 public class ShoppinglistFilterForm extends VerticalPanel {
 
 	ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 
 	private ShoppinglistHeader shoppinglistHeader = null;
+
 	private Shoppinglist selectedShoppinglist = null;
 	private Retailer selectedRetailer = null;
 	private User selectedUser = null;
@@ -44,12 +46,12 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 	private Label infoLabel = new Label("Filter deine Einkaufsliste!");
 	private ListBox filterOptionsListBox = new ListBox();
 	private ListBox filterDetailsListBox = new ListBox();
-	private Button saveButton = new Button("Filtern");
-	private Button backButton = new Button("Abbrechen");
-	private String selectedOption;
+	private Button saveButton = new Button("Speichern");
+	private Button backButton = new Button("Zurück");
+	private String selectedOption = null;
 
-	private ArrayList<Retailer> retailerArrayList;
-	private ArrayList<User> userArrayList;
+	private ArrayList<Retailer> retailerArrayList = null;
+	private ArrayList<User> userArrayList = null;
 
 	public ShoppinglistFilterForm() {
 
@@ -62,8 +64,13 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 		filterPanel.add(filterOptionsListBox);
 		filterPanel.add(filterDetailsListBox);
 
-		saveButton.addClickHandler(new SaveClickHandler());
+		
+		backButton.setStyleName("NavButton");
 		backButton.addClickHandler(new CancelClickHandler());
+
+		
+		saveButton.setStyleName("NavButton");
+		saveButton.addClickHandler(new SaveClickHandler());
 
 		buttonPanel.add(saveButton);
 		buttonPanel.add(backButton);
@@ -74,8 +81,12 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * In dieser Methode werden die Widgets der Form hinzugefügt.
+	 * 
+	 */
 	public void onLoad() {
-		
+
 		shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new RetailersCallback());
 
 		this.add(mainPanel);
@@ -106,6 +117,16 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 		this.selectedGroup = selectedGroup;
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * ClickHandler speichern der Filter Auswahl und Öffnen des
+	 * <code>FilteredShoppinglistCellTable</code>
+	 */
 	private class SaveClickHandler implements ClickHandler {
 
 		@Override
@@ -114,8 +135,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 				RootPanel.get("main").clear();
 
-				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
-				
+				shoppinglistHeader.setSelectedShoppinglist(selectedShoppinglist);
 				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
@@ -128,11 +148,11 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 				RootPanel.get("main").add(ssf);
 
 			} else if (selectedOption == "Nutzer") {
-				
+
 				RootPanel.get("main").clear();
 
-				shoppinglistHeader.setShoppinglistToDisplay(selectedShoppinglist);
-				
+				shoppinglistHeader.setSelectedShoppinglist(selectedShoppinglist);
+
 				FilteredShoppinglistCellTable fsct = new FilteredShoppinglistCellTable();
 
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
@@ -141,7 +161,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 				ssf.setSelected(selectedShoppinglist);
 				ssf.setSelectedGroup(selectedGroup);
 				ssf.setSelectedUser(selectedUser);
-				
+
 				RootPanel.get("main").add(ssf);
 
 			}
@@ -149,6 +169,10 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * ClickHandler zum Schließen der Form und erneutem Öffnen der
+	 * <code>ShoppinglistShowForm</code>
+	 */
 	private class CancelClickHandler implements ClickHandler {
 
 		@Override
@@ -162,6 +186,16 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der ChangeHandler
+	 * ***************************************************************************
+	 */
+
+	/**
+	 * ChangeHandler zum erkennen welche Filter Auswahl der Dropdown-Liste
+	 * ausgewählt wurde
+	 */
 	private class OptionsChangeHandler implements ChangeHandler {
 
 		@Override
@@ -171,7 +205,8 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 				filterDetailsListBox.clear();
 
 				shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new RetailersCallback());
-			} if (item == 1) {
+			}
+			if (item == 1) {
 				filterDetailsListBox.clear();
 				shoppinglistAdministration.getAssigndUserOf(selectedShoppinglist, new UsersCallback());
 			}
@@ -180,6 +215,10 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * ChangeHandler zum erkennen welche Filter Auswahl der Dropdown-Liste
+	 * ausgewählt wurde
+	 */
 	private class DetailsChangeHandler implements ChangeHandler {
 
 		@Override
@@ -188,22 +227,30 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 			if (item == 0) {
 				int item2 = filterDetailsListBox.getSelectedIndex();
 				selectedRetailer = retailerArrayList.get(item2);
-						
-				}else if (item == 1) {
-					int item2 = filterDetailsListBox.getSelectedIndex();
-					selectedUser =  userArrayList.get(item2);
+
+			} else if (item == 1) {
+				int item2 = filterDetailsListBox.getSelectedIndex();
+				selectedUser = userArrayList.get(item2);
 			}
-			
+
 		}
 
 	}
 
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Zum Befüllen der Dropdown-Liste mit <code>User</code>.
+	 */
 	private class UsersCallback implements AsyncCallback<ArrayList<User>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-
+			Notification.show(caught.toString());
 		}
 
 		@Override
@@ -219,11 +266,14 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 
 	}
 
+	/**
+	 * Zum Befüllen der Dropdown-Liste mit <code>Retailer</code>.
+	 */
 	private class RetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			//
+			Notification.show(caught.toString());
 		}
 
 		@Override
