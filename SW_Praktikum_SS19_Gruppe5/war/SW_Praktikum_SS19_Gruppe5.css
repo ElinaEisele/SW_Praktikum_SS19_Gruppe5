@@ -14,13 +14,6 @@ div#header {
 	border-top-right-radius: 10px;
 }
 
-.HeaderButton {
-	color: white;
-	border: 1px solid white;
-	margin: 10px 10px;
-	padding: 5px;
-}
-
 .HeaderPlatzhalterButton {
 	padding: 5px;
 	margin: 5px 10px;
@@ -175,12 +168,6 @@ div#container {
 	
 }
 
-div#trailer {
-	padding: 20px;
-}
-
-
-
 /* Um die Buttons im Header zu stylen. */
 .HeaderButton {
 	color: white;
@@ -190,8 +177,9 @@ div#trailer {
 	background: transparent;
 	border: 1px solid white;
 	border-radius: 5px;
-	padding: 10px 20px;
-	min-height:60px;
+	padding: 5px 10px;
+	margin: 10px 10px;
+	min-height: 60px;
 }
 
 .HeaderButton:active {
@@ -229,7 +217,9 @@ div#trailer {
 .CurrentUser{
 	color: white; 
 	font-size: 100%;
-	padding: 0px 10px;
+	font-weight: bold;
+	padding-top: 0px;
+	text-align: center;
 }
 /* .HeaderButton3 {
 	color: white;
@@ -269,9 +259,9 @@ div#trailer {
 	background: transparent;
 	border: 1px solid white;
 	border-radius: 5px;
-	margin-right: 5px;
-	margin-left: 5px;
 	padding: 5px 10px;
+	margin: 10px 10px;
+	min-height: 60px;
 }
 
 .TrailerButton:active {
@@ -429,9 +419,3 @@ div#trailer {
 	margin-bottom: 15px;
 	
 }
-
-img{
-	-webkit-filter: invert(100%);
-}
-
-/* platzhalter.java */
