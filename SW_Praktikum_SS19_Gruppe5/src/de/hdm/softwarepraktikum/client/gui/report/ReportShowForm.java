@@ -22,6 +22,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
+import de.hdm.softwarepraktikum.client.gui.Notification;
 import de.hdm.softwarepraktikum.client.gui.ShoppinglistSearchBar;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
@@ -46,13 +47,9 @@ public class ReportShowForm extends VerticalPanel{
 	 */
 	private VerticalPanel mainPanel = new VerticalPanel();
 
-	private HorizontalPanel addPanel1 = new HorizontalPanel();
-	private HorizontalPanel addPanel2 = new HorizontalPanel();
-
-
+	private HorizontalPanel addPanel = new HorizontalPanel();
 
 	private Grid reportGrid;
-	ReportSearchBar rsb = new ReportSearchBar();
 	
 	private User selectedUser = CurrentUser.getUser(); 
 	
@@ -214,30 +211,25 @@ public class ReportShowForm extends VerticalPanel{
 			public void onClick(ClickEvent event) {
 				
 				selectedGroup = groupsOfCurrentUser.get(groupSelectorListBox.getSelectedIndex());
-				Window.alert(selectedGroup.getName());
 				
 				sqlStartDate = new java.sql.Date(startDateBox.getValue().getTime());
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
-//				Window.alert("Datum ist gesetzt.");
 				
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
-//				Window.alert("Dein Retailer ist: " + selectedRetailer.getName());
 
 				
 				if(noDate == true && selectedRetailer.getId() == 0) {
-					Window.alert("Du musst mindestens ein Datum oder einen H�ndler ausw�hlen.");
+					Notification.show("Du musst mindestens ein Datum oder einen H�ndler ausw�hlen.");
 					
 				}else {
 					if (noDate == true) {
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
-						Window.alert("if: noDate == true" );
 					
 					}else if (selectedRetailer.getId() == 0){
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
-						Window.alert("else if: selectedRetailer.getId() == 0");
+					
 					}else {
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, selectedRetailer, new CreateAllListitemsOfGroupReport());
-						Window.alert("else:");
 					}
 				}
 			
@@ -287,13 +279,10 @@ public class ReportShowForm extends VerticalPanel{
 			if(result != null) {
 				HTMLReportWriter writer = new HTMLReportWriter();
 				writer.process(result);
-				addPanel1.add(new HTML(writer.getReportTextHeader()));
-				addPanel2.add(new HTML(writer.getReportText()));
+				addPanel.add(new HTML(writer.getReportText()));
 				
 				RootPanel.get("reportMain").clear();
-				RootPanel.get("reportMain").add(addPanel1);
-				RootPanel.get("reportMain").add(rsb);
-				RootPanel.get("reportMain").add(addPanel2);
+				RootPanel.get("reportMain").add(addPanel);
 				RootPanel.get("reportMain").add(getBackButton);
 				getBackButton.addClickHandler(new GetBackClickHandler());
 			}
