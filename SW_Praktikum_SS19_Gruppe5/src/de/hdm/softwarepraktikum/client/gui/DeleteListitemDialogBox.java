@@ -46,8 +46,8 @@ public class DeleteListitemDialogBox extends DialogBox {
 
 		this.setGlassEnabled(true);
 
-		cancelButton.setStylePrimaryName("cancelButton");
-		confirmButton.setStylePrimaryName("confirmButton");
+		cancelButton.setStylePrimaryName("NavButton");
+		confirmButton.setStylePrimaryName("NavButton");
 
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
