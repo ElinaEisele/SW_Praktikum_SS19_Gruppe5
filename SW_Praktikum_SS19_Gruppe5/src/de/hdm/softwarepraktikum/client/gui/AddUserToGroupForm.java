@@ -43,14 +43,14 @@ public class AddUserToGroupForm extends VerticalPanel {
 	private GroupShoppinglistTreeViewModel gstvm = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label infoLabel = new Label("Neues Gruppenmitglied hinzuf�gen");
+	private Label infoLabel = new Label("Neues Gruppenmitglied hinzufügen");
 	private SuggestBox emailSuggestBox = null;
 	private MultiWordSuggestOracle allUserMails = new MultiWordSuggestOracle();
 
 	private VerticalPanel interactionPanel = new VerticalPanel();
 	private HorizontalPanel searchPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button saveButton = new Button("Speichern");
+	private Button saveButton = new Button("Hinzufügen");
 	private Button backButton = new Button("Zurück");
 
 	private FlexTable userFlexTable = new FlexTable();
@@ -66,7 +66,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 		saveButton.setStyleName("NavButton");
 
 		searchPanel.add(emailSuggestBox);
-		searchPanel.add(saveButton);
+		buttonPanel.add(saveButton);
 		buttonPanel.add(backButton);
 		interactionPanel.add(searchPanel);
 		interactionPanel.add(buttonPanel);
