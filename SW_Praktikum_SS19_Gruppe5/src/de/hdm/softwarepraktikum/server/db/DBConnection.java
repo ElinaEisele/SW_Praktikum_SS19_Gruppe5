@@ -25,7 +25,8 @@ public class DBConnection {
 	
     private static Connection con = null;
     
-    private static String googleUrl = "jdbc:google:mysql://swpraktikum:main-mechanism-242607:europe-west3:swpraktikum/swpraktikum?user=root&password=swpraktikum";
+    
+    private static String googleUrl = "jdbc:google:mysql://main-mechanism-242607:europe-west3:swpraktikum/swpraktikum?user=root&password=swpraktikum";
     private static String localUrl = "jdbc:mysql://localhost:3306/swpraktikum?user=root&password=&serverTimezone=UTC";
     
     /**
@@ -43,20 +44,15 @@ public class DBConnection {
         
         String url = null;
      
-        // Wenn es bisher keine Conncetion zur DB gab, ...
 		if (con == null) {
 			try {
                 
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                 	
-                    //Klasse laden, welche das neue Präfix "jdbc:google:mysql: //" bereitstellt.
-                	
                     Class.forName("com.mysql.jdbc.GoogleDriver");
                     url = googleUrl;
                
                 } else {
-                   
-                    // Lokale MySQL Instanz zur Nutzung während der Entwicklung.
                 	
                 	Class.forName("com.mysql.jdbc.Driver");
                     url  = localUrl;
@@ -82,8 +78,7 @@ public class DBConnection {
                 
             }
         }
-
-        // Zurueckgeben der Verbindung
+		
         return con;
     }
 

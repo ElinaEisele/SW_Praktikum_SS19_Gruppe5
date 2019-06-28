@@ -3,6 +3,8 @@ package de.hdm.softwarepraktikum.client.gui.report;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
+ * Diese Klasse stellt den Startpunkt des Report-Clients dar. Alle dazu
+ * relevanten HTML-Elemente werden in dieser Klasse zusammgefuegt.
  * 
  * @author CarlaHofmann & LeoniFriedrich
  *
@@ -14,6 +16,9 @@ public class ReportMain {
 	private ReportShowForm reportShowForm = null;
 	private ReportTrailer reportTrailer = null;
 
+	/**
+	 * Methode, um die Startseite des Reports zu laden.
+	 */
 	public void loadForms() {
 		
 		reportHeader = new ReportHeader();
