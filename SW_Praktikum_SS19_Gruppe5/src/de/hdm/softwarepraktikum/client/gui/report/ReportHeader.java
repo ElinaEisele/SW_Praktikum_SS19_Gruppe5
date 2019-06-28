@@ -12,7 +12,7 @@ import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
- * Klasse zur Darstellung des Headers des Reports. Dieses umfasst ein Button
+ * Klasse zur Darstellung des Headers des Reports. Dies umfasst einen Button
  * fuer den Editor, einen fuer den ReportGenerator, einen fuer den Logout und
  * den Namen der Anwendung.
  * 
@@ -57,8 +57,14 @@ public class ReportHeader extends HorizontalPanel {
 	}
 	
 	/**
-	 * Durch ein Klick auf den Logout-Button wird der User auf die
-	 * Startseite weitergeleitet
+	 * ***************************************************************************
+	 * ABSCHNITT der ClickHandler
+	 * ***************************************************************************
+	 */
+	
+	/**
+	 * Durch einen Klick auf den Logout-Button, wird der User auf die
+	 * Startseite weitergeleitet.
 	 */
 	private class LogoutClickHandler implements ClickHandler {
 
@@ -72,7 +78,7 @@ public class ReportHeader extends HorizontalPanel {
 	}
 	
 	/**
-	 * Durch ein Klick auf den Editor-Button wird die Editorseite
+	 * Durch ein Klick auf den Editor-Button, wird die Editorseite
 	 * aufgerufen.
 	 */
 	private class EditorClickHandler implements ClickHandler{

@@ -3,11 +3,8 @@ package de.hdm.softwarepraktikum.client.gui.report;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -23,9 +20,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.client.gui.Notification;
-import de.hdm.softwarepraktikum.client.gui.ShoppinglistSearchBar;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
-import de.hdm.softwarepraktikum.shared.ShoppinglistAdministration;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Retailer;
@@ -37,7 +32,7 @@ import de.hdm.softwarepraktikum.shared.report.HTMLReportWriter;
 /**
  * Diese Klasse stellt den "main"-Teil der Report-HTML Seite dar.
  * 
- * @author TimBeutelspacher LeoniFriedrich
+ * @author TimBeutelspacher & LeoniFriedrich
  */
 
 public class ReportShowForm extends VerticalPanel{
@@ -49,59 +44,23 @@ public class ReportShowForm extends VerticalPanel{
 
 	private HorizontalPanel addPanel = new HorizontalPanel();
 
-	private Grid reportGrid;
-	
-	private User selectedUser = CurrentUser.getUser(); 
+	private Grid reportGrid; 
 	
 	/**
-	 * Button zum anzeigen des Reports
-	 */
-	private Button showReportButton = new Button("Report anzeigen");
-	
-	/**
-	 * Button zum Verlassen des Reports
-	 */
-	private Button getBackButton = new Button("Zur&uumlck");
-	
-	/**
-	 * DateBox-Widget zum auswaehlen des Startdatums
-	 */
-	private DateBox startDateBox = new DateBox();
-	
-	/**
-	 * DateBox-Widget zum auswaehlen des Startdatums
-	 */
-	private DateBox endDateBox = new DateBox();
-	
-	/**
-	 * Drop-Down-Liste zur Gruppenauswahl
-	 */
-	private ListBox groupSelectorListBox = new ListBox();
-	
-	/**
-	 * Drop-Down-Liste zur Haendlerwahl
-	 */
-	private ListBox retailerSelectorListBox = new ListBox();
-	
-	/**
-	 * Checkbox fuer die Wahl ob das Datum beruecksichtigt wird. 
-	 */
-	private CheckBox dateCheckBox = new CheckBox();
-	
-	/**
-	 * Speicher fuer das Startdate als SQL-Date
+	 * Speicher fuer das Start- und Enddatum 
 	 */
 	private Date sqlStartDate = null;
-	
-	/**
-	 * Speicher fuer das Enddate als SQL-
-	 */
 	private Date sqlEndDate = null;
 	
 	/**
-	 * Speicher für Filteroption kein Datum
+	 * Speicher für Filteroption kein Datum in SQL
 	 */
 	private Boolean noDate = false;
+	
+	/**
+	 * Speicher fuer den momentanen User
+	 */
+	private User selectedUser = CurrentUser.getUser();
 	
 	/**
 	 * Speicher fuer die ausgewaehlte Gruppe
@@ -125,13 +84,26 @@ public class ReportShowForm extends VerticalPanel{
 
 	private ArrayList<Retailer> allRetailers;
 	
+	/*
+	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
+	 */
+	private Button showReportButton = new Button("Report anzeigen");
+	private Button getBackButton = new Button("Zur&uumlck");
+	private DateBox startDateBox = new DateBox();
+	private DateBox endDateBox = new DateBox();
+	private ListBox groupSelectorListBox = new ListBox();
+	private ListBox retailerSelectorListBox = new ListBox();
+	private CheckBox dateCheckBox = new CheckBox();
+	
 	/**
-	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ShoppinglistAdministrationImpl zuzugreifen.
+	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der 
+	 * ShoppinglistAdministrationImpl zuzugreifen.
 	 */	
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings.getShoppinglistAdministration();
 	
 	/**
-	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der ReportGeneratorImpl zuzugreifen.
+	 * Instanziierung des asynchronen Interfaces, um auf die Methoden der 
+	 * ReportGeneratorImpl zuzugreifen.
 	 */
 	private ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 	
@@ -142,6 +114,9 @@ public class ReportShowForm extends VerticalPanel{
 		Label newReportLabel = new Label ("Neuen Report erstellen");
 		newReportLabel.setStyleName("Title");
 		
+		/**
+		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
+		 */
 		reportGrid = new Grid (5, 4);
 		
 		Label groupLabel = new Label ("Deine Gruppen: ");
@@ -174,15 +149,31 @@ public class ReportShowForm extends VerticalPanel{
 		mainPanel.add(newReportLabel);
 		mainPanel.add(reportGrid);	
 		
+		/**
+		 * Zum Befuellen der Dropdown-Liste mit <code>Group</code>-Objekten.
+		 */
 		reportGenerator.getAllGroupsOf(selectedUser, new GetAllGroupsOfCallback());
 		
+		/**
+		 * Zum Befuellen der Dropdown-Liste mit <code>Retailer</code>-Objekten.
+		 */
 		reportGenerator.getAllRetailers(new GetAllRetailersCallback());			
 	}
 	
+	/**
+	 * In dieser Methode werden die Widgets dem entsprechenden div-Element
+	 * hinzugefuegt.
+	 * 
+	 */
 	public void onLoad() {	
 		RootPanel.get("reportMain").add(mainPanel);
 	}
 	
+	/**
+	 * ***************************************************************************
+	 * Abschnitt der Getter- und Setter-Methoden
+	 * ***************************************************************************
+	 */
 
 	public User getUser() {
 		return selectedUser;	
@@ -201,11 +192,16 @@ public class ReportShowForm extends VerticalPanel{
 	}
 	
 	/**
-	 * 
-	 *ClickHandler
-	 *
+	 * ***************************************************************************
+	 * Abschnitt der ClickHandler
+	 * ***************************************************************************
 	 */
 				
+	/**
+	 * 
+	 * ClickHandler, um zur Anzeige des Reports mit den gewählten Filteroptionen zu gelangen.
+	 *
+	 */
 	private class ShowReportClickHandler implements ClickHandler {
 		
 			public void onClick(ClickEvent event) {
@@ -216,10 +212,9 @@ public class ReportShowForm extends VerticalPanel{
 				sqlEndDate = new java.sql.Date(endDateBox.getValue().getTime());
 				
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
-
 				
 				if(noDate == true && selectedRetailer.getId() == 0) {
-					Notification.show("Du musst mindestens ein Datum oder einen H�ndler ausw�hlen.");
+					Notification.show("Du musst mindestens ein Datum oder einen Händler auswählen.");
 					
 				}else {
 					if (noDate == true) {
@@ -232,10 +227,14 @@ public class ReportShowForm extends VerticalPanel{
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, selectedRetailer, new CreateAllListitemsOfGroupReport());
 					}
 				}
-			
 			}
 	}
 	
+	/**
+	 * 
+	 * ClickHandler, um anzugeben, dass nicht nach Datum gefiltert werden soll.
+	 *
+	 */
 	private class NoDateClickHandler implements ClickHandler {
 
 		@Override
@@ -245,7 +244,11 @@ public class ReportShowForm extends VerticalPanel{
 		
 	}
 	
-
+	/**
+	 * 
+	 * ClickHandler, um aus der Reportansicht zurück zur <code>ReportShowForm</code> zu gelangen.
+	 *
+	 */
 	private class GetBackClickHandler implements ClickHandler{
 
 		@Override
@@ -259,13 +262,16 @@ public class ReportShowForm extends VerticalPanel{
 	}
 
 	/**
-	 * 
-	 * Callback
-	 *
+	 * ***************************************************************************
+	 * Abschnitt der Callbacks
+	 * ***************************************************************************
 	 */
 
-
-
+	/**
+	 * 
+	 * Zum Anzeigen des Reports mit den gewählten Filteroptionen.
+	 *
+	 */
 	private class CreateAllListitemsOfGroupReport implements AsyncCallback<AllListitemsOfGroupReport> {
 
 		@Override
@@ -290,12 +296,16 @@ public class ReportShowForm extends VerticalPanel{
 		
 	}
 	
+	/**
+	 * 
+	 * Zum Befuellen der Dropdown-Liste mit <code>Group</code>-Objekten.
+	 *
+	 */
 	private class GetAllGroupsOfCallback implements AsyncCallback<ArrayList<Group>> {
 		
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Hier");
-				Window.alert("Fehler " + caught.toString());	
+				Notification.show("Fehler " + caught.toString());	
 			}
 
 			@Override
@@ -308,11 +318,16 @@ public class ReportShowForm extends VerticalPanel{
 			}
 	}
 	
+	/**
+	 * 
+	 * Zum Befuellen der Dropdown-Liste mit <code>Retailer</code>-Objekten.
+	 *
+	 */
 	private class GetAllRetailersCallback implements AsyncCallback<ArrayList<Retailer>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Keine Retailer");
+			Notification.show("Keine Retailer");
 		}
 
 		@Override
