@@ -14,6 +14,13 @@ div#reportHeader{
 	border-top-right-radius: 10px;
 }
 
+.Name{
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 400%;
+}
+
 /* Um die Buttons im Header zu stylen. */
 .HeaderButton {
 	color: white;
@@ -53,7 +60,7 @@ div#reportHeader{
 }
 }
 
-.HeaderPlatzhalterButton {
+.HeaderPlatzhalterButton{
 	padding: 5px;
 	margin: 5px 10px;
 	color: white;

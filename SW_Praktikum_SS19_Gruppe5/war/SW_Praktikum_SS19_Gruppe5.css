@@ -25,6 +25,13 @@ div#header {
 	border-radius: 5px;
 }
 
+.Name{
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 400%;	
+}
+
 /* SW_Praktikum_SS19_Gruppe5.html: Elemente in wrapper (footer, main, aside) */
 div#wrapper {
 	display: flex;

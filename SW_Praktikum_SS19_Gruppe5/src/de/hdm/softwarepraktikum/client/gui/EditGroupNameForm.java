@@ -55,13 +55,13 @@ public class EditGroupNameForm extends VerticalPanel {
 		saveButton.addClickHandler(new SaveClickHandler());
 		saveButton.setStyleName("NavButton");
 		
-		buttonPanel.add(newNameTextBox);
 		buttonPanel.add(saveButton);
+		buttonPanel.add(cancelButton);
 		
 		
 		mainPanel.add(infoLabel);
+		mainPanel.add(newNameTextBox);
 		mainPanel.add(buttonPanel);
-		mainPanel.add(cancelButton);
 
 	}
 
