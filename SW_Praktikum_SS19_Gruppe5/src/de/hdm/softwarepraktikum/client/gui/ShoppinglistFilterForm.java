@@ -46,7 +46,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 	private Label infoLabel = new Label("Filter deine Einkaufsliste!");
 	private ListBox filterOptionsListBox = new ListBox();
 	private ListBox filterDetailsListBox = new ListBox();
-	private Button saveButton = new Button("Speichern");
+	private Button saveButton = new Button("Filtern");
 	private Button backButton = new Button("Zurück");
 	private String selectedOption = null;
 

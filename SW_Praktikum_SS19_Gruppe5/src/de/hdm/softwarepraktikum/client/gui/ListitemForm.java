@@ -7,12 +7,10 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -348,7 +346,7 @@ public class ListitemForm extends VerticalPanel {
 				try {
 					amount = (float) decimalFormatter.parse(amountTextBox.getText());
 				} catch (NumberFormatException nfe) {
-					Window.alert("ungültiger Wert!");
+					Notification.show("Ungültiger Wert!");
 					return;
 				}
 				ListitemUnit listitemUnit = selectedListitemUnit;
