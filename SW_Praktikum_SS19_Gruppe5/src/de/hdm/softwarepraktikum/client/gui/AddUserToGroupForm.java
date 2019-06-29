@@ -85,7 +85,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 
 		infoLabel.setStyleName("Header");
 		userFlexTable.setStyleName("FlexTable");
-		
+
 		shoppinglistAdministration.getAllUsers(new AllUsersCallback());
 
 		emailSuggestBox.addKeyDownHandler(new EnterKeyDownHandler());
@@ -179,12 +179,12 @@ public class AddUserToGroupForm extends VerticalPanel {
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 
 				if (emailSuggestBox.getValue().isEmpty() == false) {
-					emailSuggestBox.setText("");
-
 					shoppinglistAdministration.getUserByMail(emailSuggestBox.getValue(), new UserCallback());
 					emailSuggestBox.setText("");
+
 				}
 			}
+
 		}
 
 	}
