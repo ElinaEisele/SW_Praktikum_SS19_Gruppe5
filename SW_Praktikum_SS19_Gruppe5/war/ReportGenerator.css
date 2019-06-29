@@ -2,7 +2,7 @@
 div#reportHeader{
 	list-style: none;
 	margin: 0;
-	background: gray;
+	background: steelblue;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -10,21 +10,55 @@ div#reportHeader{
 	display: flex;
 	-webkit-flex-flow: row wrap;
 	justify-content: flex-end;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 }
 
+/* Um die Buttons im Header zu stylen. */
 .HeaderButton {
 	color: white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 150%;
+	background: transparent;
 	border: 1px solid white;
+	border-radius: 5px;
+	padding: 5px 10px;
 	margin: 10px 10px;
-	padding: 5px;
+	min-height: 60px;
+}
+
+.HeaderButton:active {
+	border: 0px inset #ccc;
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+.HeaderButton:hover {
+	color: white;
+	border: 1px solid white;
+	border-radius: 5px;
+	background-color: powderblue;
+	
+}
+
+.LogoutButton{
+	color:white;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold; 
+	font-size: 150%;
+	background:transparent;
+	border: 0px solid powderblue; 
+}
 }
 
 .HeaderPlatzhalterButton {
 	padding: 5px;
-	margin: 10px 10px;
+	margin: 5px 10px;
 	color: white;
-	font-weight: bold;
-	font-size: 150%;
+	font-weight: normal;
+	font-size: 350%;
 	background: transparent;
 	border: 0px solid white;
 	border-radius: 5px;
@@ -54,58 +88,64 @@ div#reportHeader{
 	}
 }
 
-.HeaderButton {
-	color: white;
-	font-weight: bold;
-	font-size: 150%;
-	background: transparent;
-	border: 1px solid white;
-	border-radius: 5px;
-	padding: 5px 10px;
-}
-
-.HeaderButton:active {
-	border: 0px inset #ccc;
-	background: transparent;
-	border: 1px solid white;
-	border-radius: 5px;
-}
-
-.HeaderButton:hover {
-	background: skyblue;
-	border-color: transparent;
-	border: 1px solid white;
-	border-radius: 5px;
-}
 
 div#reportMain{
 	text-align: left;
-	background: silver;
-	min-width: 800px;	
+	background: skyblue;
+	min-height: 300px;
+	min-width: 500px;	
 }
 
 .Title{
-	padding: 5px;
-	font-size: 150%;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
+	font-size: 120%;
+	margin-top: 15px;
+}
+
+.Heading{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 100%;
+	margin-top: 15px;
 }
 
 div#reportTrailer{
-	background: tomato;
-	background: gray;
-	padding: 10px;
+	background: steelblue;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.NavButton{
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-weight: bold;
+	font-size: 100%;
+	background: transparent;
+	border: 1px solid black;
+	border-radius: 4px;
+	padding: 4px 8px;
+}
+
+.NavButton:hover {
+	color: black;
+	border: 1px solid black;
+	border-radius: 4px;
+	background-color: white;
+	
 }
 
 .TrailerButton {
 	color: white;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	font-size: 150%;
 	background: transparent;
 	border: 1px solid white;
 	border-radius: 5px;
-	margin-right: 5px;
-	margin-left: 5px;
 	padding: 5px 10px;
+	margin: 10px 10px;
+	min-height: 60px;
 }
 
 .TrailerButton:active {
@@ -115,8 +155,8 @@ div#reportTrailer{
 }
 
 .TrailerButton:hover {
-	background: skyblue;
-	border-color: transparent;
+	background-color: powderblue;
+	color: white;
 	border: 1px solid white;
 	border-radius: 5px;
 }

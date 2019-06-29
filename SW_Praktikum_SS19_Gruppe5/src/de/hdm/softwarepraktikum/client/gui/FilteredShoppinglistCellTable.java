@@ -100,12 +100,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		table.setSelectionModel(selectionModel,
 				DefaultSelectionEventManager.<ArrayList<Object>>createCheckboxManager());
 
-		backButton = new Button();
-		Image backButtonImg = new Image();
-		backButtonImg.setUrl("images/left-arrow.png");
-		backButtonImg.setSize("16px", "16px");
-		backButton.getElement().appendChild(backButtonImg.getElement());
-		backButton.setStyleName("ShoppinglistHeaderButton");
+		backButton = new Button("Zurück");
+		backButton.setStyleName("NavButton");
 		backButton.addClickHandler(new BackClickHandler());
 		archiveButton = new Button("Markierte Eintraege archivieren");
 		archiveButton.addClickHandler(new ArchiveClickHandler());

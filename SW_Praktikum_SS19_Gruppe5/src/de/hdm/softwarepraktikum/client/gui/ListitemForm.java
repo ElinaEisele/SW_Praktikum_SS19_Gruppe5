@@ -69,9 +69,9 @@ public class ListitemForm extends VerticalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button();
-	private Button saveButton = new Button();
-	private Button discardButton = new Button();
+	private Button newRetailerButton = new Button("Neuer Einzelhändler hinzufügen");
+	private Button saveButton = new Button("Speichern");
+	private Button discardButton = new Button("Abbrechen");
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
@@ -102,31 +102,21 @@ public class ListitemForm extends VerticalPanel {
 		shoppinglistGrid.setWidget(4, 0, retailerNameLabel);
 		shoppinglistGrid.setWidget(4, 1, retailerNameListBox);
 		shoppinglistGrid.setWidget(4, 2, newRetailerButton);
-		Image NewRetailerImg = new Image();
-		NewRetailerImg.setUrl("images/add.png");
-		NewRetailerImg.setSize("16px", "16px");
-		newRetailerButton.getElement().appendChild(NewRetailerImg.getElement());
-		newRetailerButton.setStyleName("ShoppinglistHeaderButton");
+		
+		
+		newRetailerButton.setStyleName("NavButton");
 		newRetailerButton.addClickHandler(new NewRetailerClickhandler());
 		retailerNameListBox.addChangeHandler(new RetailerNameListBoxChangeHandler());
 
 		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
 		shoppinglistGrid.setWidget(5, 1, actionButtonsPanel);
 
-		Image ConfirmImg = new Image();
-		ConfirmImg.setUrl("images/check-mark.png");
-		ConfirmImg.setSize("16px", "16px");
-		saveButton.getElement().appendChild(ConfirmImg.getElement());
-		saveButton.setStyleName("ShoppinglistHeaderButton");
+		saveButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new UpdateListitemClickHandler());
 		saveButton.setEnabled(true);
 		actionButtonsPanel.add(saveButton);
 
-		Image CancelImg = new Image();
-		CancelImg.setUrl("images/cancel.png");
-		CancelImg.setSize("16px", "16px");
-		discardButton.getElement().appendChild(CancelImg.getElement());
-		discardButton.setStyleName("ShoppinglistHeaderButton");
+		discardButton.setStyleName("NavButton");
 		discardButton.addClickHandler(new DiscardClickhandler());
 		discardButton.setEnabled(true);
 		actionButtonsPanel.add(discardButton);
