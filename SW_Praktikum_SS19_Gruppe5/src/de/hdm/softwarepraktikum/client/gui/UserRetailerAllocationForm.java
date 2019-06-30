@@ -51,6 +51,7 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel addAllocationPanel = new HorizontalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Label userRetailerAllocationLabel = new Label("Wer kauft wo ein?");
 
 	/*
@@ -74,14 +75,14 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 
 		addAllocationPanel.add(retailerListBox);
 		addAllocationPanel.add(userListBox);
-		addAllocationPanel.add(saveButton);
-
+		buttonPanel.add(saveButton);
+		buttonPanel.add(backButton);
 
 		mainPanel.add(userRetailerAllocationLabel);
 		mainPanel.add(allocationFlexTable);
 		mainPanel.add(addAllocationPanel);
-		mainPanel.add(backButton);
-
+		mainPanel.add(buttonPanel);
+		
 		userListBox.addChangeHandler(new UserListBoxChangeHandler());
 		retailerListBox.addChangeHandler(new RetailerListBoxChangeHandler());
 
@@ -381,12 +382,8 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		public void onSuccess(Map<String, String> result) {
 
 			for (String key : result.keySet()) {
-				removeButton = new Button();
-				Image RemoveImg = new Image();
-				RemoveImg.setUrl("images/cancel.png");
-				RemoveImg.setSize("16px", "16px");
-				removeButton.getElement().appendChild(RemoveImg.getElement());
-				removeButton.setStyleName("ShoppinglistHeaderButton");
+				removeButton = new Button("Entfernen");
+				removeButton.setStyleName("NavButton");
 				removeButton.addClickHandler(new RemoveClickHandler());
 
 				int row = allocationFlexTable.getRowCount();
@@ -394,8 +391,13 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 				allocationFlexTable.setText(row, 0, key);
 				allocationFlexTable.setText(row, 1, result.get(key));
 				allocationFlexTable.setWidget(row, 2, removeButton);
-
+				
+//				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, UserRetailerAllocationForm.this);
+//				RootPanel.get("main").clear();
+//				RootPanel.get("main").add(ssf);
+				
 			}
+			
 
 		}
 

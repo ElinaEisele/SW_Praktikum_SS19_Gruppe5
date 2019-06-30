@@ -2,7 +2,6 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -50,19 +49,19 @@ public class EditGroupNameForm extends VerticalPanel {
 		
 		newNameTextBox.setText("Neuen Namen eingeben...");
 		newNameTextBox.addClickHandler(new NameTextBoxClickHandler());
+		newNameTextBox.setWidth("200px");
 
 		cancelButton.addClickHandler(new CancelClickHandler());
 		cancelButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 		saveButton.setStyleName("NavButton");
 		
-		buttonPanel.add(newNameTextBox);
-		buttonPanel.add(saveButton);
-		
+		buttonPanel.add(saveButton);	
+		buttonPanel.add(cancelButton);
 		
 		mainPanel.add(infoLabel);
+		mainPanel.add(newNameTextBox);
 		mainPanel.add(buttonPanel);
-		mainPanel.add(cancelButton);
 
 	}
 
@@ -136,7 +135,7 @@ public class EditGroupNameForm extends VerticalPanel {
 						new ChangeNameCallback());
 
 			} else {
-				Window.alert("Bitte gib eine kürzeren Namen ein");
+				Notification.show("Bitte gib eine kürzeren Namen ein");
 			}
 		}
 	}

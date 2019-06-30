@@ -88,7 +88,7 @@ public class ReportShowForm extends VerticalPanel{
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
 	 */
 	private Button showReportButton = new Button("Report anzeigen");
-	private Button getBackButton = new Button("Zur&uumlck");
+	private Button getBackButton = new Button("Zurück");
 	private DateBox startDateBox = new DateBox();
 	private DateBox endDateBox = new DateBox();
 	private ListBox groupSelectorListBox = new ListBox();
@@ -120,31 +120,39 @@ public class ReportShowForm extends VerticalPanel{
 		reportGrid = new Grid (5, 4);
 		
 		Label groupLabel = new Label ("Deine Gruppen: ");
+		groupLabel.setStyleName("Heading");
 		reportGrid.setWidget(0, 0, groupLabel);
 		reportGrid.setWidget(0, 1, groupSelectorListBox);
 		
-		Label startDateLabel = new Label ("Startdatum waehlen: ");
+		Label startDateLabel = new Label ("Startdatum wählen: ");
+		startDateLabel.setStyleName("Heading");
 		reportGrid.setWidget(1, 0, startDateLabel);
 		startDateBox.setValue(new java.util.Date());
 		reportGrid.setWidget(1, 1, startDateBox);
 		reportGrid.setWidget(1, 2, dateCheckBox);
+		
 		Label dateCheckBoxLabel = new Label("Nicht nach Datum filtern");
+		dateCheckBoxLabel.setStyleName("Heading");
 		reportGrid.setWidget(1, 3, dateCheckBoxLabel);
 		dateCheckBox.addClickHandler(new NoDateClickHandler());
 		
-		Label endDateLabel = new Label ("Enddatum waehlen: ");
+		Label endDateLabel = new Label ("Enddatum wählen: ");
+		endDateLabel.setStyleName("Heading");
 		reportGrid.setWidget(2, 0, endDateLabel);
 		endDateBox.setValue(new java.util.Date());
 		reportGrid.setWidget(2, 1, endDateBox);
 		
-		Label retailerLabel = new Label ("Haendler waehlen: ");
+		Label retailerLabel = new Label ("Händler wählen: ");
+		retailerLabel.setStyleName("Heading");
 		reportGrid.setWidget(3, 0, retailerLabel);
 		reportGrid.setWidget(3, 1, retailerSelectorListBox);
 		
 		Label showReportButtonLabel = new Label ();
+		showReportButtonLabel.setStyleName("Heading");
 		reportGrid.setWidget(4, 0, showReportButtonLabel);
 		reportGrid.setWidget(4, 3, showReportButton);
 		showReportButton.addClickHandler(new ShowReportClickHandler());
+		showReportButton.setStyleName("NavButton");
 		
 		mainPanel.add(newReportLabel);
 		mainPanel.add(reportGrid);	
