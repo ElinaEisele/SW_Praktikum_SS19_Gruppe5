@@ -71,6 +71,8 @@ public class ShoppinglistSearchBar extends VerticalPanel {
 	 * Beim Anzeigen werden die Widgets geladen und angeordnet.
 	 */
 	public void onLoad() {
+		
+		searchButton.setStyleName("NavButton");
 
 		shoppinglistAdministration.getListitemsNameMapBy(selectedShoppinglist, new AllListitemsCallback());
 

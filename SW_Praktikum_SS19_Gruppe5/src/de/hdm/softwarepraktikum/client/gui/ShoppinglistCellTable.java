@@ -13,13 +13,11 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -29,8 +27,6 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
-import de.hdm.softwarepraktikum.client.gui.GroupCellTable.TableRes;
-import de.hdm.softwarepraktikum.client.gui.GroupCellTable.TableRes.TableStyle;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
@@ -80,7 +76,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		// CellTable custom UI resource
 		CellTable.Resources tableRes = GWT.create(TableRes.class);
-		table = new CellTable<ArrayList<Object>>(10, tableRes);
+		table = new CellTable<ArrayList<Object>>(50, tableRes);
 
 		// SelectionModel um die klicks der Checkboxen zu regeln
 		table.setSelectionModel(selectionModel,
@@ -88,6 +84,8 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		archive = new Button("Markierte Eintraege archivieren");
 		archive.addClickHandler(new ArchiveClickHandler());
+		
+		archive.setStyleName("NavButton");
 
 		/**
 		 * Spalte zur Darstellung einer Checkbox
@@ -343,7 +341,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			}
 
 			if (checkedListitems.isEmpty() == true) {
-				Window.alert("Keine Eintraege ausgewaehlt");
+				Notification.show("Keine Eintraege ausgewählt.");
 			} else {
 
 				shoppinglistAdministration.archiveListitems(checkedListitems, new AsyncCallback<Void>() {

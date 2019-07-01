@@ -46,8 +46,8 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 	private Label infoLabel = new Label("Filter deine Einkaufsliste!");
 	private ListBox filterOptionsListBox = new ListBox();
 	private ListBox filterDetailsListBox = new ListBox();
-	private Button saveButton = new Button();
-	private Button backButton = new Button();
+	private Button saveButton = new Button("Filtern");
+	private Button backButton = new Button("Zurück");
 	private String selectedOption = null;
 
 	private ArrayList<Retailer> retailerArrayList = null;
@@ -64,18 +64,12 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 		filterPanel.add(filterOptionsListBox);
 		filterPanel.add(filterDetailsListBox);
 
-		Image DiscardImg = new Image();
-		DiscardImg.setUrl("images/cancel.png");
-		DiscardImg.setSize("16px", "16px");
-		backButton.getElement().appendChild(DiscardImg.getElement());
-		backButton.setStyleName("ShoppinglistHeaderButton");
+		
+		backButton.setStyleName("NavButton");
 		backButton.addClickHandler(new CancelClickHandler());
 
-		Image SaveImg = new Image();
-		SaveImg.setUrl("images/tick.png");
-		SaveImg.setSize("16px", "16px");
-		saveButton.getElement().appendChild(SaveImg.getElement());
-		saveButton.setStyleName("ShoppinglistHeaderButton");
+		
+		saveButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
 		buttonPanel.add(saveButton);

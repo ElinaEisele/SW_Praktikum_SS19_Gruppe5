@@ -42,8 +42,8 @@ public class StandardListitemOnDialogBox extends DialogBox {
 
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
-		cancelButton.setStylePrimaryName("cancelButton");
-		confirmButton.setStylePrimaryName("confirmButton");
+		cancelButton.setStylePrimaryName("NavButton");
+		confirmButton.setStylePrimaryName("NavButton");
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
 

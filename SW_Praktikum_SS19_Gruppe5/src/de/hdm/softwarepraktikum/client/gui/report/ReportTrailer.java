@@ -38,6 +38,7 @@ public class ReportTrailer extends VerticalPanel{
 		this.setWidth("100%");
 		this.setCellHorizontalAlignment(buttonsPanel, ALIGN_CENTER);
 		
+		
 		impressumButton.addClickHandler(new ImpressumButtonClickHandler());
 		creditsButton.addClickHandler(new CreditsButtonClickHandler());
 		
@@ -54,10 +55,13 @@ public class ReportTrailer extends VerticalPanel{
 		public Impressum() {
 			this.setHTML(("<div class = 'Impressum'>" + "</br>" + "<b>Hochschule der Medien</b>" + "</br>"
 							+ "<b>Wirtschaftsinformatik und digitale Medien</b></br>"
-							+ "Nobelstraße 10</br>" + "70563 Stuttgart</br></br>"
-							+ "Kontakt</br>Telefon: 0711 8923-3242</br> E-Mail: <a href=\"mailto:info-wi7@hdm-stuttgart.de\" target=\"_top\">info-wi7@hdm-stuttgart.de "
+							+ "Nobelstraï¿½e 10</br>" + "70563 Stuttgart</br></br>"
+							+ "Kontakt</br>Telefon: 0711 8923-3242</br> "
+							+ "E-Mail: <a href=\"mailto:info-wi7@hdm-stuttgart.de\" "
+							+ "target=\"_top\">info-wi7@hdm-stuttgart.de "
 							+ "<br><a href=\"https:\\www.hdm-stuttgart.de\""
-							+ "impressum\"TARGET=\"_blank\">Impressum der Hochschule</a></br></br>" + "</div>"));
+							+ "impressum\"TARGET=\"_blank\">Impressum der Hochschule</a></br></br>" 
+							+ "</div>"));
 		}
 		
 	}
@@ -81,6 +85,12 @@ public class ReportTrailer extends VerticalPanel{
 	}
 	
 	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der ClickHandler
+	 * ***************************************************************************
+	 */
+	
+	/**
 	 * Klasse zur Verarbeitung eines Klicks auf den <code>impressumButton</code>.
 	 */
 	public class ImpressumButtonClickHandler implements ClickHandler{
@@ -99,13 +109,19 @@ public class ReportTrailer extends VerticalPanel{
 	}
 	
 	/**
+	 * ***************************************************************************
+	 * ABSCHNITT der DialogBox
+	 * ***************************************************************************
+	 */
+	
+	/**
 	 * Innere Klasse zur Darstellung einer DialogBox mit dem Impressum als Inhalt, 
 	 * wenn der Button <code>impressumButton</code> aktiviert wird.
 	 *
 	 */
 	public class ImpressumDialogBox extends DialogBox{
 		
-		private Button closeButton = new Button("Schließen");
+		private Button closeButton = new Button("Schlieï¿½en");
 		private VerticalPanel vp = new VerticalPanel();
 		private Impressum impressum = new Impressum();
 		
@@ -128,7 +144,7 @@ public class ReportTrailer extends VerticalPanel{
 	
 	public class CreditsDialogBox extends DialogBox{
 		
-		private Button closeButton = new Button("Schließen");
+		private Button closeButton = new Button("Schlieï¿½en");
 		private VerticalPanel vp = new VerticalPanel();
 		private Credits credits = new Credits();
 		public CreditsDialogBox() {

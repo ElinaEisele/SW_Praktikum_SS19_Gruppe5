@@ -2,22 +2,18 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.TreeViewModel.NodeInfo;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
-import de.hdm.softwarepraktikum.shared.bo.User;
 
 /**
  * Klasse zur Darstellung eines Formulars, um eine neue <code>Soppinglist</code>
@@ -52,6 +48,9 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
+		
+		saveButton.setStyleName("NavButton");
+		cancelButton.setStyleName("NavButton");
 
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
@@ -112,7 +111,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				if (nameTextBox.getValue() == "") {
-					Window.alert("Niemand hat die Absicht eine Einkaufsliste ohne Namen anzulegen");
+					
 				} else if (nameTextBox.getValue().length() <= 23) {
 
 					shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
@@ -120,7 +119,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 				}
 			} else {
-				Window.alert("Bitte gib eine kürzeren Namen ein");
+				Notification.show("Bitte gib eine kürzeren Namen ein");
 			}
 		}
 

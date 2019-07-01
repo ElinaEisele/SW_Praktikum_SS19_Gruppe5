@@ -94,18 +94,14 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 		// CellTable custom UI resource
 		CellTable.Resources tableRes = GWT.create(TableRes.class);
-		table = new CellTable<ArrayList<Object>>(10, tableRes);
+		table = new CellTable<ArrayList<Object>>(50, tableRes);
 
 		// SelectionModel um die klicks der Checkboxen zu regeln
 		table.setSelectionModel(selectionModel,
 				DefaultSelectionEventManager.<ArrayList<Object>>createCheckboxManager());
 
-		backButton = new Button();
-		Image backButtonImg = new Image();
-		backButtonImg.setUrl("images/left-arrow.png");
-		backButtonImg.setSize("16px", "16px");
-		backButton.getElement().appendChild(backButtonImg.getElement());
-		backButton.setStyleName("ShoppinglistHeaderButton");
+		backButton = new Button("Zurück");
+		backButton.setStyleName("NavButton");
 		backButton.addClickHandler(new BackClickHandler());
 		archiveButton = new Button("Markierte Eintraege archivieren");
 		archiveButton.addClickHandler(new ArchiveClickHandler());
@@ -113,6 +109,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		HorizontalPanel buttonPanel = new HorizontalPanel();
 		buttonPanel.add(archiveButton);
 		buttonPanel.add(backButton);
+		
+		archiveButton.setStyleName("NavButton");
 
 		/**
 		 * Spalte zur Darstellung einer Checkbox

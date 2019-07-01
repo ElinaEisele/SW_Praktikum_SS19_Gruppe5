@@ -51,6 +51,7 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel addAllocationPanel = new HorizontalPanel();
+	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Label userRetailerAllocationLabel = new Label("Wer kauft wo ein?");
 
 	/*
@@ -61,8 +62,8 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 	private ListBox retailerListBox = new ListBox();
 	private ListBox userListBox = new ListBox();
 
-	private Button backButton = new Button("zurueck");
-	private Button saveButton = new Button("Hinzufügen");
+	private Button backButton = new Button("Zurück");
+	private Button saveButton = new Button("Speichern");
 	private Button removeButton = null;
 
 	/*
@@ -74,28 +75,23 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 
 		addAllocationPanel.add(retailerListBox);
 		addAllocationPanel.add(userListBox);
-		addAllocationPanel.add(saveButton);
-		addAllocationPanel.add(backButton);
+		buttonPanel.add(saveButton);
+		buttonPanel.add(backButton);
 
 		mainPanel.add(userRetailerAllocationLabel);
 		mainPanel.add(allocationFlexTable);
 		mainPanel.add(addAllocationPanel);
-
+		mainPanel.add(buttonPanel);
+		
 		userListBox.addChangeHandler(new UserListBoxChangeHandler());
 		retailerListBox.addChangeHandler(new RetailerListBoxChangeHandler());
 
-		Image DiscardImg = new Image();
-		DiscardImg.setUrl("images/cancel.png");
-		DiscardImg.setSize("16px", "16px");
-		backButton.getElement().appendChild(DiscardImg.getElement());
-		backButton.setStyleName("ShoppinglistHeaderButton");
+		
+		backButton.setStyleName("NavButton");
 		backButton.addClickHandler(new BackClickhandler());
 
-		Image SaveImg = new Image();
-		SaveImg.setUrl("images/tick.png");
-		SaveImg.setSize("16px", "16px");
-		saveButton.getElement().appendChild(SaveImg.getElement());
-		saveButton.setStyleName("ShoppinglistHeaderButton");
+		
+		saveButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
 	}
@@ -104,7 +100,7 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 
 		allocationFlexTable.setText(0, 0, "Händler");
 		allocationFlexTable.setText(0, 1, "User");
-		allocationFlexTable.setText(0, 2, "Zuweisung löschen");
+		allocationFlexTable.setText(0, 2, "");
 
 		shoppinglistAdministration.getAssignedRetailersOf(selectedShoppinglist, new AssignedRetailerCallback());
 
@@ -386,7 +382,8 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		public void onSuccess(Map<String, String> result) {
 
 			for (String key : result.keySet()) {
-				removeButton = new Button("löschen");
+				removeButton = new Button("Entfernen");
+				removeButton.setStyleName("NavButton");
 				removeButton.addClickHandler(new RemoveClickHandler());
 
 				int row = allocationFlexTable.getRowCount();
@@ -394,8 +391,13 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 				allocationFlexTable.setText(row, 0, key);
 				allocationFlexTable.setText(row, 1, result.get(key));
 				allocationFlexTable.setWidget(row, 2, removeButton);
-
+				
+//				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, UserRetailerAllocationForm.this);
+//				RootPanel.get("main").clear();
+//				RootPanel.get("main").add(ssf);
+				
 			}
+			
 
 		}
 

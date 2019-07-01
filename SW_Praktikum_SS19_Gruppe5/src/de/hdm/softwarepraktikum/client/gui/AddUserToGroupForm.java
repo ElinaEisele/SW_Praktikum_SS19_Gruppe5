@@ -50,8 +50,8 @@ public class AddUserToGroupForm extends VerticalPanel {
 	private VerticalPanel interactionPanel = new VerticalPanel();
 	private HorizontalPanel searchPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button saveButton = new Button();
-	private Button backButton = new Button();
+	private Button saveButton = new Button("Hinzufügen");
+	private Button backButton = new Button("Zurück");
 
 	private FlexTable userFlexTable = new FlexTable();
 
@@ -62,20 +62,11 @@ public class AddUserToGroupForm extends VerticalPanel {
 		userFlexTable.setText(0, 0, "Name");
 		userFlexTable.setText(0, 1, "G-Mail-Adresse");
 
-		Image backImage = new Image();
-		backImage.setUrl("images/left-arrow.png");
-		backImage.setSize("32px", "32px");
-		backButton.setStyleName("ShoppinglistHeaderButton");
-		backButton.getElement().appendChild(backImage.getElement());
-
-		Image saveImage = new Image();
-		saveImage.setUrl("images/check-mark.png");
-		saveImage.setSize("32px", "32px");
-		saveButton.setStyleName("ShoppinglistHeaderButton");
-		saveButton.getElement().appendChild(saveImage.getElement());
+		backButton.setStyleName("NavButton");
+		saveButton.setStyleName("NavButton");
 
 		searchPanel.add(emailSuggestBox);
-		searchPanel.add(saveButton);
+		buttonPanel.add(saveButton);
 		buttonPanel.add(backButton);
 		interactionPanel.add(searchPanel);
 		interactionPanel.add(buttonPanel);
@@ -91,6 +82,9 @@ public class AddUserToGroupForm extends VerticalPanel {
 	 * geladen.
 	 */
 	public void onLoad() {
+
+		infoLabel.setStyleName("Header");
+		userFlexTable.setStyleName("FlexTable");
 
 		shoppinglistAdministration.getAllUsers(new AllUsersCallback());
 
@@ -138,7 +132,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	 */
 
 	/**
-	 * Bei Betätigen der Abbrechen-Schaltfläche wird die Gruppenansicht wieder
+	 * Bei Bet�tigen der Abbrechen-Schaltfl�che wird die Gruppenansicht wieder
 	 * geladen.
 	 */
 	private class CancelClickHandler implements ClickHandler {
@@ -156,9 +150,9 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Bei Betätigen der Speichern-Schaltfläche wird das <code>User</code>-Objekt
-	 * mit zugehöriger Email als neues Gruppenmitglied gespeichert und in die
-	 * darüberliegende <code>FlexTable</code> geschrieben.
+	 * Bei Bet�tigen der Speichern-Schaltfl�che wird das <code>User</code>-Objekt
+	 * mit zugeh�riger Email als neues Gruppenmitglied gespeichert und in die
+	 * dar�berliegende <code>FlexTable</code> geschrieben.
 	 */
 	private class SaveClickHandler implements ClickHandler {
 
@@ -171,9 +165,9 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Bei Eingabe der Email werden Vorschläge der schon in der Datenbank
-	 * existierenden Emails gemacht. Mit Betätigen von Enter wird der aktuell
-	 * selektierte Vorschlag ausgewählt und ein weiterer Enter-Klick startet die
+	 * Bei Eingabe der Email werden Vorschl�ge der schon in der Datenbank
+	 * existierenden Emails gemacht. Mit Bet�tigen von Enter wird der aktuell
+	 * selektierte Vorschlag ausgew�hlt und ein weiterer Enter-Klick startet die
 	 * Suche nach dem Nutzer.
 	 *
 	 */
@@ -185,12 +179,12 @@ public class AddUserToGroupForm extends VerticalPanel {
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 
 				if (emailSuggestBox.getValue().isEmpty() == false) {
-					emailSuggestBox.setText("");
-
 					shoppinglistAdministration.getUserByMail(emailSuggestBox.getValue(), new UserCallback());
 					emailSuggestBox.setText("");
+
 				}
 			}
+
 		}
 
 	}
@@ -228,7 +222,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Befüllen der <code>FlexTable</code> mit Namen und Email des
+	 * Zum Bef�llen der <code>FlexTable</code> mit Namen und Email des
 	 * <code>User</code>-Objekts.
 	 *
 	 */
@@ -251,8 +245,8 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Zum Befüllen des <code>MultiWordSuggestOracle</code>-Objekts für die
-	 * Vorschläge in <code>SuggestBox</code>.
+	 * Zum Bef�llen des <code>MultiWordSuggestOracle</code>-Objekts f�r die
+	 * Vorschl�ge in <code>SuggestBox</code>.
 	 */
 	private class AllUsersCallback implements AsyncCallback<ArrayList<User>> {
 
@@ -272,7 +266,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 	}
 
 	/**
-	 * Befüllt die <code>FlexTable</code> mit dem hinzuzufügenden
+	 * Bef�llt die <code>FlexTable</code> mit dem hinzuzuf�genden
 	 * <code>User</code>-Objekt.
 	 *
 	 */

@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 
-import de.hdm.softwarepraktikum.shared.CommonSettings;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.ReportGenerator;
@@ -20,7 +19,7 @@ import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
  *
  */
 
-public class ClientsideSettings extends CommonSettings{
+public class ClientsideSettings{
 	
 	/**
 	 * Remote Service Proxy zur Verbindungsaufnahme mit dem Server-seitenen

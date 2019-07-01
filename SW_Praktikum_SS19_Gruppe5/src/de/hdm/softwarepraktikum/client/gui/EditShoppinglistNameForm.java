@@ -2,7 +2,6 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -31,11 +30,12 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	private Shoppinglist selectedShoppinglist = null;
 	private NavigatorPanel navigatorPanel = null;
 
+	private Label infoLabel = new Label("Einkaufslistenname ändern");
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private TextBox newShoppinglistNameTextBox = new TextBox();
+	private TextBox newNameTextBox = new TextBox();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button confirmButton = new Button();
-	private Button cancelButton = new Button();
+	private Button confirmButton = new Button("Speichern");
+	private Button cancelButton = new Button("Abbrechen");
 	private Grid editShoppinglistNameGrid = null;
 
 	/**
@@ -44,25 +44,22 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	 * 
 	 */
 	public EditShoppinglistNameForm() {
+		
+		newNameTextBox.setText("Neuen Namen eingeben...");
+		newNameTextBox.addClickHandler(new NameTextBoxClickHandler());
+		newNameTextBox.setWidth("200px");
 
-		editShoppinglistNameGrid = new Grid(3, 2);
-		mainPanel.add(editShoppinglistNameGrid);
-
-		Label headerLabel = new Label("Shoppinglist Name ändern");
-		editShoppinglistNameGrid.setWidget(0, 0, headerLabel);
-
-		Label newShoppinglistNameLabel = new Label("Neuer Name: ");
-		editShoppinglistNameGrid.setWidget(1, 0, newShoppinglistNameLabel);
-		editShoppinglistNameGrid.setWidget(1, 1, newShoppinglistNameTextBox);
-
-		cancelButton.setStylePrimaryName("cancelButton");
-		confirmButton.setStylePrimaryName("confirmButton");
-
+		cancelButton.setStyleName("NavButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
+
+		confirmButton.setStyleName("NavButton");
 		confirmButton.addClickHandler(new ConfirmClickHandler());
 
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
+		
+		mainPanel.add(infoLabel);
+		mainPanel.add(newNameTextBox);
 		mainPanel.add(buttonPanel);
 
 	}
@@ -134,18 +131,31 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedShoppinglist != null) {
-				if (newShoppinglistNameTextBox.getText().length() <= 23) {
-					selectedShoppinglist.setName(newShoppinglistNameTextBox.getText());
+				if (newNameTextBox.getText().length() <= 23) {
+					selectedShoppinglist.setName(newNameTextBox.getText());
 
 					shoppinglistAdministration.save(selectedShoppinglist, new EditNameCallback());
 				} else {
-					Window.alert("Bitte gib eine kürzeren Namen ein");
+					Notification.show("Bitte gib eine kürzeren Namen ein.");
 
 				}
 			} else {
-				Notification.show("Keine Einkaufsliste ausgewählt");
+				Notification.show("Keine Einkaufsliste ausgewählt.");
 			}
 		}
+	}
+	
+	/**
+	 * Beim Klick in das Text Feld wird dieses geleert.
+	 *
+	 */
+	private class NameTextBoxClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			newNameTextBox.setText("");
+		}
+		
 	}
 
 	/**

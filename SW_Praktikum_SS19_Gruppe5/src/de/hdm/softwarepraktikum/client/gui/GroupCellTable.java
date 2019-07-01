@@ -57,7 +57,7 @@ public class GroupCellTable extends VerticalPanel {
 
 		// CellTable custom UI resource
 		CellTable.Resources tableRes = GWT.create(TableRes.class);
-		table = new CellTable<Shoppinglist>(10, tableRes);
+		table = new CellTable<Shoppinglist>(50, tableRes);
 
 		/**
 		 * Spalte zur Darstellung des Namen einer <code>Shoppinglist</code>

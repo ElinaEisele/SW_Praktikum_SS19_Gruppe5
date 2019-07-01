@@ -2,7 +2,6 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -43,29 +42,23 @@ public class EditGroupNameForm extends VerticalPanel {
 	private TextBox newNameTextBox = new TextBox();
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
-	private Button saveButton = new Button();
-	private Button cancelButton = new Button();
+	private Button saveButton = new Button("Speichern");
+	private Button cancelButton = new Button("Abbrechen");
 
 	public EditGroupNameForm() {
 		
 		newNameTextBox.setText("Neuen Namen eingeben...");
 		newNameTextBox.addClickHandler(new NameTextBoxClickHandler());
+		newNameTextBox.setWidth("200px");
 
 		cancelButton.addClickHandler(new CancelClickHandler());
-		Image backImage = new Image();
-		backImage.setUrl("images/cancel.png");
-		backImage.setSize("32px", "32px");
-		cancelButton.getElement().appendChild(backImage.getElement());
-
+		cancelButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
-		Image saveImage = new Image();
-		saveImage.setUrl("images/check-mark.png");
-		saveImage.setSize("32px", "32px");
-		saveButton.getElement().appendChild(saveImage.getElement());
-
-		buttonPanel.add(saveButton);
+		saveButton.setStyleName("NavButton");
+		
+		buttonPanel.add(saveButton);	
 		buttonPanel.add(cancelButton);
-
+		
 		mainPanel.add(infoLabel);
 		mainPanel.add(newNameTextBox);
 		mainPanel.add(buttonPanel);
@@ -142,7 +135,7 @@ public class EditGroupNameForm extends VerticalPanel {
 						new ChangeNameCallback());
 
 			} else {
-				Window.alert("Bitte gib eine kürzeren Namen ein");
+				Notification.show("Bitte gib eine kürzeren Namen ein");
 			}
 		}
 	}
