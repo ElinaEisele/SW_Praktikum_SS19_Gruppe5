@@ -5,11 +5,11 @@ import java.sql.DriverManager;
 
 import com.google.appengine.api.utils.SystemProperty;
 
-	/**
-	 * Verwalten einer Verbindung zur Datenbank.
-	 * 
-	 * @author CarlaHofmann
-	 */
+/**
+ * Verwalten einer Verbindung zur Datenbank.
+ * 
+ * @author CarlaHofmann
+ */
 
 public class DBConnection {
 	
@@ -25,7 +25,9 @@ public class DBConnection {
 	
     private static Connection con = null;
     
-    
+    /**
+     * Die URL, mit deren Hilfe die Datenbank angesprochen wird.
+     */
     private static String googleUrl = "jdbc:google:mysql://main-mechanism-242607:europe-west3:swpraktikum/swpraktikum?user=root&password=swpraktikum";
     private static String localUrl = "jdbc:mysql://localhost:3306/swpraktikum?user=root&password=&serverTimezone=UTC";
     
@@ -49,19 +51,27 @@ public class DBConnection {
                 
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                 	
+					/**
+					 * Klasse laden, die das neue 
+					 * "jdbc:google:mysql://"-Präfix bereitstellt.
+					 */
                     Class.forName("com.mysql.jdbc.GoogleDriver");
                     url = googleUrl;
                
                 } else {
                 	
+                	/**
+                	 * Klasse laden, die eine lokale MySQL-Instanz
+                	 * zur Nutzung während der Entwicklung bereitstellt.
+                	 */
                 	Class.forName("com.mysql.jdbc.Driver");
                     url  = localUrl;
 
                 }
                 
                 /*
-                 * Dann erst kann uns der DriverManager eine Verbindung mit den
-                 * oben in der Variable url angegebenen Verbindungsinformationen
+                 * DriverManager kann nun eine Verbindung mit den oben in der 
+                 * Variable url angegebenen Verbindungsinformationen
                  * aufbauen.
                  * 
                  * Diese Verbindung wird dann in der statischen Variable con
@@ -78,7 +88,9 @@ public class DBConnection {
                 
             }
         }
-		
+		/**
+		 * Zurückgeben der Verbindung
+		 */
         return con;
     }
 
