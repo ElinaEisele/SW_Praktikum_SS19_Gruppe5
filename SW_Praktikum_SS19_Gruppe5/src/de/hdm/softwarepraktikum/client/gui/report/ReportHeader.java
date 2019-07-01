@@ -7,6 +7,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.bo.User;
@@ -30,6 +31,8 @@ public class ReportHeader extends HorizontalPanel {
 	private Anchor reportLink;
 	private Anchor editorLink;
 
+	private Label nameLabel = new Label("MaulTasche");
+	
 	public void onLoad() {
 
 		editorButton = new Button("Editor");
@@ -43,12 +46,14 @@ public class ReportHeader extends HorizontalPanel {
 		reportButton.addClickHandler(new ReportClickHandler());
 		abmeldenButton.addClickHandler(new LogoutClickHandler());
 
+		nameLabel.setStyleName("Name");
 		editorButton.setStyleName("HeaderButton");
 		reportButton.setStyleName("HeaderButton");
 		platzhalterButton.setStyleName("HeaderPlatzhalterButton");
 		platzhalterButton.getElement().setAttribute("disabled", "disabled");
 		abmeldenButton.setStyleName("HeaderButton");
 
+		this.add(nameLabel);
 		this.add(editorButton);
 		this.add(reportButton);
 		this.add(platzhalterButton);
