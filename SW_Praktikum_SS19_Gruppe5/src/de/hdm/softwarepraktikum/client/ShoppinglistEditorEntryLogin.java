@@ -22,7 +22,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
-	private VerticalPanel header = new VerticalPanel();
+	private VerticalPanel loginHeader = new VerticalPanel();
 	private Label nameLabel = new Label("Maultasche");
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
@@ -34,7 +34,8 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 	public void onModuleLoad() {
 		
 		nameLabel.setStyleName("Name");
-		loginPanel.setStyleName("header");
+		loginHeader.setStyleName("LoginHeader");
+		loginPanel.setStyleName("LoginHeader");
 		loginLabel.setStyleName("Login");
 		signInLink.setStyleName("LoginLink");
 		
@@ -97,10 +98,10 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 		
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
-		header.add(nameLabel);
+		loginHeader.add(nameLabel);
 		
 
-		RootPanel.get("header").add(header);
+		RootPanel.get("header").add(loginHeader);
 		RootPanel.get("main").add(loginPanel);
 		RootPanel.get("trailer").add(tr);
 
