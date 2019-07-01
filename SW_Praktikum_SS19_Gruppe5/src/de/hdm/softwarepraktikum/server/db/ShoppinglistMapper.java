@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse fuer </code>Shoppinglist</code> Objekte. Diese umfasst Methoden
- * um Shoppinglist Objekte zu erstellen zu suchen, zu modifizieren und zu
- * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
- * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
+ * Mapper-Klasse, die <code>Shoppinglist</code>-Objekte auf eine relationale
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
+ * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+ * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
  * @author LeoniFriedrich & CarlaHofmann
  */
@@ -22,23 +23,29 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 public class ShoppinglistMapper {
 
 	/**
-	 * Speicherung der Instanz dieser Mapper Klasse.
+	 * Die Klasse ListitemMapper wird nur einmal instantiiert. Man spricht hierbei
+	 * von einem sogenannten <b>Singleton</b>.
+	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	 * einzige Instanz dieser Klasse.
+	 * 
 	 */
 	private static ShoppinglistMapper shoppinglistMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert die Moeglichkeit, mit <code>new</code>
-	 * neue Instanzen dieser Klasse zu erzeugen.
+	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen dieser Klasse.
 	 */
-
 	protected ShoppinglistMapper() {
 
 	}
 
 	/**
-	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
-	 * 
-	 * @return Shoppinglistmapper
+     * Diese statische Methode kann aufgrufen werden durch
+     * <code>ShoppinglistMapper.ShoppinglistMapper()</code>. Sie stellt die
+     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+     * Instanz von <code>ShoppinglistMapper</code> existiert.
+	 *
+	 * @return shoppinglistMapper
 	 */
 
 	public static ShoppinglistMapper shoppinglistMapper() {
@@ -49,8 +56,8 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * Ausgabe einer Liste aller Shoppinglist Objekte.
-	 * 
+	 * Auslesen aller <code>Shoppinglist<code>-Objekte.
+	 *
 	 * @return ArrayList<Shoppinglist>
 	 */
 	public ArrayList<Shoppinglist> findAll() {
@@ -79,8 +86,9 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * Methode um Shoppinglist mittels Id zu finden.
-	 * 
+	 * Suchen eines <code>Shoppinglist<code>-Objekts mit vorgegebener Id. 
+	 * Da diese eindeutig ist, wird genau ein Objekt zurueckgegeben.
+	 *
 	 * @param id
 	 * @return Shoppinglist-Objekt
 	 */
@@ -109,7 +117,7 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * Shoppinglist mittels Shoppinglist Namen finden.
+	 * Suchen eines <code>Shoppinglist<code>-Objekts mit vorgegebenem Namen.
 	 * 
 	 * @param name
 	 * @return ArrayList<Shoppinglist>
@@ -142,10 +150,12 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen.
-	 * 
+	 * Einfügen eines <code>Shoppinglist</code>-Objekts in die Datenbank. 
+	 * Dabei wird auch der Primaerschlüssel des übergebenen Objekts 
+	 * geprüft und ggf. berichtigt.
+	 *
 	 * @param shoppinglist
-	 * @return Shoppinglist
+	 * @return Shoppinglist-Objekt
 	 */
 
 	public Shoppinglist insert(Shoppinglist shoppinglist) {
@@ -178,10 +188,10 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
-	 * 
+	 * Wiederholtes Schreiben eines <code>Shoppinglist<code>-Objekts in die Datenbank.
+	 *
 	 * @param shoppinglist
-	 * @return Shoppinglist
+	 * @return Shoppinglist-Objekt
 	 */
 	public Shoppinglist update(Shoppinglist shoppinglist) {
 		Connection con = DBConnection.connection();
@@ -202,8 +212,9 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * Loeschen einer Shoppinglist aus der Datenbank.
-	 * 
+	 * Loeschen der Daten eines 
+	 * <code>Shoppinglist</code>-Objekts aus der Datenbank.
+	 *
 	 * @param shoppinglist
 	 */
 	public void delete(Shoppinglist shoppinglist) {
@@ -221,7 +232,8 @@ public class ShoppinglistMapper {
 	}
 	
 	/**
-	 * Neue Zust�ndigkeit zuweisen
+	 * Hinzufuegen einer neuen Verantwortlichkeit eines Users einer Shoppingliste 
+	 * bezogen auf einen bestimmten Haendler anhand den jeweiligen Ids.
 	 * 
 	 * @param retailerId
 	 * @param userId
@@ -247,8 +259,7 @@ public class ShoppinglistMapper {
 	
 	
 	/**
-	 * 
-	 * Zuweisung l�schen.
+	 * Loeschen einer Verantwortlichkeit anhand der Id eines <code>Shoppinglist<code>-Objekts.
 	 * 
 	 * @param shoppinglistId
 	 */
@@ -266,9 +277,9 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * 
-	 * Die �bergeordnete Shoppinglist eines listitems finden.
-	 * 
+	 * Auslesen des zugehoerigen <code>Shoppinglist<code>-Objekts eines
+	 * gegebenen <code>Listitem<code>-Objekts.	
+	 *
 	 * @param listitem
 	 * @return Shoppinglist-Objekt
 	 */
@@ -302,11 +313,11 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * 
-	 * Shoppinglisten einer Gruppe ausgeben.
-	 * 
+	 * Auslesen aller <code>Shoppinglist<code>-Objekte eines
+	 * gegebenen <code>Group<code>-Objekts.	
+	 *
 	 * @param group
-	 * @return
+	 * @return ArrayList<Shoppinglist>
 	 */
 	
 	public ArrayList<Shoppinglist> getShoppinglistsOf(Group group) {
@@ -343,11 +354,11 @@ public class ShoppinglistMapper {
 	}
 
 	/**
-	 * 
-	 * Shoppinglisten eines Users ausgeben.
-	 * 
+	 * Auslesen aller <code>Shoppinglist<code>-Objekte eines
+	 * gegebenen <code>User<code>-Objekts.	
+	 *
 	 * @param user
-	 * @return
+	 * @return ArrayList<Shoppinglist>
 	 */
 	
 	public ArrayList<Shoppinglist> getShoppinglistsOf(User user) {

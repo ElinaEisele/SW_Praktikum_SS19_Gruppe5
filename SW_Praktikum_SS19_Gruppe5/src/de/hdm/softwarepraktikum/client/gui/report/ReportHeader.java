@@ -90,7 +90,6 @@ public class ReportHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.alert(CurrentUser.getUser().getName() + " loggt sich jetzt aus.");
 			Window.open(user.getLogoutUrl(), "_self", "");
 
 		}
