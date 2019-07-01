@@ -113,7 +113,7 @@ public class ReportShowForm extends VerticalPanel{
 		Label newReportLabel = new Label ("Neuen Report erstellen");
 		newReportLabel.setStyleName("Title");
 		
-		getBackButton.setStyleName("NavButton");
+		getBackButton.setStyleName("BackButton");
 		
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
