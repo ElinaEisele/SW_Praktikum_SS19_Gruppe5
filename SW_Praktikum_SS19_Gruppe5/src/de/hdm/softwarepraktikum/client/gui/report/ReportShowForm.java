@@ -223,7 +223,7 @@ public class ReportShowForm extends VerticalPanel{
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
 				
 				if(noDate == true && selectedRetailer.getId() == 0) {
-					Notification.show("Du musst mindestens ein Datum oder einen Händler auswählen.");
+					NotificationReport.show("Du musst mindestens ein Datum oder einen Händler auswählen.");
 					
 				}else {
 					if (noDate == true) {
@@ -314,7 +314,7 @@ public class ReportShowForm extends VerticalPanel{
 		
 			@Override
 			public void onFailure(Throwable caught) {
-				Notification.show("Fehler " + caught.toString());	
+				NotificationReport.show("Fehler " + caught.toString());	
 			}
 
 			@Override
@@ -336,7 +336,7 @@ public class ReportShowForm extends VerticalPanel{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Keine Retailer");
+			NotificationReport.show("Keine Retailer");
 		}
 
 		@Override
