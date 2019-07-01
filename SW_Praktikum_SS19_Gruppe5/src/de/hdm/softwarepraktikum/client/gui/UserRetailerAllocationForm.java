@@ -330,7 +330,8 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Void result) {
 
-			Button removeButton = new Button("löschen");
+			Button removeButton = new Button("Entfernen");
+			removeButton.setStyleName("NavButton");
 			removeButton.addClickHandler(new RemoveClickHandler());
 
 			int row = allocationFlexTable.getRowCount();
