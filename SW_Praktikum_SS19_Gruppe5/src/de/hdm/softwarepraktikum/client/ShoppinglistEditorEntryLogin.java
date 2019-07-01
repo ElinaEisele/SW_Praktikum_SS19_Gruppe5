@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.gui.Editor;
 import de.hdm.softwarepraktikum.client.gui.RegistrationForm;
+import de.hdm.softwarepraktikum.client.gui.Trailer;
 import de.hdm.softwarepraktikum.shared.LoginService;
 import de.hdm.softwarepraktikum.shared.LoginServiceAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
@@ -21,16 +22,25 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 	private ShoppinglistAdministrationAsync shoppinglistAdministration = ClientsideSettings
 			.getShoppinglistAdministration();
 
+	private VerticalPanel header = new VerticalPanel();
+	private Label nameLabel = new Label("Maultasche");
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
 
+	Trailer tr = new Trailer();
+	
 	@Override
 	public void onModuleLoad() {
-
+		
+		nameLabel.setStyleName("Name");
+		loginPanel.setStyleName("header");
+		loginLabel.setStyleName("Login");
+		signInLink.setStyleName("LoginLink");
+		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new LoginServiceCallback());
-
+		
 	}
 
 	private class LoginServiceCallback implements AsyncCallback<User> {
@@ -62,9 +72,8 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 				if (u.getName() == null) {
 					Anchor shoppinglistEditorLink = new Anchor();
 					shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL());
-
-					RootPanel.get("header").setVisible(false);
-//					RootPanel.get("aside").setVisible(false);
+					
+					RootPanel.get("header").add(nameLabel);
 					RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, u));
 					
 				} else {
@@ -85,10 +94,15 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 
 		signInLink.setHref(CurrentUser.getUser().getLoginUrl());
 
+		
 		loginPanel.add(loginLabel);
 		loginPanel.add(signInLink);
+		header.add(nameLabel);
+		
 
+		RootPanel.get("header").add(header);
 		RootPanel.get("main").add(loginPanel);
+		RootPanel.get("trailer").add(tr);
 
 //		loginLabel.setStylePrimaryName("loginLabel");
 //		loginButton.setStylePrimaryName("loginButton");
