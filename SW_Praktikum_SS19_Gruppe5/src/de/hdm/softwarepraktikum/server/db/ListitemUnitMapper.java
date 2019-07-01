@@ -11,32 +11,41 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse fuer </code>ListitemUnit</code> Objekte. Diese umfasst Methoden um ListitemUnit
- * Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das Mapping
- * funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen und
- * DB-Stukturen in Objekte umgewandelt werden.
- * 
+ * Mapper-Klasse, die <code>ListitemUnit</code>-Objekte auf eine relationale
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
+ * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+ * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
+ *  
  * @author CarlaHofmann & LeoniFriedrich
  */
 
 public class ListitemUnitMapper {
 
 	/**
-	 * Speicherung der Instanz dieser Mapperklasse
+	 * Die Klasse ListitemUnitMapper wird nur einmal instantiiert. Man spricht hierbei
+	 * von einem sogenannten <b>Singleton</b>.
+	 * <p>
+	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	 * einzige Instanz dieser Klasse.
+	 * 
 	 */
-
 	private static ListitemUnitMapper listitemUnitMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UnitMapper
+	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen dieser Klasse.
 	 */
 	protected ListitemUnitMapper() {
 	}
 
 	/**
-	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse
+     * Diese statische Methode kann aufgrufen werden durch
+     * <code>ListitemUnitMapper.listitemUnitMapper()</code>. Sie stellt die
+     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+     * Instanz von <code>ListitemUnitMapper</code> existiert.
 	 *
-	 * @return Listitemunitmapper
+	 * @return listitemUnitMapper
 	 */
 	public static ListitemUnitMapper listitemUnitMapper() {
 		if (listitemUnitMapper == null) {

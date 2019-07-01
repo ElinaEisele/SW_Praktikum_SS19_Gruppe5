@@ -14,10 +14,11 @@ import java.util.Map;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse fuer </code>Listitem</code> Objekte. Diese umfasst Methoden um
- * Listitem Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen.
- * Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
- * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
+ * Mapper-Klasse, die <code>Listitem</code>-Objekte auf eine relationale
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
+ * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+ * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
  * @author CarlaHofmann
  */
@@ -25,20 +26,29 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 public class ListitemMapper {
 
 	/**
-	 * Speicherung der Instanz dieser Mapperklasse.
+	 * Die Klasse ListitemMapper wird nur einmal instantiiert. Man spricht hierbei
+	 * von einem sogenannten <b>Singleton</b>.
+	 * <p>
+	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	 * einzige Instanz dieser Klasse.
+	 * 
 	 */
 	private static ListitemMapper listitemMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von ListitemMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen dieser Klasse.
 	 */
 	protected ListitemMapper() {
 	}
 
 	/**
-	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
+     * Diese statische Methode kann aufgrufen werden durch
+     * <code>ListitemMapper.listitemMapper()</code>. Sie stellt die
+     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+     * Instanz von <code>ListitemMapper</code> existiert.
 	 *
-	 * @return Listitemmapper
+	 * @return listitemMapper
 	 */
 	public static ListitemMapper listitemMapper() {
 		if (listitemMapper == null) {
@@ -49,7 +59,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Ausgabe einer Liste aller Listitems.
+	 * Auslesen aller Listitems.
 	 *
 	 * @return ArrayList<Listitem>
 	 */
@@ -87,7 +97,8 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Listitem mithilfe der Id finden.
+	 * Suchen eines Listitems mit vorgegebener Id. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
 	 *
 	 * @param id
 	 * @return Listitem-Objekt
@@ -124,7 +135,9 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
+	 * Einfügen eines <code>Listitem</code>-Objekts in die Datenbank. Dabei wird
+	 * auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+	 * berichtigt.
 	 *
 	 * @param listitem
 	 * @return Listitem-Objekt
@@ -170,7 +183,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank.
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 *
 	 * @param listitem
 	 * @return Listitem-Objekt
@@ -198,7 +211,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Delete Methode, um ein Listitem-Objekt aus der Datenbank zu entfernen.
+	 * Löschen der Daten eines <code>Listitem</code>-Objekts aus der Datenbank.
 	 *
 	 * @param listitem
 	 */
@@ -217,7 +230,8 @@ public class ListitemMapper {
 	}
 	
 	/**	
-	 * Ausgeben des Amounts eines Listitems	
+	 * Auslesen des zugehörigen Amount-Wertes eines gegebenen 
+	 * <code>Listitems<code>-Objekts.	
 	 * 	
 	 * @param listitem	
 	 * @return float amount	
@@ -248,7 +262,8 @@ public class ListitemMapper {
 
  	/**	
 	 * 	
-	 * Produktname eines Eintrags finden.	
+	 * Auslesen eines zugehörigen Productname eines gegebenen Listitems
+	 * anhand dessen Id.	
 	 * 	
 	 * @param listitem	
 	 * @return String productname	
@@ -280,7 +295,8 @@ public class ListitemMapper {
 	}	
 
  	/**	
-	 * Methode, um alle Listitems einer Shoppingliste auszugeben.	
+	 * Auslesen der zugehörigen <code>Listitem<code>-Objekte eines
+	 * gegebenen <code>Shoppinglist<code>-Objekts.	
 	 * 	
 	 * @param shoppinglist	
 	 * @return ArrayList<Listitem>	
@@ -322,7 +338,8 @@ public class ListitemMapper {
  	}	
 
  	/**	
- 	 * Methode, um alle archivierten Listitems einer Shoppingliste auszugeben.	
+ 	 * Auslesen der zugehörigen archivierten <code>Listitem<code>-Objekte eines
+	 * gegebenen <code>Shoppinglist<code>-Objekts.
 	 * 	
 	 * @param shoppinglist	
 	 * @return ArrayList<Listitem>	
@@ -366,7 +383,8 @@ public class ListitemMapper {
 
 	
 	/**
-	 * Methode, um alle Listitems eines Retailers zu finden.
+	 * Auslesen der zugehörigen <code>Listitem<code>-Objekte eines
+	 * gegebenen <code>Retailer<code>-Objekts.
 	 * 
 	 * @param retailer
 	 * @return ArrayList<Listitem>
@@ -408,7 +426,8 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * Alle Listeneintraege einer Gruppe finden
+	 * Auslesen der zugehörigen <code>Listitem<code>-Objekte eines
+	 * gegebenen <code>Group<code>-Objekts.
 	 * 
 	 * @param group
 	 * @return ArrayList<Listitem>
@@ -450,10 +469,11 @@ public class ListitemMapper {
 	
 
 	/**
- 	 * Methode, um alle Daten von Listitem-Objekten f�r den CellTable auszugeben.
+ 	 * Auslesen der zugehörigen <code>Listitem<code>-Objekte und dessen Attribute anhand
+	 * eines gegebenen <code>Shoppinglist<code>-Objekts.
 	 * 
 	 * @param shoppinglist
-	 * @return ArrayList<String>
+	 * @return Map<Listitem, ArrayList<String>>
 	 */
 	public Map<Listitem, ArrayList<String>> getListitemData(Shoppinglist shoppinglist){
 		Connection con = DBConnection.connection();
@@ -538,7 +558,8 @@ public class ListitemMapper {
 	
 	/**
 	 * 
-	 * Methode, um Eintraege nach Produktnamen in einer Shoppingliste zu suchen.
+	 * Auslesen der zugehörigen <code>Listitem<code>-Objekte eines
+	 * gegebenen <code>Shoppinglist<code>-Objekts und einem Productname.
 	 * 
 	 * @param shoppinglist
 	 * @param productname
@@ -582,10 +603,16 @@ public class ListitemMapper {
 		
 		
 	}
+
 	/**
-	 * Holt alle Infos zu einem Listitem
+	 * Auslesen der Daten eines <code>Listitem<code>-Objekts  anhand eines
+	 * gegebenen <code>Shoppinglist<code>-Objekts und einem gegebenen 
+	 * <code>Listitem<code>-Objekt.
+	 * 
+	 * @param shoppinglist
+	 * @param listitem
+	 * @return ArrayList<String>
 	 */
-	
 	public ArrayList<String> getListitemDataOf(Shoppinglist shoppinglist, Listitem listitem){
 
 		Connection con = DBConnection.connection();
@@ -626,21 +653,17 @@ public class ListitemMapper {
 	 				ResultSet rs3 = stmt2.executeQuery("SELECT name FROM retailers WHERE id = " + li.getRetailerID());
 
 	 				if(rs3.next()) {
-
 	 				Retailer r = new Retailer();
 					r.setName(rs3.getString("name"));
 					listitemData.add(r.getName());
-
 	 				}
 
 	 				ResultSet rs4 = stmt2.executeQuery("SELECT name FROM units WHERE id = " + li.getListitemUnitID());
 
-	 				if(rs4.next()) {
-	 					
+	 				if(rs4.next()) {	
 	 				ListitemUnit u = new ListitemUnit();
 					u.setName(rs4.getString("name"));
 					listitemData.add(u.getName());
-					
 	 				}
 	 				
 	 				ResultSet rs5 = stmt2.executeQuery("SELECT amount FROM listitems WHERE id = " + li.getId());
@@ -649,10 +672,8 @@ public class ListitemMapper {
 	 				Float f = rs5.getFloat("amount");
 	 				listitemData.add(f.toString());
 	 				}
-	 				
 	 		}
-	 
-	 				
+	 		
 		} catch(SQLException e) {
 			e.getStackTrace();
 		}
@@ -660,7 +681,8 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Methode, um die Standarteintraege einer Gruppe zu finden.
+	 * Auslesen der zugehörigen, standardisierten <code>Listitem<code>-Objekte eines
+	 * gegebenen <code>Group<code>-Objekts.
 	 * 
 	 * @param group
 	 * @return ArrayList<Listitem>
@@ -702,7 +724,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Ein Listitem einer Gruppe als Standart setzen.
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank als Standardlistitem.
 	 * 
 	 * @param group
 	 * @param listitem
@@ -728,11 +750,13 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * Eine Shoppingliste anhand eines Usernamens filtern.
+	 * Auslesen der zugehörigen <code>Listitem<code>-Objekte und dessen Attribute anhand
+	 * der gegebenen Id eines <code>Shoppinglist<code>-Objekts und der gegebenen
+	 * ID eines <code>User<code>-Objekts.
 	 * 
 	 * @param shoppinglistId
 	 * @param usernameId
-	 * @return ArrayList<Listitem>
+	 * @return Map<Listitem, ArrayList<String>>
 	 */
 	public Map<Listitem, ArrayList<String>> filterShoppinglistByUser(int shoppinglistId,  int userId){
 		
@@ -824,7 +848,9 @@ public class ListitemMapper {
 	}
 	
 	/**
-	 * Eine Shoppingliste anhand eines Retailers filtern.
+	 * Auslesen der zugehörigen <code>Listitem<code>-Objekte und dessen Attribute anhand
+	 * der gegebenen Id eines <code>Shoppinglist<code>-Objekts und der gegebenen
+	 * ID eines <code>Retailer<code>-Objekts.
 	 * 
 	 * @param shoppinglistId
 	 * @param retailerId
