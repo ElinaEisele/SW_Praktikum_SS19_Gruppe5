@@ -2,16 +2,14 @@ package de.hdm.softwarepraktikum.server;
 
 import java.util.logging.Logger;
 
-import de.hdm.softwarepraktikum.shared.CommonSettings;
-
 /**
  * <p>
- * Klasse mit Eigenschaften und Diensten, die für alle serverseitigen Klassen
+ * Klasse mit Eigenschaften und Diensten, die fï¿½r alle serverseitigen Klassen
  * relevant sind.
  * </p>
  * <p>
- * In ihrem aktuellen Entwicklungsstand bietet die Klasse eine rudimentäre
- * Unterstützung der Logging-Funkionalität unter Java. Es wird ein
+ * In ihrem aktuellen Entwicklungsstand bietet die Klasse eine rudimentaere
+ * Unterstuetzung der Logging-Funkionalitaet unter Java. Es wird ein
  * applikationszentraler Logger realisiert, der mittels
  * <code>ServerSideSettings.getLogger()</code> genutzt werden kann.
  * </p>
@@ -20,7 +18,7 @@ import de.hdm.softwarepraktikum.shared.CommonSettings;
  * 
  */
 
-public class ServersideSettings extends CommonSettings {
+public class ServersideSettings {
 	
 	private static final String LOGGER_NAME = "SharedShoppinglist Server";
 	private static final Logger log = Logger.getLogger(LOGGER_NAME);
