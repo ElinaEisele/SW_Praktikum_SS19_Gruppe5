@@ -19,7 +19,6 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
-import de.hdm.softwarepraktikum.client.gui.Notification;
 import de.hdm.softwarepraktikum.shared.ReportGeneratorAsync;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
@@ -224,7 +223,7 @@ public class ReportShowForm extends VerticalPanel{
 				selectedRetailer = allRetailers.get(retailerSelectorListBox.getSelectedIndex());
 				
 				if(noDate == true && selectedRetailer.getId() == 0) {
-					Notification.show("Du musst mindestens ein Datum oder einen Händler auswählen.");
+					NotificationReport.show("Du musst mindestens ein Datum oder einen Händler auswählen.");
 					
 				}else {
 					if (noDate == true) {
@@ -315,7 +314,7 @@ public class ReportShowForm extends VerticalPanel{
 		
 			@Override
 			public void onFailure(Throwable caught) {
-				Notification.show("Fehler " + caught.toString());	
+				NotificationReport.show("Fehler " + caught.toString());	
 			}
 
 			@Override
@@ -337,7 +336,7 @@ public class ReportShowForm extends VerticalPanel{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Notification.show("Keine Retailer");
+			NotificationReport.show("Keine Retailer");
 		}
 
 		@Override
