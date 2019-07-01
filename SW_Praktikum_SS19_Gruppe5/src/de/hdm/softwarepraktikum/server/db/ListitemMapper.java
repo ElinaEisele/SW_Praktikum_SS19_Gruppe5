@@ -28,7 +28,6 @@ public class ListitemMapper {
 	/**
 	 * Die Klasse ListitemMapper wird nur einmal instantiiert. Man spricht hierbei
 	 * von einem sogenannten <b>Singleton</b>.
-	 * <p>
 	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
 	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	 * einzige Instanz dieser Klasse.
@@ -59,7 +58,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Auslesen aller Listitems.
+	 * Auslesen aller <code>Listitem<code>-Objekte.
 	 *
 	 * @return ArrayList<Listitem>
 	 */
@@ -97,8 +96,8 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Suchen eines Listitems mit vorgegebener Id. Da diese eindeutig ist,
-	 * wird genau ein Objekt zurueckgegeben.
+	 * Suchen eines <code>Listitem<code>-Objekts mit vorgegebener Id. 
+	 * Da diese eindeutig ist, wird genau ein Objekt zurueckgegeben.
 	 *
 	 * @param id
 	 * @return Listitem-Objekt
@@ -135,9 +134,9 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Einfügen eines <code>Listitem</code>-Objekts in die Datenbank. Dabei wird
-	 * auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
-	 * berichtigt.
+	 * Einfügen eines <code>Listitem</code>-Objekts in die Datenbank. 
+	 * Dabei wird auch der Primärschlüssel des übergebenen Objekts 
+	 * geprüft und ggf. berichtigt.
 	 *
 	 * @param listitem
 	 * @return Listitem-Objekt
@@ -183,7 +182,7 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+	 * Wiederholtes Schreiben eines <code>Listitem<code>-Objekts in die Datenbank.
 	 *
 	 * @param listitem
 	 * @return Listitem-Objekt
@@ -211,7 +210,8 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Löschen der Daten eines <code>Listitem</code>-Objekts aus der Datenbank.
+	 * Loeschen der Daten eines 
+	 * <code>Listitem</code>-Objekts aus der Datenbank.
 	 *
 	 * @param listitem
 	 */
@@ -231,7 +231,7 @@ public class ListitemMapper {
 	
 	/**	
 	 * Auslesen des zugehörigen Amount-Wertes eines gegebenen 
-	 * <code>Listitems<code>-Objekts.	
+	 * <code>Listitem<code>-Objekts.	
 	 * 	
 	 * @param listitem	
 	 * @return float amount	
@@ -260,9 +260,8 @@ public class ListitemMapper {
 
  	}	
 
- 	/**	
-	 * 	
-	 * Auslesen eines zugehörigen Productname eines gegebenen Listitems
+ 	/**	 	
+	 * Auslesen eines zugehörigen Productname eines gegebenen <code>Listitem<code>-Objekts
 	 * anhand dessen Id.	
 	 * 	
 	 * @param listitem	
@@ -724,7 +723,8 @@ public class ListitemMapper {
 	}
 
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank als Standardlistitem.
+	 * Wiederholtes Schreiben eines <code>Listitem<code>-Objekts 
+	 * als Standardlistitem in die Datenbank.
 	 * 
 	 * @param group
 	 * @param listitem
