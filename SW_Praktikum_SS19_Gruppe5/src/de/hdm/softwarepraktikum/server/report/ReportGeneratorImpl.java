@@ -83,8 +83,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
     	this.listitemMapper = ListitemMapper.listitemMapper();
     	this.listitemUnitMapper = ListitemUnitMapper.listitemUnitMapper();
     	this.shoppinglistMapper = ShoppinglistMapper.shoppinglistMapper();
-      	this.retailerMapper = RetailerMapper.retailerMapper();
-      	this.productMapper = ProductMapper.productMapper();
+      this.retailerMapper = RetailerMapper.retailerMapper();
+      this.productMapper = ProductMapper.productMapper();
     }
     
     /**
@@ -104,15 +104,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
      */
     public AllListitemsOfGroupReport createAllListitemsOfGroupReport(Group g, Retailer r) throws IllegalArgumentException{
     	
-    	AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
+      AllListitemsOfGroupReport result = new AllListitemsOfGroupReport();
 
     	result.setTitle("Report der Gruppe: " + g.getName());
     	result.setCreationDate(new Date());
 		
     	ArrayList<Shoppinglist> shoppinglists = this.shoppinglistMapper.getShoppinglistsOf(g);
-		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
+  		ArrayList<Listitem> listitems = new ArrayList<Listitem>();
 	
-		if(!shoppinglists.isEmpty()) {
+	  	if(!shoppinglists.isEmpty()) {
+		
 			for (Shoppinglist s: shoppinglists)	{
 				ArrayList<Listitem>  listit = this.listitemMapper.getArchivedListitemsOf(s);
 				for(Listitem rw : listit) {
