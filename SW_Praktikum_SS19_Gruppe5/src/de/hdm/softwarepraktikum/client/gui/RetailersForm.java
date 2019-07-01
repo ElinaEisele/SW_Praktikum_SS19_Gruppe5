@@ -52,10 +52,13 @@ public class RetailersForm extends VerticalPanel {
 		saveButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
-		infoLabel.setText("Alle Händler im System: ");
+		infoLabel.setText("Alle Händler im System");
 
-		retailerTextBox.setText("Händlername eingeben");
+		retailerTextBox.setText("Händlername eingeben...");
+		retailerTextBox.setWidth("200px");
+		
 		retailerTextBox.addClickHandler(new ClearClickHandler());
+		
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
 

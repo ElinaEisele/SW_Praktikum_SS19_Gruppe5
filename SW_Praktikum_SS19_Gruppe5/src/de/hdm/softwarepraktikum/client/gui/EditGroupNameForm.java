@@ -49,15 +49,15 @@ public class EditGroupNameForm extends VerticalPanel {
 		
 		newNameTextBox.setText("Neuen Namen eingeben...");
 		newNameTextBox.addClickHandler(new NameTextBoxClickHandler());
+		newNameTextBox.setWidth("200px");
 
 		cancelButton.addClickHandler(new CancelClickHandler());
 		cancelButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 		saveButton.setStyleName("NavButton");
 		
-		buttonPanel.add(saveButton);
+		buttonPanel.add(saveButton);	
 		buttonPanel.add(cancelButton);
-		
 		
 		mainPanel.add(infoLabel);
 		mainPanel.add(newNameTextBox);
@@ -187,3 +187,4 @@ public class EditGroupNameForm extends VerticalPanel {
 	}
 
 }
+
