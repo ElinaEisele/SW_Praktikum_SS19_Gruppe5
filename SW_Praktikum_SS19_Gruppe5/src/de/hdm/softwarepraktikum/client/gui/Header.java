@@ -33,6 +33,7 @@ public class Header extends HorizontalPanel {
 	private Anchor editorLink;
 
 	private VerticalPanel logoutPanel;
+	private Label nameLabel = new Label("MaulTasche");
 	private Label userMailLabel;
 
 	private ReportGeneratorEntry reportGenerator;
@@ -58,6 +59,7 @@ public class Header extends HorizontalPanel {
 		userMailLabel.addClickHandler(new LogoutClickHandler());
 		logoutButton.addClickHandler(new LogoutClickHandler());
 
+		nameLabel.setStyleName("Name");
 		editorButton.setStyleName("HeaderButton");
 		reportButton.setStyleName("HeaderButton");
 		platzhalterButton.setStyleName("HeaderPlatzhalterButton");
@@ -67,6 +69,7 @@ public class Header extends HorizontalPanel {
 		userMailLabel.setStyleName("CurrentUser");
 		logoutPanel.setStyleName("HeaderButton");
 
+		this.add(nameLabel);
 		this.add(editorButton);
 		this.add(reportButton);
 		this.add(platzhalterButton);

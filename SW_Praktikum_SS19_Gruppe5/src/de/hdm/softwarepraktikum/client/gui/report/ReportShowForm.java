@@ -114,6 +114,8 @@ public class ReportShowForm extends VerticalPanel{
 		Label newReportLabel = new Label ("Neuen Report erstellen");
 		newReportLabel.setStyleName("Title");
 		
+		getBackButton.setStyleName("NavButton");
+		
 		/**
 		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
 		 */
@@ -227,7 +229,7 @@ public class ReportShowForm extends VerticalPanel{
 				}else {
 					if (noDate == true) {
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, selectedRetailer, new CreateAllListitemsOfGroupReport());
-					
+
 					}else if (selectedRetailer.getId() == 0){
 						reportGenerator.createAllListitemsOfGroupReport(selectedGroup, sqlStartDate, sqlEndDate, new CreateAllListitemsOfGroupReport());
 					
