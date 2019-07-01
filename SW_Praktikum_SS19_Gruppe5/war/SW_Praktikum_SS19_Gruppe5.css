@@ -1,3 +1,19 @@
+.Login{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 200%;
+	margin-top: 15px;
+	align: center;
+}
+
+.LoginLink{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	font-size: 150%;
+	margin-top: 15px;
+	justify-content: central;
+}
+
 /* SW_Praktikum_SS19_Gruppe5.html: Navigationbar (header) */
 div#header {
 	list-style: none;
@@ -10,6 +26,21 @@ div#header {
 	display: flex;
 	-webkit-flex-flow: row wrap;
 	justify-content: flex-end;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+div#LoginHeader {
+	list-style: none;
+	margin: 0;
+	background: steelblue;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	justify-content: flex-start;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 }
@@ -30,6 +61,7 @@ div#header {
 	font-family: 'Rock Salt', cursive;
 	font-weight: bold;
 	font-size: 250%;	
+	margin-left: 20px; 
 }
 
 /* SW_Praktikum_SS19_Gruppe5.html: Elemente in wrapper (footer, main, aside) */
