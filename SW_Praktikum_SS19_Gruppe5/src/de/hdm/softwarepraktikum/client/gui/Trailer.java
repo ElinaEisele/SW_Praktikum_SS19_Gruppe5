@@ -30,7 +30,7 @@ public class Trailer extends VerticalPanel{
 		buttonsPanel.add(creditsButton);
 		this.add(buttonsPanel);
 		this.setWidth("100%");
-		this.setCellHorizontalAlignment(buttonsPanel, ALIGN_CENTER);
+		this.setCellHorizontalAlignment(buttonsPanel, ALIGN_RIGHT);
 		impressumButton.setStyleName("TrailerButton");
 		creditsButton.setStyleName("TrailerButton");
 		
