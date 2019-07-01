@@ -2,7 +2,6 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -228,7 +227,7 @@ public class NewRetailerForm extends VerticalPanel {
 					shoppinglistAdministration.createRetailer(retailerNameTextBox.getText(),
 							new CreateRetailerCallback());
 				} else {
-					Window.alert("Besser keinen Einzelhändler anlegen als einen ohne Name anlegen");
+					Notification.show("Bitte gib einen Namen für den neuen Einzelhändler an.");
 				}
 
 			} else {

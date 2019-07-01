@@ -2,10 +2,8 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -103,12 +101,12 @@ public class NewGroupForm extends VerticalPanel {
 			if (u != null) {
 				if (nameTextBox.getValue() == "") {
 
-					Window.alert("Niemand hat die Absicht eine Gruppe ohne Namen anzulegen");
+					Notification.show("Bitte gib einen Namen für die neue Gruppe ein.");
 				} else if (nameTextBox.getValue().length() <= 20) {
 					groupShowForm = new GroupShowForm();
 					shoppinglistAdministration.createGroupFor(u, nameTextBox.getValue(), new NewGroupAsyncCallback());
 				} else {
-					Window.alert("Bitte gib eine kürzeren Namen ein");
+					Notification.show("Bitte gib eine kürzeren Namen ein.");
 				}
 			}
 		}
