@@ -114,7 +114,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				if (nameTextBox.getValue() == "") {
-					
+					Notification.show("Bitte gib einen Namen für die neue Gruppe ein.");
 				} else if (nameTextBox.getValue().length() <= 23) {
 
 					shoppinglistAdministration.createShoppinglistFor(selectedGroup, nameTextBox.getValue(),
