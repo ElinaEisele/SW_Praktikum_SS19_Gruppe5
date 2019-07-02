@@ -5,7 +5,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * Realisierung einer exemplarischen Einkaufliste. Eine Einkaufsliste beseteht
- * aus mehreren Eintr�gen (Listitems).
+ * aus mehreren Eintraegen (Listitems).
  * 
  * @author TimBeutelspacher
  *
@@ -25,6 +25,11 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	private int groupId;
 	
 	/*
+	 * Fremdschluesselbeziehung zum zuletzt geaenderten Listitem-Objekt
+	 */
+	private int lastestEdit;
+	
+	/*
 	 * Default-Konstruktor
 	 */
 	public Shoppinglist() {
@@ -39,7 +44,7 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	}
 	
 	/**
-	 * Konstruktor zum bef�llen des CellTables
+	 * Konstruktor zum befuellen des CellTables
 	 */
 	public Shoppinglist(String name, ArrayList <Listitem>listitems) {
 		super(name);
@@ -48,7 +53,7 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	}
 	
 	/**
-	 * Ausgeben einer ArrayList mit allen Eintr�gen.
+	 * Ausgeben einer ArrayList mit allen Eintraegen.
 	 */
 	public ArrayList<Listitem> getListitems() {
 		return listitems;
@@ -66,5 +71,19 @@ public class Shoppinglist extends NamedBusinessObject implements IsSerializable{
 	 */
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
+	}
+
+	/*
+	 * Ausgabe der ID des zuletzt geaenderten Listitems.
+	 */
+	public int getLastestEdit() {
+		return lastestEdit;
+	}
+
+	/*
+	 * Setzen der ID des zuletzt geaenderten Listitems.
+	 */
+	public void setLastestEdit(int lastestEdit) {
+		this.lastestEdit = lastestEdit;
 	}
 }
