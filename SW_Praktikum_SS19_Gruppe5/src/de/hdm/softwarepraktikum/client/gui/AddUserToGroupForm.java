@@ -64,6 +64,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 
 		backButton.setStyleName("NavButton");
 		saveButton.setStyleName("NavButton");
+		buttonPanel.setStyleName("ButtonPanel");
 
 		searchPanel.add(emailSuggestBox);
 		buttonPanel.add(saveButton);

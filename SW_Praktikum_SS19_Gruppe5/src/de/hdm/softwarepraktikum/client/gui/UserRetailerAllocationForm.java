@@ -53,6 +53,8 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 	private HorizontalPanel addAllocationPanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Label userRetailerAllocationLabel = new Label("Wer kauft wo ein?");
+	private Label headerLabel1 = new Label("Händler");
+	private Label headerLabel2 = new Label("User");
 
 	/*
 	 * Widgets, deren Inhalte variable sind, werden als Attribute angelegt.
@@ -73,6 +75,11 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 	 */
 	public UserRetailerAllocationForm() {
 
+		userRetailerAllocationLabel.setStyleName("UserRetailerAll");
+		allocationFlexTable.setStyleName("FlexTable");
+		addAllocationPanel.setStyleName("AllocationPanel");
+		buttonPanel.setStyleName("ButtonPanel");
+		
 		addAllocationPanel.add(retailerListBox);
 		addAllocationPanel.add(userListBox);
 		buttonPanel.add(saveButton);
@@ -94,12 +101,14 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		saveButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
+		headerLabel1.setStyleName("HeaderLabel");
+		headerLabel2.setStyleName("HeaderLabel");
 	}
 
 	public void onLoad() {
 
-		allocationFlexTable.setText(0, 0, "Händler");
-		allocationFlexTable.setText(0, 1, "User");
+		allocationFlexTable.setWidget(0, 0, headerLabel1);
+		allocationFlexTable.setWidget(0, 1, headerLabel2);
 		allocationFlexTable.setText(0, 2, "");
 
 		shoppinglistAdministration.getAssignedRetailersOf(selectedShoppinglist, new AssignedRetailerCallback());
@@ -331,7 +340,7 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		public void onSuccess(Void result) {
 
 			Button removeButton = new Button("Entfernen");
-			removeButton.setStyleName("NavButton");
+			removeButton.setStyleName("NavButton2");
 			removeButton.addClickHandler(new RemoveClickHandler());
 
 			int row = allocationFlexTable.getRowCount();
@@ -384,7 +393,7 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 
 			for (String key : result.keySet()) {
 				removeButton = new Button("Entfernen");
-				removeButton.setStyleName("NavButton");
+				removeButton.setStyleName("NavButton2");
 				removeButton.addClickHandler(new RemoveClickHandler());
 
 				int row = allocationFlexTable.getRowCount();

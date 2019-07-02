@@ -58,10 +58,12 @@ div#LoginHeader {
 
 .Name{
 	color: white;
-	font-family: 'Rock Salt', cursive;
-	font-weight: bold;
-	font-size: 250%;	
-	margin-left: 20px; 
+	font-family: 'Libre Barcode 128 Text', cursive;
+	font-weight: normal;
+	font-size: 550%;	
+	margin-left: 20px;
+	margin-top: 10px;
+	margin-bottom: 5px;  
 }
 
 /* SW_Praktikum_SS19_Gruppe5.html: Elemente in wrapper (footer, main, aside) */
@@ -153,6 +155,25 @@ div#aside {
 	
 }
 
+.NavButton2{
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	font-weight: bold;
+	font-size: 100%;
+	background: transparent;
+	border: 1px solid black;
+	border-radius: 4px;
+	padding: 4px 8px;
+	margin-left: 5px; 
+}
+
+.NavButton2:hover {
+	color: black;
+	border: 1px solid black;
+	border-radius: 4px;
+	background-color: white;
+	
+}
 .cellTree{
 	color: black;
 	font-weight: normal;
@@ -444,7 +465,8 @@ div#container {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	font-size: 120%;
-	margin-top: 15px;	
+	margin-top: 10px;	
+	margin-bottom: 10px; 
 }
 
 .FlexTable{
@@ -454,6 +476,31 @@ div#container {
 	font-weight: normal;
 	font-size: 100%;
 	margin-top: 10px;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	
+}
+
+.UserRetailerAll{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 120%;
+	margin-top: 10px;	
+}
+
+.AllocationPanel{
+	color: black;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	margin-top: 10px
+}
+
+.ButtonPanel{
+	margin-top: 10px;
+}
+
+.HeaderLabel{
+	color: black;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	margin-top: 10px; 
 }
