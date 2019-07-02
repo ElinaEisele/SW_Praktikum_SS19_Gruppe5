@@ -105,6 +105,8 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		selectionModel.addSelectionChangeHandler(new SelectionChangeEventHandler());
 		shoppinglistDataProviders = new HashMap<Group, ListDataProvider<Shoppinglist>>();
 	}
+	
+	
 
 	public SingleSelectionModel<BusinessObject> getSelectionModel() {
 		return selectionModel;
