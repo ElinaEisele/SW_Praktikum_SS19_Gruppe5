@@ -169,7 +169,8 @@ public class ListitemUnitMapper {
 					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 				pstmt.setInt(1, unit.getId());
-				pstmt.setDate(2, (Date) unit.getCreationDate());
+				java.sql.Date sqlDate = new java.sql.Date(unit.getCreationDate().getTime());
+				pstmt.setDate(2, sqlDate);
 				pstmt.setString(3, unit.getName());
 				pstmt.executeUpdate();
 
