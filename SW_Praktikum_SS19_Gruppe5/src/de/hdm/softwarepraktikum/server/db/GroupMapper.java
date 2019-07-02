@@ -141,7 +141,8 @@ public class GroupMapper {
 					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, group.getId());
-			pstmt.setDate(2, (Date) group.getCreationDate());
+			java.sql.Date sqlDate = new java.sql.Date(group.getCreationDate().getTime());
+			pstmt.setDate(2, sqlDate);
 			pstmt.setString(3, group.getName());
 			pstmt.executeUpdate();
 			

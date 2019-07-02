@@ -1,6 +1,6 @@
 package de.hdm.softwarepraktikum.shared.bo;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -28,17 +28,13 @@ public abstract class BusinessObject implements IsSerializable{
 	
 	private Date creationDate;
 	
-	public BusinessObject() {
-		java.util.Date java = new java.util.Date();
-		java.sql.Date sql = new java.sql.Date(java.getTime());
-	    this.setCreationDate(sql);
+	public BusinessObject() {	
+	    this.setCreationDate(new Date());
 		/*
 		 * Setzen einer voraeufigen ID. Im Insert-Aufruf wird die Id gesetzt, welche mit der Datenbank
 		 * konsisent ist.
 		 */
-		this.setId(1);
-//		this.setCreationDate(new Date());
-	}
+		this.setId(1);	}
 	
 	/**
 	 * Die eindeutige Identifikationsnummer einer Instanz dieser Klasse.
