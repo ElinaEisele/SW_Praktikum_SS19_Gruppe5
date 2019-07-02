@@ -133,6 +133,7 @@ public class EditGroupNameForm extends VerticalPanel {
 
 				shoppinglistAdministration.changeNameOf(selectedGroup, newNameTextBox.getValue(),
 						new ChangeNameCallback());
+				return;
 
 			} else {
 				Notification.show("Bitte gib eine kürzeren Namen ein");
