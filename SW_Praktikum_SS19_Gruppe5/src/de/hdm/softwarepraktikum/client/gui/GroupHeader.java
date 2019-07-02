@@ -47,6 +47,7 @@ public class GroupHeader extends HorizontalPanel {
 		newShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		newShoppinglist.getElement().appendChild(newShoppinglistImg.getElement());
 		newShoppinglist.addClickHandler(new NewShoppinglistClickHandler());
+		newShoppinglist.setTitle("Einkausliste hinzufügen");
 
 		Image addUserImg = new Image();
 		addUserImg.setUrl("images/add-user.png");
@@ -54,6 +55,7 @@ public class GroupHeader extends HorizontalPanel {
 		addUser.setStyleName("GroupHeaderButton");
 		addUser.getElement().appendChild(addUserImg.getElement());
 		addUser.addClickHandler(new AddUserClickHandler());
+		addUser.setTitle("Nutzer hinzufügen");
 
 		Image leaveGroupImg = new Image();
 		leaveGroupImg.setUrl("images/logout.png");
@@ -61,6 +63,7 @@ public class GroupHeader extends HorizontalPanel {
 		leaveGroup.setStyleName("GroupHeaderButton");
 		leaveGroup.getElement().appendChild(leaveGroupImg.getElement());
 		leaveGroup.addClickHandler(new LeaveGroupClickHandler());
+		leaveGroup.setTitle("Gruppe verlassen");
 
 		Image editGroupImg = new Image();
 		editGroupImg.setUrl("images/edit.png");
@@ -68,6 +71,7 @@ public class GroupHeader extends HorizontalPanel {
 		editGroupName.setStyleName("GroupHeaderButton");
 		editGroupName.getElement().appendChild(editGroupImg.getElement());
 		editGroupName.addClickHandler(new EditClickHandler());
+		editGroupName.setTitle("Gruppename ändern");
 
 		Image deleteImg = new Image();
 		deleteImg.setUrl("images/delete.png");
@@ -75,6 +79,7 @@ public class GroupHeader extends HorizontalPanel {
 		deleteGroup.setStyleName("GroupHeaderButton");
 		deleteGroup.getElement().appendChild(deleteImg.getElement());
 		deleteGroup.addClickHandler(new DeleteGroupClickHandler());
+		deleteGroup.setTitle("Gruppe löschen");
 
 		Image showRetailersImg = new Image();
 		showRetailersImg.setUrl("images/shop.png");
@@ -82,7 +87,7 @@ public class GroupHeader extends HorizontalPanel {
 		showRetailers.setStyleName("GroupHeaderButton");
 		showRetailers.getElement().appendChild(showRetailersImg.getElement());
 		showRetailers.addClickHandler(new ShowRetailersClickHandler());
-
+		showRetailers.setTitle("Einzelhändeler anzeigen");
 	}
 
 	/**
