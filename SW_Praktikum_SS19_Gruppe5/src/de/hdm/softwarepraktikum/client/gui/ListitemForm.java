@@ -593,7 +593,7 @@ public class ListitemForm extends VerticalPanel {
 				RootPanel.get("main").add(ssf);
 			}
 			
-			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, result, new LatestEditCallback());
+			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, selectedListitem, new LatestEditCallback());
 
 
 		}
