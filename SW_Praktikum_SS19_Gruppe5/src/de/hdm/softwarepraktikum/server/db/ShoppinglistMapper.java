@@ -75,6 +75,7 @@ public class ShoppinglistMapper {
 				sl.setCreationDate(rs.getDate("creationDate"));
 				sl.setName(rs.getString("name"));
 				sl.setId(rs.getInt("usergroup_id"));
+				sl.setLastestEdit(rs.getInt("latestEdit"));
 				shoppinglists.add(sl);
 			}
 
@@ -106,6 +107,8 @@ public class ShoppinglistMapper {
 				sl.setCreationDate(rs.getDate("creationDate"));
 				sl.setName(rs.getString("name"));
 				sl.setId(rs.getInt("usergroup_id"));
+				sl.setLastestEdit(rs.getInt("latestEdit"));
+
 			}
 			
 		} catch (SQLException e) {
@@ -129,7 +132,7 @@ public class ShoppinglistMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id "
+			ResultSet rs = stmt.executeQuery("SELECT id, creationDate, name, usergroup_id, latestEdit "
 					+ "FROM retailers WHERE name = '" + name + "'");
 
 			while (rs.next()) {
@@ -138,6 +141,7 @@ public class ShoppinglistMapper {
 				sl.setCreationDate(rs.getDate("creationDate"));
 				sl.setName(rs.getString("name"));
 				sl.setGroupId(rs.getInt("usergroup_id"));
+				sl.setLastestEdit(rs.getInt("latestEdit"));
 				shoppinglists.add(sl);
 			}
 			
@@ -296,7 +300,8 @@ public class ShoppinglistMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id AS shoppinglist_id, "
 					+ "shoppinglists.creationDate AS shoppinglist_creationDate, "
-					+ "shoppinglists.name AS shoppinglist_name "
+					+ "shoppinglists.name AS shoppinglist_name, "
+					+ "shoppinglists.latestEdit AS shoppinglist_latestEdit "
 					+ "FROM listitems INNER JOIN shoppinglists "
 					+ "ON listitems.shoppinglist_id = shoppinglists.id "
 					+ "WHERE listitems.id = " + listitem.getId());
@@ -305,6 +310,8 @@ public class ShoppinglistMapper {
 				sl.setId(rs.getInt("shoppinglist_id"));
 				sl.setCreationDate(rs.getDate("shoppinglist_creationDate"));
 				sl.setName(rs.getString("shoppinglist_name"));
+				sl.setLastestEdit(rs.getInt("shoppinglist_latestEdit"));
+
 			}
 
 		} catch (SQLException e) {
@@ -334,7 +341,8 @@ public class ShoppinglistMapper {
 			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id AS shoppinglist_id, "
 					+ "shoppinglists.creationDate AS shoppinglist_creationDate, "
 					+ "shoppinglists.name AS shoppinglist_name, "
-					+ "shoppinglists.usergroup_id AS shoppinglist_usergroup_id "
+					+ "shoppinglists.usergroup_id AS shoppinglist_usergroup_id, "
+					+ "shoppinglists.latestEdit AS shoppinglist_latestEdit "
 					+ "FROM shoppinglists INNER JOIN usergroups "
 					+ "ON shoppinglists.usergroup_id = usergroups.id "
 					+ "WHERE usergroups.id = " + group.getId());
@@ -345,6 +353,7 @@ public class ShoppinglistMapper {
 				sl.setCreationDate(rs.getDate("shoppinglist_creationDate"));
 				sl.setName(rs.getString("shoppinglist_name"));
 				sl.setGroupId(rs.getInt("shoppinglist_usergroup_id"));
+				sl.setLastestEdit(rs.getInt("shoppinglist_latestEdit"));
 				shoppinglists.add(sl);
 			}
 
@@ -374,7 +383,8 @@ public class ShoppinglistMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT shoppinglists.id AS shoppinglist_id, "
 					+ "shoppinglists.creationDate AS shoppinglist_creationDate, "
-					+ "shoppinglists.name AS shoppinglist_name "
+					+ "shoppinglists.name AS shoppinglist_name, "
+					+ "shoppinglists.latestEdit AS shoppinglist_latestEdit "
 					+ "FROM shoppinglists INNER JOIN users "
 					+ "ON shoppinglists.user_id = users.id "
 					+ "WHERE users.id = " + user.getId());
@@ -384,6 +394,8 @@ public class ShoppinglistMapper {
 				sl.setId(rs.getInt("shoppinglist_id"));
 				sl.setCreationDate(rs.getDate("shoppinglist_creationDate"));
 				sl.setName(rs.getString("shoppinglist_name"));
+				sl.setLastestEdit(rs.getInt("shoppinglist_latestEdit"));
+
 				shoppinglists.add(sl);
 			}
 

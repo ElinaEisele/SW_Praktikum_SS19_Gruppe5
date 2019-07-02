@@ -559,6 +559,10 @@ public class ListitemForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
+			
+			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, selectedListitem, new LatestEditCallback());
+			selectedShoppinglist.setLastestEdit(selectedListitem.getId());
+		
 			RootPanel.get("main").clear();
 
 			if (selectedShoppinglist != null && selectedUser != null) {
