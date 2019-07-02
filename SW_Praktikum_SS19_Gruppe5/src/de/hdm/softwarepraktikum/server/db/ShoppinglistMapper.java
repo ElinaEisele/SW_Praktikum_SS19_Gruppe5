@@ -175,7 +175,8 @@ public class ShoppinglistMapper {
 					+ "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, shoppinglist.getId());
-			pstmt.setDate(2, (Date) shoppinglist.getCreationDate());
+			java.sql.Date sqlDate = new java.sql.Date(shoppinglist.getCreationDate().getTime());
+			pstmt.setDate(2, sqlDate);
 			pstmt.setString(3, shoppinglist.getName());
 			pstmt.setInt(4, shoppinglist.getGroupId());
 			pstmt.executeUpdate();
