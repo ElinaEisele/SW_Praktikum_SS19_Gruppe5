@@ -39,7 +39,7 @@ public class NewGroupForm extends VerticalPanel {
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button saveButton = new Button("Speichern");
-	private Button cancelButten = new Button("Abbrechen");
+	private Button cancelButton = new Button("Abbrechen");
 
 	public NewGroupForm() {
 		
@@ -47,11 +47,16 @@ public class NewGroupForm extends VerticalPanel {
 		nameTextBox.addClickHandler(new NameTextBoxClickHandler());
 
 		saveButton.addClickHandler(new SaveClickHandler());
-		cancelButten.addClickHandler(new CancelClickHandler());
+		cancelButton.addClickHandler(new CancelClickHandler());
 
+		infoLabel.setStyleName("Header");
+		buttonPanel.setStyleName("ButtonPanel");
+		saveButton.setStyleName("NavButton");
+		cancelButton.setStyleName("NavButton");
+		
 		buttonPanel.add(saveButton);
-		buttonPanel.add(cancelButten);
-
+		buttonPanel.add(cancelButton);
+		
 		mainPanel.add(infoLabel);
 		mainPanel.add(nameTextBox);
 		mainPanel.add(buttonPanel);

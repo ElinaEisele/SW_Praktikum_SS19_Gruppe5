@@ -42,7 +42,9 @@ public class DeleteShoppinglistDialogBox extends DialogBox {
 
 		cancelButton.setStyleName("NavButton");
 		confirmButton.setStyleName("NavButton");
-
+		buttonPanel.setStyleName("ButtonPanel");
+		confirmationLabel.setStyleName("Header");
+		
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
 

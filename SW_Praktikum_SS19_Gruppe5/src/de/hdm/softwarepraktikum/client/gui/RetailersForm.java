@@ -59,6 +59,8 @@ public class RetailersForm extends VerticalPanel {
 		
 		retailerTextBox.addClickHandler(new ClearClickHandler());
 		
+		buttonPanel.setStyleName("ButtonPanel");
+		
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
 
