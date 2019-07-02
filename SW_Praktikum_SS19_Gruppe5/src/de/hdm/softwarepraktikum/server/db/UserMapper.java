@@ -203,7 +203,8 @@ public class UserMapper {
 					+ "VALUES (?, ?, ?, ?) ", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, user.getId());
-			pstmt.setDate(2, (Date) user.getCreationDate());
+			java.sql.Date sqlDate = new java.sql.Date(user.getCreationDate().getTime());
+			pstmt.setDate(2, sqlDate);
 			pstmt.setString(3, user.getName());
 			pstmt.setString(4, user.getGmailAddress());
 			pstmt.executeUpdate();
