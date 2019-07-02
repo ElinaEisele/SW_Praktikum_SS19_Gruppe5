@@ -64,6 +64,7 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 		filterPanel.add(filterOptionsListBox);
 		filterPanel.add(filterDetailsListBox);
 
+		infoLabel.setStyleName("Header");
 		
 		backButton.setStyleName("NavButton");
 		backButton.addClickHandler(new CancelClickHandler());
@@ -72,6 +73,8 @@ public class ShoppinglistFilterForm extends VerticalPanel {
 		saveButton.setStyleName("NavButton");
 		saveButton.addClickHandler(new SaveClickHandler());
 
+		buttonPanel.setStyleName("ButtonPanel");
+		
 		buttonPanel.add(saveButton);
 		buttonPanel.add(backButton);
 

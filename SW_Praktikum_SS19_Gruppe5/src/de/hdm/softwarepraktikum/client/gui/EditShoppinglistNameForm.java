@@ -55,6 +55,9 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		confirmButton.setStyleName("NavButton");
 		confirmButton.addClickHandler(new ConfirmClickHandler());
 
+		infoLabel.setStyleName("Header");
+		buttonPanel.setStyleName("ButtonPanel");
+		
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
 		

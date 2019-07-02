@@ -49,8 +49,10 @@ public class NewShoppinglistForm extends VerticalPanel {
 		saveButton.addClickHandler(new SaveClickHandler());
 		cancelButton.addClickHandler(new CancelClickHandler());
 		
+		infoLabel.setStyleName("Header");
 		saveButton.setStyleName("NavButton");
 		cancelButton.setStyleName("NavButton");
+		buttonPanel.setStyleName("ButtonPanel");
 
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
