@@ -162,7 +162,8 @@ public class ListitemMapper {
 					Statement.RETURN_GENERATED_KEYS);
 			
 				pstmt.setInt(1, listitem.getId());
-				pstmt.setDate(2, (Date) listitem.getCreationDate());
+				java.sql.Date sqlDate = new java.sql.Date(listitem.getCreationDate().getTime());
+				pstmt.setDate(2, sqlDate);
 				pstmt.setFloat(3, listitem.getAmount());
 				pstmt.setBoolean(4, listitem.isStandard()); 
 				pstmt.setInt(5, listitem.getProductID());
