@@ -594,12 +594,20 @@ public interface ShoppinglistAdministration extends RemoteService {
 	public ArrayList<Listitem> getArchivedListitemsOf(Group group) throws IllegalArgumentException;
 	
 	/**
-	 * Eine Zuweisung wird gel�scht.
+	 * Eine Zuweisung wird geloescht.
 	 * @param retailer ist der Einzelhaendler, welcher als Beschaffungsort eines Eintrags gilt
 	 * @param user ist der User, dessen Zuweisung gel�scht werden soll.
 	 * @param shoppinglist ist die Shoppinglist, innerhalb 
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist) throws IllegalArgumentException;
+	
+	/**
+	 * Setzen der Fremdschluesselbeziehung zu dem zuletzt geaenderten Lisitem-Objekt einer Shoppingliste.
+	 * @param shoppinglist ist die Einkaufsliste, in welcher das zuletzt geaenderte Listitem gesetzt werden soll. 
+	 * @param listitem ist das zuletzt geaenderte Listitem.
+	 * @throws IllegalArgumentException
+	 */
+	public void setLatestEdit(Shoppinglist shoppinglist, Listitem listitem) throws IllegalArgumentException; 
 
 }

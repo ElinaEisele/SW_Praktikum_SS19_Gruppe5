@@ -315,7 +315,7 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Clickhandler zum erstellen des Listitem Objekts
+	 * Clickhandler zum Aktualisieren des Listitem Objekts
 	 * 
 	 */
 	private class UpdateListitemClickHandler implements ClickHandler {
@@ -559,6 +559,10 @@ public class ListitemForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
+			
+			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, selectedListitem, new LatestEditCallback());
+			selectedShoppinglist.setLastestEdit(selectedListitem.getId());
+			
 			RootPanel.get("main").clear();
 
 			if (selectedShoppinglist != null && selectedUser != null) {
@@ -595,5 +599,24 @@ public class ListitemForm extends VerticalPanel {
 
 		}
 
+	}
+	
+	/**
+	 * Zum Festlegen der letzten Änderung einer <code>Shoppinglist</code>.
+	 */
+	private class LatestEditCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 }

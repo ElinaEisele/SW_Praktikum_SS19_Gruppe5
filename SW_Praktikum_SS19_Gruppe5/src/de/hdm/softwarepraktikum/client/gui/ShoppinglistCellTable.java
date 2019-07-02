@@ -64,7 +64,8 @@ public class ShoppinglistCellTable extends VerticalPanel {
 	private Shoppinglist selectedShoppinglist = null;
 	private Listitem selectedListitem = null;
 	private Group selectedGroup = null;
-
+	private int id = 0;
+	
 	private Button archive = null;
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
@@ -262,14 +263,12 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			public String getValue(ArrayList<Object> object) {
 				selectedListitem = (Listitem) object.get(0);
 
-//				int id = shoppinglistShowForm.getSelectedShoppinglist().getLatestEdit();
-//				
-//				if (selectedListitem.getId() == id) {
-//					return "like.png";
-//					
-//				} else {
-				return "";
-//				}
+				if (selectedListitem.getId() == id) {
+					return "new.png";
+					
+				} else {
+				return "transparent.png";
+				}
 
 			}
 
@@ -299,6 +298,9 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		/**
 		 * Holen der Daten ohne Filter
 		 */
+		selectedShoppinglist = shoppinglistShowForm.getSelectedShoppinglist();
+		id = shoppinglistShowForm.getSelectedShoppinglist().getLastestEdit();
+
 		shoppinglistAdministration.getListitemData(shoppinglistShowForm.getSelectedShoppinglist(),
 				new GetListitemDataCallback());
 

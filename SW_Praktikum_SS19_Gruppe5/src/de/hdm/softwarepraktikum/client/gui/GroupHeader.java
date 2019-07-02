@@ -88,6 +88,7 @@ public class GroupHeader extends HorizontalPanel {
 		showRetailers.getElement().appendChild(showRetailersImg.getElement());
 		showRetailers.addClickHandler(new ShowRetailersClickHandler());
 		showRetailers.setTitle("Einzelhändler anzeigen");
+
 	}
 
 	/**

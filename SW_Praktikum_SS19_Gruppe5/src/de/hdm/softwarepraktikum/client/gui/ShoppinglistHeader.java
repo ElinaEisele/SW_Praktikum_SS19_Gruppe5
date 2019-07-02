@@ -81,6 +81,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		showUserRetailerAllocation.addClickHandler(new ShowUserRetailerAllocationClickHandler());
 		showUserRetailerAllocation.setTitle("Einzelhändlerzuweisung verwalten");
 
+
 		Image filterImg = new Image();
 		filterImg.setUrl("images/filter.png");
 		filterImg.setSize("30px", "30px");
