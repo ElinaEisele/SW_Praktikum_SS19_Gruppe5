@@ -168,7 +168,8 @@ public class ProductMapper {
 					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 				pstmt.setInt(1, product.getId());
-				pstmt.setDate(2, (Date) product.getCreationDate());
+				java.sql.Date sqlDate = new java.sql.Date(product.getCreationDate().getTime());
+				pstmt.setDate(2, sqlDate);
 				pstmt.setString(3, product.getName());
 				pstmt.executeUpdate();
 
