@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -139,7 +140,8 @@ public class NewShoppinglistForm extends VerticalPanel {
 				GroupShowForm gsf = new GroupShowForm();
 				gsf.setSelected(selectedGroup);
 				gsf.setGstvm(gstvm);
-				gstvm.setGroupShowForm(gsf);
+		//		gstvm.setGroupShowForm(gsf);
+				
 				RootPanel.get("main").add(gsf);
 			}
 		}
