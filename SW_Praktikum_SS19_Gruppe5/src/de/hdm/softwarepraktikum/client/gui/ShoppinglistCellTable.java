@@ -18,6 +18,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -84,7 +85,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 		archive = new Button("Markierte Eintraege archivieren");
 		archive.addClickHandler(new ArchiveClickHandler());
-		
+
 		archive.setStyleName("NavButton");
 
 		/**
@@ -243,6 +244,38 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
+		 * Spalte, die ein Bild enthält, dass das zuletzt geänderte
+		 * <code>Listitem</code>-Objekt deutlich macht.
+		 * 
+		 */
+		Column<ArrayList<Object>, String> latestChangeColumn = new Column<ArrayList<Object>, String>(
+				new ClickableTextCell() {
+					public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
+						sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+					}
+
+				})
+
+		{
+
+			@Override
+			public String getValue(ArrayList<Object> object) {
+				selectedListitem = (Listitem) object.get(0);
+
+//				int id = shoppinglistShowForm.getSelectedShoppinglist().getLatestEdit();
+//				
+//				if (selectedListitem.getId() == id) {
+//					return "like.png";
+//					
+//				} else {
+				return "";
+//				}
+
+			}
+
+		};
+
+		/**
 		 * Add Columns to CellTable
 		 * 
 		 */
@@ -253,6 +286,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(retailerNameToDisplay, "Haendler");
 		table.addColumn(imageColumn, "Edit");
 		table.addColumn(standardColumn, "Standard");
+		table.addColumn(latestChangeColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
 
 	}
 
@@ -456,7 +490,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 					listitems.add(result.get(key).get(1));
 					listitems.add(result.get(key).get(2));
 					listitems.add(result.get(key).get(3));
-
+					
 					data.add(listitems);
 				}
 

@@ -171,13 +171,15 @@ public class ShoppinglistMapper {
 				shoppinglist.setId(rs.getInt("maxid") + 1);
 			}
 			
-			PreparedStatement pstmt = con.prepareStatement("INSERT INTO shoppinglists (id, creationDate, name, usergroup_id) "
-					+ "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement("INSERT INTO shoppinglists (id, creationDate, name, usergroup_id, latestEdit) "
+					+ "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, shoppinglist.getId());
-			pstmt.setDate(2, (Date) shoppinglist.getCreationDate());
+			java.sql.Date sqlDate = new java.sql.Date(shoppinglist.getCreationDate().getTime());
+			pstmt.setDate(2, sqlDate);
 			pstmt.setString(3, shoppinglist.getName());
 			pstmt.setInt(4, shoppinglist.getGroupId());
+			pstmt.setInt(5, shoppinglist.getLastestEdit());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -197,10 +199,11 @@ public class ShoppinglistMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			PreparedStatement pstmt = con.prepareStatement("UPDATE shoppinglists SET name = ? WHERE id = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE shoppinglists SET name = ?, latestEdit = ? WHERE id = ?");
 
 			pstmt.setString(1, shoppinglist.getName());
-			pstmt.setInt(2, shoppinglist.getId());
+			pstmt.setInt(2, shoppinglist.getLastestEdit());
+			pstmt.setInt(3, shoppinglist.getId());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
