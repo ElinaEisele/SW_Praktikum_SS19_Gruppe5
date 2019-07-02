@@ -11,31 +11,41 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse fuer </code>Group</code> Objekte. Diese umfasst Methoden um
- * Group Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das
- * Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen
- * und DB-Stukturen in Objekte umgewandelt werden.
+ * Mapper-Klasse, die <code>Group</code>-Objekte auf eine relationale
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
+ * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+ * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
  * @author CarlaHofmann
  */
 
 public class GroupMapper {
 
-	/**
-	 * Speicherung der Instanz dieser Mapperklasse.
-	 */
+	  /**
+	   * Die Klasse GroupMapper wird nur einmal instantiiert. Man spricht hierbei
+	   * von einem sogenannten <b>Singleton</b>.
+	   * <p>
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.
+	   * 
+	   */
 	private static GroupMapper groupMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen von GroupMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen dieser Klasse.
 	 */
 	protected GroupMapper() {
 	}
 
 	/**
-	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
+     * Diese statische Methode kann aufgrufen werden durch
+     * <code>GroupMapper.groupMapper()</code>. Sie stellt die
+     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+     * Instanz von <code>GroupMapper</code> existiert.
 	 *
-	 * @return Groupmapper
+	 * @return groupMapper
 	 */
 	public static GroupMapper groupMapper() {
 		if (groupMapper == null) {
@@ -46,7 +56,7 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Ausgabe einer Liste aller Gruppen
+	 * Auslesen aller Gruppen.
 	 *
 	 * @return ArrayList<Group>
 	 */
@@ -76,8 +86,9 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Gruppe mithilfe id finden
-	 *
+	 * Suchen einer Gruppe mit vorgegebener Id. Da diese eindeutig ist,
+	 * wird genau ein Objekt zurueckgegeben.
+	 * 
 	 * @param id
 	 * @return Group-Objekt
 	 */
@@ -106,7 +117,9 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen
+	 * Einfügen eines <code>Group</code>-Objekts in die Datenbank. Dabei wird
+	 * auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
+	 * berichtigt.
 	 *
 	 * @param group
 	 * @return Group-Objekt
@@ -128,7 +141,8 @@ public class GroupMapper {
 					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, group.getId());
-			pstmt.setDate(2, (Date) group.getCreationDate());
+			java.sql.Date sqlDate = new java.sql.Date(group.getCreationDate().getTime());
+			pstmt.setDate(2, sqlDate);
 			pstmt.setString(3, group.getName());
 			pstmt.executeUpdate();
 			
@@ -142,7 +156,7 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank
+	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 *
 	 * @param group
 	 * @return Group-Objekt
@@ -168,7 +182,7 @@ public class GroupMapper {
 	}
 
 	/**
-	 * Delete Methode, um ein Gruppen-Objekt aus der Datenbank zu entfernen
+	 * Löschen der Daten eines <code>Group</code>-Objekts aus der Datenbank.
 	 *
 	 * @param group
 	 */
@@ -187,8 +201,7 @@ public class GroupMapper {
 	}
 	
 	/**
-	 * 
-	 * Eine neue Membershipbeziehung erstellen.
+	 * Einfügen einer Membershpbeziehung in die Datenbank.
 	 * 
 	 * @param user_id
 	 * @param usergroup_id
@@ -213,8 +226,7 @@ public class GroupMapper {
 	}
 	
 	/**
-	 * 
-	 * User aus einer Gruppe loeschen
+	 * Löschen einer Membershpbeziehung aus der Datenbank.
 	 * 
 	 * @param userId
 	 * @param groupId
@@ -236,7 +248,7 @@ public class GroupMapper {
 	
 	/**
 	 * 
-	 * Eine Membershipbeziehung loeschen.
+	 * Löschen aller Membershpbeziehung einer Gruppe aus der Datenbank.
 	 * 
 	 * @param usergroup_id
 	 */
@@ -256,7 +268,8 @@ public class GroupMapper {
 	}
 	
 	/**
-	 * Methode, um alle Gruppen eines Users zu finden
+	 * Auslesen der zugehörigen <code>Group</code>-Objekte eines 
+	 * gegebenen <code>User<code>-Objekts.
 	 * 
 	 * @param user
 	 * @return Group-Objekt

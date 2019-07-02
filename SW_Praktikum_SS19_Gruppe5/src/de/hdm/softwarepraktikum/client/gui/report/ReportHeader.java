@@ -7,6 +7,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ShoppinglistEditorEntryLogin.CurrentUser;
 import de.hdm.softwarepraktikum.shared.bo.User;
@@ -15,6 +17,7 @@ import de.hdm.softwarepraktikum.shared.bo.User;
  * Klasse zur Darstellung des Headers des Reports. Dies umfasst einen Button
  * fuer den Editor, einen fuer den ReportGenerator, einen fuer den Logout und
  * den Namen der Anwendung.
+ * 
  * 
  * @author FelixRapp & CarlaHofmann
  *
@@ -30,6 +33,10 @@ public class ReportHeader extends HorizontalPanel {
 	private Anchor reportLink;
 	private Anchor editorLink;
 
+	
+	private Label userNameLabel;
+	private VerticalPanel logoutPanel;
+	
 	public void onLoad() {
 
 		editorButton = new Button("Editor");
@@ -39,20 +46,33 @@ public class ReportHeader extends HorizontalPanel {
 		reportLink = new Anchor("Report");
 		editorLink = new Anchor("Editor");
 
+		logoutPanel = new VerticalPanel();
+		
+		userNameLabel = new Label(user.getName());
+		logoutPanel.add(abmeldenButton);
+		logoutPanel.add(userNameLabel);
+		
 		editorButton.addClickHandler(new EditorClickHandler());
 		reportButton.addClickHandler(new ReportClickHandler());
+		
+		userNameLabel.addClickHandler(new LogoutClickHandler());
 		abmeldenButton.addClickHandler(new LogoutClickHandler());
 
+		
 		editorButton.setStyleName("HeaderButton");
 		reportButton.setStyleName("HeaderButton");
 		platzhalterButton.setStyleName("HeaderPlatzhalterButton");
 		platzhalterButton.getElement().setAttribute("disabled", "disabled");
-		abmeldenButton.setStyleName("HeaderButton");
+		
+		abmeldenButton.setStyleName("LogoutButton");
+		userNameLabel.setStyleName("CurrentUser");
+		logoutPanel.setStyleName("HeaderButton");
 
+		
 		this.add(editorButton);
 		this.add(reportButton);
 		this.add(platzhalterButton);
-		this.add(abmeldenButton);
+		this.add(logoutPanel);
 
 	}
 	
@@ -70,7 +90,6 @@ public class ReportHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.alert(CurrentUser.getUser().getName() + " loggt sich jetzt aus.");
 			Window.open(user.getLogoutUrl(), "_self", "");
 
 		}

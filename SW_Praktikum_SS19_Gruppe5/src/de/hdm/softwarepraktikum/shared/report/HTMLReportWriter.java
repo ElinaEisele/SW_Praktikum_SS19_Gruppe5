@@ -106,12 +106,20 @@ public void process(AllListitemsOfGroupReport r) {
   //In diesem StringBuffer werden die Ergebnisse der Methode abgelegt.
     StringBuffer result = new StringBuffer();
 
+	//    result.append("<head>");
+	//    result.append("<meta charset='utf-8'>"); 
+	//    result.append("<link href=\'https://fonts.googleapis.com/css?family=Barriecito&display=swap\'>");
+	//    result.append("</head>");
+    
     /*
      * Die einzelnen Bestandteile des Reports werden nacheinander ausgelesen
-     * und dem StringBuffer in HTML-Form angeh�ngt.
+     * und dem StringBuffer in HTML-Form angehängt.
      */
-    result.append("<H1>" + r.getTitle() + "</H1>");
-    result.append("<H3>" + r.getCreationDateString()+ "</H3>");
+   result.append("<H1>" + r.getTitle() + "</H1>");
+   result.append("<H3>" + r.getCreationDateString() + "</H3>");
+    
+//    result.append("<H1 style = font-family: 'Barriecito', cursive; font-weight: bold; font-size: 120%;>" + r.getTitle() + "</H1>");
+//    result.append("<H3 style = font-family: 'Open Sans', sans-serif; font-weight: bold; font-size: 100%;>" + r.getCreationDateString()+ "</H3>");
     
     this.reportTextHeader = result.toString();
 

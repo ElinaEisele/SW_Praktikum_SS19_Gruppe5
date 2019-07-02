@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse fuer </code>User</code> Objekte. Diese umfasst Methoden um User
- * Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das Mapping
- * funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen und
- * DB-Stukturen in Objekte umgewandelt werden.
+ * Mapper-Klasse, die <code>User</code>-Objekte auf eine relationale
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
+ * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+ * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
  * @author LeoniFriedrich & CarlaHofmann
  *
@@ -17,20 +18,28 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 public class UserMapper {
 
 	/**
-	 * Speicherung der Instanz dieser Mapperklasse.
+	 * Die Klasse ListitemMapper wird nur einmal instantiiert. Man spricht hierbei
+	 * von einem sogenannten <b>Singleton</b>.
+	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	 * einzige Instanz dieser Klasse.
+	 * 
 	 */
 	private static UserMapper userMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von UserMapper.
+	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen dieser Klasse.
 	 */
 	protected UserMapper() {
 	}
 
 	/**
-	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse.
+     * Diese statische Methode kann aufgrufen werden durch
+     * <code>UserMapper.userMapper()</code>. Sie stellt die
+     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+     * Instanz von <code>UserMapper</code> existiert.
 	 *
-	 * @return Usermapper
+	 * @return userMapper
 	 */
 	public static UserMapper userMapper() {
 		if (userMapper == null) {
@@ -41,8 +50,8 @@ public class UserMapper {
 	}
 
 	/**
-	 * Ausgabe einer Liste aller User.
-	 * 
+	 * Auslesen aller <code>User<code>-Objekte.
+	 *
 	 * @return ArrayList<User>
 	 */
 	public ArrayList<User> findAll() {
@@ -73,7 +82,8 @@ public class UserMapper {
 	}
 
 	/**
-	 * User mithilfe Id finden.
+	 * Suchen eines <code>User<code>-Objekts mit vorgegebener Id. 
+	 * Da diese eindeutig ist, wird genau ein Objekt zurueckgegeben.
 	 * 
 	 * @param id
 	 * @return User-Objekte
@@ -103,7 +113,7 @@ public class UserMapper {
 	}
 
 	/**
-	 * User mithilfe des Namens finden.
+	 * Suchen aller <code>User<code>-Objekte mit vorgegebenem Namen. 
 	 * 
 	 * @param name
 	 * @return ArrayList<User>
@@ -137,7 +147,7 @@ public class UserMapper {
 	}
 
 	/**
-	 * User mithilfe der Gmail Adresse finden.
+	 * Suchen eines <code>User<code>-Objekts mit vorgegebener gMail-Adresse. 
 	 * 
 	 * @param gmail
 	 * @return User-Objekt
@@ -169,7 +179,9 @@ public class UserMapper {
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen.
+	 * Einfügen eines <code>User</code>-Objekts in die Datenbank. 
+	 * Dabei wird auch der Primaerschlüssel des übergebenen Objekts 
+	 * geprüft und ggf. berichtigt.
 	 *
 	 * @param user
 	 * @return User-Objekt
@@ -205,7 +217,7 @@ public class UserMapper {
 	}
 	
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
+	 * Wiederholtes Schreiben eines <code>User<code>-Objekts in die Datenbank.
 	 *
 	 * @param user 
 	 * @return User-Objekt
@@ -232,8 +244,9 @@ public class UserMapper {
 	}
 
 	/**
-	 * Delete Methode um User-Datensatz aus der DB zu entfernen.
-	 * 
+	 * Loeschen der Daten eines 
+	 * <code>User</code>-Objekts aus der Datenbank.
+	 *
 	 * @param user
 	 */
 
@@ -252,8 +265,7 @@ public class UserMapper {
 	}
 	
 	/**
-	 * 
-	 * Zuweisung loeschen.
+	 * Loeschen aller Verantwortlichkeiten eines <code>User<code>-Objekts.
 	 * 
 	 * @param userId
 	 */
@@ -273,8 +285,7 @@ public class UserMapper {
 
 
 	/**
-	 * 
-	 * Eine Membershipbeziehung loeschen.
+	 * Loeschen aller Membershipbeziehungen eines <code>User<code>-Objekts.
 	 * 
 	 * @param usergroup_id
 	 */
@@ -294,8 +305,9 @@ public class UserMapper {
 	}
 	
 	/**
-	 * User einer Gruppe ausgeben
-	 * 
+	 * Auslesen aller zugehörigen <code>User<code>-Objekte eines
+	 * gegebenen <code>Group<code>-Objekts.	
+	 *
 	 * @param group
 	 * @return ArrayList<User>
 	 */
@@ -330,9 +342,9 @@ public class UserMapper {
 	}
 
 	/**
-	 * 
-	 * User finden, welcher dem uebergebenen Listitem zugeordnet ist.
-	 * 
+	 * Auslesen eines <code>User<code>-Objekts mit der Verantwortlichkeit 
+	 * für ein gegebenes <code>Listitem<code>-Objekt.	
+	 *
 	 * @param listitem
 	 * @return User-Objekt
 	 */
@@ -374,6 +386,14 @@ public class UserMapper {
 
 	}
 	
+	/**
+	 * Auslesen eines <code>User<code>-Objekts eines <code>Shoppinglist<code>-Objekts 
+	 * mit einer zugeordneten Verantwortlichkeit zu einem gegebenen <code>Retailer<code>-Objekt.
+	 * 
+	 * @param shoppinglist
+	 * @param retailer
+	 * @return User-Objekt
+	 */
 	public User getAssignedUser(Shoppinglist shoppinglist, Retailer retailer) {
 		
 		Connection con = DBConnection.connection();

@@ -33,7 +33,7 @@ public class Header extends HorizontalPanel {
 	private Anchor editorLink;
 
 	private VerticalPanel logoutPanel;
-	private Label userMailLabel;
+	private Label userNameLabel;
 
 	private ReportGeneratorEntry reportGenerator;
 
@@ -48,14 +48,14 @@ public class Header extends HorizontalPanel {
 
 		logoutPanel = new VerticalPanel();
 
-		userMailLabel = new Label(user.getName());
+		userNameLabel = new Label(user.getName());
 		logoutPanel.add(logoutButton);
-		logoutPanel.add(userMailLabel);
+		logoutPanel.add(userNameLabel);
 
 		editorButton.addClickHandler(new EditorClickHandler());
 		reportButton.addClickHandler(new ReportClickHandler());
 
-		userMailLabel.addClickHandler(new LogoutClickHandler());
+		userNameLabel.addClickHandler(new LogoutClickHandler());
 		logoutButton.addClickHandler(new LogoutClickHandler());
 
 		editorButton.setStyleName("HeaderButton");
@@ -64,7 +64,7 @@ public class Header extends HorizontalPanel {
 		platzhalterButton.getElement().setAttribute("disabled", "disabled");
 
 		logoutButton.setStyleName("LogoutButton");
-		userMailLabel.setStyleName("CurrentUser");
+		userNameLabel.setStyleName("CurrentUser");
 		logoutPanel.setStyleName("HeaderButton");
 
 		this.add(editorButton);
