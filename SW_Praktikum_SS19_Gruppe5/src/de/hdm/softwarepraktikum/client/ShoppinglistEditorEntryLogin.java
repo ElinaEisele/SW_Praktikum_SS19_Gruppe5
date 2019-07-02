@@ -23,7 +23,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 			.getShoppinglistAdministration();
 
 	private VerticalPanel loginHeader = new VerticalPanel();
-	private Label nameLabel = new Label("Maultasche");
+	private Label nameLabel = new Label("MaulTasche");
 	private VerticalPanel loginPanel = new VerticalPanel();
 	private Label loginLabel = new Label("Bitte mit Google-Account anmelden.");
 	private Anchor signInLink = new Anchor("Login");
