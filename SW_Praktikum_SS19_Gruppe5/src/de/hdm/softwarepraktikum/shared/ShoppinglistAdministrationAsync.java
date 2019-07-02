@@ -166,4 +166,6 @@ public interface ShoppinglistAdministrationAsync {
 	void getArchivedListitemsOf(Group group, AsyncCallback<ArrayList<Listitem>> callback) throws IllegalArgumentException;
 	
 	void deleteAssignment(Retailer retailer, Shoppinglist shoppinglist, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	
+	void setLatestEdit(Shoppinglist shoppinglist, Listitem listitem, AsyncCallback<Void> callback) throws IllegalArgumentException;
 }

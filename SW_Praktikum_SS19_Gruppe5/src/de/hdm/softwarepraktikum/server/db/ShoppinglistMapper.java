@@ -199,10 +199,11 @@ public class ShoppinglistMapper {
 		Connection con = DBConnection.connection();
 
 		try {
-			PreparedStatement pstmt = con.prepareStatement("UPDATE shoppinglists SET name = ? WHERE id = ?");
+			PreparedStatement pstmt = con.prepareStatement("UPDATE shoppinglists SET name = ?, latestEdit = ? WHERE id = ?");
 
 			pstmt.setString(1, shoppinglist.getName());
-			pstmt.setInt(2, shoppinglist.getId());
+			pstmt.setInt(2, shoppinglist.getLastestEdit());
+			pstmt.setInt(3, shoppinglist.getId());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
