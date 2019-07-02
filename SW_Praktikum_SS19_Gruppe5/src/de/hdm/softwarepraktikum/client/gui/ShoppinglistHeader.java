@@ -54,6 +54,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		newListitem.getElement().appendChild(newListitemImg.getElement());
 		newListitem.setStyleName("ShoppinglistHeaderButton");
 		newListitem.addClickHandler(new NewListitemClickHandler());
+		newListitem.setTitle("Eintrag hinzufügen");
 
 		Image deleteShoppinglistImg = new Image();
 		deleteShoppinglistImg.setUrl("images/delete.png");
@@ -61,6 +62,8 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		deleteShoppinglist.getElement().appendChild(deleteShoppinglistImg.getElement());
 		deleteShoppinglist.setStyleName("ShoppinglistHeaderButton");
 		deleteShoppinglist.addClickHandler(new DeleteShoppinglistClickHandler());
+		deleteShoppinglist.setTitle("Einkaufsliste löschen");
+		
 
 		Image editShoppinglistNameImg = new Image();
 		editShoppinglistNameImg.setUrl("images/edit.png");
@@ -68,6 +71,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		editShoppinglistName.getElement().appendChild(editShoppinglistNameImg.getElement());
 		editShoppinglistName.setStyleName("ShoppinglistHeaderButton");
 		editShoppinglistName.addClickHandler(new EditShoppinglistNameClickHandler());
+		editShoppinglistName.setTitle("Einkauflistenname ändern");
 
 		Image allocationImg = new Image();
 		allocationImg.setUrl("images/collaboration.png");
@@ -75,6 +79,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		showUserRetailerAllocation.getElement().appendChild(allocationImg.getElement());
 		showUserRetailerAllocation.setStyleName("ShoppinglistHeaderButton");
 		showUserRetailerAllocation.addClickHandler(new ShowUserRetailerAllocationClickHandler());
+		showUserRetailerAllocation.setTitle("Einzelhändlerzuweisung anzeigen");
 
 		Image filterImg = new Image();
 		filterImg.setUrl("images/filter.png");
@@ -82,7 +87,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		filter.getElement().appendChild(filterImg.getElement());
 		filter.addClickHandler(new FilterClickHandler());
 		filter.setStyleName("ShoppinglistHeaderButton");
-
+		filter.setTitle("Einkaufsliste filtern");
 	}
 
 	/**
