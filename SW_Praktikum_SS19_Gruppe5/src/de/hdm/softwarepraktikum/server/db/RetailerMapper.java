@@ -13,10 +13,11 @@ import java.util.Map;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse fuer </code>Retailer</code> Objekte. Diese umfasst Methoden um
- * RetailerMapper Objekte zu erstellen, zu suchen, zu modifizieren und zu
- * loeschen. Das Mapping funktioniert dabei bidirektional. Es koennen Objekte in
- * DB-Strukturen und DB-Stukturen in Objekte umgewandelt werden.
+ * Mapper-Klasse, die <code>Retailer</code>-Objekte auf eine relationale
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
+ * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+ * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
  * @author LeoniFriedrich & CarlaHofmann
  *
@@ -25,20 +26,28 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 public class RetailerMapper {
 
 	/**
-	 * Speicherung der Instanz dieser Mapperklasse
+	 * Die Klasse ListitemMapper wird nur einmal instantiiert. Man spricht hierbei
+	 * von einem sogenannten <b>Singleton</b>.
+	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	 * einzige Instanz dieser Klasse.
+	 * 
 	 */
 	private static RetailerMapper retailerMapper = null;
 
 	/**
-	 * Geschuetzter Konstrukter verhindert weitere Instanzierungen von RetailerMapper-Objekten
+	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen dieser Klasse.
 	 */
 	protected RetailerMapper() {
 	}
 
 	/**
-	 * Sicherstellung der Singleton Eigenschaft der Mapperklasse
+	 * Diese statische Methode kann aufgrufen werden durch
+     * <code>RetailerMapper.retailerMapper()</code>. Sie stellt die
+     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+     * Instanz von <code>RetailerMapper</code> existiert.
 	 * 
-	 * @return Retailermapper
+	 * @return retailerMapper
 	 */
 
 	public static RetailerMapper retailerMapper() {
@@ -49,7 +58,7 @@ public class RetailerMapper {
 	}
 
 	/**
-	 * Ausgabe einer Liste aller Retailer-Objekte
+	 * Auslesen aller <code>Retailer<code>-Objekte.
 	 * 
 	 * @return ArrayList<Retailer>
 	 */
@@ -78,8 +87,9 @@ public class RetailerMapper {
 	}
 
 	/**
-	 * Methode um einen Retailer mithilfe seiner Id zu finden
-	 * 
+	 * Suchen eines <code>Retailer<code>-Objekts mit vorgegebener Id. 
+	 * Da diese eindeutig ist, wird genau ein Objekt zurueckgegeben.
+	 *
 	 * @param id
 	 * @return Retailer-Objekt
 	 */
@@ -108,7 +118,7 @@ public class RetailerMapper {
 	}
 
 	/**
-	 * Retailer mithilfe ihrer Namen finden
+	 * Suchen aller <code>Retailer<code>-Objekte mit vorgegebenem Namen. 
 	 * 
 	 * @param name
 	 * @return ArrayList<Retailer> 
@@ -139,8 +149,10 @@ public class RetailerMapper {
 	}
 
 	/**
-	 * Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen
-	 * 
+	 * Einfügen eines <code>Retailer</code>-Objekts in die Datenbank. 
+	 * Dabei wird auch der Primärschlüssel des übergebenen Objekts 
+	 * geprüft und ggf. berichtigt.
+	 *
 	 * @param retailer
 	 * @return Retailer-Objekt
 	 */
@@ -173,8 +185,8 @@ public class RetailerMapper {
 	}
 
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank
-	 * 
+	 * Wiederholtes Schreiben eines <code>Retailer<code>-Objekts in die Datenbank.
+	 *
 	 * @param retailer
 	 * @return Retailer-Objekt
 	 */
@@ -197,8 +209,9 @@ public class RetailerMapper {
 	}
 
 	/**
-	 * Loeschen eines Retailers aus der Datenbank
-	 * 
+	 * Loeschen der Daten eines 
+	 * <code>Retailer</code>-Objekts aus der Datenbank.
+	 *
 	 * @param retailer
 	 */
 	public void delete(Retailer retailer) {
@@ -216,7 +229,8 @@ public class RetailerMapper {
 	}
 	
 	/**
-	 * Eine neue Zuweisung erstellen
+	 * Hinzufuegen einer neuen Verantwortlichkeit eines Users einer Shoppingliste 
+	 * bezogen auf einen bestimmten Händler anhand den jeweiligen Ids.
 	 * 
 	 * @param retailer_id
 	 * @param user_id
@@ -239,10 +253,34 @@ public class RetailerMapper {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Loeschen einer Verantwortlichkeit anhand eines gegebenen <code>Retailer<code>-Objekts
+	 * und eines gegebenen <code>Shoppinglist<code>-Objekts.
+	 * 
+	 * @param retailerId 
+	 * @param userId 
+	 * @param shoppinglistId 
+	 */
+	public void deleteResponsibility(Retailer retailer, Shoppinglist shoppinglist) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM responsibilities WHERE retailer_id = " + retailer.getId() 
+					+ " AND shoppinglist_id = " + shoppinglist.getId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
-	 * Finden des Retailers eines Listitems
-	 * 
+	 * Auslesen des zugehoerigen <code>Retailer<code>-Objekts eines
+	 * gegebenen <code>Listitem<code>-Objekts.	
+	 *
 	 * @param listitem
 	 * @return Retailer
 	 */
@@ -275,8 +313,9 @@ public class RetailerMapper {
 	}
 
 	/**
+	 * Auslesen des verantwortlichen <code>User<code>-Objekts 
+	 * eines <code>Retailer<code>-Objekts.
 	 * 
-	 * Finden der zugeordneten Retailer eines Users
 	 * 
 	 * @param user
 	 * @return ArrayList<Retailer>
@@ -314,9 +353,9 @@ public class RetailerMapper {
 	
 	
 	/**
-	 * 
-	 * Retailer, welche in einer Shoppingliste verwendet werden, finden
-	 * 
+	 * Auslesen des zugehörigen <code>Retailer<code>-Objekts eines
+	 * gegebenen <code>Shoppinglist<code>-Objekts.	
+	 *
 	 * @param shoppinglist
 	 * @return ArrayList<Retailer>
 	 */
@@ -353,7 +392,8 @@ public class RetailerMapper {
 	}
 	
 	/**
-	 * Alle zugewiesenen H�ndler einer Shoppingliste zur�ckgeben
+	 * Auslesen aller <code>Retailer<code>-Objekte eines 
+	 * <code>Shoppinglist<code>-Objekts mit der Zuordnung eines Verantwortlichen.
 	 * 
 	 * @param shoppinglist
 	 * @return ArrayList<Retailer>
@@ -387,7 +427,12 @@ public class RetailerMapper {
 	}
 	
 	/**
-	 * User der einem Retailer zugewiesen ist
+	 * Auslesen aller <code>User<code>-Objekte eines <code>Shoppinglist<code>-Objekts 
+	 * mit einer zugeordneten Verantwortlichkeit zu einem gegebenen <code>Retailer<code>-Objekt.
+	 * 
+	 * @param shoppinglist
+	 * @param retailer
+	 * @return User-Objekt
 	 */
 	public User getAssigndUserOf(Shoppinglist shoppinglist, Retailer retailer) {
 		
@@ -416,6 +461,13 @@ public class RetailerMapper {
 		return u;
 	}
 	
+	/**
+	 * Auslesen aller <code>User<code>-Objekte eines <code>Shoppinglist<code>-Objekts 
+	 * mit einer zugeordneten Verantwortlichkeit.
+	 * 
+	 * @param shoppinglist
+	 * @return ArrayList<User>
+	 */
 	public ArrayList<User> getAssigndUsersOf(Shoppinglist shoppinglist){
 		
 		Connection con = DBConnection.connection();
@@ -446,8 +498,11 @@ public class RetailerMapper {
 	}
 	
 	
-	/** evtl raus:
-	 * Alle Zuweisungen in einer Shoppingliste
+	/**
+	 * Auslesen aller Verantwortlichkeiten eines <code>Shoppinglist<code>-Objekts.
+	 * 
+	 * @param shoppinglist
+	 * @return Map<String, String>
 	 */
 	public Map<String, String> getAllocationsOf(Shoppinglist shoppinglist){
 				
@@ -500,8 +555,8 @@ public class RetailerMapper {
 	}
 	
 	/**
-	 * 
-	 * Alle Retailer einer Shoppingliste finden, welche einem User zugeordnet sind
+	 * Auslesen aller <code>Retailer<code>-Objekte eines <code>Shoppinglist<code>-Objekts
+	 * mit einer zugeordneten Verantwortlichkeit.
 	 * 
 	 * @param shoppinglist
 	 * @param user
@@ -537,26 +592,4 @@ public class RetailerMapper {
 		
 		return retailers;
 	}
-	
-	/**
-	 * Eine bestimmte Zuweisung loeschen.
-	 * 
-	 * @param retailerId ist die ID des Retailers, dessen Zusweisung geloescht weden soll.
-	 * @param userId ist die ID des users, dessen Zuweisung geloescht werden soll.
-	 * @param shoppinglistId ist die ID der Shoppinglist, in welcher eine Zusweisung geloescht werden soll.
-	 */
-	public void deleteResponsibility(Retailer retailer, Shoppinglist shoppinglist) {
-		
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate("DELETE FROM responsibilities WHERE retailer_id = " + retailer.getId() 
-					+ " AND shoppinglist_id = " + shoppinglist.getId());
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 }

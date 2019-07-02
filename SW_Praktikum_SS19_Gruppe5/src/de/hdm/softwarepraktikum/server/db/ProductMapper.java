@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import de.hdm.softwarepraktikum.shared.bo.*;
 
 /**
- * Mapper Klasse fuer </code>Product</code> Objekte. Diese umfasst Methoden um
- * Produkt-Objekte zu erstellen, zu suchen, zu modifizieren und zu loeschen. Das
- * Mapping funktioniert dabei bidirektional. Es koennen Objekte in DB-Strukturen
- * und DB-Stukturen in Objekte umgewandelt werden.
+ * Mapper-Klasse, die <code>Product</code>-Objekte auf eine relationale
+ * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
+ * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
+ * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
+ * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
  * @author CarlaHofmann
  */
@@ -22,19 +23,26 @@ import de.hdm.softwarepraktikum.shared.bo.*;
 public class ProductMapper {
 
 	/**
-	 * Speicherung der Instanz dieser Mapperklasse
+	 * Die Klasse ListitemMapper wird nur einmal instantiiert. Man spricht hierbei
+	 * von einem sogenannten <b>Singleton</b>.
+	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	 * einzige Instanz dieser Klasse.
+	 * 
 	 */
 	private static ProductMapper productMapper = null;
 
 	/**
-	 * Geschuetzter Konstruktor verhindert weitere Instanzierungen von
-	 * ProductMapper
+	 * Geschuetzter Konstruktor verhindert weitere Instanziierungen dieser Klasse.
 	 */
 	protected ProductMapper() {
 	}
 
 	/**
-	 * Sicherstellung der Singleton-Eigenschaft der Mapperklasse
+     * Diese statische Methode kann aufgrufen werden durch
+     * <code>ProductMapper.productMapper()</code>. Sie stellt die
+     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+     * Instanz von <code>ProductMapper</code> existiert.
 	 *
 	 * @return Productmapper
 	 */
@@ -46,7 +54,7 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Ausgabe einer Liste aller Produkte
+	 * Auslesen aller <code>Product<code>-Objekte.
 	 *
 	 * @return ArrayList<Product>
 	 */
@@ -75,7 +83,8 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Produkt mithilfe seiner id finden
+	 * Suchen eines <code>Product<code>-Objekts mit vorgegebener Id. 
+	 * Da diese eindeutig ist, wird genau ein Objekt zurueckgegeben.
 	 *
 	 * @param id
 	 * @return Product-Objekt
@@ -104,7 +113,7 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Produkt mithilfe des Produktnamens finden
+	 * Suchen aller <code>Product<code>-Objekte mit vorgegebenem Namen. 
 	 * 
 	 * @param name
 	 * @return ArrayList<Product>
@@ -135,7 +144,9 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Insert Methode, um eine neue Entitaet der Datenbank hinzuzufuegen
+	 * Einfügen eines <code>Product</code>-Objekts in die Datenbank. 
+	 * Dabei wird auch der Primaerschlüssel des übergebenen Objekts 
+	 * geprüft und ggf. berichtigt.
 	 *
 	 * @param product
 	 * @return Product-Objekt
@@ -169,7 +180,7 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Wiederholtes Schreiben / Aendern eines Objekts in die/der Datenbank
+	 * Wiederholtes Schreiben eines <code>Product<code>-Objekts in die Datenbank.
 	 *
 	 * @param product
 	 * @return Product-Objekt
@@ -194,7 +205,8 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Delete Methode, um ein Produkt-Objekt aus der Datenbank zu entfernen
+	 * Loeschen der Daten eines 
+	 * <code>Listitem</code>-Objekts aus der Datenbank.
 	 *
 	 * @param product
 	 */
@@ -213,8 +225,9 @@ public class ProductMapper {
 	}
 
 	/**
-	 * Methode, um das Produkt eines Listitems zu finden
-	 * 
+	 * Auslesen eines zugehoerigen <code>Product<code>-Objekts 
+	 * eines gegebenen <code>Listitem<code>-Objekts.
+	 * 	
 	 * @param listitem
 	 * @return Product-Objekt
 	 */

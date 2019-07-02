@@ -25,7 +25,6 @@ public class ListitemUnitMapper {
 	/**
 	 * Die Klasse ListitemUnitMapper wird nur einmal instantiiert. Man spricht hierbei
 	 * von einem sogenannten <b>Singleton</b>.
-	 * <p>
 	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
 	 * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	 * einzige Instanz dieser Klasse.
@@ -56,7 +55,7 @@ public class ListitemUnitMapper {
 	}
 	
 	/**
-	 * Ausgabe einer Liste aller Unit-Objekte
+	 * Auslesen aller <code>Unit<code>-Objekte.
 	 * 
 	 * @return ArrayList<ListitemUnit>
 	 */
@@ -87,7 +86,8 @@ public class ListitemUnitMapper {
 	}
 
 	/**
-	 * Unit mithilfe der id finden
+	 * Suchen eines <code>ListitemUnit<code>-Objekts mit vorgegebener Id. 
+	 * Da diese eindeutig ist, wird genau ein Objekt zurueckgegeben.
 	 * 
 	 * @param id
 	 * @return Listitemunit-Objekt
@@ -116,7 +116,7 @@ public class ListitemUnitMapper {
 	}
 	
 	/**
-	 * Unit mithilfe des Namens finden
+	 * Suchen aller <code>ListitemUnit<code>-Objekte mit vorgegebenem Namen. 
 	 * 
 	 * @param name
 	 * @return ArrayList<ListitemUnit>
@@ -146,7 +146,9 @@ public class ListitemUnitMapper {
 	}
 
 	/**
-	 *Insert Methode um der Datenbank eine neue Entitaet hinzuzufuegen
+	 * Einfügen eines <code>ListitemUnit</code>-Objekts in die Datenbank. 
+	 * Dabei wird auch der Primärschlüssel des übergebenen Objekts 
+	 * geprüft und ggf. berichtigt.
 	 * 
 	 * @param unit
 	 * @return Listitemunit-Objekt
@@ -178,7 +180,8 @@ public class ListitemUnitMapper {
 		return unit;
 	}
 	/**
-	 * Wiederholtes Schreiben eines Objekts in die Datenbank
+	 * Wiederholtes Schreiben eines 
+	 * <code>ListitemUnit<code>-Objekts in die Datenbank.
 	 * 
 	 * @param unit
 	 * @return Listitemunit -Objekt
@@ -204,7 +207,8 @@ public class ListitemUnitMapper {
 	}
 
 	/**
-	 * Loeschen eines Units aus der Datenbank
+	 * Loeschen der Daten eines 
+	 * <code>Listitem</code>-Objekts aus der Datenbank.
 	 * 
 	 * @param unit
 	 */
@@ -223,7 +227,8 @@ public class ListitemUnitMapper {
 	}
 	
 	/**
-	 * Unit eines Eintrags finden
+	 * Auslesen des zugehörigen Unit-Wertes eines gegebenen 
+	 * <code>Listitem<code>-Objekts.
 	 * 
 	 * @param listitem
 	 * @return Listitemunit-Objekt
