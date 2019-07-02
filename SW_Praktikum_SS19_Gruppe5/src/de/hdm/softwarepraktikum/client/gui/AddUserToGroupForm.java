@@ -144,7 +144,7 @@ public class AddUserToGroupForm extends VerticalPanel {
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(selectedGroup);
 			gsf.setGstvm(gstvm);
-			gstvm.setGroupShowForm(gsf);
+			//gstvm.setGroupShowForm(gsf);
 			RootPanel.get("main").add(gsf);
 		}
 
