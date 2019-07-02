@@ -191,10 +191,8 @@ public class NavigatorPanel extends VerticalPanel {
 			if (result == true) {
 				refreshInfoLabel.setStyleName("refreshInfoLabel");
 				RootPanel.get("header").add(refreshInfoLabel);
-				refreshInfoLabel.setText("Bitte aktualisiere deine Seite!");
 
 			} else {
-				refreshInfoLabel.setText("");
 
 			}
 		}
