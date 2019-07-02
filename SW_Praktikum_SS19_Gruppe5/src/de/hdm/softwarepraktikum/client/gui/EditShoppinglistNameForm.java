@@ -134,8 +134,9 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedShoppinglist != null) {
-				if (newNameTextBox.getText().length() <= 23) {
-					selectedShoppinglist.setName(newNameTextBox.getText());
+				if (newNameTextBox.getValue() == "") {
+					Notification.show("Bitte gib einen Namen für die neue Gruppe ein.");
+				} else if (newNameTextBox.getValue().length() <= 23) {
 
 					shoppinglistAdministration.save(selectedShoppinglist, new EditNameCallback());
 				} else {
