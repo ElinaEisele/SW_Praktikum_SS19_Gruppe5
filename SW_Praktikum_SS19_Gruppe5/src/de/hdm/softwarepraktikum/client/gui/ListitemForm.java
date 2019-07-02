@@ -559,6 +559,10 @@ public class ListitemForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
+			
+			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, selectedListitem, new LatestEditCallback());
+			selectedShoppinglist.setLastestEdit(selectedListitem.getId());
+			
 			RootPanel.get("main").clear();
 
 			if (selectedShoppinglist != null && selectedUser != null) {
@@ -592,9 +596,6 @@ public class ListitemForm extends VerticalPanel {
 				ssf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(ssf);
 			}
-			
-			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, result, new LatestEditCallback());
-
 
 		}
 
