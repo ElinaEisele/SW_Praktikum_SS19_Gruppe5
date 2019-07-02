@@ -68,7 +68,7 @@ public class NewListitemForm extends HorizontalPanel {
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-	 * angeordnet, dessen GrÃ¶ÃŸe sich aus dem Platzbedarf der enthaltenen Widgets
+	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
 	public NewListitemForm() {
@@ -369,7 +369,6 @@ public class NewListitemForm extends HorizontalPanel {
 				ssf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(ssf);
 				Notification.show("Neuer Eintrag in der Einkaufsliste " + selectedShoppinglist.getName() + "!");
-
 			} else {
 				Notification.show("Das Anlegen eines neuen Eintrags ist fehlgeschlagen!");
 			}
