@@ -64,7 +64,7 @@ public void process(AllListitemsOfGroupReport r) {
 
     /*
      * Die einzelnen Bestandteile des Reports werden nacheinander ausgelesen
-     * und dem StringBuffer in HTML-Form angehängt.
+     * und dem StringBuffer in HTML-Form angehï¿½ngt.
      */
     result.append("*** " + r.getTitle() + " ***\n\n");
     result.append(r.getHeaderData() + "\n");
@@ -83,28 +83,28 @@ public void process(AllListitemsOfGroupReport r) {
     result.append(r.getImprint() + "\n");
 
     /*
-     * Der String Buffer wird in einen String umgewandelt, damit es anschließend
+     * Der String Buffer wird in einen String umgewandelt, damit es anschlieï¿½end
      * moeglich ist das Ergebnis mit der Methode getReportText() aufzurufen.
      */
     this.reportText = result.toString();
   }
 
-/**
- * Erstellen des uebergebenen Reports und speichern im richtigen Format.
- * 
- * @param r der zu erstellende Report
- */
-  @Override
-public void process(AllShoppinglistsOfGroupReport r) {
+	/**
+	 * Erstellen des uebergebenen Reports und speichern im richtigen Format.
+	 * 
+	 * @param r der zu erstellende Report
+	 */
+	  @Override
+	public void process(AllShoppinglistsOfGroupReport r) {
 
-  }
+	  }
 
-  /**
-   * Auslesen des zuletzt erstellen Report.
-   * 
-   * @return String im HTML-Format
-   */
-  public String getReportText() {
-    return this.getHeader() + this.reportText + this.getTrailer();
-  }
+	  /**
+	   * Auslesen des zuletzt erstellen Report.
+	   * 
+	   * @return String im HTML-Format
+	   */
+	  public String getReportText() {
+	    return this.getHeader() + this.reportText + this.getTrailer();
+	  }
 }
