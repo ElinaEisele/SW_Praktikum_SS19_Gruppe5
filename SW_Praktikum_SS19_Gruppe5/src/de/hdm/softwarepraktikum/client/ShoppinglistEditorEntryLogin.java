@@ -101,7 +101,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 		loginHeader.add(nameLabel);
 		
 
-		RootPanel.get("header").add(loginHeader);
+		RootPanel.get("LoginHeader").add(loginHeader);
 		RootPanel.get("main").add(loginPanel);
 		RootPanel.get("trailer").add(tr);
 
