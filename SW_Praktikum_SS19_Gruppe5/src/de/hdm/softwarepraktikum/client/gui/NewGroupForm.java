@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -39,7 +40,7 @@ public class NewGroupForm extends VerticalPanel {
 
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	private Button saveButton = new Button("Speichern");
-	private Button cancelButten = new Button("Abbrechen");
+	private Button cancelButton = new Button("Abbrechen");
 
 	public NewGroupForm() {
 		
@@ -47,11 +48,16 @@ public class NewGroupForm extends VerticalPanel {
 		nameTextBox.addClickHandler(new NameTextBoxClickHandler());
 
 		saveButton.addClickHandler(new SaveClickHandler());
-		cancelButten.addClickHandler(new CancelClickHandler());
+		cancelButton.addClickHandler(new CancelClickHandler());
 
+		infoLabel.setStyleName("Header");
+		buttonPanel.setStyleName("ButtonPanel");
+		saveButton.setStyleName("NavButton");
+		cancelButton.setStyleName("NavButton");
+		
 		buttonPanel.add(saveButton);
-		buttonPanel.add(cancelButten);
-
+		buttonPanel.add(cancelButton);
+		
 		mainPanel.add(infoLabel);
 		mainPanel.add(nameTextBox);
 		mainPanel.add(buttonPanel);
@@ -173,9 +179,9 @@ public class NewGroupForm extends VerticalPanel {
 
 			newGroup = result;
 			groupShowForm.setSelected(newGroup);
+			
 			groupShowForm.getGroupHeader().setSelectedGroup(newGroup);
-			RootPanel.get("main").add(groupShowForm);
-			gstvm.addGroup(newGroup);
+			RootPanel.get("main").add(groupShowForm);			
 
 		}
 

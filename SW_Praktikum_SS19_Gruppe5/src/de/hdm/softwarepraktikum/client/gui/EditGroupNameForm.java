@@ -56,6 +56,9 @@ public class EditGroupNameForm extends VerticalPanel {
 		saveButton.addClickHandler(new SaveClickHandler());
 		saveButton.setStyleName("NavButton");
 		
+		infoLabel.setStyleName("Header");
+		buttonPanel.setStyleName("ButtonPanel");
+		
 		buttonPanel.add(saveButton);	
 		buttonPanel.add(cancelButton);
 		

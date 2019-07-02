@@ -41,6 +41,8 @@ public class DeleteGroupDialogBox extends DialogBox{
 		
 		cancelButton.setStylePrimaryName("NavButton");
 		confirmButton.setStylePrimaryName("NavButton");
+		buttonPanel.setStyleName("ButtonPanel");
+		confirmationLabel.setStyleName("Header");
 		
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());

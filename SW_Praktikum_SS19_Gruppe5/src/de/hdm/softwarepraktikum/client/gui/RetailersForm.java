@@ -59,6 +59,8 @@ public class RetailersForm extends VerticalPanel {
 		
 		retailerTextBox.addClickHandler(new ClearClickHandler());
 		
+		buttonPanel.setStyleName("ButtonPanel");
+		
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
 
@@ -121,7 +123,7 @@ public class RetailersForm extends VerticalPanel {
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(selectedGroup);
 			gsf.setGstvm(gstvm);
-			gstvm.setGroupShowForm(gsf);
+		//	gstvm.setGroupShowForm(gsf);
 			RootPanel.get("main").add(gsf);
 		}
 
