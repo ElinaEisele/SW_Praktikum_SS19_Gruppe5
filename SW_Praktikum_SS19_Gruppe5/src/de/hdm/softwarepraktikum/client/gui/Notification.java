@@ -15,6 +15,7 @@ public class Notification {
 	
 	private static Label notificationLabel = new Label();
 	private static boolean isActive = false;
+	private static Header header = new Header();
 	
 	public Notification() {
 		
@@ -34,7 +35,9 @@ public class Notification {
 	public static void show (String message) {
 		notificationLabel.setText(message);
 		notificationLabel.setStyleName("notificationLabel");
+		RootPanel.get("header").clear();
 		RootPanel.get("header").add(notificationLabel);
+		RootPanel.get("header").add(header);
 		
 		final Timer timer = new Timer() {
 
