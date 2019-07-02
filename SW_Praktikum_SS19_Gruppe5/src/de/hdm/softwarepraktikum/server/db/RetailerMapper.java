@@ -173,7 +173,8 @@ public class RetailerMapper {
 					+ "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, retailer.getId());
-			pstmt.setDate(2, (Date) retailer.getCreationDate());
+			java.sql.Date sqlDate = new java.sql.Date(retailer.getCreationDate().getTime());
+			pstmt.setDate(2, sqlDate);
 			pstmt.setString(3, retailer.getName());
 			pstmt.executeUpdate();
 
