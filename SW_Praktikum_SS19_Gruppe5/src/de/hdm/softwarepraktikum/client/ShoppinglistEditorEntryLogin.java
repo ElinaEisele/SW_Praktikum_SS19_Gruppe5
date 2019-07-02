@@ -51,18 +51,6 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 			Window.alert(caught.toString());
 		}
 
-//		@Override
-//		public void onSuccess(User user) {
-//			
-//			CurrentUser.setUser(user);
-//			
-//			if (user.isLoggedIn()) {
-//				Editor editor = new Editor();
-//				editor.loadForms();
-//			} else {
-//				loadLogin();
-//			}
-//		}
 
 		@Override
 		public void onSuccess(User u) {
@@ -107,22 +95,9 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 
 //		loginLabel.setStylePrimaryName("loginLabel");
 //		loginButton.setStylePrimaryName("loginButton");
-//		
-//		loginButton.addClickHandler(new LoginClickHandler());
-
-//		RootPanel.get("header").setVisible(false);
-//		RootPanel.get("aside").setVisible(false);
 
 	}
 
-//	private class LoginClickHandler implements ClickHandler{
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			Window.open(signInLink.getHref(), "_self", "");
-//		}
-//		
-//	}
 
 	/**
 	 * Die Klasse <code>CurrentUser</code> repräsentiert den aktuell am System

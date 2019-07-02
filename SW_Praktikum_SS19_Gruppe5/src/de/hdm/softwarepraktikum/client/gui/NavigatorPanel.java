@@ -134,6 +134,7 @@ public class NavigatorPanel extends VerticalPanel {
 
 	public void refreshInfo() {
 		shoppinglistAdministration.refreshData(this.getGstvm().getUserGroups(), u, new RefreshDataCallback());
+
 	}
 
 	/**
@@ -174,7 +175,8 @@ public class NavigatorPanel extends VerticalPanel {
 	 */
 
 	/**
-	 * Zum
+	 * Zur Darstellung einer Benachrichtigung, wenn Sich etwas geändert hat 
+	 * und die Seite aktualisiert werden muss.
 	 *
 	 */
 	private class RefreshDataCallback implements AsyncCallback<Boolean> {
@@ -191,7 +193,7 @@ public class NavigatorPanel extends VerticalPanel {
 				RootPanel.get("header").add(refreshInfoLabel);
 
 			} else {
-				refreshInfoLabel.setText("");
+
 			}
 		}
 	}
