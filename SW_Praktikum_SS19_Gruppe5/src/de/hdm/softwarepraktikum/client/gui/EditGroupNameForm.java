@@ -133,9 +133,9 @@ public class EditGroupNameForm extends VerticalPanel {
 
 		public void onClick(ClickEvent event) {
 			if (newNameTextBox.getValue() == "") {
-
 				Notification.show("Bitte gib einen Namen für die neue Gruppe ein.");
 			} else if (newNameTextBox.getValue().length() <= 20) {
+				shoppinglistAdministration.changeNameOf(selectedGroup, newNameTextBox.getValue(), new ChangeNameCallback());
 				groupShowForm = new GroupShowForm();
 			} else {
 				Notification.show("Bitte gib eine kürzeren Namen ein");

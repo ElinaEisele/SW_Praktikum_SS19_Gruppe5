@@ -67,7 +67,7 @@ public class ListitemForm extends VerticalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button("Neuer Einzelhändler hinzufügen");
+	private Button newRetailerButton = new Button("Neuen Einzelhändler hinzufügen");
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("Abbrechen");
 
