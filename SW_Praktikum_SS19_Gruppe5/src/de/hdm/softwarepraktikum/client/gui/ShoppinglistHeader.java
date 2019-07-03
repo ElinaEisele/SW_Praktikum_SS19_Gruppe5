@@ -209,6 +209,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				esndb.setGstvm(ShoppinglistHeader.this.gstvm);
 				esndb.setShoppinglistHeader(ShoppinglistHeader.this);
 				esndb.setSelectedShoppinglist(selectedShoppinglist);
+				esndb.setSelectedGroup(selectedGroup);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, esndb);
 				ssf.setSelected(selectedShoppinglist);
 

@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
+import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Shoppinglist;
 
 /**
@@ -29,6 +30,7 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 	private GroupShoppinglistTreeViewModel gstvm = null;
 	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private Shoppinglist selectedShoppinglist = null;
+	private Group selectedGroup = null;
 	private NavigatorPanel navigatorPanel = null;
 
 	private Label infoLabel = new Label("Einkaufslistenname ändern");
@@ -101,6 +103,14 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		this.selectedShoppinglist = selectedShoppinglist;
 	}
 
+	public Group getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(Group selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+	
 	/**
 	 * ***************************************************************************
 	 * Abschnitt der ClickHandler
@@ -140,7 +150,7 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 				} else if (newNameTextBox.getValue().length() <= 23) {
 					selectedShoppinglist.setName(newNameTextBox.getValue());
 					shoppinglistAdministration.save(selectedShoppinglist, new EditNameCallback());
-					shoppinglistShowForm = new ShoppinglistShowForm();
+
 				} else {
 					Notification.show("Bitte gib eine kürzeren Namen ein.");
 
@@ -188,10 +198,13 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 			RootPanel.get("main").clear();
 			RootPanel.get("aside").clear();
 			navigatorPanel = new NavigatorPanel();
+			shoppinglistShowForm = new ShoppinglistShowForm();
+
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setSelected(selectedShoppinglist);
-			RootPanel.get("aside").add(navigatorPanel);
+			ssf.setSelectedGroup(selectedGroup);
 
+			RootPanel.get("aside").add(navigatorPanel);
 			RootPanel.get("main").add(ssf);
 
 		}
