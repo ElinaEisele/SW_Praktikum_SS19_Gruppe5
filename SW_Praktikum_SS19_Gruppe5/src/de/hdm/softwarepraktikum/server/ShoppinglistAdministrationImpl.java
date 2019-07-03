@@ -273,7 +273,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setProductID(p.getId());;
 
 		//In der Insert-Methode erhaelt das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
-		return this.listitemMapper.insert(li);
+		Listitem koLi = this.listitemMapper.insert(li);
+		
+		//Das neue Listitem wird als letztes geaendertes Listitem gekennzeichnet.
+		this.setLatestEdit(shoppinglist, koLi);
+		
+		return koLi;
 	}
 	
 	/**
@@ -314,7 +319,12 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		li.setProductID(p.getId());;
 
 		//In der Insert-Methode erhaelt das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
-		return this.listitemMapper.insert(li);
+		Listitem koLi = this.listitemMapper.insert(li);
+		
+		//Das neue Listitem wird als letztes geaendertes Listitem gekennzeichnet.
+		this.setLatestEdit(shoppinglist, koLi);
+		
+		return koLi;
 	}
 	
 	
@@ -353,7 +363,13 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Fremdschluessel vom Listitem zum Product wird gesetzt.
 		li.setProductID(p.getId());
 		
-		return this.listitemMapper.insert(li);
+		//In der Insert-Methode erhaelt das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
+		Listitem koLi = this.listitemMapper.insert(li);
+		
+		//Das neue Listitem wird als letztes geaendertes Listitem gekennzeichnet.
+		this.setLatestEdit(shoppinglist, koLi);
+		
+		return koLi;
 	}
 	
 	/**
@@ -395,7 +411,13 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		//Fremdschluessel vom Listitem zum Product wird gesetzt.
 		li.setProductID(p.getId());
 		
-		return this.listitemMapper.insert(li);
+		//In der Insert-Methode erhaelt das Listitem-Objekt die finale ID, welche mit der Datenbank konsistent ist.
+		Listitem koLi = this.listitemMapper.insert(li);
+		
+		//Das neue Listitem wird als letztes geaendertes Listitem gekennzeichnet.
+		this.setLatestEdit(shoppinglist, koLi);
+		
+		return koLi;
 	}
 	
 	/**
@@ -1066,6 +1088,17 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		return this.shoppinglistMapper.findById(shoppinglistId);
 	}
 
+	/**
+	 * Setzen der Fremdschluesselbeziehung zu dem zuletzt geaenderten Lisitem-Objekt einer Shoppingliste.
+	 * @param shoppinglist ist die Einkaufsliste, in welcher das zuletzt geaenderte Listitem gesetzt werden soll. 
+	 * @param listitem ist das zuletzt geaenderte Listitem.
+	 * @throws IllegalArgumentException
+	 */
+	@Override
+	public void setLatestEdit(Shoppinglist shoppinglist, Listitem listitem) throws IllegalArgumentException {
+		shoppinglist.setLastestEdit(listitem.getId());
+		this.save(shoppinglist);
+	}
 	
 	
 /**
@@ -1344,6 +1377,9 @@ public class ShoppinglistAdministrationImpl extends RemoteServiceServlet impleme
 		}
 		return null;
 	}
+
+
+	
 
 
 }

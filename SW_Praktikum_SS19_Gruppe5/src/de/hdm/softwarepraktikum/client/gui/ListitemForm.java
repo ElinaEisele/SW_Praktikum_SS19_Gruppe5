@@ -67,7 +67,7 @@ public class ListitemForm extends VerticalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button("Neuer Einzelhändler hinzufügen");
+	private Button newRetailerButton = new Button("Neuen Einzelhändler hinzufügen");
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("Abbrechen");
 
@@ -315,7 +315,7 @@ public class ListitemForm extends VerticalPanel {
 	}
 
 	/**
-	 * Clickhandler zum erstellen des Listitem Objekts
+	 * Clickhandler zum Aktualisieren des Listitem Objekts
 	 * 
 	 */
 	private class UpdateListitemClickHandler implements ClickHandler {
@@ -559,6 +559,10 @@ public class ListitemForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
+			
+			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, selectedListitem, new LatestEditCallback());
+			selectedShoppinglist.setLastestEdit(selectedListitem.getId());
+		
 			RootPanel.get("main").clear();
 
 			if (selectedShoppinglist != null && selectedUser != null) {
@@ -592,8 +596,30 @@ public class ListitemForm extends VerticalPanel {
 				ssf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(ssf);
 			}
+			
+			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, selectedListitem, new LatestEditCallback());
+
 
 		}
 
+	}
+	
+	/**
+	 * Zum Festlegen der letzten Änderung einer <code>Shoppinglist</code>.
+	 */
+	private class LatestEditCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 }

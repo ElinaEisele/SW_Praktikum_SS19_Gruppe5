@@ -27,6 +27,7 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 
 	private ShoppinglistHeader shoppinglistHeader = null;
 	private GroupShoppinglistTreeViewModel gstvm = null;
+	private ShoppinglistShowForm shoppinglistShowForm = null;
 	private Shoppinglist selectedShoppinglist = null;
 	private NavigatorPanel navigatorPanel = null;
 
@@ -55,6 +56,9 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		confirmButton.setStyleName("NavButton");
 		confirmButton.addClickHandler(new ConfirmClickHandler());
 
+		infoLabel.setStyleName("Header");
+		buttonPanel.setStyleName("ButtonPanel");
+		
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
 		
@@ -131,10 +135,12 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (selectedShoppinglist != null) {
-				if (newNameTextBox.getText().length() <= 23) {
-					selectedShoppinglist.setName(newNameTextBox.getText());
-
+				if (newNameTextBox.getValue() == "") {
+					Notification.show("Bitte gib einen Namen für die neue Gruppe ein.");
+				} else if (newNameTextBox.getValue().length() <= 23) {
+					selectedShoppinglist.setName(newNameTextBox.getValue());
 					shoppinglistAdministration.save(selectedShoppinglist, new EditNameCallback());
+					shoppinglistShowForm = new ShoppinglistShowForm();
 				} else {
 					Notification.show("Bitte gib eine kürzeren Namen ein.");
 

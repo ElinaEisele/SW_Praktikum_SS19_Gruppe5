@@ -61,14 +61,14 @@ public class NewListitemForm extends HorizontalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button("Einzelhändler hinzufügen");
+	private Button newRetailerButton = new Button("Neuen Einzelhändler hinzufügen");
 
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("Abbrechen");
 
 	/*
 	 * Beim Anzeigen werden die anderen Widgets erzeugt. Alle werden in einem Raster
-	 * angeordnet, dessen GrÃ¶ÃŸe sich aus dem Platzbedarf der enthaltenen Widgets
+	 * angeordnet, dessen Größe sich aus dem Platzbedarf der enthaltenen Widgets
 	 * bestimmt.
 	 */
 	public NewListitemForm() {
@@ -363,17 +363,37 @@ public class NewListitemForm extends HorizontalPanel {
 		public void onSuccess(Listitem result) {
 
 			if (result != null) {
+				shoppinglistAdministration.setLatestEdit(selectedShoppinglist, result, new LatestEditCallback());
+				selectedShoppinglist.setLastestEdit(result.getId());
 				RootPanel.get("main").clear();
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 				ssf.setSelected(selectedShoppinglist);
 				ssf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(ssf);
 				Notification.show("Neuer Eintrag in der Einkaufsliste " + selectedShoppinglist.getName() + "!");
-
 			} else {
 				Notification.show("Das Anlegen eines neuen Eintrags ist fehlgeschlagen!");
 			}
 		}
+	}
+	
+	/**
+	 * Zum Festlegen der letzten Änderung einer <code>Shoppinglist</code>.
+	 */
+	private class LatestEditCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 }
