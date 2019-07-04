@@ -84,7 +84,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 		table.setSelectionModel(selectionModel,
 				DefaultSelectionEventManager.<ArrayList<Object>>createCheckboxManager());
 
-		archive = new Button("Markierte Eintraege archivieren");
+		archive = new Button("Markierte Einträge archivieren");
 		archive.addClickHandler(new ArchiveClickHandler());
 
 		archive.setStyleName("NavButton");
@@ -339,7 +339,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 
 	/**
 	 * Sobald eine <code>Shoppinglist</code> ausgewaehlt wird das Label mit den
-	 * entsprechenden Informationen bef�llt.
+	 * entsprechenden Informationen befüllt.
 	 * 
 	 * @param s, das zu setzende <code>Shoppinglist</code> Objekt.
 	 */
@@ -377,7 +377,7 @@ public class ShoppinglistCellTable extends VerticalPanel {
 			}
 
 			if (checkedListitems.isEmpty() == true) {
-				Notification.show("Keine Eintraege ausgewählt.");
+				Notification.show("Keine Einträge ausgewählt.");
 			} else {
 
 				shoppinglistAdministration.archiveListitems(checkedListitems, new AsyncCallback<Void>() {

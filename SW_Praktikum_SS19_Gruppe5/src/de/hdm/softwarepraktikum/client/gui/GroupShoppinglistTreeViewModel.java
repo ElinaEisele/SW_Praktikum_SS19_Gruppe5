@@ -90,6 +90,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 				setSelectedGroup((Group) selection);
 			} else if (selection instanceof Shoppinglist) {
 				setSelectedShoppinglist((Shoppinglist) selection);
+
 			}
 
 		}
@@ -135,9 +136,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	}
 
 	void setSelectedGroup(Group g) {
+		groupShowForm = new GroupShowForm();
 		RootPanel.get("main").clear();
 		selectedGroup = g;
 		groupShowForm.setSelected(g);
+		groupShowForm.setGstvm(this);
 		navigatorPanel.setSelectedGroup(selectedGroup);
 
 		selectedShoppinglist = null;
@@ -151,9 +154,11 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	}
 
 	void setSelectedShoppinglist(Shoppinglist s) {
+		shoppinglistShowForm = new ShoppinglistShowForm();
 		RootPanel.get("main").clear();
 		selectedShoppinglist = s;
 		shoppinglistShowForm.setSelected(s);
+		shoppinglistShowForm.setGstvm(this);
 		navigatorPanel.setSelectedShoppinglist(s);
 
 		if (s != null) {
@@ -198,7 +203,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	 */
 	void updateGroup(Group group) {
 		List<Group> groupList = groupDataProvider.getList();
-		int i = 1;
+		int i = 0;
 		for (Group g : groupList) {
 			if (g.getId() == group.getId()) {
 				groupList.set(i, group);
@@ -224,23 +229,18 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	 *                     werden soll
 	 */
 	void addShoppinglistToGroup(Shoppinglist shoppinglist, Group group) {
-
-		/*
+		/**
 		 * Wurde noch kein Shoppinglist Provider für diese <code>Group</code> erstellt,
 		 * so muss diese auch nicht bearbeitet werden.
 		 */
-
-		if (!shoppinglistDataProviders.containsKey(group)) {
-			return;
-		}
+		selectionModel.setSelected(shoppinglist, true);
 
 		ListDataProvider<Shoppinglist> shoppinglistsProvider = shoppinglistDataProviders.get(group);
 
 		if (!shoppinglistsProvider.getList().contains(shoppinglist)) {
 			shoppinglistsProvider.getList().add(shoppinglist);
 		}
-
-		selectionModel.setSelected(shoppinglist, true);
+		
 
 	}
 
@@ -255,7 +255,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	/**
 	 * Eine Shoppinglist in der Baumstruktur soll ersetzt werden durch eine
 	 * Shoppinglist mit der selben Id, wenn sich die Eigenschaften einer
-	 * Shoppinglist ge�ndert haben und in der Baumstruktur noch ein veraltetes
+	 * Shoppinglist geändert haben und in der Baumstruktur noch ein veraltetes
 	 * Shoppinglistobjekt vorhanden ist.
 	 * 
 	 * Dient dem Aktualisieren eines <code>Shoppinglist</code> Objekts im
@@ -263,11 +263,10 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	 * 
 	 */
 	void updateShoppinglist(Shoppinglist s) {
-		shoppinglistAdministration.getGroupById(s.getId(), new UpdateShoppinglistCallback(s));
+		shoppinglistAdministration.getGroupById(s.getGroupId(), new UpdateShoppinglistCallback(s));
 	}
 
 	private class UpdateShoppinglistCallback implements AsyncCallback<Group> {
-
 		Shoppinglist shoppinglist = null;
 
 		UpdateShoppinglistCallback(Shoppinglist s) {
@@ -276,11 +275,14 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 
 		@Override
 		public void onFailure(Throwable t) {
+			Notification.show(t.toString());
 		}
 
 		@Override
-		public void onSuccess(Group group) {
+		public void onSuccess(Group group) {			
+			
 			List<Shoppinglist> shoppinglistList = shoppinglistDataProviders.get(group).getList();
+
 			for (int i = 0; i < shoppinglistList.size(); i++) {
 				if (shoppinglist.getId() == shoppinglistList.get(i).getId()) {
 					shoppinglistList.set(i, shoppinglist);
@@ -290,6 +292,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		}
 
 	}
+	
 
 	/**
 	 * Zurueckgeben der NodeInfo, die die Kinder des jeweiligen Werts enthaelt.
@@ -303,7 +306,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 
 				@Override
 				public void onFailure(Throwable t) {
-					Notification.show("Folgender Fehler ist aufgetreten \n" + t.toString());
+					Notification.show(t.toString());
 				}
 
 				@Override
@@ -320,16 +323,16 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 		}
 
 		if (value instanceof Group) {
-			// Erzeugen eines ListDataProviders f�r Shoppinglist-Daten
+			// Erzeugen eines ListDataProviders für Shoppinglist-Daten
 			final ListDataProvider<Shoppinglist> shoppinglistsProvider = new ListDataProvider<Shoppinglist>();
-
+			
 			shoppinglistDataProviders.put((Group) value, shoppinglistsProvider);
-
+						
 			shoppinglistAdministration.getShoppinglistsOf((Group) value, new AsyncCallback<ArrayList<Shoppinglist>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					Notification.show("Folgender Fehler ist aufgetreten: \n" + caught.toString());
+					Notification.show(caught.toString());
 				}
 
 				@Override

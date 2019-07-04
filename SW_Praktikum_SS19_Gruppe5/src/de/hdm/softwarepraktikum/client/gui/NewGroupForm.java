@@ -122,7 +122,6 @@ public class NewGroupForm extends VerticalPanel {
 	/**
 	 * Bei Betätigen der Abbrechen-Schaltfläche wird die Gruppenansicht der alten 
 	 * Gruppe anzuzeigen.
-	 * @author elina
 	 *
 	 */
 	private class CancelClickHandler implements ClickHandler {
@@ -173,16 +172,17 @@ public class NewGroupForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Group result) {
 			RootPanel.get("main").clear();
-			RootPanel.get("aside").clear();
-			NavigatorPanel np = new NavigatorPanel();
-			RootPanel.get("aside").add(np);
 
 			newGroup = result;
 			groupShowForm.setSelected(newGroup);
 			
 			groupShowForm.getGroupHeader().setSelectedGroup(newGroup);
-			RootPanel.get("main").add(groupShowForm);			
+			RootPanel.get("main").add(groupShowForm);
+			gstvm.addGroup(result);
 
+			
+
+			
 		}
 
 	}

@@ -155,6 +155,7 @@ public class NavigatorPanel extends VerticalPanel {
 				selectedGroup = gstvm.getSelectedGroup();
 
 				NewGroupForm ngf = new NewGroupForm();
+				ngf.setGstvm(gstvm);
 				if (selectedGroup != null) {
 					ngf.setOldSelectedGroup(selectedGroup);
 				}
