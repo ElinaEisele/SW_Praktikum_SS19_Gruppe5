@@ -35,15 +35,15 @@ public class Notification {
 	public static void show (String message) {
 		notificationLabel.setText(message);
 		notificationLabel.setStyleName("notificationLabel");
-		RootPanel.get("header").clear();
-		RootPanel.get("header").add(notificationLabel);
-		RootPanel.get("header").add(header);
+
+		RootPanel.get("header").insert(notificationLabel, 0);
 		
 		final Timer timer = new Timer() {
 
 			@Override
 			public void run() {
 				RootPanel.get("header").remove(RootPanel.get("header").getWidgetIndex(notificationLabel));
+
 			}
 			
 		};
