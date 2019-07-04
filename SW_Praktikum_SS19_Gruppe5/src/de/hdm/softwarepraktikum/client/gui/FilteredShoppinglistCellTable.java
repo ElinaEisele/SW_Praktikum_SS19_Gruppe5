@@ -704,7 +704,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public int compare(List<Object> o1, List<Object> o2) {
-						return ((String) o1.get(1)).compareTo((String) o2.get(1));
+						return ((String) o1.get(2)).compareTo((String) o2.get(2));
 					}
 				});
 
