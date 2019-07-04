@@ -61,7 +61,7 @@ public class NewListitemForm extends HorizontalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button("Einzelhändler hinzufügen");
+	private Button newRetailerButton = new Button("Neuen Einzelhändler hinzufügen");
 
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("Abbrechen");
@@ -363,6 +363,8 @@ public class NewListitemForm extends HorizontalPanel {
 		public void onSuccess(Listitem result) {
 
 			if (result != null) {
+				shoppinglistAdministration.setLatestEdit(selectedShoppinglist, result, new LatestEditCallback());
+				selectedShoppinglist.setLastestEdit(result.getId());
 				RootPanel.get("main").clear();
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 				ssf.setSelected(selectedShoppinglist);
@@ -373,6 +375,25 @@ public class NewListitemForm extends HorizontalPanel {
 				Notification.show("Das Anlegen eines neuen Eintrags ist fehlgeschlagen!");
 			}
 		}
+	}
+	
+	/**
+	 * Zum Festlegen der letzten Änderung einer <code>Shoppinglist</code>.
+	 */
+	private class LatestEditCallback implements AsyncCallback<Void>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 }

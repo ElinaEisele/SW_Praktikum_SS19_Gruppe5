@@ -43,7 +43,9 @@ public class LeaveGroupDialogBox extends DialogBox {
 
 		cancelButton.setStylePrimaryName("NavButton");
 		confirmButton.setStylePrimaryName("NavButton");
-
+		buttonPanel.setStyleName("ButtonPanel");
+		confirmationLabel.setStyleName("Header");
+		
 		cancelButton.addClickHandler(new CancelClickHandler());
 		confirmButton.addClickHandler(new ConfirmClickHandler());
 
@@ -98,12 +100,6 @@ public class LeaveGroupDialogBox extends DialogBox {
 		public void onClick(ClickEvent event) {
 			if (selectedGroup != null) {
 				shoppinglistAdministration.removeUserFromGroup(u, selectedGroup, new RemoveUserCallback());
-				RootPanel.get("aside").clear();
-				RootPanel.get("main").clear();
-
-				NavigatorPanel np = new NavigatorPanel();
-				RootPanel.get("aside").add(np);
-				LeaveGroupDialogBox.this.hide();
 
 			} else {
 				Notification.show("Es wurde keine Gruppe ausgewählt.");
@@ -130,6 +126,14 @@ public class LeaveGroupDialogBox extends DialogBox {
 
 		@Override
 		public void onSuccess(Void result) {
+			
+			RootPanel.get("aside").clear();
+			RootPanel.get("main").clear();
+
+			NavigatorPanel np = new NavigatorPanel();
+			RootPanel.get("aside").add(np);
+			LeaveGroupDialogBox.this.hide();
+			
 			setSelectedGroup(null);
 			gstvm.removeGroup(selectedGroup);
 

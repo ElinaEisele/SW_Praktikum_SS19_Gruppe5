@@ -79,7 +79,8 @@ public class ShoppinglistHeader extends HorizontalPanel {
 		showUserRetailerAllocation.getElement().appendChild(allocationImg.getElement());
 		showUserRetailerAllocation.setStyleName("ShoppinglistHeaderButton");
 		showUserRetailerAllocation.addClickHandler(new ShowUserRetailerAllocationClickHandler());
-		showUserRetailerAllocation.setTitle("Einzelhändlerzuweisung anzeigen");
+		showUserRetailerAllocation.setTitle("Einzelhändlerzuweisung verwalten");
+
 
 		Image filterImg = new Image();
 		filterImg.setUrl("images/filter.png");
@@ -208,6 +209,7 @@ public class ShoppinglistHeader extends HorizontalPanel {
 				esndb.setGstvm(ShoppinglistHeader.this.gstvm);
 				esndb.setShoppinglistHeader(ShoppinglistHeader.this);
 				esndb.setSelectedShoppinglist(selectedShoppinglist);
+				esndb.setSelectedGroup(selectedGroup);
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(ShoppinglistHeader.this, esndb);
 				ssf.setSelected(selectedShoppinglist);
 

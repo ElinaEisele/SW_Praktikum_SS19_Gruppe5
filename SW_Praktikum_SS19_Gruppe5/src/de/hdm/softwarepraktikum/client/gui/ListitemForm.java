@@ -67,7 +67,7 @@ public class ListitemForm extends VerticalPanel {
 	private ListBox unitNameListBox = new ListBox();
 	private ListBox retailerNameListBox = new ListBox();
 
-	private Button newRetailerButton = new Button("Neuer Einzelhändler hinzufügen");
+	private Button newRetailerButton = new Button("Neuen Einzelhändler hinzufügen");
 	private Button saveButton = new Button("Speichern");
 	private Button discardButton = new Button("Abbrechen");
 
@@ -562,7 +562,7 @@ public class ListitemForm extends VerticalPanel {
 			
 			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, selectedListitem, new LatestEditCallback());
 			selectedShoppinglist.setLastestEdit(selectedListitem.getId());
-			
+		
 			RootPanel.get("main").clear();
 
 			if (selectedShoppinglist != null && selectedUser != null) {
@@ -596,6 +596,9 @@ public class ListitemForm extends VerticalPanel {
 				ssf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(ssf);
 			}
+			
+			shoppinglistAdministration.setLatestEdit(selectedShoppinglist, selectedListitem, new LatestEditCallback());
+
 
 		}
 

@@ -36,14 +36,12 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 
 	private GroupShowForm groupShowForm;
 	private ShoppinglistShowForm shoppinglistShowForm;
-
-	private ShoppinglistCellTable shoppinglistCellTable;
 	private NavigatorPanel navigatorPanel = new NavigatorPanel();
 
 	private Group selectedGroup = null;
 	private Shoppinglist selectedShoppinglist = null;
-	private ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 	private ListDataProvider<Group> groupDataProvider = new ListDataProvider<Group>();
+	private ShoppinglistAdministrationAsync shoppinglistAdministration = null;
 
 	/*
 	 * In dieser Map werden die ListDataProviders fuer die Shoppinglisten der im
@@ -78,7 +76,7 @@ public class GroupShoppinglistTreeViewModel implements TreeViewModel {
 	private SingleSelectionModel<BusinessObject> selectionModel = null;
 
 	/**
-	 * Nested Class f�r die Reaktion auf Selektionsereignisse. Als Folge einer
+	 * Nested Class für die Reaktion auf Selektionsereignisse. Als Folge einer
 	 * Baumknotenauswahl wird je nach Typ des Business-Objects die "selectedGroup"
 	 * bzw. die "selectedShoppinglist" gesetzt.
 	 *

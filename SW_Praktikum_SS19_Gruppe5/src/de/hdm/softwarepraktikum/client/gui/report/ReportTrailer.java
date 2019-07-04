@@ -36,7 +36,7 @@ public class ReportTrailer extends VerticalPanel{
 		
 		this.add(buttonsPanel);
 		this.setWidth("100%");
-		this.setCellHorizontalAlignment(buttonsPanel, ALIGN_RIGHT);
+		this.setCellHorizontalAlignment(buttonsPanel, ALIGN_CENTER);
 		
 		
 		impressumButton.addClickHandler(new ImpressumButtonClickHandler());

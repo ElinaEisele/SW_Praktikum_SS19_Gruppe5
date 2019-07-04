@@ -29,13 +29,6 @@ div#LoginHeader{
 	border-top-right-radius: 10px;
 }
 
-.Name{
-	color: white;
-	font-family: 'Rock Salt', cursive;
-	font-weight: bold;
-	font-size: 250%;
-}
-
 /* Um die Buttons im Header zu stylen. */
 .HeaderButton {
 	color: white;
@@ -128,7 +121,7 @@ div#reportMain{
 .Title{
 	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
-	font-size: 120%;
+	font-size: 175%;
 	margin-top: 15px;
 }
 
