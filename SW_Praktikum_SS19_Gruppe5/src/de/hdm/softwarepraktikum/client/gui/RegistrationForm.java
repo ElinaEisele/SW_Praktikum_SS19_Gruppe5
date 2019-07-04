@@ -33,7 +33,7 @@ public class RegistrationForm extends VerticalPanel {
 	private HorizontalPanel registrationFormHeaderPanel = new HorizontalPanel();
 	private HorizontalPanel buttonsPanel = new HorizontalPanel();
 
-	private Label welcomeLabel = new Label("Herzlich Willkommen zum Einkaufserlebnis mit Maul Tasche!");
+	private Label welcomeLabel = new Label("Herzlich Willkommen zum Einkaufserlebnis mit MaulTasche!");
 	private Label registrationInfoLabel = new Label("Bitte registrieren Sie sich hier:");
 
 	private Label firstNameLabel = new Label("Vorname:");
@@ -66,6 +66,13 @@ public class RegistrationForm extends VerticalPanel {
 	 */
 	public void onLoad() {
 
+		welcomeLabel.setStyleName("Header");
+		registrationInfoLabel.setStyleName("Heading");
+		firstNameTextBox.setStyleName("TextBox");
+		lastNameTextBox.setStyleName("TextBox");
+		registerButton.setStyleName("NavButton");
+		cancelButton.setStyleName("NavButton");
+		
 		this.setWidth("100%");
 		registrationFormHeaderPanel.setHeight("8vh");
 		registrationFormHeaderPanel.setWidth("100%");
@@ -90,6 +97,7 @@ public class RegistrationForm extends VerticalPanel {
 
 		this.add(registrationFormHeaderPanel);
 		this.add(welcomeLabel);
+		this.add(registrationInfoLabel);
 		this.add(registrationGrid);
 		this.add(buttonsPanel);
 

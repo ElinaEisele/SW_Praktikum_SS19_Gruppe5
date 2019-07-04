@@ -469,6 +469,21 @@ div#container {
 	margin-bottom: 10px; 
 }
 
+.Heading{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	
+}
+
+.TextBox{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 100%;
+}
+
 .FlexTable{
 	background:transparent; 
 	color: black;
