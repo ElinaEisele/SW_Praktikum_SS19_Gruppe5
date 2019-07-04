@@ -11,7 +11,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -120,8 +119,8 @@ public class UserRetailerAllocationForm extends VerticalPanel {
 		 * Zum Befüllen der Dropdown-Liste mit <code>User</code>.
 		 */
 		selectedGroup = shoppinglistHeader.getSelected();
-
 		shoppinglistAdministration.getUsersOf(selectedGroup, new GetAllUserCallback());
+		
 		shoppinglistAdministration.getRetailersOf(selectedShoppinglist, new GetAllRetailersCallback());
 		RootPanel.get("main").add(mainPanel);
 
