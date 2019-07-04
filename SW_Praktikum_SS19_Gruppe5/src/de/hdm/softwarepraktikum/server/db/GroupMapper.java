@@ -17,7 +17,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
  * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
- * @author CarlaHofmann
+ * @author CarlaHofmann & LeoniFriedrich
  */
 
 public class GroupMapper {
@@ -42,7 +42,7 @@ public class GroupMapper {
 	/**
      * Diese statische Methode kann aufgrufen werden durch
      * <code>GroupMapper.groupMapper()</code>. Sie stellt die
-     * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+     * Singleton-Eigenschaft sicher, indem Sie dafuer sorgt, dass nur eine einzige
      * Instanz von <code>GroupMapper</code> existiert.
 	 *
 	 * @return groupMapper
@@ -201,7 +201,7 @@ public class GroupMapper {
 	}
 	
 	/**
-	 * Einfügen einer Membershpbeziehung in die Datenbank.
+	 * Einfügen einer Membershipbeziehung in die Datenbank.
 	 * 
 	 * @param user_id
 	 * @param usergroup_id
@@ -226,7 +226,7 @@ public class GroupMapper {
 	}
 	
 	/**
-	 * Löschen einer Membershpbeziehung aus der Datenbank.
+	 * Löschen einer Membershipbeziehung aus der Datenbank.
 	 * 
 	 * @param userId
 	 * @param groupId
@@ -248,7 +248,7 @@ public class GroupMapper {
 	
 	/**
 	 * 
-	 * Löschen aller Membershpbeziehung einer Gruppe aus der Datenbank.
+	 * Löschen aller Membershipbeziehung einer Gruppe aus der Datenbank.
 	 * 
 	 * @param usergroup_id
 	 */
