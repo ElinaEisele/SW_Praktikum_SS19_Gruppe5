@@ -70,6 +70,7 @@ public abstract class BusinessObject implements IsSerializable{
 	 * Gleichheit zweier BusinessObjects ueberpruefen. Hierbei wird sich auf
 	 * die ID's bezogen.
 	 */
+	@Override
 	public boolean equals(Object o) {
 	    /*
 	     * Abfragen, ob ein Objekt ungleich NULL ist und ob ein Objekt gecastet
@@ -102,6 +103,7 @@ public abstract class BusinessObject implements IsSerializable{
 	   * <p>
 	   * Zusammen mit <code>equals</code> sollte diese Methode immer definiert werden.
 	   */
+	@Override
 	public int hashCode() {
 		return this.id;
 	}

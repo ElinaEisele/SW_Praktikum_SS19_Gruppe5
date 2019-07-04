@@ -68,7 +68,10 @@ public class NewShoppinglistForm extends VerticalPanel {
 	 * Laden und Anordnen der Widgets.
 	 */
 	public void onLoad() {
-
+		if(gstvm==null) {
+			Window.alert("gstvm ist null 2");
+		}
+		
 		RootPanel.get("main").add(mainPanel);
 
 	}
@@ -122,7 +125,7 @@ public class NewShoppinglistForm extends VerticalPanel {
 
 				}
 			} else {
-				Notification.show("Bitte gib eine kürzeren Namen ein");
+				Notification.show("Bitte gib einen kürzeren Namen ein.");
 			}
 		}
 
@@ -142,7 +145,6 @@ public class NewShoppinglistForm extends VerticalPanel {
 				GroupShowForm gsf = new GroupShowForm();
 				gsf.setSelected(selectedGroup);
 				gsf.setGstvm(gstvm);
-		//		gstvm.setGroupShowForm(gsf);
 				
 				RootPanel.get("main").add(gsf);
 			}
@@ -189,9 +191,14 @@ public class NewShoppinglistForm extends VerticalPanel {
 			shoppinglistShowForm.setSelectedGroup(selectedGroup);
 			RootPanel.get("main").clear();
 			RootPanel.get("main").add(shoppinglistShowForm);
+			if (gstvm==null) {
+				Window.alert("gstvm null");
+			}
+			gstvm.addShoppinglistToGroup(selectedShoppinglist, selectedGroup);
 
-			gstvm.setSelectedShoppinglist(selectedShoppinglist);
-			gstvm.getSelectionModel().setSelected(selectedShoppinglist, true);
+
+//			gstvm.setSelectedShoppinglist(selectedShoppinglist);
+//			gstvm.getSelectionModel().setSelected(selectedShoppinglist, true);
 
 		}
 
