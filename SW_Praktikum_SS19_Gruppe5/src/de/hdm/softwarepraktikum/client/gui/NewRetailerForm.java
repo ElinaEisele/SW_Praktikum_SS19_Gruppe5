@@ -2,6 +2,7 @@ package de.hdm.softwarepraktikum.client.gui;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -172,13 +173,14 @@ public class NewRetailerForm extends VerticalPanel {
 				lsf.setSelectedRetailer(selectedRetailer);
 				lsf.setSelectedGroup(selectedGroup);
 				RootPanel.get("main").add(lsf);
-
+	
 			} else if (selectedGroup != null && selectedShoppinglist != null && selectedRetailer == null
 					&& selectedUser == null && selectedListitem == null) {
 
 				NewListitemForm nlf = new NewListitemForm();
 				nlf.setSelectedShoppinglist(getSelectedShoppinglist());
 				nlf.setSelectedShoppinglist(selectedShoppinglist);
+				nlf.setSelectedGroup(selectedGroup);
 
 				ShoppinglistShowForm ssf = new ShoppinglistShowForm(shoppinglistHeader, nlf);
 				ssf.setSelected(selectedShoppinglist);

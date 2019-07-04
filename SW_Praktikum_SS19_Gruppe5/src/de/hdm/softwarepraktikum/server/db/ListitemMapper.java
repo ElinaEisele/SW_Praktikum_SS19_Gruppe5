@@ -20,7 +20,7 @@ import de.hdm.softwarepraktikum.shared.bo.*;
  * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
  * in DB-Strukturen und DB-Strukturen in Objekte umgewandelt werden.
  * 
- * @author CarlaHofmann
+ * @author CarlaHofmann	& LeoniFriedrich
  */
 
 public class ListitemMapper {

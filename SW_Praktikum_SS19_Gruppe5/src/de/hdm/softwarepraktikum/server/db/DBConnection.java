@@ -8,7 +8,7 @@ import com.google.appengine.api.utils.SystemProperty;
 /**
  * Verwalten einer Verbindung zur Datenbank.
  * 
- * @author CarlaHofmann
+ * @author CarlaHofmann & LeoniFriedrich
  */
 
 public class DBConnection {
@@ -53,7 +53,7 @@ public class DBConnection {
                 	
 					/**
 					 * Klasse laden, die das neue 
-					 * "jdbc:google:mysql://"-Präfix bereitstellt.
+					 * "jdbc:google:mysql://"-Praefix bereitstellt.
 					 */
                     Class.forName("com.mysql.jdbc.GoogleDriver");
                     url = googleUrl;
@@ -89,7 +89,7 @@ public class DBConnection {
             }
         }
 		/**
-		 * Zurückgeben der Verbindung
+		 * Zurueckgeben der Verbindung
 		 */
         return con;
     }

@@ -158,9 +158,9 @@ public class GroupHeader extends HorizontalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			NavigatorPanel np = new NavigatorPanel();
-			RootPanel.get("aside").clear();
-			RootPanel.get("aside").add(np);
+//			NavigatorPanel np = new NavigatorPanel();
+//			RootPanel.get("aside").clear();
+//			RootPanel.get("aside").add(np);
 
 			NewShoppinglistForm nsf = new NewShoppinglistForm();
 			nsf.setGstvm(GroupHeader.this.gstvm);
