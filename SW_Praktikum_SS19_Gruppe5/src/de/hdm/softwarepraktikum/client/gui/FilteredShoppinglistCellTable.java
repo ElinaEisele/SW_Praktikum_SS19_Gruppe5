@@ -341,7 +341,6 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			/**
 			 * Holen der Daten ohne Filter
 			 */
-			Window.alert("3");
 			data.clear();
 			if (data.size() == 0) {
 				for (Listitem key : listitemData.keySet()) {
