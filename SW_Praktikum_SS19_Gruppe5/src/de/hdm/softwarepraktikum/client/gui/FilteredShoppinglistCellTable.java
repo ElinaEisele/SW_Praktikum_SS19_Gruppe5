@@ -8,26 +8,23 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.gwt.cell.client.Cell.Context;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -35,8 +32,6 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
-import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable.TableRes;
-import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable.TableRes.TableStyle;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
@@ -515,7 +510,11 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 						ssf.setSelected(selectedShoppinglist);
 						ssf.setSelectedGroup(selectedGroup);
-						ssf.setSelectedRetailer(selectedRetailer);
+						if (selectedRetailer != null) {
+							ssf.setSelectedRetailer(selectedRetailer);
+						}
+						if (selectedUser != null) {
+							ssf.setSelectedUser(selectedUser);						}
 
 						ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
 
@@ -704,7 +703,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public int compare(List<Object> o1, List<Object> o2) {
-						return ((String) o1.get(1)).compareTo((String) o2.get(1));
+						return ((String) o1.get(2)).compareTo((String) o2.get(2));
 					}
 				});
 
