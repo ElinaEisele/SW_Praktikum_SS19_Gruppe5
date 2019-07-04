@@ -4,9 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -42,45 +40,30 @@ public class NewRetailerForm extends VerticalPanel {
 	private User selectedUser = null;
 
 	private VerticalPanel mainPanel = new VerticalPanel();
+	private HorizontalPanel actionButtonsPanel = new HorizontalPanel();
 	private TextBox retailerNameTextBox = new TextBox();
-	private Button confirmButton = new Button();
-	private Button cancelButton = new Button();
-
-	private Grid newRetailerGrid = null;
+	private Button confirmButton = new Button("Bestätigen");
+	private Button cancelButton = new Button("Abbrechen");
+	private Label descriptionLabel = new Label("Neuen Einzelhaendler anlegen");
 
 	public NewRetailerForm() {
-
-		/**
-		 * Das Grid-Widget erlaubt die Anordnung anderer Widgets in einem Gitter.
-		 */
-		newRetailerGrid = new Grid(3, 2);
-		mainPanel.add(newRetailerGrid);
-
-		Label descriptionLabel = new Label("Neuen Einzelhaendler anlegen");
-		newRetailerGrid.setWidget(0, 0, descriptionLabel);
-
-		Label newRetailerLabel = new Label("Name des Einzelhaendlers: ");
-		newRetailerGrid.setWidget(1, 0, newRetailerLabel);
-		newRetailerGrid.setWidget(1, 1, retailerNameTextBox);
-
-		HorizontalPanel actionButtonsPanel = new HorizontalPanel();
-		newRetailerGrid.setWidget(2, 1, actionButtonsPanel);
-
-		Image DiscardImg = new Image();
-		DiscardImg.setUrl("images/cancel.png");
-		DiscardImg.setSize("16px", "16px");
-		cancelButton.getElement().appendChild(DiscardImg.getElement());
-		cancelButton.setStyleName("ShoppinglistHeaderButton");
+		
+		retailerNameTextBox.setText("Name eingeben...");
+		retailerNameTextBox.addClickHandler(new NameTextBoxClickHandler());
+		retailerNameTextBox.setWidth("200px");
+		
+		cancelButton.setStyleName("NavButton");
 		cancelButton.addClickHandler(new CancelClickHandler());
 
-		Image SaveImg = new Image();
-		SaveImg.setUrl("images/tick.png");
-		SaveImg.setSize("16px", "16px");
-		confirmButton.getElement().appendChild(SaveImg.getElement());
-		confirmButton.setStyleName("ShoppinglistHeaderButton");
+		confirmButton.setStyleName("NavButton");
 		confirmButton.addClickHandler(new ConfirmClickHandler());
+		
 		actionButtonsPanel.add(confirmButton);
 		actionButtonsPanel.add(cancelButton);
+		
+		mainPanel.add(descriptionLabel);
+		mainPanel.add(retailerNameTextBox);
+		mainPanel.add(actionButtonsPanel);
 
 	}
 
@@ -234,6 +217,19 @@ public class NewRetailerForm extends VerticalPanel {
 				Notification.show("Es wurde keine Shoppinglist ausgewählt.");
 			}
 		}
+	}
+	
+	/**
+	 * Beim Klick in das Text Feld wird dieses geleert.
+	 *
+	 */
+	private class NameTextBoxClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			retailerNameTextBox.setText("");
+		}
+		
 	}
 
 	/**

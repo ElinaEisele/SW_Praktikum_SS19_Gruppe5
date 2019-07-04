@@ -504,3 +504,8 @@ div#container {
 	font-weight: bold;
 	margin-top: 10px; 
 }
+
+.notificationLabel{
+	color: white;
+	float: left;
+}
