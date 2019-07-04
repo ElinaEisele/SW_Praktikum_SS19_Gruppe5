@@ -22,6 +22,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -314,11 +315,11 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	public void onLoad() {
 
 		if (listitemData == null) {
-
+			
 			/**
 			 * Holen der Daten bei Filtern nach User
 			 */
-			if (selectedListitem != null && selectedUser != null) {
+			if (selectedUser != null) {
 				contentLabel.setText("Nach Nutzer Filtern");
 				shoppinglistAdministration.filterShoppinglistsByUser(selectedShoppinglist, selectedUser,
 						new FilterShoppinglistByUserCallback());
@@ -327,6 +328,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 				 * Holen der Daten bei Filtern nach Retailer
 				 */
 			} else if (selectedShoppinglist != null && selectedRetailer != null) {
+				
 				contentLabel.setText("Nach Händler Filtern");
 
 				shoppinglistAdministration.filterShoppinglistsByRetailer(selectedShoppinglist, selectedRetailer,
@@ -339,6 +341,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 			/**
 			 * Holen der Daten ohne Filter
 			 */
+			Window.alert("3");
 			data.clear();
 			if (data.size() == 0) {
 				for (Listitem key : listitemData.keySet()) {
