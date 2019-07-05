@@ -48,6 +48,8 @@ public class RegistrationForm extends VerticalPanel {
 	private Button cancelButton = new Button("Abbrechen");
 
 	private Anchor destinationUrl = new Anchor();
+	
+	Trailer tr = new Trailer();
 
 	public RegistrationForm(Anchor destinationUrl, User u) {
 		this.destinationUrl = destinationUrl;
@@ -66,6 +68,8 @@ public class RegistrationForm extends VerticalPanel {
 	 */
 	public void onLoad() {
 
+		
+		registrationFormHeaderPanel.setStyleName("Header");
 		welcomeLabel.setStyleName("Header");
 		registrationInfoLabel.setStyleName("Heading");
 		firstNameTextBox.setStyleName("TextBox");
@@ -95,7 +99,9 @@ public class RegistrationForm extends VerticalPanel {
 		registrationGrid.setWidget(1, 0, lastNameLabel);
 		registrationGrid.setWidget(1, 1, lastNameTextBox);
 
-		this.add(registrationFormHeaderPanel);
+		RootPanel.get("trailer").add(tr);
+		
+//		this.add(registrationFormHeaderPanel);
 		this.add(welcomeLabel);
 		this.add(registrationInfoLabel);
 		this.add(registrationGrid);

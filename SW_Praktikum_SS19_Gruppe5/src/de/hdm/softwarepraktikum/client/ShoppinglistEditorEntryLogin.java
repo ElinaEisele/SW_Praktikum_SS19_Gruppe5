@@ -62,7 +62,7 @@ public class ShoppinglistEditorEntryLogin implements EntryPoint {
 					Anchor shoppinglistEditorLink = new Anchor();
 					shoppinglistEditorLink.setHref(GWT.getHostPageBaseURL());
 					
-					RootPanel.get("header").add(nameLabel);
+					RootPanel.get("LoginHeader").add(nameLabel);
 					RootPanel.get("main").add(new RegistrationForm(shoppinglistEditorLink, u));
 					
 				} else {
