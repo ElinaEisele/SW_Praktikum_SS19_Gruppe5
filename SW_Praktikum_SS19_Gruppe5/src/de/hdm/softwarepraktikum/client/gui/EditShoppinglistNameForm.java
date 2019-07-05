@@ -197,15 +197,21 @@ public class EditShoppinglistNameForm extends VerticalPanel {
 
 			RootPanel.get("main").clear();
 			RootPanel.get("aside").clear();
+		
 			navigatorPanel = new NavigatorPanel();
 			shoppinglistShowForm = new ShoppinglistShowForm();
 
 			ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 			ssf.setSelected(selectedShoppinglist);
 			ssf.setSelectedGroup(selectedGroup);
-
+			ssf.setGstvm(gstvm);
+			
+			gstvm.getSelectionModel().setSelected(selectedShoppinglist, true);
+			gstvm.setSelectedShoppinglist(selectedShoppinglist);
+			
 			RootPanel.get("aside").add(navigatorPanel);
 			RootPanel.get("main").add(ssf);
+
 
 		}
 	}

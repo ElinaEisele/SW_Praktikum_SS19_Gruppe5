@@ -8,7 +8,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
-
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
@@ -176,6 +176,7 @@ public class ShoppinglistSearchBar extends VerticalPanel {
 				ssf.setSelected(selectedShoppinglist);
 				ssf.setSelectedGroup(selectedGroup);
 				fsct.setListitemData(result);
+				fsct.setSelectedShoppinglist(selectedShoppinglist);
 
 				RootPanel.get("main").add(ssf);
 			}

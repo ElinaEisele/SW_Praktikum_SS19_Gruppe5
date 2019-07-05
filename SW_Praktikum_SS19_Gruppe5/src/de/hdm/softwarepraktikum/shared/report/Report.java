@@ -8,12 +8,12 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * <p>
  * Diese Klasse ist die Basis aller Reports. Alle Reports sind Serializable,
- * sodass diese vom Server an den Client gesendet werden k�nnen. Der Zugriff
- * auf die Reports erfolgt lokal �ber den Client.
+ * sodass diese vom Server an den Client gesendet werden können. Der Zugriff
+ * auf die Reports erfolgt lokal aber den Client.
  * </p>
  * <p>
  * Jeder Report besitzt einige Standardelemente, welche in dieser Klasse
- * mit Hilfe von Attributen dargestellt und dokumentiert.
+ * mit Hilfe von Attributen dargestellt und dokumentiert sind.
  * </p>
  * 
  * @author TimBeutelspacher

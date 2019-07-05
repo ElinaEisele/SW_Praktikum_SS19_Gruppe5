@@ -8,15 +8,14 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.gwt.cell.client.Cell.Context;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
@@ -26,7 +25,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -34,8 +32,6 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 import de.hdm.softwarepraktikum.client.ClientsideSettings;
-import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable.TableRes;
-import de.hdm.softwarepraktikum.client.gui.ShoppinglistCellTable.TableRes.TableStyle;
 import de.hdm.softwarepraktikum.shared.ShoppinglistAdministrationAsync;
 import de.hdm.softwarepraktikum.shared.bo.Group;
 import de.hdm.softwarepraktikum.shared.bo.Listitem;
@@ -78,6 +74,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	private Group selectedGroup = null;
 	private Retailer selectedRetailer = null;
 	private User selectedUser = null;
+	private int id = 0;
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
 	private ArrayList<ArrayList<Object>> data = new ArrayList<>();
@@ -109,7 +106,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		HorizontalPanel buttonPanel = new HorizontalPanel();
 		buttonPanel.add(archiveButton);
 		buttonPanel.add(backButton);
-		
+
 		archiveButton.setStyleName("NavButton");
 
 		/**
@@ -233,12 +230,18 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 							RootPanel.get("main").add(lsf);
 
-						}
+						} 
+					}else {
+							ListitemShowForm lsf = new ListitemShowForm();
+							lsf.setSelected(selectedListitem);
+							lsf.setSelectedShoppinglist(selectedShoppinglist);
+							lsf.setSelectedGroup(selectedGroup);
 
-					} else {
-						Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte später erneut versuchen");
+							RootPanel.get("main").add(lsf);
 
-					}
+						
+					} 
+
 				}
 			}
 		};
@@ -289,6 +292,36 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
+		 * Spalte, die ein Bild enthält, dass das zuletzt geänderte
+		 * <code>Listitem</code>-Objekt deutlich macht.
+		 * 
+		 */
+		Column<ArrayList<Object>, String> latestChangeColumn = new Column<ArrayList<Object>, String>(
+				new ClickableTextCell() {
+					public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
+						sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+					}
+
+				})
+
+		{
+
+			@Override
+			public String getValue(ArrayList<Object> object) {
+				selectedListitem = (Listitem) object.get(0);
+
+				if (selectedListitem.getId() == id) {
+					return "new.png";
+
+				} else {
+					return "transparent.png";
+				}
+
+			}
+
+		};
+
+		/**
 		 * Add Columns to CellTable
 		 * 
 		 */
@@ -299,6 +332,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(retailerNameToDisplay, "Händler");
 		table.addColumn(imageColumn, "Edit");
 		table.addColumn(standardColumn, "Standard");
+		table.addColumn(latestChangeColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
 
 		mainPanel.add(contentLabel);
 		mainPanel.add(table);
@@ -313,12 +347,15 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	 */
 	public void onLoad() {
 
+		selectedShoppinglist = shoppinglistShowForm.getSelectedShoppinglist();
+		id = shoppinglistShowForm.getSelectedShoppinglist().getLastestEdit();
+
 		if (listitemData == null) {
 
 			/**
 			 * Holen der Daten bei Filtern nach User
 			 */
-			if (selectedListitem != null && selectedUser != null) {
+			if (selectedUser != null) {
 				contentLabel.setText("Nach Nutzer Filtern");
 				shoppinglistAdministration.filterShoppinglistsByUser(selectedShoppinglist, selectedUser,
 						new FilterShoppinglistByUserCallback());
@@ -327,6 +364,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 				 * Holen der Daten bei Filtern nach Retailer
 				 */
 			} else if (selectedShoppinglist != null && selectedRetailer != null) {
+
 				contentLabel.setText("Nach Händler Filtern");
 
 				shoppinglistAdministration.filterShoppinglistsByRetailer(selectedShoppinglist, selectedRetailer,
@@ -513,7 +551,12 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 						ShoppinglistShowForm ssf = new ShoppinglistShowForm();
 						ssf.setSelected(selectedShoppinglist);
 						ssf.setSelectedGroup(selectedGroup);
-						ssf.setSelectedRetailer(selectedRetailer);
+						if (selectedRetailer != null) {
+							ssf.setSelectedRetailer(selectedRetailer);
+						}
+						if (selectedUser != null) {
+							ssf.setSelectedUser(selectedUser);
+						}
 
 						ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
 
@@ -702,7 +745,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 					@Override
 					public int compare(List<Object> o1, List<Object> o2) {
-						return ((String) o1.get(1)).compareTo((String) o2.get(1));
+						return ((String) o1.get(2)).compareTo((String) o2.get(2));
 					}
 				});
 
