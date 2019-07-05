@@ -74,6 +74,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	private Group selectedGroup = null;
 	private Retailer selectedRetailer = null;
 	private User selectedUser = null;
+	private int id = 0;
 
 	private ArrayList<Listitem> checkedListitems = new ArrayList<Listitem>();
 	private ArrayList<ArrayList<Object>> data = new ArrayList<>();
@@ -105,7 +106,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		HorizontalPanel buttonPanel = new HorizontalPanel();
 		buttonPanel.add(archiveButton);
 		buttonPanel.add(backButton);
-		
+
 		archiveButton.setStyleName("NavButton");
 
 		/**
@@ -229,12 +230,18 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 
 							RootPanel.get("main").add(lsf);
 
-						}
+						} 
+					}else {
+							ListitemShowForm lsf = new ListitemShowForm();
+							lsf.setSelected(selectedListitem);
+							lsf.setSelectedShoppinglist(selectedShoppinglist);
+							lsf.setSelectedGroup(selectedGroup);
 
-					} else {
-						Notification.show("Hoppla, hier ist etwas schief gelaufen. Bitte später erneut versuchen");
+							RootPanel.get("main").add(lsf);
 
-					}
+						
+					} 
+
 				}
 			}
 		};
@@ -285,6 +292,36 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		};
 
 		/**
+		 * Spalte, die ein Bild enthält, dass das zuletzt geänderte
+		 * <code>Listitem</code>-Objekt deutlich macht.
+		 * 
+		 */
+		Column<ArrayList<Object>, String> latestChangeColumn = new Column<ArrayList<Object>, String>(
+				new ClickableTextCell() {
+					public void render(Context context, SafeHtml value, SafeHtmlBuilder sb) {
+						sb.appendHtmlConstant("<img width=\"20\" src=\"images/" + value.asString() + "\">");
+					}
+
+				})
+
+		{
+
+			@Override
+			public String getValue(ArrayList<Object> object) {
+				selectedListitem = (Listitem) object.get(0);
+
+				if (selectedListitem.getId() == id) {
+					return "new.png";
+
+				} else {
+					return "transparent.png";
+				}
+
+			}
+
+		};
+
+		/**
 		 * Add Columns to CellTable
 		 * 
 		 */
@@ -295,6 +332,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 		table.addColumn(retailerNameToDisplay, "Händler");
 		table.addColumn(imageColumn, "Edit");
 		table.addColumn(standardColumn, "Standard");
+		table.addColumn(latestChangeColumn, SafeHtmlUtils.fromSafeConstant("<br/>"));
 
 		mainPanel.add(contentLabel);
 		mainPanel.add(table);
@@ -309,8 +347,11 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 	 */
 	public void onLoad() {
 
+		selectedShoppinglist = shoppinglistShowForm.getSelectedShoppinglist();
+		id = shoppinglistShowForm.getSelectedShoppinglist().getLastestEdit();
+
 		if (listitemData == null) {
-			
+
 			/**
 			 * Holen der Daten bei Filtern nach User
 			 */
@@ -323,7 +364,7 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 				 * Holen der Daten bei Filtern nach Retailer
 				 */
 			} else if (selectedShoppinglist != null && selectedRetailer != null) {
-				
+
 				contentLabel.setText("Nach Händler Filtern");
 
 				shoppinglistAdministration.filterShoppinglistsByRetailer(selectedShoppinglist, selectedRetailer,
@@ -514,7 +555,8 @@ public class FilteredShoppinglistCellTable extends VerticalPanel {
 							ssf.setSelectedRetailer(selectedRetailer);
 						}
 						if (selectedUser != null) {
-							ssf.setSelectedUser(selectedUser);						}
+							ssf.setSelectedUser(selectedUser);
+						}
 
 						ssf.setFilteredshoppinglistCellTable(FilteredShoppinglistCellTable.this);
 
