@@ -177,13 +177,12 @@ public class EditGroupNameForm extends VerticalPanel {
 		public void onSuccess(Group result) {
 			selectedGroup = result;
 			RootPanel.get("main").clear();
-			RootPanel.get("aside").clear();
+			
 			GroupShowForm gsf = new GroupShowForm();
 			gsf.setSelected(selectedGroup);
 			gsf.setGstvm(gstvm);
 			RootPanel.get("main").add(gsf);
-			NavigatorPanel np = new NavigatorPanel();
-			RootPanel.get("aside").add(np);
+			
 			gstvm.updateGroup(result);
 		}
 
